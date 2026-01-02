@@ -1,0 +1,275 @@
+@import "tailwindcss";
+@import "./components/delivery/MapStyles.css";
+
+/* Shimmer animation for loading skeletons */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+}
+
+/* Typing cursor animation for dynamic placeholders */
+@keyframes typing-cursor {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.typing-cursor {
+  animation: typing-cursor 1s infinite;
+}
+
+/* Dynamic placeholder styles */
+.dynamic-placeholder::placeholder {
+  color: #9CA3AF;
+  font-style: normal;
+  transition: all 0.3s ease;
+}
+
+/* styles.css or tailwind.css */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+/* Base styles for better mobile experience */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Responsive font sizes */
+@screen sm {
+  html {
+    font-size: 16px;
+  }
+}
+
+@screen md {
+  html {
+    font-size: 17px;
+  }
+}
+
+@screen lg {
+  html {
+    font-size: 18px;
+  }
+}
+
+/* Responsive container padding */
+.container {
+  @apply px-4 sm:px-6 lg:px-8;
+}
+
+/* Custom animations */
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom utility classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.8s ease-out forwards;
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Form elements */
+input,
+button,
+textarea,
+select {
+  @apply text-base;
+}
+
+/* Better touch targets for mobile */
+button,
+a {
+  @apply min-h-[44px] min-w-[44px];
+  touch-action: manipulation;
+}
+
+/* Hide scrollbar on mobile */
+@media (max-width: 640px) {
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1a87d;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8926b;
+}
+
+
+/* Add these styles to your global CSS file (index.css or App.css) */
+
+/* Line Clamp Utilities */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Additional utility classes for consistent card layouts */
+.card-container {
+  height: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-image-container {
+  height: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: #f3f4f6;
+}
+
+.card-content {
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Fallback for browsers that don't support -webkit-line-clamp */
+@supports not (-webkit-line-clamp: 2) {
+  .line-clamp-1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .line-clamp-2,
+  .line-clamp-3 {
+    overflow: hidden;
+    display: block;
+    max-height: 3em; /* Approximate height for 2 lines */
+    line-height: 1.5em;
+  }
+}
+
+/* Bottom navigation offset helpers */
+:root {
+  --bottom-nav-height: 56px; /* matches Tailwind h-14 */
+}
+
+/* Use on fixed bottom bars to sit above BottomNav and safe areas */
+.fixed-above-bottom-nav {
+  bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+}
+
+/* Use on scrollable containers to ensure content isn't hidden under BottomNav */
+.pb-bottom-nav {
+  padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+}

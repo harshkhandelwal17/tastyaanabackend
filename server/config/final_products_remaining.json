@@ -1,0 +1,1080 @@
+[
+    {
+    "title": "Poha",
+    "name": "Poha",
+    "slug": "poha",
+    "description": "Classic flattened rice breakfast dish cooked with onions, mustard seeds and curry leaves",
+    "shortDescription": "Traditional flattened rice breakfast",
+    "price": 15.0,
+    "originalPrice": 15.0,
+    "discountPrice": 15.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838642/1_chnpro.png",
+      "alt": "Poha",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "breakfast",
+    "tags": [
+      "breakfast",
+      "poha",
+      "traditional"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "150g",
+        "price": 15.0,
+        "originalPrice": 15.0,
+        "discount": 0.0,
+        "stock": 50,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 20,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+    {
+    "title": "Pav Bhaji",
+    "name": "Pav Bhaji",
+    "slug": "pav-bhaji",
+    "description": "Spiced mixed vegetable curry served with buttered bread rolls",
+    "shortDescription": "Mumbai street food specialty",
+    "price": 60.0,
+    "originalPrice": 60.0,
+    "discountPrice": 60.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883802/42_uyyz4t.png",
+      "alt": "Pav Bhaji",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "fast_snack",
+    "tags": [
+      "fast food",
+      "mumbai",
+      "street food",
+      "spicy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "300g",
+        "price": 60.0,
+        "originalPrice": 60.0,
+        "discount": 0.0,
+        "stock": 50,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 11,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Cheese Pav Bhaji",
+    "name": "Cheese Pav Bhaji",
+    "slug": "cheese-pav-bhaji",
+    "description": "Classic pav bhaji topped with melted cheese for extra richness",
+    "shortDescription": "Cheese-loaded pav bhaji",
+    "price": 90.0,
+    "originalPrice": 90.0,
+    "discountPrice": 90.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883809/43_qfvkvj.png",
+      "alt": "Cheese Pav Bhaji",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "fast_snack",
+    "tags": [
+      "fast food",
+      "cheese",
+      "rich",
+      "indulgent"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "350g",
+        "price": 90.0,
+        "originalPrice": 90.0,
+        "discount": 0.0,
+        "stock": 40,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 23,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "title": "Chola Bhatura",
+    "name": "Chola Bhatura",
+    "slug": "chola-bhatura",
+    "description": "Spiced chickpea curry served with deep-fried fluffy bread",
+    "shortDescription": "Punjabi chickpea curry with fried bread",
+    "price": 60.0,
+    "originalPrice": 60.0,
+    "discountPrice": 60.0,
+    "discount": 0.0,
+   "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883807/45_te37jc.png",
+      "alt": "Chola Bhatura",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "fast_snack",
+    "tags": [
+      "punjabi",
+      "chickpeas",
+      "fried bread",
+      "hearty"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "300g",
+        "price": 60.0,
+        "originalPrice": 60.0,
+        "discount": 0.0,
+        "stock": 50,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 25,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Cheese Chola Bhatura",
+    "name": "Cheese Chola Bhatura",
+    "slug": "cheese-chola-bhatura",
+    "description": "Traditional chola bhatura enhanced with melted cheese",
+    "shortDescription": "Cheese-topped chola bhatura",
+    "price": 100.0,
+    "originalPrice": 100.0,
+    "discountPrice": 100.0,
+    "discount": 0.0,
+   "images": [{
+      "url": "",
+      "alt": "",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "fast_snack",
+    "tags": [
+      "punjabi",
+      "cheese",
+      "rich",
+      "filling"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "350g",
+        "price": 100.0,
+        "originalPrice": 100.0,
+        "discount": 0.0,
+        "stock": 35,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 14,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 35,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "title": "Chole Kulche",
+    "name": "Chole Kulche",
+    "slug": "chole-kulche",
+    "description": "Spiced chickpea curry served with soft leavened bread",
+    "shortDescription": "Chickpeas with soft kulcha bread",
+    "price": 60.0,
+    "originalPrice": 60.0,
+    "discountPrice": 60.0,
+    "discount": 0.0,
+   "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883807/45_te37jc.png",
+      "alt": "Chole Kulche",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "fast_snack",
+    "tags": [
+      "chickpeas",
+      "kulcha",
+      "soft bread",
+      "comfort food"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "280g",
+        "price": 60.0,
+        "originalPrice": 60.0,
+        "discount": 0.0,
+        "stock": 45,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 13,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 45,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "title": "Cheese Chole Kulche",
+    "name": "Cheese Chole Kulche",
+    "slug": "cheese-chole-kulche",
+    "description": "Classic chole kulche with added melted cheese topping",
+    "shortDescription": "Cheese-enhanced chole kulche",
+    "price": 100.0,
+    "originalPrice": 100.0,
+    "discountPrice": 100.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "",
+      "alt": "",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "fast_snack",
+    "tags": [
+      "chickpeas",
+      "cheese",
+      "indulgent",
+      "rich"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "330g",
+        "price": 100.0,
+        "originalPrice": 100.0,
+        "discount": 0.0,
+        "stock": 30,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 24,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 30,
+    "unitType": "piece",
+    "isPerishable": true
+  }, {
+    "title": "Veg Grilled Sandwich",
+    "name": "Veg Grilled Sandwich",
+    "slug": "veg-grilled-sandwich",
+    "description": "Grilled sandwich with mixed vegetables and spices",
+    "shortDescription": "Crispy grilled vegetable sandwich",
+    "price": 70.0,
+    "originalPrice": 70.0,
+    "discountPrice": 70.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883805/46_hzjy68.png",
+      "alt": "Veg Grilled Sandwich ",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "sandwich",
+    "tags": [
+      "sandwich",
+      "grilled",
+      "vegetables",
+      "crispy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "200g",
+        "price": 70.0,
+        "originalPrice": 70.0,
+        "discount": 0.0,
+        "stock": 60,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 29,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 60,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Cheese Chutney Sandwich",
+    "name": "Cheese Chutney Sandwich",
+    "slug": "cheese-chutney-sandwich",
+    "description": "Grilled sandwich with cheese and mint chutney",
+    "shortDescription": "Cheese sandwich with mint chutney",
+    "price": 80.0,
+    "originalPrice": 80.0,
+    "discountPrice": 80.0,
+    "discount": 0.0,
+   "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883811/49_zr1v6j.png",
+      "alt": "Cheese Chutney Sandwich",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "sandwich",
+    "tags": [
+      "sandwich",
+      "cheese",
+      "chutney",
+      "mint"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "190g",
+        "price": 80.0,
+        "originalPrice": 80.0,
+        "discount": 0.0,
+        "stock": 50,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 13,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Tandoori Paneer Sandwich",
+    "name": "Tandoori Paneer Sandwich",
+    "slug": "tandoori-paneer-sandwich",
+    "description": "Grilled sandwich with tandoori-marinated paneer and vegetables",
+    "shortDescription": "Tandoori-flavored paneer sandwich",
+    "price": 100.0,
+    "originalPrice": 100.0,
+    "discountPrice": 100.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883800/50_jn21o6.png",
+      "alt": "Tandoori Paneer Sandwich",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "sandwich",
+    "tags": [
+      "sandwich",
+      "tandoori",
+      "paneer",
+      "spicy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "220g",
+        "price": 100.0,
+        "originalPrice": 100.0,
+        "discount": 0.0,
+        "stock": 40,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 17,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Corn Cheese Sandwich",
+    "name": "Corn Cheese Sandwich",
+    "slug": "corn-cheese-sandwich",
+    "description": "Grilled sandwich with sweet corn and melted cheese",
+    "shortDescription": "Sweet corn and cheese sandwich",
+    "price": 100.0,
+    "originalPrice": 100.0,
+    "discountPrice": 100.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883799/51_by2ozr.png",
+      "alt": "Corn Cheese Sandwich",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "sandwich",
+    "tags": [
+      "sandwich",
+      "corn",
+      "cheese",
+      "sweet"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "210g",
+        "price": 100.0,
+        "originalPrice": 100.0,
+        "discount": 0.0,
+        "stock": 45,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 22,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 45,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Indore Chatpata Sandwich",
+    "name": "Indore Chatpata Sandwich",
+    "slug": "indore-chatpata-sandwich",
+    "description": "Indore-style spicy and tangy sandwich with special sauces",
+    "shortDescription": "Indore special tangy sandwich",
+    "price": 100.0,
+    "originalPrice": 100.0,
+    "discountPrice": 100.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883809/52_uqeava.png",
+      "alt": "Indore Chatpata Sandwich",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "sandwich",
+    "tags": [
+      "sandwich",
+      "indore",
+      "chatpat",
+      "tangy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "220g",
+        "price": 100.0,
+        "originalPrice": 100.0,
+        "discount": 0.0,
+        "stock": 35,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 12,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 35,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Veg Club Sandwich",
+    "name": "Veg Club Sandwich",
+    "slug": "veg-club-sandwich",
+    "description": "Multi-layered club sandwich with mixed vegetables and sauces",
+    "shortDescription": "Triple-layer vegetable club sandwich",
+    "price": 110.0,
+    "originalPrice": 110.0,
+    "discountPrice": 110.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883811/53_u5xuzb.png",
+      "alt": "Veg Club Sandwich",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "sandwich",
+    "tags": [
+      "sandwich",
+      "club",
+      "multilayer",
+      "filling"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "280g",
+        "price": 110.0,
+        "originalPrice": 110.0,
+        "discount": 0.0,
+        "stock": 30,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 29,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 30,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Arrabiata Pasta (Red Sauce)",
+    "name": "Arrabiata Pasta (Red Sauce)",
+    "slug": "arrabiata-pasta-(red-sauce)",
+    "description": "Italian pasta in spicy red tomato sauce with herbs",
+    "shortDescription": "Spicy red sauce pasta",
+    "price": 130.0,
+    "originalPrice": 130.0,
+    "discountPrice": 130.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883818/54_asc59b.png",
+      "alt": "Arrabiata Pasta ",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "pasta",
+    "tags": [
+      "pasta",
+      "italian",
+      "red sauce",
+      "spicy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "300g",
+        "price": 130.0,
+        "originalPrice": 130.0,
+        "discount": 0.0,
+        "stock": 40,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 22,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Alfredo Pasta (White Sauce)",
+    "name": "Alfredo Pasta (White Sauce)",
+    "slug": "alfredo-pasta-(white-sauce)",
+    "description": "Creamy white sauce pasta with Italian herbs and cheese",
+    "shortDescription": "Creamy white sauce pasta",
+    "price": 130.0,
+    "originalPrice": 130.0,
+    "discountPrice": 130.0,
+    "discount": 0.0,
+   "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883818/55_jgpag6.png",
+      "alt": "Alfredo Pasta",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "pasta",
+    "tags": [
+      "pasta",
+      "italian",
+      "white sauce",
+      "creamy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "300g",
+        "price": 130.0,
+        "originalPrice": 130.0,
+        "discount": 0.0,
+        "stock": 40,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 12,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Regular Pasta",
+    "name": "Regular Pasta",
+    "slug": "regular-pasta",
+    "description": "Simple pasta with basic seasoning and vegetables",
+    "shortDescription": "Basic vegetable pasta",
+    "price": 110.0,
+    "originalPrice": 110.0,
+    "discountPrice": 110.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883818/56_ghrk3r.png",
+      "alt": "Regular Pasta",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "pasta",
+    "tags": [
+      "pasta",
+      "basic",
+      "simple",
+      "vegetables"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "250g",
+        "price": 110.0,
+        "originalPrice": 110.0,
+        "discount": 0.0,
+        "stock": 50,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 27,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Salted Fries",
+    "name": "Salted Fries",
+    "slug": "salted-fries",
+    "description": "Crispy golden potato fries seasoned with salt",
+    "shortDescription": "Classic salted potato fries",
+    "price": 80.0,
+    "originalPrice": 80.0,
+    "discountPrice": 80.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883819/57_g2fldp.png",
+      "alt": "Salted Fries",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "fries",
+    "tags": [
+      "fries",
+      "potato",
+      "crispy",
+      "salted"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "200g",
+        "price": 80.0,
+        "originalPrice": 80.0,
+        "discount": 0.0,
+        "stock": 80,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 17,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 80,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Peri Peri Fries",
+    "name": "Peri Peri Fries",
+    "slug": "peri-peri-fries",
+    "description": "Spicy potato fries seasoned with peri peri spice blend",
+    "shortDescription": "Spicy peri peri seasoned fries",
+    "price": 100.0,
+    "originalPrice": 100.0,
+    "discountPrice": 100.0,
+    "discount": 0.0,
+   "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883822/58_zq0bwp.png",
+      "alt": "Peri Peri Fries",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "fries",
+    "tags": [
+      "fries",
+      "peri peri",
+      "spicy",
+      "seasoned"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "200g",
+        "price": 100.0,
+        "originalPrice": 100.0,
+        "discount": 0.0,
+        "stock": 70,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 12,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 70,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Masala Fries",
+    "name": "Masala Fries",
+    "slug": "masala-fries",
+    "description": "Potato fries tossed with Indian masala spices",
+    "shortDescription": "Indian masala spiced fries",
+    "price": 100.0,
+    "originalPrice": 100.0,
+    "discountPrice": 100.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883820/59_gwos73.png",
+      "alt": "Masala Fries",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "fries",
+    "tags": [
+      "fries",
+      "masala",
+      "indian spices",
+      "flavorful"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "200g",
+        "price": 100.0,
+        "originalPrice": 100.0,
+        "discount": 0.0,
+        "stock": 70,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 16,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 70,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "title": "Cheese Overloaded Fries",
+    "name": "Cheese Overloaded Fries",
+    "slug": "cheese-overloaded-fries",
+    "description": "Crispy fries loaded with melted cheese and herbs",
+    "shortDescription": "Cheese-loaded crispy fries",
+    "price": 150.0,
+    "originalPrice": 150.0,
+    "discountPrice": 150.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883821/60_krkpjg.png",
+      "alt": "Cheese Overloaded Fries",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "fries",
+    "tags": [
+      "fries",
+      "cheese",
+      "loaded",
+      "indulgent"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "250g",
+        "price": 150.0,
+        "originalPrice": 150.0,
+        "discount": 0.0,
+        "stock": 50,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 16,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+{
+    "_id": {
+      "$oid": "bc10a0dc-9f8e-4cc3-9454-b59f980a1a08"
+    },
+    "title": "Butter Paneer Masala",
+    "name": "Butter Paneer Masala",
+    "slug": "butter-paneer-masala",
+    "description": "Paneer in rich buttery tomato-based gravy",
+    "shortDescription": "Rich buttery paneer curry",
+    "price": 240.0,
+    "originalPrice": 240.0,
+    "discountPrice": 240.0,
+    "discount": 0.0,
+ "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883852/81_vitohg.png",
+      "alt": "Butter Paneer Masala",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "paneer_special",
+    "tags": [
+      "paneer",
+      "butter",
+      "tomato",
+      "rich"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "1 bowl",
+        "price": 240.0,
+        "originalPrice": 240.0,
+        "discount": 0.0,
+        "stock": 40,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 25,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "_id": {
+      "$oid": "f50849b4-aeaa-402e-a579-577b040b0964"
+    },
+    "title": "Veg Manchurian",
+    "name": "Veg Manchurian",
+    "slug": "veg-manchurian",
+    "description": "Deep-fried vegetable balls in tangy Indo-Chinese sauce",
+    "shortDescription": "Vegetable balls in Chinese sauce",
+    "price": 120.0,
+    "originalPrice": 120.0,
+    "discountPrice": 120.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883832/67_tp0las.png",
+      "alt": "Veg Manchurian",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chinese",
+    "tags": [
+      "chinese",
+      "manchurian",
+      "vegetable",
+      "tangy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "250g",
+        "price": 120.0,
+        "originalPrice": 120.0,
+        "discount": 0.0,
+        "stock": 35,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 18,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 35,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+]

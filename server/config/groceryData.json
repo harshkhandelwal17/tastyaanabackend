@@ -1,0 +1,651 @@
+[
+  {
+    "title": "Fresh Onions 1kg",
+    "name": "Fresh Onions 1kg",
+    "description": "Premium quality fresh onions, carefully selected and packed. Perfect for daily cooking needs.",
+    "shortDescription": "Fresh, premium quality onions",
+    "price": 33,
+    "discountPrice": 28,
+    "originalPrice": 40,
+    "discount": 20,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/onions_abc123.jpg",
+        "alt": "Fresh Onions 1kg",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439020",
+    "subcategory": "507f1f77bcf86cd799439021",
+    "subcategoryName": "Vegetables",
+    "tags": ["onions", "vegetables", "fresh", "daily essentials"],
+    "seller": "507f1f77bcf86cd799439013",
+    "createdBy": "507f1f77bcf86cd799439013",
+    "manufacturer": {
+      "name": "Fresh Farms",
+      "address": "Farm Road, Nashik, Maharashtra",
+      "license": "FSSAI-12345678901235"
+    },
+    "weightOptions": [
+      {
+        "weight": "500g",
+        "price": 18,
+        "originalPrice": 22,
+        "discount": 18,
+        "stock": 100
+      },
+      {
+        "weight": "1kg",
+        "price": 33,
+        "originalPrice": 40,
+        "discount": 20,
+        "stock": 80
+      },
+      {
+        "weight": "2kg",
+        "price": 60,
+        "originalPrice": 75,
+        "discount": 20,
+        "stock": 50
+      }
+    ],
+    "stock": 230,
+    "lowStockThreshold": 20,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Fresh",
+    "specifications": [
+      {
+        "name": "Type",
+        "value": "Red Onions"
+      },
+      {
+        "name": "Shelf Life",
+        "value": "2-3 weeks"
+      }
+    ],
+    "ingredients": ["Fresh Onions"],
+    "allergens": [],
+    "nutritionInfo": {
+      "calories": 40,
+      "protein": 1.1,
+      "carbs": 9.3,
+      "fat": 0.1,
+      "sugar": 4.7,
+      "fiber": 1.7
+    },
+    "weight": 1000,
+    "shelfLife": 21,
+    "storageInstructions": "Store in a cool, dry place. Keep away from direct sunlight."
+  },
+  {
+    "title": "Organic Cauliflower",
+    "name": "Organic Cauliflower",
+    "description": "Fresh organic cauliflower, pesticide-free and naturally grown. Perfect for healthy cooking.",
+    "shortDescription": "Fresh organic cauliflower",
+    "price": 32,
+    "discountPrice": 28,
+    "originalPrice": 43,
+    "discount": 25,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/cauliflower_abc124.jpg",
+        "alt": "Organic Cauliflower",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439020",
+    "subcategory": "507f1f77bcf86cd799439021",
+    "subcategoryName": "Vegetables",
+    "tags": ["cauliflower", "organic", "vegetables", "healthy"],
+    "seller": "507f1f77bcf86cd799439013",
+    "createdBy": "507f1f77bcf86cd799439013",
+    "manufacturer": {
+      "name": "Organic Valley",
+      "address": "Organic Farm, Pune, Maharashtra",
+      "license": "FSSAI-12345678901236"
+    },
+    "weightOptions": [
+      {
+        "weight": "1 piece (400-600g)",
+        "price": 32,
+        "originalPrice": 43,
+        "discount": 25,
+        "stock": 50
+      },
+      {
+        "weight": "2 pieces",
+        "price": 58,
+        "originalPrice": 78,
+        "discount": 25,
+        "stock": 30
+      }
+    ],
+    "stock": 80,
+    "lowStockThreshold": 15,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": true,
+    "badge": "Organic",
+    "specifications": [
+      {
+        "name": "Type",
+        "value": "Organic White Cauliflower"
+      },
+      {
+        "name": "Shelf Life",
+        "value": "1 week"
+      }
+    ],
+    "ingredients": ["Organic Cauliflower"],
+    "allergens": [],
+    "nutritionInfo": {
+      "calories": 25,
+      "protein": 1.9,
+      "carbs": 5.0,
+      "fat": 0.3,
+      "sugar": 1.9,
+      "fiber": 2.0
+    },
+    "weight": 500,
+    "shelfLife": 7,
+    "storageInstructions": "Store in refrigerator. Keep in a plastic bag to maintain freshness."
+  },
+  {
+    "title": "Fresh Tomatoes 500g",
+    "name": "Fresh Tomatoes 500g",
+    "description": "Ripe, juicy tomatoes perfect for salads, cooking, and making sauces. Farm fresh and naturally ripened.",
+    "shortDescription": "Fresh, ripe tomatoes",
+    "price": 28,
+    "discountPrice": 25,
+    "originalPrice": 35,
+    "discount": 20,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/tomatoes_abc125.jpg",
+        "alt": "Fresh Tomatoes 500g",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439020",
+    "subcategory": "507f1f77bcf86cd799439021",
+    "subcategoryName": "Vegetables",
+    "tags": ["tomatoes", "vegetables", "fresh", "cooking"],
+    "seller": "507f1f77bcf86cd799439013",
+    "createdBy": "507f1f77bcf86cd799439013",
+    "manufacturer": {
+      "name": "Fresh Harvest",
+      "address": "Tomato Farm, Nashik, Maharashtra",
+      "license": "FSSAI-12345678901237"
+    },
+    "weightOptions": [
+      {
+        "weight": "250g",
+        "price": 15,
+        "originalPrice": 18,
+        "discount": 20,
+        "stock": 80
+      },
+      {
+        "weight": "500g",
+        "price": 28,
+        "originalPrice": 35,
+        "discount": 20,
+        "stock": 60
+      },
+      {
+        "weight": "1kg",
+        "price": 50,
+        "originalPrice": 65,
+        "discount": 20,
+        "stock": 40
+      }
+    ],
+    "stock": 180,
+    "lowStockThreshold": 25,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Fresh",
+    "specifications": [
+      {
+        "name": "Type",
+        "value": "Desi Tomatoes"
+      },
+      {
+        "name": "Shelf Life",
+        "value": "1 week"
+      }
+    ],
+    "ingredients": ["Fresh Tomatoes"],
+    "allergens": [],
+    "nutritionInfo": {
+      "calories": 18,
+      "protein": 0.9,
+      "carbs": 3.9,
+      "fat": 0.2,
+      "sugar": 2.6,
+      "fiber": 1.2
+    },
+    "weight": 500,
+    "shelfLife": 7,
+    "storageInstructions": "Store at room temperature until ripe, then refrigerate."
+  },
+  {
+    "title": "Fresh Carrots 500g",
+    "name": "Fresh Carrots 500g",
+    "description": "Sweet and crunchy carrots, rich in beta-carotene. Perfect for salads, cooking, and juicing.",
+    "shortDescription": "Sweet and crunchy carrots",
+    "price": 25,
+    "discountPrice": 22,
+    "originalPrice": 33,
+    "discount": 25,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/carrots_abc126.jpg",
+        "alt": "Fresh Carrots 500g",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439020",
+    "subcategory": "507f1f77bcf86cd799439021",
+    "subcategoryName": "Vegetables",
+    "tags": ["carrots", "vegetables", "fresh", "healthy"],
+    "seller": "507f1f77bcf86cd799439013",
+    "createdBy": "507f1f77bcf86cd799439013",
+    "manufacturer": {
+      "name": "Fresh Farms",
+      "address": "Carrot Farm, Nashik, Maharashtra",
+      "license": "FSSAI-12345678901238"
+    },
+    "weightOptions": [
+      {
+        "weight": "250g",
+        "price": 13,
+        "originalPrice": 17,
+        "discount": 25,
+        "stock": 70
+      },
+      {
+        "weight": "500g",
+        "price": 25,
+        "originalPrice": 33,
+        "discount": 25,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 45,
+        "originalPrice": 60,
+        "discount": 25,
+        "stock": 30
+      }
+    ],
+    "stock": 150,
+    "lowStockThreshold": 20,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Fresh",
+    "specifications": [
+      {
+        "name": "Type",
+        "value": "Orange Carrots"
+      },
+      {
+        "name": "Shelf Life",
+        "value": "2 weeks"
+      }
+    ],
+    "ingredients": ["Fresh Carrots"],
+    "allergens": [],
+    "nutritionInfo": {
+      "calories": 41,
+      "protein": 0.9,
+      "carbs": 9.6,
+      "fat": 0.2,
+      "sugar": 4.7,
+      "fiber": 2.8
+    },
+    "weight": 500,
+    "shelfLife": 14,
+    "storageInstructions": "Store in refrigerator. Keep in a plastic bag to maintain freshness."
+  },
+  {
+    "title": "Fresh Apples 4pcs",
+    "name": "Fresh Apples 4pcs",
+    "description": "Crisp and juicy apples, rich in fiber and antioxidants. Perfect for healthy snacking.",
+    "shortDescription": "Crisp and juicy apples",
+    "price": 120,
+    "discountPrice": 100,
+    "originalPrice": 150,
+    "discount": 20,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/apples_abc127.jpg",
+        "alt": "Fresh Apples 4pcs",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439022",
+    "subcategory": "507f1f77bcf86cd799439023",
+    "subcategoryName": "Fruits",
+    "tags": ["apples", "fruits", "fresh", "healthy"],
+    "seller": "507f1f77bcf86cd799439013",
+    "createdBy": "507f1f77bcf86cd799439013",
+    "manufacturer": {
+      "name": "Apple Valley",
+      "address": "Apple Farm, Shimla, Himachal Pradesh",
+      "license": "FSSAI-12345678901239"
+    },
+    "weightOptions": [
+      {
+        "weight": "4 pcs (500-700g)",
+        "price": 120,
+        "originalPrice": 150,
+        "discount": 20,
+        "stock": 40
+      },
+      {
+        "weight": "6 pcs (750g-1kg)",
+        "price": 170,
+        "originalPrice": 220,
+        "discount": 20,
+        "stock": 30
+      },
+      {
+        "weight": "1kg",
+        "price": 200,
+        "originalPrice": 250,
+        "discount": 20,
+        "stock": 25
+      }
+    ],
+    "stock": 95,
+    "lowStockThreshold": 15,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Fresh",
+    "specifications": [
+      {
+        "name": "Type",
+        "value": "Red Delicious Apples"
+      },
+      {
+        "name": "Shelf Life",
+        "value": "2 weeks"
+      }
+    ],
+    "ingredients": ["Fresh Apples"],
+    "allergens": [],
+    "nutritionInfo": {
+      "calories": 52,
+      "protein": 0.3,
+      "carbs": 14,
+      "fat": 0.2,
+      "sugar": 10,
+      "fiber": 2.4
+    },
+    "weight": 600,
+    "shelfLife": 14,
+    "storageInstructions": "Store in refrigerator. Keep in a plastic bag to maintain freshness."
+  },
+  {
+    "title": "Fresh Bananas 6pcs",
+    "name": "Fresh Bananas 6pcs",
+    "description": "Sweet and nutritious bananas, perfect for breakfast, smoothies, and healthy snacking.",
+    "shortDescription": "Sweet and nutritious bananas",
+    "price": 40,
+    "discountPrice": 35,
+    "originalPrice": 50,
+    "discount": 20,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/bananas_abc128.jpg",
+        "alt": "Fresh Bananas 6pcs",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439022",
+    "subcategory": "507f1f77bcf86cd799439023",
+    "subcategoryName": "Fruits",
+    "tags": ["bananas", "fruits", "fresh", "breakfast"],
+    "seller": "507f1f77bcf86cd799439013",
+    "createdBy": "507f1f77bcf86cd799439013",
+    "manufacturer": {
+      "name": "Banana Farm",
+      "address": "Banana Plantation, Kerala",
+      "license": "FSSAI-12345678901240"
+    },
+    "weightOptions": [
+      {
+        "weight": "6 pcs (500-700g)",
+        "price": 40,
+        "originalPrice": 50,
+        "discount": 20,
+        "stock": 60
+      },
+      {
+        "weight": "12 pcs (1kg-1.2kg)",
+        "price": 70,
+        "originalPrice": 90,
+        "discount": 20,
+        "stock": 40
+      },
+      {
+        "weight": "1 dozen",
+        "price": 75,
+        "originalPrice": 95,
+        "discount": 20,
+        "stock": 35
+      }
+    ],
+    "stock": 135,
+    "lowStockThreshold": 25,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Fresh",
+    "specifications": [
+      {
+        "name": "Type",
+        "value": "Yellow Bananas"
+      },
+      {
+        "name": "Shelf Life",
+        "value": "1 week"
+      }
+    ],
+    "ingredients": ["Fresh Bananas"],
+    "allergens": [],
+    "nutritionInfo": {
+      "calories": 89,
+      "protein": 1.1,
+      "carbs": 23,
+      "fat": 0.3,
+      "sugar": 12,
+      "fiber": 2.6
+    },
+    "weight": 600,
+    "shelfLife": 7,
+    "storageInstructions": "Store at room temperature. Refrigerate when ripe to extend shelf life."
+  },
+  {
+    "title": "Fresh Milk 500ml",
+    "name": "Fresh Milk 500ml",
+    "description": "Pure, fresh cow milk, pasteurized and packed for daily consumption. Rich in calcium and protein.",
+    "shortDescription": "Pure, fresh cow milk",
+    "price": 25,
+    "discountPrice": 22,
+    "originalPrice": 30,
+    "discount": 16,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/milk_abc129.jpg",
+        "alt": "Fresh Milk 500ml",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439024",
+    "subcategory": "507f1f77bcf86cd799439025",
+    "subcategoryName": "Dairy",
+    "tags": ["milk", "dairy", "fresh", "protein"],
+    "seller": "507f1f77bcf86cd799439013",
+    "createdBy": "507f1f77bcf86cd799439013",
+    "manufacturer": {
+      "name": "Dairy Farm",
+      "address": "Milk Farm, Pune, Maharashtra",
+      "license": "FSSAI-12345678901241"
+    },
+    "weightOptions": [
+      {
+        "weight": "250ml",
+        "price": 15,
+        "originalPrice": 18,
+        "discount": 16,
+        "stock": 80
+      },
+      {
+        "weight": "500ml",
+        "price": 25,
+        "originalPrice": 30,
+        "discount": 16,
+        "stock": 60
+      },
+      {
+        "weight": "1L",
+        "price": 45,
+        "originalPrice": 55,
+        "discount": 16,
+        "stock": 40
+      }
+    ],
+    "stock": 180,
+    "lowStockThreshold": 30,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Fresh",
+    "specifications": [
+      {
+        "name": "Type",
+        "value": "Full Cream Milk"
+      },
+      {
+        "name": "Shelf Life",
+        "value": "3 days"
+      }
+    ],
+    "ingredients": ["Fresh Cow Milk"],
+    "allergens": ["Milk"],
+    "nutritionInfo": {
+      "calories": 42,
+      "protein": 3.4,
+      "carbs": 5.0,
+      "fat": 1.0,
+      "sugar": 5.0,
+      "fiber": 0
+    },
+    "weight": 500,
+    "shelfLife": 3,
+    "storageInstructions": "Store in refrigerator. Consume within 3 days of opening."
+  },
+  {
+    "title": "Fresh Yogurt 400g",
+    "name": "Fresh Yogurt 400g",
+    "description": "Thick and creamy yogurt, made from fresh milk. Perfect for curries, raita, and healthy eating.",
+    "shortDescription": "Thick and creamy yogurt",
+    "price": 35,
+    "discountPrice": 32,
+    "originalPrice": 40,
+    "discount": 12,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/yogurt_abc130.jpg",
+        "alt": "Fresh Yogurt 400g",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439024",
+    "subcategory": "507f1f77bcf86cd799439025",
+    "subcategoryName": "Dairy",
+    "tags": ["yogurt", "dairy", "fresh", "probiotic"],
+    "seller": "507f1f77bcf86cd799439013",
+    "createdBy": "507f1f77bcf86cd799439013",
+    "manufacturer": {
+      "name": "Dairy Farm",
+      "address": "Milk Farm, Pune, Maharashtra",
+      "license": "FSSAI-12345678901242"
+    },
+    "weightOptions": [
+      {
+        "weight": "200g",
+        "price": 20,
+        "originalPrice": 22,
+        "discount": 12,
+        "stock": 70
+      },
+      {
+        "weight": "400g",
+        "price": 35,
+        "originalPrice": 40,
+        "discount": 12,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 80,
+        "originalPrice": 90,
+        "discount": 12,
+        "stock": 30
+      }
+    ],
+    "stock": 150,
+    "lowStockThreshold": 20,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Fresh",
+    "specifications": [
+      {
+        "name": "Type",
+        "value": "Plain Yogurt"
+      },
+      {
+        "name": "Shelf Life",
+        "value": "5 days"
+      }
+    ],
+    "ingredients": ["Fresh Milk", "Live Cultures"],
+    "allergens": ["Milk"],
+    "nutritionInfo": {
+      "calories": 59,
+      "protein": 10,
+      "carbs": 3.6,
+      "fat": 0.4,
+      "sugar": 3.2,
+      "fiber": 0
+    },
+    "weight": 400,
+    "shelfLife": 5,
+    "storageInstructions": "Store in refrigerator. Consume within 5 days of opening."
+  }
+] 

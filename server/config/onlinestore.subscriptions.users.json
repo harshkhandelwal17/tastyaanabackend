@@ -1,0 +1,4903 @@
+[{
+  "_id": {
+    "$oid": "68a8529223f8e41e067ece0d"
+  },
+  "subscriptionId": "SUB_71RPHVFNE",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68a8522723f8e41e067eccd1"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-08-22T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 10,
+    "mealsSkipped": 0,
+    "mealsRemaining": 12,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "evening",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 24,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "17:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 65,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 1842.5,
+    "planPrice": 1950,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 1950
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [
+    {
+      "$oid": "68b3bc31aabddc0f5d1066d6"
+    },
+    {
+      "$oid": "68b3c1fc093a7292dc6d66cf"
+    }
+  ],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68a8529223f8e41e067ece0e"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-08-22T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-09-21T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-08-22T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-16T13:24:20.770Z"
+  },
+  "__v": 3,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-09-03T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-08-28T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-08-29T04:50:41.971Z"
+      },
+      "updatedAt": {
+        "$date": "2025-08-29T06:05:05.449Z"
+      },
+      "_id": {
+        "$oid": "68b131a157bad095a6b32c5c"
+      },
+      "deliveredAt": {
+        "$date": "2025-08-29T06:05:05.450Z"
+      },
+      "deliveredBy": {
+        "$oid": "687242b702db822f91b13586"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "todayMeal": {
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Loki chana daal",
+        "description": "Besan gattee",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52c9"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Basmati rice with saffron",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52ca"
+        }
+      },
+      {
+        "name": "Daal",
+        "description": "Creamy black lentils",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cb"
+        }
+      },
+      {
+        "name": "Butter Roti",
+        "description": "Leavened bread with butter",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cc"
+        }
+      },
+      {
+        "name": "Gulab jamun",
+        "description": "Yogurt with vegetables",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cd"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-10-16T13:24:20.757Z"
+    },
+    "mealType": "lunch"
+  }
+},
+{
+  "_id": {
+    "$oid": "68b16ea261d2057c24b46c5e"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68b16d7661d2057c24b46c0d"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-08-29T09:10:58.967Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "firstDeliveryDate": {
+      "$date": "2025-08-29T09:10:58.967Z"
+    },
+    "lastDeliveryDate": {
+      "$date": "2025-09-27T09:10:58.967Z"
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 30,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "isActive": false,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "11:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 75,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 0,
+    "planPrice": 0,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 3900
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68b16ea261d2057c24b46c5f"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false,
+        "specialInstructions": ""
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-29T09:10:58.967Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false,
+        "specialInstructions": ""
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-29T09:10:58.967Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "1162,Rajiv Awas Vihar ,Scheme No 114, Part I, Vijay Nagar, Indore",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010"
+  },
+  "status": "pending_payment",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-29T09:10:58.973Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-08-29T09:10:58.967Z"
+  },
+  "endDate": {
+    "$date": "2025-09-28T09:10:58.967Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-08-29T09:10:58.967Z"
+  },
+  "paymentStatus": "pending",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_3441C6A6",
+  "remainingMeals": 58,
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-08-29T09:10:58.976Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-29T09:10:58.976Z"
+  },
+  "__v": 0,
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  }
+},
+{
+  "_id": {
+    "$oid": "68b16ea761d2057c24b46c66"
+  },
+  "subscriptionId": "SUB_10PACBHAH",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68b16d7661d2057c24b46c0d"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 1,
+    "mealsSkipped": 0,
+    "mealsRemaining": -2,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 58,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "13:10"
+    },
+    "evening": {
+      "enabled": false,
+      "time": "23:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 65,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 3695,
+    "planPrice": 3900,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 3900
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68b16ea761d2057c24b46c67"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-29T09:11:03.657Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-29T09:11:03.657Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "1162,Rajiv Awas Vihar ,Scheme No 114, Part I, Vijay Nagar, Indore",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-29T09:11:03.654Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-10-26T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68b16ea261d2057c24b46c5e",
+  "razorpayPaymentId": "pay_RB61C03kozZBIf",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-29T09:11:03.659Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-26T03:00:51.150Z"
+  },
+  "__v": 0,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-10-25T18:30:00.000Z"
+  },
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "todayMeal": {
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Loki chana daal",
+        "description": "Besan gattee",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52c9"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Basmati rice with saffron",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52ca"
+        }
+      },
+      {
+        "name": "Daal",
+        "description": "Creamy black lentils",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cb"
+        }
+      },
+      {
+        "name": "Butter Roti",
+        "description": "Leavened bread with butter",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cc"
+        }
+      },
+      {
+        "name": "Gulab jamun",
+        "description": "Yogurt with vegetables",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cd"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-10-16T13:24:20.757Z"
+    },
+    "mealType": "lunch"
+  }
+},
+{
+  "_id": {
+    "$oid": "68b522342524c0c53f9574aa"
+  },
+  "subscriptionId": "SUB_M3JNU6F4K",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68b018c6c450488d0ed04cd6"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-08-24T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 17,
+    "mealsSkipped": 0,
+    "mealsRemaining": 13,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_2",
+  "duration": 9,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 16,
+  "remainingMeals": 44,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "13:10"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "23:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 50,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 3000,
+    "planPrice": 3000,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 3000,
+    "sellerBasePrice": 50
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68b18b84482fd0685673f671"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-29T11:14:12.131Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "both",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-29T11:14:12.131Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "scheme 78",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-29T11:14:12.124Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-08-29T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-09-27T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-08-29T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68b18b81482fd0685673f668",
+  "razorpayPaymentId": "pay_RB890bhrTbxErB",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "deliveryTracking": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-29T11:14:12.135Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-27T03:00:37.495Z"
+  },
+  "__v": 0,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-09-26T18:30:00.000Z"
+  },
+  "sellerId": {
+    "$oid": "68af25f91cf5e34b4cbc47ad"
+  }
+},
+{
+  "_id": {
+    "$oid": "68b6e13e33c3067e4657bc76"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68ab378297f8a31ea39960fb"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-09-02T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 20,
+    "mealsDelivered": 3,
+    "mealsSkipped": 0,
+    "mealsRemaining": 7,
+    "regularMealsDelivered": 3,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "10days_0",
+  "duration": 10,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 20,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "14:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:30"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 55,
+    "totalDays": 10,
+    "mealsPerDay": 2,
+    "totalMeals": 20,
+    "totalThali": 20,
+    "totalAmount": 1100,
+    "planPrice": 1100,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 1100,
+    "sellerBasePrice": 50
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68b6e13e33c3067e4657bc77"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-02T12:21:18.126Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-02T12:21:18.126Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "Friendzo Co-Living, Near Ana Convent School,  Above Usalwala, Scheme 78,  Part-2, Vijay Nagar-452010 (Near Ana Convent School, Above Usalwala)",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010"
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-09-02T12:21:18.126Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-09-02T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-09-11T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-09-03T12:21:56.408Z"
+  },
+  "paymentStatus": "paid",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1756815678513_F20E1EB494C0",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-09-02T12:21:18.534Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-11T03:00:24.662Z"
+  },
+  "__v": 0,
+  "razorpayPaymentId": "pay_RCjOsjcJPRX1ac",
+  "walletTransaction": {
+    "$oid": "68b6e16433c3067e4657bc89"
+  },
+  "lastOrderDate": {
+    "$date": "2025-09-10T18:30:00.000Z"
+  },
+  "sellerId": {
+    "$oid": "68af25f91cf5e34b4cbc47ad"
+  }
+},
+{
+  "_id": {
+    "$oid": "68c257724d84aae25d69ba82"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68c2408a4d84aae25d69b6a2"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-09-11T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 56,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 27,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_2",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 56,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "08:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 70,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 56,
+    "totalThali": 56,
+    "totalAmount": 2100,
+    "planPrice": 2100,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 2100,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68c257724d84aae25d69ba83"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-11T05:00:34.106Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-11T05:00:34.106Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "Aura friendzo above usalwala scheme 78 , vijaynagar",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010"
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-09-11T05:00:34.106Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-09-11T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-10-10T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-09-12T05:01:31.813Z"
+  },
+  "paymentStatus": "paid",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/140.0.7339.101 Mobile/15E148 Safari/604.1",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1757566834577_E0ADE9E5489B",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-09-11T05:00:34.581Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-10T03:00:44.930Z"
+  },
+  "__v": 0,
+  "razorpayPaymentId": "pay_RGAh9YsIST6Xwk",
+  "walletTransaction": {
+    "$oid": "68c257ab4d84aae25d69ba8e"
+  },
+  "lastOrderDate": {
+    "$date": "2025-10-09T18:30:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68c510dc4d84aae25d69ff65"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68b7169733979a4ec0f2b1ca"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-09-15T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 20,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 20,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "10days_3",
+  "duration": 10,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 20,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "14:15"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 70,
+    "totalDays": 10,
+    "mealsPerDay": 2,
+    "totalMeals": 20,
+    "totalThali": 20,
+    "totalAmount": 630,
+    "planPrice": 630,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 630,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68c510dc4d84aae25d69ff66"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-13T06:36:11.298Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-13T06:36:11.298Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "BH-11 scheme no 74c vijay nagar ",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010"
+  },
+  "status": "pending_payment",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-09-13T06:36:11.298Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-09-15T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-09-24T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-09-15T00:00:00.000Z"
+  },
+  "paymentStatus": "pending",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1757745372259_75E1DE96EA6A",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-09-13T06:36:12.262Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-13T06:36:12.262Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7a6514d84aae25d6a24b1"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68733c48d5c4ca93f2fb37e9"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-09-15T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 60,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 60,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "08:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 75,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 4500,
+    "planPrice": 4500,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 4500,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68c7a6514d84aae25d6a24b2"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-15T05:38:24.673Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-15T05:38:24.673Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": ""
+  },
+  "status": "cancelled",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-09-15T05:38:24.673Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-09-15T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-10-14T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-09-15T00:00:00.000Z"
+  },
+  "paymentStatus": "pending",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1757914705200_1FB42A073A50",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-09-15T05:38:25.210Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-27T16:00:20.647Z"
+  },
+  "__v": 0,
+  "cancellationReason": "Replaced by new subscription - auto-cancelled",
+  "cancelledAt": {
+    "$date": "2025-10-27T16:00:20.647Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68caf6b1bfff9ddd2b53c292"
+  },
+  "subscriptionId": "SUB_71RPHVFNV",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68b17fb23f18383fe34a3cf4"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-08-02T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 10,
+    "mealsSkipped": 0,
+    "mealsRemaining": 20,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "evening",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 20,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "17:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 65,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 1950,
+    "planPrice": 1950,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 1950,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [
+    {
+      "$oid": "68b3bc31aabddc0f5d1066d6"
+    },
+    {
+      "$oid": "68b3c1fc093a7292dc6d66cf"
+    }
+  ],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68a8529223f8e41e067ece0e"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "expired",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-08-22T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-09-21T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-08-22T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-23T12:36:48.145Z"
+  },
+  "__v": 3,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-09-03T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-08-28T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-08-29T04:50:41.971Z"
+      },
+      "updatedAt": {
+        "$date": "2025-08-29T06:05:05.449Z"
+      },
+      "_id": {
+        "$oid": "68b131a157bad095a6b32c5c"
+      },
+      "deliveredAt": {
+        "$date": "2025-08-29T06:05:05.450Z"
+      },
+      "deliveredBy": {
+        "$oid": "687242b702db822f91b13586"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  }
+},
+{
+  "_id": {
+    "$oid": "68d374b856fa123bc62504c4"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68d0f47956fa123bc624e1c8"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "todayMeal": {
+    "items": [
+      {
+        "name": "Dal",
+        "description": "Tempered yellow lentils",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68d69a2d20cc442c2817278b"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Aromatic basmati rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "68d69a2d20cc442c2817278c"
+        }
+      },
+      {
+        "name": "aloo gobhi",
+        "description": "allo gobhi",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "68d69a2d20cc442c2817278d"
+        }
+      },
+      {
+        "name": "butter roti",
+        "description": "Fresh wheat bread",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "68d69a2d20cc442c2817278e"
+        }
+      },
+      {
+        "name": "laddo",
+        "description": "Cucumber yogurt salad",
+        "quantity": "1 small bowl",
+        "_id": {
+          "$oid": "68d69a2d20cc442c2817278f"
+        }
+      }
+    ],
+    "mealType": "lunch",
+    "date": "2025-09-25T00:00:00.000Z",
+    "isAvailable": true,
+    "lastUpdated": {
+      "$date": "2025-09-26T13:50:37.077Z"
+    }
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-09-24T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 10,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 0,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "10days_3",
+  "duration": 10,
+  "shift": "morning",
+  "thaliCount": 1,
+  "thalisDelivered": 1,
+  "remainingMeals": 8,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "12:30"
+    },
+    "evening": {
+      "enabled": false,
+      "time": "00:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 55,
+    "totalDays": 10,
+    "mealsPerDay": 1,
+    "totalMeals": 10,
+    "totalThali": 10,
+    "totalAmount": 550,
+    "planPrice": 550,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 550,
+    "sellerBasePrice": 0,
+    "couponCode": null,
+    "couponId": null,
+    "discount": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68d374b856fa123bc62504c5"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-24T04:34:00.009Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-24T04:34:00.009Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": ""
+  },
+  "status": "cancelled",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-09-24T04:34:00.009Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-09-24T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-10-03T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-09-24T00:00:00.000Z"
+  },
+  "paymentStatus": "paid",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_5_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/140.0.7339.122 Mobile/15E148 Safari/604.1",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1758688440248_DBA7E879852B",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-09-24T04:34:00.254Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-03T03:00:31.459Z"
+  },
+  "__v": 0,
+  "razorpayPaymentId": "pay_RLJBc6laCQFCxL",
+  "lastOrderDate": {
+    "$date": "2025-10-02T18:30:00.000Z"
+  },
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  }
+},
+{
+  "_id": {
+    "$oid": "68d474a9c3d260bed0429353"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "687891a23720c89a340e79c4"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-09-25T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 30,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 60,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "11:02"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "22:02"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 65,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 3640,
+    "planPrice": 3640,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": "WELCOME15",
+    "couponId": {
+      "$oid": "68c7bebd9c7819ec13b2f910"
+    },
+    "discount": 20,
+    "finalAmount": 3620,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68d474a9c3d260bed0429354"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-24T22:46:00.860Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-24T22:46:00.860Z"
+      }
+    }
+  },
+  "customizedDays": [
+    {
+      "date": {
+        "$date": "2025-09-26T00:00:00.000Z"
+      },
+      "shifts": [
+        "morning",
+        "evening"
+      ],
+      "customizationId": "68d516c522dad2fd769f2ee6",
+      "_id": {
+        "$oid": "68d47cd85225b718ed79341a"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-08T00:00:00.000Z"
+      },
+      "shifts": [
+        "morning"
+      ],
+      "customizationId": "68e5c8f90abb2b176b2a0a3e",
+      "_id": {
+        "$oid": "68e4f815e82ebae5d72af0e2"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-09T00:00:00.000Z"
+      },
+      "shifts": [
+        "morning"
+      ],
+      "customizationId": "68e5aa2f0abb2b176b2a050c",
+      "_id": {
+        "$oid": "68e5aa2f0abb2b176b2a0515"
+      }
+    }
+  ],
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-09-24T22:46:00.860Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [
+    {
+      "date": {
+        "$date": "2025-09-26T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda1a2"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-09-25T07:35:48.806Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68d4f0d47786f92e6eda9e28"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-09-26T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda1a2"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-09-25T07:35:49.301Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68d4f0d57786f92e6eda9e6d"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-09-26T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda1a2"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-09-25T10:02:12.329Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68d5132422dad2fd769f2dc0"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-09-26T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda1a2"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-09-25T10:02:37.835Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68d5133d22dad2fd769f2e29"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-09-26T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda1a2"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-09-25T10:03:27.698Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68d5136f22dad2fd769f2e76"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-09-26T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda1a2"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-09-25T10:17:42.055Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68d516c622dad2fd769f2efc"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-08T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda19b"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-10-07T11:23:01.132Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68e4f815e82ebae5d72af0ee"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-08T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda19b"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-10-07T11:23:01.366Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68e4f815e82ebae5d72af13b"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-09T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda19b"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-10-08T00:02:55.536Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68e5aa2f0abb2b176b2a0521"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-09T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda19b"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-10-08T00:03:31.078Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68e5aa530abb2b176b2a05cd"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-08T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda1a2"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-10-08T02:14:18.150Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68e5c8fa0abb2b176b2a0a50"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-08T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda1a2"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-10-08T02:14:53.593Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68e5c91d0abb2b176b2a0af8"
+      }
+    }
+  ],
+  "startDate": {
+    "$date": "2025-09-25T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-10-24T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-09-25T00:00:00.000Z"
+  },
+  "todayMeal": {
+    "items": [
+      {
+        "name": "Loki chana daal",
+        "description": "Besan gattee",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52c9"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Basmati rice with saffron",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52ca"
+        }
+      },
+      {
+        "name": "Daal",
+        "description": "Creamy black lentils",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cb"
+        }
+      },
+      {
+        "name": "Butter Roti",
+        "description": "Leavened bread with butter",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cc"
+        }
+      },
+      {
+        "name": "Gulab jamun",
+        "description": "Yogurt with vegetables",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cd"
+        }
+      }
+    ],
+    "mealType": "lunch",
+    "date": "2025-09-25T00:00:00.000Z",
+    "isAvailable": true,
+    "lastUpdated": {
+      "$date": "2025-10-16T13:24:20.757Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  },
+  "paymentStatus": "paid",
+  "dailyDeductions": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36",
+    "promoCode": "WELCOME15",
+    "discountApplied": 20
+  },
+  "subscriptionId": "SUB_1758753961262_95400FE8DBCB",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-09-24T22:46:01.279Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-24T03:00:34.969Z"
+  },
+  "__v": 24,
+  "razorpayPaymentId": "pay_RLbnZHur9ak95e",
+  "walletTransaction": {
+    "$oid": "68d474d9c3d260bed0429372"
+  },
+  "lastOrderDate": {
+    "$date": "2025-10-23T18:30:00.000Z"
+  },
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "skippedMeals": [
+    {
+      "date": {
+        "$date": "2025-10-06T18:30:00.000Z"
+      },
+      "shift": "evening",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-10-07T12:05:18.800Z"
+      },
+      "createdBy": {
+        "$oid": "68717ebc7395056035d1718d"
+      },
+      "_id": {
+        "$oid": "68e501fe66b3ee15bcf08733"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-07T18:30:00.000Z"
+      },
+      "shift": "evening",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-10-07T12:05:18.802Z"
+      },
+      "createdBy": {
+        "$oid": "68717ebc7395056035d1718d"
+      },
+      "_id": {
+        "$oid": "68e501fe66b3ee15bcf08734"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-08T18:30:00.000Z"
+      },
+      "shift": "evening",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-10-07T12:05:18.802Z"
+      },
+      "createdBy": {
+        "$oid": "68717ebc7395056035d1718d"
+      },
+      "_id": {
+        "$oid": "68e501fe66b3ee15bcf08735"
+      }
+    }
+  ],
+  "customizations": [
+    {
+      "$oid": "68e5c8f90abb2b176b2a0a3e"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "68d68c9efa321623b3e57689"
+  },
+  "startShift": "evening",
+  "user": {
+    "$oid": "68d68bfdfa321623b3e5760c"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "todayMeal": {
+    "mealType": "dinner",
+    "isAvailable": true,
+    "tier": "basic",
+    "shift": "morning",
+    "items": [
+      {
+        "name": "Daal",
+        "description": "Kidney beans curry",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f1778beac2fba8cc4e4c"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Cumin flavored rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "68f0f1778beac2fba8cc4e4d"
+        }
+      },
+      {
+        "name": "Lauki chana daal",
+        "description": "Potato cauliflower curry",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "68f0f1778beac2fba8cc4e4e"
+        }
+      },
+      {
+        "name": "Chapati",
+        "description": "Fresh wheat bread",
+        "quantity": "2 pieces",
+        "_id": {
+          "$oid": "68f0f1778beac2fba8cc4e4f"
+        }
+      }
+    ],
+    "date": {
+      "$date": "2025-09-26T12:52:46.751Z"
+    },
+    "lastUpdated": {
+      "$date": "2025-10-16T13:21:59.608Z"
+    }
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 10,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 10,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "10days_3",
+  "duration": 10,
+  "shift": "evening",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 10,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "12:03"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 55,
+    "totalDays": 10,
+    "mealsPerDay": 1,
+    "totalMeals": 10,
+    "totalThali": 10,
+    "totalAmount": 550,
+    "planPrice": 550,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": "WELCOME15",
+    "couponId": {
+      "$oid": "68c7bebd9c7819ec13b2f910"
+    },
+    "discount": 20,
+    "finalAmount": 530,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68d68c9efa321623b3e5768a"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-26T12:52:46.377Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-09-26T12:52:46.377Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-09-26T12:52:46.377Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-10-05T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-09-27T12:53:13.120Z"
+  },
+  "paymentStatus": "paid",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36",
+    "promoCode": "WELCOME15",
+    "discountApplied": 20
+  },
+  "subscriptionId": "SUB_1758891166750_172D258CBE40",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-09-26T12:52:46.758Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-16T13:21:59.622Z"
+  },
+  "__v": 0,
+  "razorpayPaymentId": "pay_RMEkmd0kRrTdTB",
+  "walletTransaction": {
+    "$oid": "68d68cb9fa321623b3e5769a"
+  },
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  }
+},
+{
+  "_id": {
+    "$oid": "68e4fba166b3ee15bcf08503"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68717ebc7395056035d1718d"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "todayMeal": {
+    "mealType": "lunch",
+    "isAvailable": false,
+    "tier": "basic",
+    "shift": "morning",
+    "items": [],
+    "date": {
+      "$date": "2025-10-07T11:38:09.388Z"
+    },
+    "lastUpdated": {
+      "$date": "2025-10-07T11:38:09.388Z"
+    }
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-10-07T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 60,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 60,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "13:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 65,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 3900,
+    "planPrice": 3900,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": null,
+    "couponId": null,
+    "discount": 0,
+    "finalAmount": 3900,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68e4fba166b3ee15bcf08504"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-07T11:38:08.706Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-07T11:38:08.706Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "Near Brilliant ",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010"
+  },
+  "status": "cancelled",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-10-07T11:38:08.706Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-10-07T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-05T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-10-07T00:00:00.000Z"
+  },
+  "paymentStatus": "pending",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1759837089388_5D17642249F6",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-10-07T11:38:09.400Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-07T11:42:37.681Z"
+  },
+  "__v": 0,
+  "cancellationReason": "Replaced by new subscription - auto-cancelled",
+  "cancelledAt": {
+    "$date": "2025-10-07T11:42:37.680Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68e4fcad66b3ee15bcf0853a"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68e483f0e82ebae5d72ae977"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "todayMeal": {
+    "mealType": "lunch",
+    "isAvailable": false,
+    "tier": "basic",
+    "shift": "morning",
+    "items": [],
+    "date": {
+      "$date": "2025-10-06T11:42:37.977Z"
+    },
+    "lastUpdated": {
+      "$date": "2025-10-06T11:42:37.977Z"
+    }
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-10-06T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 32,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 57,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "13:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 65,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 3900,
+    "planPrice": 3900,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": null,
+    "couponId": null,
+    "discount": 0,
+    "finalAmount": 3900,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68e4fcad66b3ee15bcf0853b"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-07T11:42:37.190Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-07T11:42:37.190Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "Near Brilliant ",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010"
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-10-07T11:42:37.190Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-10-06T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-04T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-10-07T11:43:04.635Z"
+  },
+  "paymentStatus": "paid",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1759837357977_E4AEF0950242",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-10-06T11:42:37.984Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-04T03:00:40.655Z"
+  },
+  "__v": 0,
+  "razorpayPaymentId": "pay_RQZR2HkoHa5P4v",
+  "walletTransaction": {
+    "$oid": "68e4fcc866b3ee15bcf08556"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-03T18:30:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68e4fe8abd3008fe7bbb6cea"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68e4845be82ebae5d72ae999"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "todayMeal": {
+    "mealType": "lunch",
+    "isAvailable": false,
+    "tier": "basic",
+    "shift": "morning",
+    "items": [],
+    "date": {
+      "$date": "2025-10-06T11:42:37.977Z"
+    },
+    "lastUpdated": {
+      "$date": "2025-10-06T11:42:37.977Z"
+    }
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-10-06T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 29,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 2,
+  "thalisDelivered": 0,
+  "remainingMeals": 57,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "13:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 65,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 3900,
+    "planPrice": 3900,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": null,
+    "couponId": null,
+    "discount": 0,
+    "finalAmount": 3900,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-07T11:42:37.190Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-07T11:42:37.190Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "Near Brilliant ",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010"
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-10-07T11:42:37.190Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-10-06T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-04T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-10-07T11:43:04.635Z"
+  },
+  "paymentStatus": "paid",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1759837357977_E4AEF0950243",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-10-06T11:42:37.984Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-04T03:00:40.664Z"
+  },
+  "__v": 0,
+  "razorpayPaymentId": "pay_RQZR2HkoHa5P4v",
+  "walletTransaction": {
+    "$oid": "68e4fcc866b3ee15bcf08556"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-03T18:30:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68e61c5068cc57975a0c2636"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68732f3ed5c4ca93f2fb2a5d"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "todayMeal": {
+    "mealType": "lunch",
+    "isAvailable": true,
+    "tier": "basic",
+    "shift": "morning",
+    "items": [
+      {
+        "name": "Loki chana daal",
+        "description": "Besan gattee",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52c9"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Basmati rice with saffron",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52ca"
+        }
+      },
+      {
+        "name": "Daal",
+        "description": "Creamy black lentils",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cb"
+        }
+      },
+      {
+        "name": "Butter Roti",
+        "description": "Leavened bread with butter",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cc"
+        }
+      },
+      {
+        "name": "Gulab jamun",
+        "description": "Yogurt with vegetables",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f2048beac2fba8cc52cd"
+        }
+      }
+    ],
+    "date": {
+      "$date": "2025-10-08T08:09:52.364Z"
+    },
+    "lastUpdated": {
+      "$date": "2025-10-16T13:24:20.757Z"
+    }
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-10-08T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 32,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 60,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "13:34"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:34"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 65,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 3900,
+    "planPrice": 3900,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": null,
+    "couponId": null,
+    "discount": 0,
+    "finalAmount": 3900,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [
+    {
+      "$oid": "68e623b8a63e6e4acf683b0f"
+    },
+    {
+      "$oid": "68e623d8a63e6e4acf683ba2"
+    },
+    {
+      "$oid": "68eccc87a63e6e4acf6ad712"
+    },
+    {
+      "$oid": "68edfae38beac2fba8cc15dd"
+    }
+  ],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68e61c5068cc57975a0c2637"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-08T08:09:51.588Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-08T08:09:51.588Z"
+      }
+    }
+  },
+  "customizedDays": [
+    {
+      "date": {
+        "$date": "2025-10-08T00:00:00.000Z"
+      },
+      "shifts": [
+        "evening"
+      ],
+      "customizationId": "68e623b8a63e6e4acf683b0f",
+      "_id": {
+        "$oid": "68e623b8a63e6e4acf683b14"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-15T00:00:00.000Z"
+      },
+      "shifts": [
+        "evening"
+      ],
+      "customizationId": "68e623d8a63e6e4acf683ba2",
+      "_id": {
+        "$oid": "68e623d8a63e6e4acf683ba7"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-14T00:00:00.000Z"
+      },
+      "shifts": [
+        "morning"
+      ],
+      "customizationId": "68eccc87a63e6e4acf6ad712",
+      "_id": {
+        "$oid": "68eccc87a63e6e4acf6ad717"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-16T00:00:00.000Z"
+      },
+      "shifts": [
+        "morning"
+      ],
+      "customizationId": "68edfae38beac2fba8cc15dd",
+      "_id": {
+        "$oid": "68edfae48beac2fba8cc15e2"
+      }
+    }
+  ],
+  "deliveryAddress": {
+    "street": "Khalsa chowk near Neelkanth stationary ",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010"
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-10-08T08:09:51.588Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [
+    {
+      "date": {
+        "$date": "2025-10-08T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda19b"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-10-08T08:41:28.270Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68e623b8a63e6e4acf683b20"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-15T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda19f"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-10-08T08:42:00.220Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68e623d8a63e6e4acf683bb3"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-14T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda1a2"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-10-13T09:55:19.319Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68eccc87a63e6e4acf6ad71b"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-16T00:00:00.000Z"
+      },
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1d"
+      },
+      "replacementThali": {
+        "$oid": "68e4f22dbd3008fe7bbb6cd0"
+      },
+      "priceDifference": -5,
+      "replacedAt": {
+        "$date": "2025-10-14T07:25:24.553Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "68edfae48beac2fba8cc15e6"
+      }
+    }
+  ],
+  "startDate": {
+    "$date": "2025-10-07T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-13T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-10-15T00:00:00.000Z"
+  },
+  "paymentStatus": "paid",
+  "dailyDeductions": [],
+  "skippedMeals": [
+    {
+      "date": {
+        "$date": "2025-10-08T18:30:00.000Z"
+      },
+      "shift": "evening",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-10-08T08:47:47.155Z"
+      },
+      "createdBy": {
+        "$oid": "68717ebc7395056035d1718d"
+      },
+      "_id": {
+        "$oid": "68e62533a63e6e4acf68405f"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-12T18:30:00.000Z"
+      },
+      "shift": "evening",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-10-13T07:47:59.550Z"
+      },
+      "createdBy": {
+        "$oid": "68717ebc7395056035d1718d"
+      },
+      "_id": {
+        "$oid": "68ecaeaf488d5200e5d8577a"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-13T18:30:00.000Z"
+      },
+      "shift": "morning",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-10-13T08:32:21.676Z"
+      },
+      "createdBy": {
+        "$oid": "68732f3ed5c4ca93f2fb2a5d"
+      },
+      "_id": {
+        "$oid": "68ecb915a63e6e4acf6ad220"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-15T18:30:00.000Z"
+      },
+      "shift": "morning",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-10-13T09:54:52.911Z"
+      },
+      "createdBy": {
+        "$oid": "68732f3ed5c4ca93f2fb2a5d"
+      },
+      "_id": {
+        "$oid": "68eccc6ca63e6e4acf6ad690"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-10-15T18:30:00.000Z"
+      },
+      "shift": "evening",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-10-13T09:54:52.912Z"
+      },
+      "createdBy": {
+        "$oid": "68732f3ed5c4ca93f2fb2a5d"
+      },
+      "_id": {
+        "$oid": "68eccc6ca63e6e4acf6ad691"
+      }
+    }
+  ],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1759910992363_9E4D50289799",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-10-08T08:09:52.379Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-07T03:00:27.192Z"
+  },
+  "__v": 12,
+  "razorpayPaymentId": "pay_RQuLL3wo9AHZ5d",
+  "walletTransaction": {
+    "$oid": "68e61c6a68cc57975a0c2653"
+  },
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-06T18:30:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68ecb2fa135f21aefd6ddaa6"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68906d4fec525b84050e309f"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "todayMeal": {
+    "mealType": "lunch",
+    "isAvailable": true,
+    "tier": "basic",
+    "shift": "morning",
+    "items": [
+      {
+        "name": "Dal",
+        "description": "Tempered yellow lentils",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f1f68beac2fba8cc518e"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Aromatic basmati rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "68f0f1f68beac2fba8cc518f"
+        }
+      },
+      {
+        "name": "Loki chana daal",
+        "description": "Besan gatte",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "68f0f1f68beac2fba8cc5190"
+        }
+      },
+      {
+        "name": "butter roti",
+        "description": "Fresh wheat bread",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "68f0f1f68beac2fba8cc5191"
+        }
+      },
+      {
+        "name": "Gulab jamunn",
+        "description": "Cucumber yogurt salad",
+        "quantity": "1 small bowl",
+        "_id": {
+          "$oid": "68f0f1f68beac2fba8cc5192"
+        }
+      }
+    ],
+    "date": {
+      "$date": "2025-10-13T08:06:18.676Z"
+    },
+    "lastUpdated": {
+      "$date": "2025-10-16T13:24:06.711Z"
+    }
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-10-14T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 35,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 60,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "14:06"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "22:02"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 50,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 2800,
+    "planPrice": 2800,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": null,
+    "couponId": null,
+    "discount": 0,
+    "finalAmount": 2800,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68ecb2fa135f21aefd6ddaa7"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-13T08:06:17.098Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-13T08:06:17.098Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-10-13T08:06:17.098Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-10-14T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-12T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-10-14T00:00:00.000Z"
+  },
+  "paymentStatus": "paid",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1760342778672_F630784AB51E",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-10-13T08:06:18.698Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-07T03:00:27.184Z"
+  },
+  "__v": 0,
+  "razorpayPaymentId": "pay_RSsxWEjveyLHka",
+  "walletTransaction": {
+    "$oid": "68ecb328135f21aefd6ddac2"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-06T18:30:00.000Z"
+  },
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  }
+},
+{
+  "_id": {
+    "$oid": "68ee64ce3045a0f60031c097"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68717ebc7395056035d1718d"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "todayMeal": {
+    "mealType": "lunch",
+    "isAvailable": true,
+    "tier": "basic",
+    "shift": "morning",
+    "items": [
+      {
+        "name": "Dal",
+        "description": "Tempered yellow lentils",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "68f0f1f68beac2fba8cc518e"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Aromatic basmati rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "68f0f1f68beac2fba8cc518f"
+        }
+      },
+      {
+        "name": "Loki chana daal",
+        "description": "Besan gatte",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "68f0f1f68beac2fba8cc5190"
+        }
+      },
+      {
+        "name": "butter roti",
+        "description": "Fresh wheat bread",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "68f0f1f68beac2fba8cc5191"
+        }
+      },
+      {
+        "name": "Gulab jamunn",
+        "description": "Cucumber yogurt salad",
+        "quantity": "1 small bowl",
+        "_id": {
+          "$oid": "68f0f1f68beac2fba8cc5192"
+        }
+      }
+    ],
+    "date": {
+      "$date": "2025-10-14T14:57:18.269Z"
+    },
+    "lastUpdated": {
+      "$date": "2025-10-16T13:24:06.711Z"
+    }
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-10-14T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 36,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 60,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "08:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 50,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 3000,
+    "planPrice": 3000,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": null,
+    "couponId": null,
+    "discount": 0,
+    "finalAmount": 3000,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68ee64ce3045a0f60031c098"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-14T14:57:17.123Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-14T14:57:17.123Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "cl46 sukhliya indore",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010"
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-10-14T14:57:17.123Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-10-14T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-12T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-10-15T14:57:53.979Z"
+  },
+  "paymentStatus": "paid",
+  "dailyDeductions": [],
+  "skippedMeals": [
+    {
+      "date": {
+        "$date": "2025-11-05T18:30:00.000Z"
+      },
+      "shift": "evening",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-11-06T06:36:27.527Z"
+      },
+      "createdBy": {
+        "$oid": "68717ebc7395056035d1718d"
+      },
+      "_id": {
+        "$oid": "690c41eb8beac2fba8ccfd44"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-06T18:30:00.000Z"
+      },
+      "shift": "evening",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-11-06T06:36:27.527Z"
+      },
+      "createdBy": {
+        "$oid": "68717ebc7395056035d1718d"
+      },
+      "_id": {
+        "$oid": "690c41eb8beac2fba8ccfd45"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-07T18:30:00.000Z"
+      },
+      "shift": "evening",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-11-06T06:36:27.528Z"
+      },
+      "createdBy": {
+        "$oid": "68717ebc7395056035d1718d"
+      },
+      "_id": {
+        "$oid": "690c41eb8beac2fba8ccfd46"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-08T18:30:00.000Z"
+      },
+      "shift": "morning",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-11-07T10:43:37.951Z"
+      },
+      "createdBy": {
+        "$oid": "68717ebc7395056035d1718d"
+      },
+      "_id": {
+        "$oid": "690dcd598beac2fba8cd7ee4"
+      }
+    }
+  ],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1760453838264_FC74E945DDC9",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-10-14T14:57:18.290Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-07T10:43:38.029Z"
+  },
+  "__v": 2,
+  "razorpayPaymentId": "pay_RTOUVLKKYjPHwM",
+  "walletTransaction": {
+    "$oid": "68ee64f23045a0f60031c0b3"
+  },
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-06T18:30:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68ff97148beac2fba8cc93dd"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "68733c48d5c4ca93f2fb37e9"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "todayMeal": {
+    "mealType": "lunch",
+    "isAvailable": false,
+    "tier": "basic",
+    "shift": "morning",
+    "items": [],
+    "date": {
+      "$date": "2025-10-27T16:00:20.750Z"
+    },
+    "lastUpdated": {
+      "$date": "2025-10-27T16:00:20.750Z"
+    }
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-10-27T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ]
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 0,
+    "mealsSkipped": 0,
+    "mealsRemaining": 60,
+    "regularMealsDelivered": 0,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 60,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "08:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 75,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 4500,
+    "planPrice": 4500,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": null,
+    "couponId": null,
+    "discount": 0,
+    "finalAmount": 4500,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68ff97148beac2fba8cc93de"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-27T16:00:19.786Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-10-27T16:00:19.786Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": ""
+  },
+  "status": "pending_payment",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-10-27T16:00:19.786Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-10-27T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-25T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-10-27T00:00:00.000Z"
+  },
+  "paymentStatus": "pending",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1761580820750_4DEA54A543AB",
+  "deliveryTracking": [],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-10-27T16:00:20.754Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-27T16:00:20.754Z"
+  },
+  "__v": 0
+}]

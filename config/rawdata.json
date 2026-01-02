@@ -1,0 +1,556 @@
+[
+  {
+    "title": "Premium Gulab Jamun Box",
+    "name": "Premium Gulab Jamun Box",
+    "description": "Soft, spongy milk dumplings soaked in aromatic sugar syrup, made with pure khoya and cardamom. A classic Indian dessert perfect for celebrations and festivals.",
+    "shortDescription": "Authentic milk dumplings in rose-scented syrup",
+    "price": 249,
+    "discountPrice": 249,
+    "originalPrice": 299,
+    "discount": 17,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/gulab-jamun_dauvgx.jpg",
+        "alt": "Premium Gulab Jamun Box",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439011",
+    "tags": ["gulab jamun", "milk sweets", "festival special", "traditional"],
+    "seller": "687242b702db822f91b13586",
+    "createdBy": "687242b702db822f91b13586",
+    "manufacturer": {
+      "name": "Shree Krishna Sweets",
+      "address": "123 Sweet Street, Mumbai, Maharashtra",
+      "license": "FSSAI-12345678901234"
+    },
+    "variants": [
+      {
+        "size": "Small",
+        "color": "Golden Brown",
+        "stock": 50,
+        "price": 249,
+        "sku": "GJ-SM-001"
+      },
+      {
+        "size": "Large",
+        "color": "Golden Brown",
+        "stock": 30,
+        "price": 449,
+        "sku": "GJ-LG-001"
+      }
+    ],
+    "weightOptions": [
+      {
+        "weight": "500g",
+        "price": 249,
+        "originalPrice": 299,
+        "discount": 17,
+        "stock": 50
+      },
+      {
+        "weight": "1kg",
+        "price": 449,
+        "originalPrice": 549,
+        "discount": 18,
+        "stock": 30
+      }
+    ],
+    "priceHistory": [],
+    "stock": 80,
+    "lowStockThreshold": 10,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Festival Special",
+    "specifications": [
+      {
+        "name": "Ingredients",
+        "value": "Milk, Sugar, Khoya, Cardamom, Rose Water"
+      },
+      {
+        "name": "Shelf Life",
+        "value": "5 days"
+      }
+    ],
+    "ingredients": ["Milk", "Sugar", "Khoya", "Cardamom", "Rose Water", "Ghee"],
+    "allergens": ["Milk", "Nuts"],
+    "nutritionInfo": {
+      "calories": 250,
+      "protein": 8,
+      "carbs": 35,
+      "fat": 12,
+      "sugar": 30,
+      "fiber": 1
+    },
+    "weight": 500,
+    "dimensions": {
+      "length": 20,
+      "width": 15,
+      "height": 8
+    },
+    "shelfLife": 5,
+    "storageInstructions": "Store in refrigerator. Consume within 5 days.",
+    "seoData": {
+      "metaTitle": "Premium Gulab Jamun Box - Authentic Indian Sweet",
+      "metaDescription": "Order fresh, soft Gulab Jamun made with pure khoya. Perfect for festivals and celebrations.",
+      "keywords": ["gulab jamun", "indian sweets", "milk sweets", "festival sweets"]
+    },
+    "slug": "premium-gulab-jamun-box",
+    "metaTitle": "Premium Gulab Jamun Box - Authentic Indian Sweet",
+    "metaDescription": "Order fresh, soft Gulab Jamun made with pure khoya. Perfect for festivals and celebrations.",
+    "ratings": {
+      "average": 4.8,
+      "count": 156
+    },
+    "reviewCount": 156,
+    "views": 2580,
+    "salesCount": 445,
+    "unitType": "g",
+    "isPerishable": true,
+    "harvestDate": null,
+    "origin": "Mumbai, Maharashtra",
+    "returnPolicyDays": 1
+  },
+  {
+    "title": "Kaju Katli Silver Leaf",
+    "name": "Kaju Katli Silver Leaf",
+    "description": "Premium cashew fudge with delicate silver leaf coating. Made from finest quality cashews and pure sugar, this diamond-shaped delicacy melts in your mouth.",
+    "shortDescription": "Premium cashew fudge with silver leaf",
+    "price": 799,
+    "discountPrice": 799,
+    "originalPrice": 899,
+    "discount": 11,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/kajukatli_kpbrwv.webp",
+        "alt": "Kaju Katli with Silver Leaf",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439011",
+    "tags": ["kaju katli", "cashew", "silver leaf", "premium", "diwali special"],
+    "seller": "687242b702db822f91b13586",
+    "createdBy": "687242b702db822f91b13586",
+    "manufacturer": {
+      "name": "Haldiram's",
+      "address": "456 Heritage Lane, Delhi",
+      "license": "FSSAI-98765432109876"
+    },
+    "variants": [
+      {
+        "size": "Regular",
+        "color": "Silver",
+        "stock": 25,
+        "price": 799,
+        "sku": "KK-REG-002"
+      }
+    ],
+    "weightOptions": [
+      {
+        "weight": "500g",
+        "price": 799,
+        "originalPrice": 899,
+        "discount": 11,
+        "stock": 25
+      },
+      {
+        "weight": "1kg",
+        "price": 1499,
+        "originalPrice": 1699,
+        "discount": 12,
+        "stock": 15
+      }
+    ],
+    "priceHistory": [],
+    "stock": 40,
+    "lowStockThreshold": 5,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Premium Royal",
+    "specifications": [
+      {
+        "name": "Main Ingredient",
+        "value": "Premium Cashews"
+      },
+      {
+        "name": "Special Feature",
+        "value": "Edible Silver Leaf"
+      }
+    ],
+    "ingredients": ["Cashews", "Sugar", "Cardamom", "Silver Leaf", "Ghee"],
+    "allergens": ["Nuts"],
+    "nutritionInfo": {
+      "calories": 520,
+      "protein": 18,
+      "carbs": 28,
+      "fat": 38,
+      "sugar": 25,
+      "fiber": 3
+    },
+    "weight": 500,
+    "dimensions": {
+      "length": 25,
+      "width": 20,
+      "height": 5
+    },
+    "shelfLife": 15,
+    "storageInstructions": "Store in cool, dry place. Keep away from moisture.",
+    "seoData": {
+      "metaTitle": "Kaju Katli with Silver Leaf - Premium Cashew Sweet",
+      "metaDescription": "Authentic Kaju Katli made with premium cashews and decorated with edible silver leaf.",
+      "keywords": ["kaju katli", "cashew sweet", "silver leaf", "premium sweets", "diwali"]
+    },
+    "slug": "kaju-katli-silver-leaf",
+    "metaTitle": "Kaju Katli with Silver Leaf - Premium Cashew Sweet",
+    "metaDescription": "Authentic Kaju Katli made with premium cashews and decorated with edible silver leaf.",
+    "ratings": {
+      "average": 4.9,
+      "count": 203
+    },
+    "reviewCount": 203,
+    "views": 3420,
+    "salesCount": 567,
+    "unitType": "g",
+    "isPerishable": false,
+    "harvestDate": null,
+    "origin": "Delhi",
+    "returnPolicyDays": 7
+  },
+  {
+    "title": "Rasgulla Pack of 12",
+    "name": "Rasgulla Pack of 12",
+    "description": "Soft, spongy cottage cheese balls soaked in light sugar syrup. This Bengali delicacy is made fresh daily with premium chenna and aromatic cardamom.",
+    "shortDescription": "Fresh Bengali cottage cheese balls in syrup",
+    "price": 150,
+    "discountPrice": 150,
+    "originalPrice": 180,
+    "discount": 17,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/RASGULLA_matqtb.webp",
+        "alt": "Fresh Rasgulla Pack",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439011",
+    "tags": ["rasgulla", "bengali sweets", "cottage cheese", "fresh", "traditional"],
+    "seller": "687242b702db822f91b13586",
+    "createdBy": "687242b702db822f91b13586",
+    "manufacturer": {
+      "name": "Bengal Sweet House",
+      "address": "789 Cultural Street, Kolkata, West Bengal",
+      "license": "FSSAI-11223344556677"
+    },
+    "variants": [
+      {
+        "size": "Pack of 12",
+        "color": "White",
+        "stock": 60,
+        "price": 150,
+        "sku": "RS-P12-003"
+      },
+      {
+        "size": "Pack of 6",
+        "color": "White",
+        "stock": 40,
+        "price": 80,
+        "sku": "RS-P06-003"
+      }
+    ],
+    "weightOptions": [
+      {
+        "weight": "12 pieces",
+        "price": 150,
+        "originalPrice": 180,
+        "discount": 17,
+        "stock": 60
+      },
+      {
+        "weight": "6 pieces",
+        "price": 80,
+        "originalPrice": 95,
+        "discount": 16,
+        "stock": 40
+      }
+    ],
+    "priceHistory": [],
+    "stock": 100,
+    "lowStockThreshold": 15,
+    "isActive": true,
+    "featured": false,
+    "isNew": true,
+    "isBestseller": false,
+    "isOrganic": false,
+    "badge": "Regional Special",
+    "specifications": [
+      {
+        "name": "Origin",
+        "value": "Bengal Traditional Recipe"
+      },
+      {
+        "name": "Texture",
+        "value": "Soft and Spongy"
+      }
+    ],
+    "ingredients": ["Cottage Cheese", "Sugar", "Water", "Cardamom"],
+    "allergens": ["Milk"],
+    "nutritionInfo": {
+      "calories": 150,
+      "protein": 6,
+      "carbs": 28,
+      "fat": 2,
+      "sugar": 25,
+      "fiber": 0
+    },
+    "weight": 300,
+    "dimensions": {
+      "length": 18,
+      "width": 12,
+      "height": 6
+    },
+    "shelfLife": 3,
+    "storageInstructions": "Refrigerate immediately. Best consumed within 3 days.",
+    "seoData": {
+      "metaTitle": "Fresh Rasgulla Pack - Authentic Bengali Sweet",
+      "metaDescription": "Soft, spongy Rasgulla made with fresh cottage cheese. Traditional Bengali dessert.",
+      "keywords": ["rasgulla", "bengali sweets", "cottage cheese", "traditional sweets"]
+    },
+    "slug": "rasgulla-pack-12",
+    "metaTitle": "Fresh Rasgulla Pack - Authentic Bengali Sweet",
+    "metaDescription": "Soft, spongy Rasgulla made with fresh cottage cheese. Traditional Bengali dessert.",
+    "ratings": {
+      "average": 4.6,
+      "count": 89
+    },
+    "reviewCount": 89,
+    "views": 1240,
+    "salesCount": 234,
+    "unitType": "piece",
+    "isPerishable": true,
+    "harvestDate": null,
+    "origin": "Kolkata, West Bengal",
+    "returnPolicyDays": 1
+  },
+  {
+    "title": "Assorted Laddu Box",
+    "name": "Assorted Laddu Box",
+    "description": "A delightful collection of traditional laddus including Besan Laddu, Coconut Laddu, and Rava Laddu. Each laddu is handcrafted with authentic recipes and premium ingredients.",
+    "shortDescription": "Mixed variety of traditional handmade laddus",
+    "price": 349,
+    "discountPrice": 349,
+    "originalPrice": 399,
+    "discount": 13,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/organicJladdu_cihb26.webp",
+        "alt": "Assorted Laddu Box",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439011",
+    "tags": ["laddu", "besan laddu", "coconut laddu", "rava laddu", "mixed box", "handmade"],
+    "seller": "687242b702db822f91b13586",
+    "createdBy": "687242b702db822f91b13586",
+    "manufacturer": {
+      "name": "Traditional Sweets Co.",
+      "address": "321 Heritage Road, Jaipur, Rajasthan",
+      "license": "FSSAI-55667788990011"
+    },
+    "variants": [
+      {
+        "size": "Mixed Box - 15 pieces",
+        "color": "Golden",
+        "stock": 35,
+        "price": 349,
+        "sku": "LD-MX-004"
+      }
+    ],
+    "weightOptions": [
+      {
+        "weight": "750g (15 pieces)",
+        "price": 349,
+        "originalPrice": 399,
+        "discount": 13,
+        "stock": 35
+      },
+      {
+        "weight": "1.5kg (30 pieces)",
+        "price": 649,
+        "originalPrice": 749,
+        "discount": 13,
+        "stock": 20
+      }
+    ],
+    "priceHistory": [],
+    "stock": 55,
+    "lowStockThreshold": 8,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": false,
+    "isOrganic": true,
+    "badge": "Master Crafted",
+    "specifications": [
+      {
+        "name": "Variety",
+        "value": "Besan, Coconut, Rava Laddu"
+      },
+      {
+        "name": "Preparation",
+        "value": "Handmade Traditional Method"
+      }
+    ],
+    "ingredients": ["Gram Flour", "Coconut", "Semolina", "Sugar", "Ghee", "Cardamom", "Almonds", "Cashews"],
+    "allergens": ["Nuts", "Gluten"],
+    "nutritionInfo": {
+      "calories": 380,
+      "protein": 12,
+      "carbs": 45,
+      "fat": 18,
+      "sugar": 35,
+      "fiber": 4
+    },
+    "weight": 750,
+    "dimensions": {
+      "length": 28,
+      "width": 20,
+      "height": 8
+    },
+    "shelfLife": 10,
+    "storageInstructions": "Store in airtight container in cool, dry place.",
+    "seoData": {
+      "metaTitle": "Assorted Traditional Laddu Box - Handmade Indian Sweets",
+      "metaDescription": "Mixed variety box of traditional laddus - Besan, Coconut, and Rava. Handcrafted with authentic recipes.",
+      "keywords": ["laddu", "traditional sweets", "besan laddu", "coconut laddu", "mixed sweets box"]
+    },
+    "slug": "assorted-laddu-box",
+    "metaTitle": "Assorted Traditional Laddu Box - Handmade Indian Sweets",
+    "metaDescription": "Mixed variety box of traditional laddus - Besan, Coconut, and Rava. Handcrafted with authentic recipes.",
+    "ratings": {
+      "average": 4.7,
+      "count": 142
+    },
+    "reviewCount": 142,
+    "views": 1890,
+    "salesCount": 378,
+    "unitType": "piece",
+    "isPerishable": false,
+    "harvestDate": null,
+    "origin": "Jaipur, Rajasthan",
+    "returnPolicyDays": 5
+  },
+  {
+    "title": "Chocolate Barfi Premium",
+    "name": "Chocolate Barfi Premium",
+    "description": "Modern twist on traditional barfi with rich chocolate flavor. Made with pure khoya, premium cocoa, and a hint of cardamom for the perfect fusion dessert experience.",
+    "shortDescription": "Fusion chocolate-flavored traditional barfi",
+    "price": 399,
+    "discountPrice": 399,
+    "originalPrice": 450,
+    "discount": 11,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1752965228/mysorepak_oebyzz.webp",
+        "alt": "Premium Chocolate Barfi",
+        "isPrimary": true
+      }
+    ],
+    "category": "507f1f77bcf86cd799439011",
+    "tags": ["chocolate barfi", "fusion sweets", "modern", "premium", "chocolate"],
+    "seller": "687242b702db822f91b13586",
+    "createdBy": "687242b702db822f91b13586",
+    "manufacturer": {
+      "name": "Modern Sweets Artisan",
+      "address": "567 Innovation Street, Pune, Maharashtra",
+      "license": "FSSAI-99887766554433"
+    },
+    "variants": [
+      {
+        "size": "Regular",
+        "color": "Dark Brown",
+        "stock": 28,
+        "price": 399,
+        "sku": "CB-REG-005"
+      }
+    ],
+    "weightOptions": [
+      {
+        "weight": "500g",
+        "price": 399,
+        "originalPrice": 450,
+        "discount": 11,
+        "stock": 28
+      },
+      {
+        "weight": "1kg",
+        "price": 749,
+        "originalPrice": 849,
+        "discount": 12,
+        "stock": 18
+      }
+    ],
+    "priceHistory": [],
+    "stock": 46,
+    "lowStockThreshold": 10,
+    "isActive": true,
+    "featured": false,
+    "isNew": true,
+    "isBestseller": false,
+    "isOrganic": false,
+    "badge": "Gift Special",
+    "specifications": [
+      {
+        "name": "Cocoa Content",
+        "value": "Premium Belgian Cocoa"
+      },
+      {
+        "name": "Style",
+        "value": "Fusion Traditional-Modern"
+      }
+    ],
+    "ingredients": ["Khoya", "Sugar", "Cocoa Powder", "Cardamom", "Ghee", "Almonds"],
+    "allergens": ["Milk", "Nuts"],
+    "nutritionInfo": {
+      "calories": 410,
+      "protein": 9,
+      "carbs": 38,
+      "fat": 22,
+      "sugar": 32,
+      "fiber": 3
+    },
+    "weight": 500,
+    "dimensions": {
+      "length": 20,
+      "width": 15,
+      "height": 6
+    },
+    "shelfLife": 8,
+    "storageInstructions": "Store in cool place away from direct sunlight.",
+    "seoData": {
+      "metaTitle": "Premium Chocolate Barfi - Fusion Indian Sweet",
+      "metaDescription": "Modern chocolate barfi made with traditional khoya and premium cocoa. Perfect fusion dessert.",
+      "keywords": ["chocolate barfi", "fusion sweets", "modern indian sweets", "chocolate dessert"]
+    },
+    "slug": "chocolate-barfi-premium",
+    "metaTitle": "Premium Chocolate Barfi - Fusion Indian Sweet",
+    "metaDescription": "Modern chocolate barfi made with traditional khoya and premium cocoa. Perfect fusion dessert.",
+    "ratings": {
+      "average": 4.4,
+      "count": 67
+    },
+    "reviewCount": 67,
+    "views": 980,
+    "salesCount": 145,
+    "unitType": "g",
+    "isPerishable": false,
+    "harvestDate": null,
+    "origin": "Pune, Maharashtra",
+    "returnPolicyDays": 7
+  }
+]

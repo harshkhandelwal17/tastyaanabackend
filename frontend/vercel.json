@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ],
+ "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://www.tastyaana.com/$1",
+      "permanent": true,
+      "has": [
+        { "type": "host", "value": "tastyaana.com" }
+      ]
+    }
+  ]
+}

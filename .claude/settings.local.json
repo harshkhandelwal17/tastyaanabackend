@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+<<<<<<< HEAD
+      "Bash(npm start)",
+      "Read(/D:\\Products\\onlinestore\\frontend/**)",
+      "Read(/D:\\Products\\onlinestore\\frontend\\src\\components\\buyer/**)",
+      "Read(/D:\\Products\\onlinestore\\frontend\\src\\pages\\buyer/**)",
+      "Read(/D:\\Products\\onlinestore\\frontend\\src/**)",
+      "Bash(node:*)"
+=======
+      "Bash(curl:*)"
+>>>>>>> c98ec36b7918dc9191fa2100df03bd95972f29c0
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,105 @@
+[{
+  "_id": {
+    "$oid": "6882f8f15b1ba9254864dfe7"
+  },
+  "name": "Vegetables",
+  "slug": "vegetables"
+},
+{
+  "_id": {
+    "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "name": "Grocery",
+  "slug": "grocery"
+},
+{
+  "_id": {
+    "$oid": "6882f91f5b1ba9254864dfeb"
+  },
+  "name": "Sweets",
+  "slug": "sweets"
+},
+{
+  "_id": {
+    "$oid": "688e94341f64b64116fa23d1"
+  },
+  "name": "Stationery",
+  "slug": "stationery"
+},
+{
+  "_id": {
+    "$oid": "688fb41ebea1c163a6eda193"
+  },
+  "name": "Foodzone",
+  "slug": "foodzone"
+},
+{
+  "_id": {
+    "$oid": "68a9f92f7f446a4c68f0455a"
+  },
+  "name": "Dairy",
+  "slug": "dairy"
+},
+{
+  "_id": {
+    "$oid": "68b14f3debcbba39abe74447"
+  },
+  "name": "Real Estate",
+  "slug": "real-estate"
+},
+{
+  "_id": {
+    "$oid": "68b14f3debcbba39abe74440"
+  },
+  "name": "Cold Drinks & Juices",
+  "slug": "cold-drinks-juices"
+},
+{
+  "_id": {
+    "$oid": "68b14f3debcbba39abe74445"
+  },
+  "name": "Masala, Oil & More",
+  "slug": "masala-oil-more"
+},
+{
+  "_id": {
+    "$oid": "68b14f3debcbba39abe74441"
+  },
+  "name": "Breakfast & Instant Food",
+  "slug": "breakfast-instant-food"
+},
+{
+  "_id": {
+    "$oid": "68b14f3debcbba39abe74444"
+  },
+  "name": "Aata, Rice & Dal",
+  "slug": "aata-rice-dal"
+},
+{
+  "_id": {
+    "$oid": "68b14f3debcbba39abe74442"
+  },
+  "name": "Bakery & Biscuits",
+  "slug": "bakery-biscuits"
+},
+{
+  "_id": {
+    "$oid": "68b14f3debcbba39abe74443"
+  },
+  "name": "Tea, Coffee & Health Drinks",
+  "slug": "tea-coffee-health-drinks"
+},
+{
+  "_id": {
+    "$oid": "68b14f3debcbba39abe74446"
+  },
+  "name": "Phones",
+  "slug": "phones"
+},
+{
+  "_id": {
+    "$oid": "68d05dcbbca1a367e0fe9458"
+  },
+  "name": "Vrat Meal",
+  "slug": "vratmeal"
+}]

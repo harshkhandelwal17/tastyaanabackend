@@ -1,0 +1,1022 @@
+[{
+    "_id": {
+      "$oid": "f4fa6407-1a56-43df-9238-f75e0911f9dd"
+    },
+    "title": "Dahi Samosa",
+    "name": "Dahi Samosa",
+    "slug": "dahi-samosa",
+    "description": "Crispy samosa served with fresh yogurt and tangy chutneys",
+    "shortDescription": "Samosa with yogurt and chutneys",
+    "price": 20.0,
+    "originalPrice": 20.0,
+    "discountPrice": 20.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838645/7_gftm1n.png",
+      "alt": "Dahi Samosa",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "samosa",
+      "yogurt",
+      "tangy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "180g",
+        "price": 20.0,
+        "originalPrice": 20.0,
+        "discount": 0.0,
+        "stock": 80,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 18,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 80,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "_id": {
+      "$oid": "9bd8dc3e-e73f-4c84-bb78-589bc5e825fc"
+    },
+    "title": "Dahi Kachori",
+    "name": "Dahi Kachori",
+    "slug": "dahi-kachori",
+    "description": "Crispy kachori topped with yogurt, chutneys and spices",
+    "shortDescription": "Kachori with yogurt and chutneys",
+    "price": 20.0,
+    "originalPrice": 20.0,
+    "discountPrice": 20.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838643/8_pqlcrz.png",
+      "alt": "Dahi Kachori",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "kachori",
+      "yogurt",
+      "spicy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "180g",
+        "price": 20.0,
+        "originalPrice": 20.0,
+        "discount": 0.0,
+        "stock": 80,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 20,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 80,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+{
+    "_id": {
+      "$oid": "44b141c2-60fa-4eac-9c68-edda5d777495"
+    },
+    "title": "Samosa Chola",
+    "name": "Samosa Chola",
+    "slug": "samosa-chola",
+    "description": "Crispy samosa served with spiced chickpea curry",
+    "shortDescription": "Samosa with spiced chickpeas",
+    "price": 20.0,
+    "originalPrice": 20.0,
+    "discountPrice": 20.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838642/9_i75crb.png",
+      "alt": "Samosa Chola",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "samosa",
+      "chickpeas",
+      "curry"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "200g",
+        "price": 20.0,
+        "originalPrice": 20.0,
+        "discount": 0.0,
+        "stock": 80,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 10,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 80,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "_id": {
+      "$oid": "988d3f57-aafd-4c62-ace4-d97ebee6d51d"
+    },
+    "title": "Kachori Chola",
+    "name": "Kachori Chola",
+    "slug": "kachori-chola",
+    "description": "Crispy kachori served with spiced chickpea curry",
+    "shortDescription": "Kachori with spiced chickpeas",
+    "price": 20.0,
+    "originalPrice": 20.0,
+    "discountPrice": 20.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838645/10_oxkgs6.png",
+      "alt": "Kachori Chola",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "kachori",
+      "chickpeas",
+      "curry"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "200g",
+        "price": 20.0,
+        "originalPrice": 20.0,
+        "discount": 0.0,
+        "stock": 80,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 17,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 80,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "_id": {
+      "$oid": "8062469d-aa84-45c4-b792-70624b7ec6bb"
+    },
+    "title": "Pani Poori (5 Pcs.)",
+    "name": "Pani Poori (5 Pcs.)",
+    "slug": "pani-poori-(5-pcs.)",
+    "description": "5 pieces of crispy hollow puris served with spiced water, tamarind chutney and stuffing",
+    "shortDescription": "5 pieces crispy pani puri",
+    "price": 10.0,
+    "originalPrice": 10.0,
+    "discountPrice": 10.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838647/13_yiejdb.png",
+      "alt": "Pani Poori",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "pani puri",
+      "crispy",
+      "tangy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "100g",
+        "price": 10.0,
+        "originalPrice": 10.0,
+        "discount": 0.0,
+        "stock": 150,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 29,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 150,
+    "unitType": "piece",
+    "isPerishable": true
+  }, {
+    "_id": {
+      "$oid": "b8c3b530-3a49-4dc3-a948-7ca3bcf00eef"
+    },
+    "title": "Sev Poori",
+    "name": "Sev Poori",
+    "slug": "sev-poori",
+    "description": "Crispy flat puris topped with vegetables, chutneys and sev",
+    "shortDescription": "Crispy puri with sev topping",
+    "price": 30.0,
+    "originalPrice": 30.0,
+    "discountPrice": 30.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838649/14_tozxz0.png",
+      "alt": "Sev Poori",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "sev",
+      "puri",
+      "crunchy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "150g",
+        "price": 30.0,
+        "originalPrice": 30.0,
+        "discount": 0.0,
+        "stock": 100,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 27,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 100,
+    "unitType": "piece",
+    "isPerishable": true
+  }, {
+    "_id": {
+      "$oid": "52ee4288-c519-4200-a0e2-062a797c25dc"
+    },
+    "title": "Dahi Bhalla",
+    "name": "Dahi Bhalla",
+    "slug": "dahi-bhalla",
+    "description": "Soft lentil dumplings soaked in yogurt and topped with chutneys and spices",
+    "shortDescription": "Yogurt-soaked lentil dumplings",
+    "price": 50.0,
+    "originalPrice": 50.0,
+    "discountPrice": 50.0,
+    "discount": 0.0,
+   "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838649/16_vwndcv.png",
+      "alt": "Dahi Bhalla",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "bhalla",
+      "yogurt",
+      "soft"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "220g",
+        "price": 50.0,
+        "originalPrice": 50.0,
+        "discount": 0.0,
+        "stock": 60,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 14,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 60,
+    "unitType": "piece",
+    "isPerishable": true
+  }, {
+    "_id": {
+      "$oid": "ce3053d2-a257-4d0c-b338-6178ee96cf3d"
+    },
+    "title": "Bhalla Papdi Chaat",
+    "name": "Bhalla Papdi Chaat",
+    "slug": "bhalla-papdi-chaat",
+    "description": "Combination of soft bhallas and crispy papdis with yogurt and chutneys",
+    "shortDescription": "Mixed bhalla papdi chaat",
+    "price": 50.0,
+    "originalPrice": 50.0,
+    "discountPrice": 50.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838651/17_oi1nl5.png",
+      "alt": "Bhalla Papdi Chaat",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "bhalla",
+      "papdi",
+      "mixed"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "250g",
+        "price": 50.0,
+        "originalPrice": 50.0,
+        "discount": 0.0,
+        "stock": 60,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 23,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 60,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "_id": {
+      "$oid": "c2b64a42-f5f9-4c26-beb5-298033c49ee9"
+    },
+    "title": "Fruit Bhalla Chaat",
+    "name": "Fruit Bhalla Chaat",
+    "slug": "fruit-bhalla-chaat",
+    "description": "Soft lentil dumplings with fresh fruits, yogurt and sweet chutneys",
+    "shortDescription": "Bhalla chaat with fresh fruits",
+    "price": 50.0,
+    "originalPrice": 50.0,
+    "discountPrice": 50.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838651/18_eokepf.png",
+      "alt": "Fruit Bhalla Chaat",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "bhalla",
+      "fruits",
+      "healthy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "250g",
+        "price": 50.0,
+        "originalPrice": 50.0,
+        "discount": 0.0,
+        "stock": 50,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 23,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "piece",
+    "isPerishable": true
+  }, {
+    "title": "Raj Kachori",
+    "name": "Raj Kachori",
+    "slug": "raj-kachori",
+    "description": "Large crispy kachori filled with various chutneys, yogurt and garnished with sev",
+    "shortDescription": "King-size stuffed kachori",
+    "price": 50.0,
+    "originalPrice": 50.0,
+    "discountPrice": 50.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838651/19_cstnar.png",
+      "alt": "Raj Kachori",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "kachori",
+      "royal",
+      "large"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "300g",
+        "price": 50.0,
+        "originalPrice": 50.0,
+        "discount": 0.0,
+        "stock": 40,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 28,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "_id": {
+      "$oid": "2f380393-268f-4660-bd57-00302e97899e"
+    },
+    "title": "Lacha Tokri",
+    "name": "Lacha Tokri",
+    "slug": "lacha-tokri",
+    "description": "Crispy basket-shaped snack filled with mixed vegetables and chutneys",
+    "shortDescription": "Crispy vegetable basket chaat",
+    "price": 50.0,
+    "originalPrice": 50.0,
+    "discountPrice": 50.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838652/20_tuk3kk.png",
+      "alt": "Lacha Tokri",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "tokri",
+      "vegetables",
+      "crispy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "200g",
+        "price": 50.0,
+        "originalPrice": 50.0,
+        "discount": 0.0,
+        "stock": 40,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 21,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "_id": {
+      "$oid": "ea80636b-771a-4739-9344-543d425759cb"
+    },
+    "title": "Bhel Poori",
+    "name": "Bhel Poori",
+    "slug": "bhel-poori",
+    "description": "Mix of puffed rice, vegetables, chutneys and sev tossed together",
+    "shortDescription": "Mixed puffed rice chaat",
+    "price": 50.0,
+    "originalPrice": 50.0,
+    "discountPrice": 50.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838654/21_snvs9j.png",
+      "alt": "Bhel Poori",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "bhel",
+      "puffed rice",
+      "mixed"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "180g",
+        "price": 50.0,
+        "originalPrice": 50.0,
+        "discount": 0.0,
+        "stock": 80,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 28,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 80,
+    "unitType": "piece",
+    "isPerishable": true
+  }, {
+    "_id": {
+      "$oid": "22a07efe-e1b9-4757-8c78-b2204cd5a7fe"
+    },
+    "title": "Sprouted Papdi Chaat",
+    "name": "Sprouted Papdi Chaat",
+    "slug": "sprouted-papdi-chaat",
+    "description": "Healthy chaat made with sprouted lentils, crispy papdis and fresh chutneys",
+    "shortDescription": "Healthy sprouted lentil chaat",
+    "price": 50.0,
+    "originalPrice": 50.0,
+    "discountPrice": 50.0,
+    "discount": 0.0,
+   "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838653/22_x4ufad.png",
+      "alt": "Sprouted Papdi Chaat",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "sprouted",
+      "healthy",
+      "nutritious"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "200g",
+        "price": 50.0,
+        "originalPrice": 50.0,
+        "discount": 0.0,
+        "stock": 60,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 16,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 60,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "_id": {
+      "$oid": "fbee1f81-d732-4b49-a9b2-24e2bb83c958"
+    },
+    "title": "Stuff Papdi Chaat",
+    "name": "Stuff Papdi Chaat",
+    "slug": "stuff-papdi-chaat",
+    "description": "Crispy papdis stuffed with various fillings and topped with chutneys",
+    "shortDescription": "Stuffed papdi chaat special",
+    "price": 50.0,
+    "originalPrice": 50.0,
+    "discountPrice": 50.0,
+    "discount": 0.0,
+   "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838654/23_p5nhf2.png",
+      "alt": "Stuff Papdi Chaat",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "papdi",
+      "stuffed",
+      "special"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "220g",
+        "price": 50.0,
+        "originalPrice": 50.0,
+        "discount": 0.0,
+        "stock": 50,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 19,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "_id": {
+      "$oid": "5799eae8-1b9e-4871-99a2-36de0468aa3f"
+    },
+    "title": "Coleslow Papdi Chaat",
+    "name": "Coleslow Papdi Chaat",
+    "slug": "coleslow-papdi-chaat",
+    "description": "Fusion chaat combining crispy papdis with fresh coleslaw and Indian chutneys",
+    "shortDescription": "Fusion coleslaw papdi chaat",
+    "price": 50.0,
+    "originalPrice": 50.0,
+    "discountPrice": 50.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755838658/24_vtgefa.png",
+      "alt": "Coleslow Papdi Chaat",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "coleslaw",
+      "fusion",
+      "fresh"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "200g",
+        "price": 50.0,
+        "originalPrice": 50.0,
+        "discount": 0.0,
+        "stock": 40,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 13,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "piece",
+    "isPerishable": true
+  },{
+    "_id": {
+      "$oid": "5371974b-b8b0-4f3b-8478-6aad08fa4dbf"
+    },
+    "title": "Palak Chaat",
+    "name": "Palak Ke Patte Ki Chaat",
+    "slug": "palak-ke-patte-ki-chaat",
+    "description": "Crispy fried spinach leaves topped with yogurt, chutneys and spices",
+    "shortDescription": "Crispy spinach leaf chaat",
+    "price": 50.0,
+    "originalPrice": 50.0,
+    "discountPrice": 50.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "",
+      "alt": "Palak Chaat",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chaat",
+    "tags": [
+      "chaat",
+      "spinach",
+      "crispy",
+      "unique"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "150g",
+        "price": 50.0,
+        "originalPrice": 50.0,
+        "discount": 0.0,
+        "stock": 30,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 24,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 30,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+   {
+    "_id": {
+      "$oid": "bd65c3ed-1b65-4f96-9b94-5f1f04f6c202"
+    },
+    "title": "Hara Bhara Kabab",
+    "name": "Hara Bhara Kabab",
+    "slug": "hara-bhara-kabab",
+    "description": "Green vegetable kabab made with spinach and green vegetables",
+    "shortDescription": "Green vegetable spinach kabab",
+    "price": 160.0,
+    "originalPrice": 160.0,
+    "discountPrice": 160.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883845/74_t2vqlm.png",
+      "alt": "Hara Bhara Kabab",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "tikka_kabab",
+    "tags": [
+      "kabab",
+      "green vegetables",
+      "spinach",
+      "healthy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "180g",
+        "price": 160.0,
+        "originalPrice": 160.0,
+        "discount": 0.0,
+        "stock": 35,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 24,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 35,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+  {
+    "_id": {
+      "$oid": "540e75dc-4384-4233-8943-8b6308c8636f"
+    },
+    "title": "Dahi Kabab",
+    "name": "Dahi Kabab",
+    "slug": "dahi-kabab",
+    "description": "Soft kabab made with yogurt and spices",
+    "shortDescription": "Yogurt-based soft kabab",
+    "price": 160.0,
+    "originalPrice": 160.0,
+    "discountPrice": 160.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883844/75_lykdwb.png",
+      "alt": "Dahi Kabab",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "tikka_kabab",
+    "tags": [
+      "kabab",
+      "yogurt",
+      "soft",
+      "mild"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "180g",
+        "price": 160.0,
+        "originalPrice": 160.0,
+        "discount": 0.0,
+        "stock": 30,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 27,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 30,
+    "unitType": "piece",
+    "isPerishable": true
+  }, {
+    "_id": {
+      "$oid": "d8dd87c5-5875-487a-bba5-6495cf2e6b6e"
+    },
+    "title": "Crispy Honey Chilli Potato",
+    "name": "Crispy Honey Chilli Potato",
+    "slug": "crispy-honey-chilli-potato",
+    "description": "Crispy potato strips tossed in honey chilli sauce",
+    "shortDescription": "Sweet and spicy honey chilli potato",
+    "price": 150.0,
+    "originalPrice": 150.0,
+    "discountPrice": 150.0,
+    "discount": 0.0,
+   "images": [{
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883839/70_obrrjn.png",
+      "alt": "Crispy Honey Chilli Potato",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chinese",
+    "tags": [
+      "chinese",
+      "potato",
+      "honey",
+      "chilli"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "250g",
+        "price": 150.0,
+        "originalPrice": 150.0,
+        "discount": 0.0,
+        "stock": 35,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 22,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 35,
+    "unitType": "piece",
+    "isPerishable": true
+  }, {
+    "_id": {
+      "$oid": "09f8d522-a666-4a55-9da9-65bcd93c41d9"
+    },
+    "title": "Paneer 65",
+    "name": "Paneer 65",
+    "slug": "paneer-65",
+    "description": "Spicy deep-fried paneer cubes marinated in South Indian style",
+    "shortDescription": "Spicy South Indian style paneer",
+    "price": 250.0,
+    "originalPrice": 250.0,
+    "discountPrice": 250.0,
+    "discount": 0.0,
+    "images": [{
+      "url": "",
+      "alt": "",
+      "isPrimary": true
+    }],
+    "category": {
+      "$oid": "688fb41ebea1c163a6eda193"
+    },
+    "subcategory": "chinese",
+    "tags": [
+      "chinese",
+      "paneer",
+      "spicy",
+      "south indian"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "200g",
+        "price": 250.0,
+        "originalPrice": 250.0,
+        "discount": 0.0,
+        "stock": 20,
+        "unitType": "plate"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 29,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 20,
+    "unitType": "piece",
+    "isPerishable": true
+  },
+]

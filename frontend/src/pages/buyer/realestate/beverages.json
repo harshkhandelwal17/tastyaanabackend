@@ -1,0 +1,1186 @@
+[ {
+    "title": "Cold Drink (Coke/Pepsi/Sprite)",
+    "name": "Cold Drink",
+    "description": "Chilled carbonated soft drinks available in Coca-Cola, Pepsi, and Sprite flavors. Perfectly chilled to beat the heat and refresh your taste buds with every sip.",
+    "shortDescription": "Chilled carbonated soft drinks - Coke, Pepsi, Sprite",
+    "price": 20,
+    "originalPrice": 25,
+    "discount": 20,
+    "discountPrice": 20,
+    "images": [
+      {
+        "url": "/images/cold-drink-1.jpg",
+        "alt": "Cold Drink - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "subCategory": "Beverages",
+    "tags": ["cold-drink", "carbonated", "chilled", "refreshing", "coke", "pepsi", "sprite"],
+    "isCollegeBranded": true,
+    "variants": [
+      {
+        "size": "300ml",
+        "color": "Coke",
+        "stock": 100,
+        "price": 20,
+        "sku": "CD-COKE-300"
+      },
+      {
+        "size": "300ml",
+        "color": "Pepsi",
+        "stock": 85,
+        "price": 20,
+        "sku": "CD-PEPSI-300"
+      },
+      {
+        "size": "300ml",
+        "color": "Sprite",
+        "stock": 75,
+        "price": 20,
+        "sku": "CD-SPRITE-300"
+      }
+    ],
+    "weightOptions": [
+      {
+        "weight": "300ml",
+        "price": 20,
+        "originalPrice": 25,
+        "discount": 20,
+        "stock": 260
+      },
+      {
+        "weight": "600ml",
+        "price": 35,
+        "originalPrice": 40,
+        "discount": 13,
+        "stock": 150
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 20
+      }
+    ],
+    "stock": 260,
+    "lowStockThreshold": 50,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "specifications": [
+      {
+        "name": "Type",
+        "value": "Carbonated Soft Drink"
+      },
+      {
+        "name": "Temperature",
+        "value": "Chilled"
+      },
+      {
+        "name": "Brands Available",
+        "value": "Coke, Pepsi, Sprite"
+      }
+    ],
+    "ingredients": ["Carbonated Water", "Sugar", "Natural Flavors", "Caffeine", "Preservatives"],
+    "allergens": ["None"],
+    "weight": 300,
+    "shelfLife": 365,
+    "storageInstructions": "Store in cool, dry place",
+    "seoData": {
+      "metaTitle": "Cold Drinks - Coke, Pepsi, Sprite | Your Cafe Name",
+      "metaDescription": "Chilled carbonated soft drinks - Coke, Pepsi, Sprite",
+      "keywords": ["cold-drink", "carbonated", "chilled", "refreshing", "coke", "pepsi", "sprite"]
+    },
+    "slug": "cold-drink",
+    "ratings": {
+      "average": 4.1,
+      "count": 345
+    },
+    "reviewCount": 345,
+    "views": 3450,
+    "salesCount": 567,
+    "unitType": "ml",
+    "isPerishable": false,
+    "origin": "Indore, Madhya Pradesh",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Lemon Soda",
+    "name": "Lemon Soda",
+    "description": "Refreshing fizzy drink made with fresh lemon juice, soda water, salt, and black pepper. A perfect thirst quencher and digestive drink, especially popular during summers.",
+    "shortDescription": "Refreshing fizzy drink with fresh lemon and spices",
+    "price": 25,
+    "originalPrice": 30,
+    "discount": 17,
+    "discountPrice": 25,
+    "images": [
+      {
+        "url": "/images/lemon-soda-1.jpg",
+        "alt": "Lemon Soda - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "subCategory": "Beverages",
+    "tags": ["lemon", "soda", "fizzy", "refreshing", "digestive", "summer", "healthy"],
+    "isCollegeBranded": false,
+    "weightOptions": [
+      {
+        "weight": "250ml",
+        "price": 25,
+        "originalPrice": 30,
+        "discount": 17,
+        "stock": 60
+      },
+      {
+        "weight": "400ml",
+        "price": 40,
+        "originalPrice": 45,
+        "discount": 11,
+        "stock": 35
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 25
+      }
+    ],
+    "stock": 60,
+    "lowStockThreshold": 15,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": false,
+    "isOrganic": true,
+    "badge": "Fresh Harvest",
+    "specifications": [
+      {
+        "name": "Main Ingredient",
+        "value": "Fresh Lemon"
+      },
+      {
+        "name": "Type",
+        "value": "Fizzy Digestive"
+      },
+      {
+        "name": "Best Season",
+        "value": "Summer"
+      }
+    ],
+    "ingredients": ["Fresh Lemon Juice", "Soda Water", "Black Salt", "Black Pepper", "Mint", "Ice"],
+    "allergens": ["None"],
+    "nutritionInfo": {
+      "calories": 25,
+      "protein": 0,
+      "carbs": 6,
+      "fat": 0,
+      "sugar": 4,
+      "fiber": 0
+    },
+    "weight": 250,
+    "shelfLife": 1,
+    "storageInstructions": "Serve immediately with ice",
+    "seoData": {
+      "metaTitle": "Lemon Soda - Fresh & Fizzy | Your Cafe Name",
+      "metaDescription": "Refreshing fizzy drink with fresh lemon and spices",
+      "keywords": ["lemon", "soda", "fizzy", "refreshing", "digestive", "summer", "healthy"]
+    },
+    "slug": "lemon-soda",
+    "ratings": {
+      "average": 4.3,
+      "count": 124
+    },
+    "reviewCount": 124,
+    "views": 1560,
+    "salesCount": 198,
+    "unitType": "ml",
+    "isPerishable": true,
+    "origin": "Indore, Madhya Pradesh",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Sweet Lassi",
+    "name": "Sweet Lassi",
+    "description": "Traditional yogurt-based drink blended with sugar and cardamom. Thick, creamy, and naturally cooling. Perfect digestive drink and a healthy alternative to artificial beverages.",
+    "shortDescription": "Traditional sweet yogurt drink with cardamom",
+    "price": 35,
+    "originalPrice": 40,
+    "discount": 13,
+    "discountPrice": 35,
+    "images": [
+      {
+        "url": "/images/sweet-lassi-1.jpg",
+        "alt": "Sweet Lassi - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "subCategory": "Beverages",
+    "tags": ["lassi", "yogurt", "traditional", "cooling", "digestive", "healthy", "probiotic"],
+    "isCollegeBranded": false,
+    "weightOptions": [
+      {
+        "weight": "300ml",
+        "price": 35,
+        "originalPrice": 40,
+        "discount": 13,
+        "stock": 45
+      },
+      {
+        "weight": "500ml",
+        "price": 55,
+        "originalPrice": 65,
+        "discount": 15,
+        "stock": 25
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 35
+      }
+    ],
+    "stock": 45,
+    "lowStockThreshold": 12,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": false,
+    "isOrganic": true,
+    "badge": "Fresh Harvest",
+    "specifications": [
+      {
+        "name": "Base",
+        "value": "Fresh Yogurt"
+      },
+      {
+        "name": "Flavor",
+        "value": "Sweet with Cardamom"
+      },
+      {
+        "name": "Health Benefit",
+        "value": "Probiotic & Cooling"
+      }
+    ],
+    "ingredients": ["Fresh Yogurt", "Sugar", "Cardamom", "Ice", "Rose Water"],
+    "allergens": ["Contains dairy"],
+    "nutritionInfo": {
+      "calories": 150,
+      "protein": 6,
+      "carbs": 20,
+      "fat": 5,
+      "sugar": 18,
+      "fiber": 0
+    },
+    "weight": 300,
+    "shelfLife": 1,
+    "storageInstructions": "Keep chilled and consume fresh",
+    "seoData": {
+      "metaTitle": "Sweet Lassi - Traditional Yogurt Drink | Your Cafe Name",
+      "metaDescription": "Traditional sweet yogurt drink with cardamom",
+      "keywords": ["lassi", "yogurt", "traditional", "cooling", "digestive", "healthy", "probiotic"]
+    },
+    "slug": "sweet-lassi",
+    "ratings": {
+      "average": 4.4,
+      "count": 89
+    },
+    "reviewCount": 89,
+    "views": 1120,
+    "salesCount": 134,
+    "unitType": "ml",
+    "isPerishable": true,
+    "origin": "Indore, Madhya Pradesh",
+    "returnPolicyDays": 0
+  },
+   {
+    "_id": {
+      "$oid": "688ee792010dda98c35af820"
+    },
+    "title": "Orange Juice",
+    "name": "Orange Juice",
+    "slug": "orange-juice",
+    "description": "Freshly squeezed orange juice packed with vitamin C and natural sweetness. Made from hand-picked oranges, served chilled for maximum refreshment.",
+    "shortDescription": "Fresh squeezed orange juice, vitamin C rich",
+    "price": 60,
+    "originalPrice": 65,
+    "discountPrice": 60,
+    "discount": 7.7,
+    "images": [
+      {
+        "url": "https://example.com/images/orange-juice.jpg",
+        "alt": "Fresh Orange Juice",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "tags": [
+      "orange juice",
+      "fresh",
+      "vitamin c",
+      "healthy",
+      "citrus"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular (250ml)",
+        "price": 60,
+        "originalPrice": 65,
+        "discount": 7.7,
+        "stock": 30
+      },
+      {
+        "size": "Large (400ml)",
+        "price": 90,
+        "originalPrice": 95,
+        "discount": 5.3,
+        "stock": 25
+      }
+    ],
+    "stock": 55,
+    "lowStockThreshold": 10,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": true,
+    "ingredients": [
+      "Fresh Orange",
+      "Natural Sugar (optional)"
+    ],
+    "preparationTime": 3,
+    "isVegetarian": true,
+    "isVegan": true,
+    "spiceLevel": "None",
+    "storageInstructions": "Serve immediately, best consumed fresh",
+    "ratings": {
+      "average": 4.4,
+      "count": 234
+    },
+    "reviewCount": 234,
+    "views": 987,
+    "salesCount": 567,
+    "unitType": "ml",
+    "isPerishable": true,
+    "origin": "Fresh Local",
+    "returnPolicyDays": 0
+  },
+  {
+    "_id": {
+      "$oid": "688ee792010dda98c35af821"
+    },
+    "title": "Mosambi Juice",
+    "name": "Mosambi Juice",
+    "slug": "mosambi-juice",
+    "description": "Sweet and refreshing juice from fresh mosambi (sweet lime). Light, hydrating and naturally sweet with a subtle citrus flavor. Perfect for hot days.",
+    "shortDescription": "Sweet and refreshing mosambi juice",
+    "price": 55,
+    "originalPrice": 60,
+    "discountPrice": 55,
+    "discount": 8.3,
+    "images": [
+      {
+        "url": "https://example.com/images/mosambi-juice.jpg",
+        "alt": "Fresh Mosambi Juice",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "tags": [
+      "mosambi",
+      "sweet lime",
+      "fresh juice",
+      "hydrating",
+      "citrus"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular (250ml)",
+        "price": 55,
+        "originalPrice": 60,
+        "discount": 8.3,
+        "stock": 35
+      },
+      {
+        "size": "Large (400ml)",
+        "price": 80,
+        "originalPrice": 85,
+        "discount": 5.9,
+        "stock": 30
+      }
+    ],
+    "stock": 65,
+    "lowStockThreshold": 12,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": false,
+    "ingredients": [
+      "Fresh Mosambi",
+      "Natural Sugar (optional)",
+      "Black Salt (optional)"
+    ],
+    "preparationTime": 3,
+    "isVegetarian": true,
+    "isVegan": true,
+    "spiceLevel": "None",
+    "storageInstructions": "Serve immediately, best consumed fresh",
+    "ratings": {
+      "average": 4.2,
+      "count": 123
+    },
+    "reviewCount": 123,
+    "views": 567,
+    "salesCount": 289,
+    "unitType": "ml",
+    "isPerishable": true,
+    "origin": "Fresh Local",
+    "returnPolicyDays": 0
+  },
+  {
+    "_id": {
+      "$oid": "688ee792010dda98c35af822"
+    },
+    "title": "Pineapple Juice",
+    "name": "Pineapple Juice",
+    "slug": "pineapple-juice",
+    "description": "Tropical and tangy fresh pineapple juice with natural enzymes. Sweet, refreshing and packed with vitamin C and antioxidants.",
+    "shortDescription": "Tropical fresh pineapple juice",
+    "price": 70,
+    "originalPrice": 75,
+    "discountPrice": 70,
+    "discount": 6.7,
+    "images": [
+      {
+        "url": "https://example.com/images/pineapple-juice.jpg",
+        "alt": "Fresh Pineapple Juice",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "tags": [
+      "pineapple",
+      "tropical",
+      "vitamin c",
+      "fresh juice",
+      "tangy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular (250ml)",
+        "price": 70,
+        "originalPrice": 75,
+        "discount": 6.7,
+        "stock": 25
+      },
+      {
+        "size": "Large (400ml)",
+        "price": 100,
+        "originalPrice": 105,
+        "discount": 4.8,
+        "stock": 20
+      }
+    ],
+    "stock": 45,
+    "lowStockThreshold": 8,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": false,
+    "ingredients": [
+      "Fresh Pineapple",
+      "Natural Sugar (optional)",
+      "Black Salt (optional)"
+    ],
+    "preparationTime": 4,
+    "isVegetarian": true,
+    "isVegan": true,
+    "spiceLevel": "None",
+    "storageInstructions": "Serve chilled immediately after preparation",
+    "ratings": {
+      "average": 4.3,
+      "count": 167
+    },
+    "reviewCount": 167,
+    "views": 734,
+    "salesCount": 234,
+    "unitType": "ml",
+    "isPerishable": true,
+    "origin": "Fresh Local",
+    "returnPolicyDays": 0
+  },
+  {
+    "_id": {
+      "$oid": "688ee792010dda98c35af823"
+    },
+    "title": "Watermelon Juice",
+    "name": "Watermelon Juice",
+    "slug": "watermelon-juice",
+    "description": "Super refreshing and hydrating watermelon juice. Natural, sweet and perfect for hot summer days. Rich in lycopene and naturally cooling.",
+    "shortDescription": "Refreshing and hydrating watermelon juice",
+    "price": 50,
+    "originalPrice": 55,
+    "discountPrice": 50,
+    "discount": 9.1,
+    "images": [
+      {
+        "url": "https://example.com/images/watermelon-juice.jpg",
+        "alt": "Fresh Watermelon Juice",
+        "isPrimary": true
+      }
+    ],
+   "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "tags": [
+      "watermelon",
+      "hydrating",
+      "summer drink",
+      "cooling",
+      "natural"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular (300ml)",
+        "price": 50,
+        "originalPrice": 55,
+        "discount": 9.1,
+        "stock": 40
+      },
+      {
+        "size": "Large (500ml)",
+        "price": 75,
+        "originalPrice": 80,
+        "discount": 6.3,
+        "stock": 35
+      }
+    ],
+    "stock": 75,
+    "lowStockThreshold": 15,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "ingredients": [
+      "Fresh Watermelon",
+      "Black Salt (optional)",
+      "Mint Leaves (optional)"
+    ],
+    "preparationTime": 3,
+    "isVegetarian": true,
+    "isVegan": true,
+    "spiceLevel": "None",
+    "storageInstructions": "Serve chilled immediately after preparation",
+    "ratings": {
+      "average": 4.5,
+      "count": 298
+    },
+    "reviewCount": 298,
+    "views": 1345,
+    "salesCount": 567,
+    "unitType": "ml",
+    "isPerishable": true,
+    "origin": "Fresh Local",
+    "returnPolicyDays": 0
+  },
+  {
+    "_id": {
+      "$oid": "688ee792010dda98c35af824"
+    },
+    "title": "Banana Shake",
+    "name": "Banana Shake",
+    "slug": "banana-shake",
+    "description": "Creamy and nutritious banana milkshake made with fresh bananas and milk. Rich in potassium and natural sugars, perfect energy drink.",
+    "shortDescription": "Creamy banana milkshake with fresh bananas",
+    "price": 65,
+    "originalPrice": 70,
+    "discountPrice": 65,
+    "discount": 7.1,
+    "images": [
+      {
+        "url": "https://example.com/images/banana-shake.jpg",
+        "alt": "Banana Shake",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "tags": [
+      "banana shake",
+      "milkshake",
+      "healthy",
+      "energy drink",
+      "creamy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular (300ml)",
+        "price": 65,
+        "originalPrice": 70,
+        "discount": 7.1,
+        "stock": 25
+      },
+      {
+        "size": "Large (500ml)",
+        "price": 95,
+        "originalPrice": 100,
+        "discount": 5.0,
+        "stock": 20
+      }
+    ],
+    "stock": 45,
+    "lowStockThreshold": 8,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "ingredients": [
+      "Fresh Banana",
+      "Milk",
+      "Sugar",
+      "Ice Cream (optional)",
+      "Nuts (optional)"
+    ],
+    "preparationTime": 4,
+    "isVegetarian": true,
+    "isVegan": false,
+    "spiceLevel": "None",
+    "storageInstructions": "Serve chilled immediately after preparation",
+    "ratings": {
+      "average": 4.4,
+      "count": 189
+    },
+    "reviewCount": 189,
+    "views": 876,
+    "salesCount": 345,
+    "unitType": "ml",
+    "isPerishable": true,
+    "origin": "Fresh Made",
+    "returnPolicyDays": 0
+  },
+  {
+    "_id": {
+      "$oid": "688ee792010dda98c35af825"
+    },
+    "title": "Chocolate Shake",
+    "name": "Chocolate Shake",
+    "slug": "chocolate-shake",
+    "description": "Rich and indulgent chocolate milkshake made with premium chocolate syrup, milk and ice cream. A perfect treat for chocolate lovers.",
+    "shortDescription": "Rich chocolate milkshake with ice cream",
+    "price": 85,
+    "originalPrice": 90,
+    "discountPrice": 85,
+    "discount": 5.6,
+    "images": [
+      {
+        "url": "https://example.com/images/chocolate-shake.jpg",
+        "alt": "Chocolate Shake",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "tags": [
+      "chocolate shake",
+      "milkshake",
+      "indulgent",
+      "dessert drink",
+      "rich"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular (300ml)",
+        "price": 85,
+        "originalPrice": 90,
+        "discount": 5.6,
+        "stock": 20
+      },
+      {
+        "size": "Large (500ml)",
+        "price": 120,
+        "originalPrice": 125,
+        "discount": 4.0,
+        "stock": 15
+      }
+    ],
+    "stock": 35,
+    "lowStockThreshold": 6,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": false,
+    "ingredients": [
+      "Milk",
+      "Chocolate Syrup",
+      "Vanilla Ice Cream",
+      "Whipped Cream",
+      "Cocoa Powder"
+    ],
+    "preparationTime": 5,
+    "isVegetarian": true,
+    "isVegan": false,
+    "spiceLevel": "None",
+    "storageInstructions": "Serve chilled immediately after preparation",
+    "ratings": {
+      "average": 4.5,
+      "count": 156
+    },
+    "reviewCount": 156,
+    "views": 678,
+    "salesCount": 267,
+    "unitType": "ml",
+    "isPerishable": true,
+    "origin": "Fresh Made",
+    "returnPolicyDays": 0
+  },
+  {
+    "_id": {
+      "$oid": "688ee792010dda98c35af826"
+    },
+    "title": "Strawberry Shake",
+    "name": "Strawberry Shake",
+    "slug": "strawberry-shake",
+    "description": "Creamy strawberry milkshake made with fresh strawberries, milk and ice cream. Sweet, fruity and visually appealing pink colored shake.",
+    "shortDescription": "Creamy strawberry milkshake with fresh fruit",
+    "price": 90,
+    "originalPrice": 95,
+    "discountPrice": 90,
+    "discount": 5.3,
+    "images": [
+      {
+        "url": "https://example.com/images/strawberry-shake.jpg",
+        "alt": "Strawberry Shake",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "tags": [
+      "strawberry shake",
+      "milkshake",
+      "fruity",
+      "pink",
+      "dessert drink"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular (300ml)",
+        "price": 90,
+        "originalPrice": 95,
+        "discount": 5.3,
+        "stock": 18
+      },
+      {
+        "size": "Large (500ml)",
+        "price": 130,
+        "originalPrice": 135,
+        "discount": 3.7,
+        "stock": 12
+      }
+    ],
+    "stock": 30,
+    "lowStockThreshold": 6,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": false,
+    "ingredients": [
+      "Fresh Strawberry",
+      "Milk",
+      "Sugar",
+      "Vanilla Ice Cream",
+      "Whipped Cream"
+    ],
+    "preparationTime": 5,
+    "isVegetarian": true,
+    "isVegan": false,
+    "spiceLevel": "None",
+    "storageInstructions": "Serve chilled immediately after preparation",
+    "ratings": {
+      "average": 4.3,
+      "count": 145
+    },
+    "reviewCount": 145,
+    "views": 567,
+    "salesCount": 189,
+    "unitType": "ml",
+    "isPerishable": true,
+    "origin": "Fresh Made",
+    "returnPolicyDays": 0
+  },
+  {
+    "_id": {
+      "$oid": "688ee792010dda98c35af827"
+    },
+    "title": "Vanilla Shake",
+    "name": "Vanilla Shake",
+    "slug": "vanilla-shake",
+    "description": "Classic vanilla milkshake with rich vanilla flavor and creamy texture. Made with premium vanilla ice cream and fresh milk for the perfect indulgent treat.",
+    "shortDescription": "Classic creamy vanilla milkshake",
+    "price": 80,
+    "originalPrice": 85,
+    "discountPrice": 80,
+    "discount": 5.9,
+    "images": [
+      {
+        "url": "https://example.com/images/vanilla-shake.jpg",
+        "alt": "Vanilla Shake",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "tags": [
+      "vanilla shake",
+      "milkshake",
+      "classic",
+      "creamy",
+      "dessert drink"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular (300ml)",
+        "price": 80,
+        "originalPrice": 85,
+        "discount": 5.9,
+        "stock": 22
+      },
+      {
+        "size": "Large (500ml)",
+        "price": 115,
+        "originalPrice": 120,
+        "discount": 4.2,
+        "stock": 18
+      }
+    ],
+    "stock": 40,
+    "lowStockThreshold": 8,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": true,
+    "ingredients": [
+      "Milk",
+      "Vanilla Ice Cream",
+      "Sugar",
+      "Vanilla Extract",
+      "Whipped Cream"
+    ],
+    "preparationTime": 4,
+    "isVegetarian": true,
+    "isVegan": false,
+    "spiceLevel": "None",
+    "storageInstructions": "Serve chilled immediately after preparation",
+    "ratings": {
+      "average": 4.2,
+      "count": 178
+    },
+    "reviewCount": 178,
+    "views": 678,
+    "salesCount": 234,
+    "unitType": "ml",
+    "isPerishable": true,
+    "origin": "Fresh Made",
+    "returnPolicyDays": 0
+  },
+  {
+    "_id": {
+      "$oid": "688ee792010dda98c35af828"
+    },
+    "title": "Cold Coffee",
+    "name": "Cold Coffee",
+    "slug": "cold-coffee",
+    "description": "Refreshing iced coffee made with strong coffee, milk, sugar and ice cream. Perfect blend of coffee flavor with creamy sweetness, ideal for coffee lovers.",
+    "shortDescription": "Refreshing iced coffee with milk and ice cream",
+    "price": 75,
+    "originalPrice": 80,
+    "discountPrice": 75,
+    "discount": 6.3,
+    "images": [
+      {
+        "url": "https://example.com/images/cold-coffee.jpg",
+        "alt": "Cold Coffee",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "tags": [
+      "cold coffee",
+      "iced coffee",
+      "caffeine",
+      "refreshing",
+      "coffee"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular (300ml)",
+        "price": 75,
+        "originalPrice": 80,
+        "discount": 6.3,
+        "stock": 25
+      },
+      {
+        "size": "Large (500ml)",
+        "price": 110,
+        "originalPrice": 115,
+        "discount": 4.3,
+        "stock": 20
+      }
+    ],
+    "stock": 45,
+    "lowStockThreshold": 8,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "ingredients": [
+      "Coffee",
+      "Milk",
+      "Sugar",
+      "Vanilla Ice Cream",
+      "Whipped Cream",
+      "Ice Cubes"
+    ],
+    "preparationTime": 5,
+    "isVegetarian": true,
+    "isVegan": false,
+    "spiceLevel": "None",
+    "storageInstructions": "Serve chilled immediately after preparation",
+    "ratings": {
+      "average": 4.4,
+      "count": 234
+    },
+    "reviewCount": 234,
+    "views": 987,
+    "salesCount": 456,
+    "unitType": "ml",
+    "isPerishable": true,
+    "origin": "Fresh Made",
+    "returnPolicyDays": 0
+  },
+  {
+    "_id": {
+      "$oid": "688ee792010dda98c35af829"
+    },
+    "title": "Ginger Tea",
+    "name": "Ginger Tea",
+    "slug": "ginger-tea",
+    "description": "Hot aromatic tea infused with fresh ginger. Known for its warming properties and digestive benefits. Perfect for cold weather or when feeling under the weather.",
+    "shortDescription": "Hot aromatic tea with fresh ginger",
+    "price": 25,
+    "originalPrice": 30,
+    "discountPrice": 25,
+    "discount": 16.7,
+    "images": [
+      {
+        "url": "https://example.com/images/ginger-tea.jpg",
+        "alt": "Ginger Tea",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "tags": [
+      "ginger tea",
+      "hot tea",
+      "healthy",
+      "warming",
+      "digestive"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular Cup",
+        "price": 25,
+        "originalPrice": 30,
+        "discount": 16.7,
+        "stock": 50
+      }
+    ],
+    "stock": 50,
+    "lowStockThreshold": 15,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": true,
+    "ingredients": [
+      "Tea Leaves",
+      "Fresh Ginger",
+      "Milk",
+      "Sugar",
+      "Cardamom"
+    ],
+    "preparationTime": 5,
+    "isVegetarian": true,
+    "isVegan": false,
+    "spiceLevel": "Medium",
+    "storageInstructions": "Serve hot immediately after preparation",
+    "ratings": {
+      "average": 4.3,
+      "count": 267
+    },
+    "reviewCount": 267,
+    "views": 1234,
+    "salesCount": 678,
+    "unitType": "cup",
+    "isPerishable": true,
+    "origin": "Indian Style",
+    "returnPolicyDays": 0
+  },
+  {
+    "_id": {
+      "$oid": "688ee792010dda98c35af830"
+    },
+    "title": "Chocolate Tea",
+    "name": "Chocolate Tea",
+    "slug": "chocolate-tea",
+    "description": "Unique blend of tea and chocolate flavors creating a comforting hot beverage. Sweet and aromatic with the richness of chocolate and warmth of tea.",
+    "shortDescription": "Hot tea blended with chocolate flavor",
+    "price": 35,
+    "originalPrice": 40,
+    "discountPrice": 35,
+    "discount": 12.5,
+    "images": [
+      {
+        "url": "https://example.com/images/chocolate-tea.jpg",
+        "alt": "Chocolate Tea",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "68b14f3debcbba39abe74440"
+    },
+    "tags": [
+      "chocolate tea",
+      "hot tea",
+      "unique",
+      "sweet",
+      "comforting"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular Cup",
+        "price": 35,
+        "originalPrice": 40,
+        "discount": 12.5,
+        "stock": 30
+      }
+    ],
+    "stock": 30,
+    "lowStockThreshold": 10,
+    "isActive": true,
+    "featured": false,
+    "isNew": true,
+    "isBestseller": false,
+    "ingredients": [
+      "Tea Leaves",
+      "Chocolate Powder",
+      "Milk",
+      "Sugar",
+      "Cocoa"
+    ],
+    "preparationTime": 6,
+    "isVegetarian": true,
+    "isVegan": false,
+    "spiceLevel": "None",
+    "storageInstructions": "Serve hot immediately after preparation",
+    "ratings": {
+      "average": 4.0,
+      "count": 78
+    },
+    "reviewCount": 78,
+    "views": 345,
+    "salesCount": 123,
+    "unitType": "cup",
+    "isPerishable": true,
+    "origin": "Fusion Style",
+    "returnPolicyDays": 0
+  }
+]

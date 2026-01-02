@@ -1,0 +1,59 @@
+User-agent: *
+Allow: /
+
+# Allow important pages
+Allow: /about
+Allow: /contact
+Allow: /products
+Allow: /meal-plans
+Allow: /groceries
+Allow: /cateroty1/foodzone
+Allow: /ghar/ka/khana
+
+# Block admin and sensitive areas
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /seller
+Disallow: /driver
+Disallow: /checkout
+Disallow: /payment
+Disallow: /profile
+Disallow: /orders
+Disallow: /wallet
+Disallow: /cart
+
+# Allow specific API endpoints that are needed for content loading
+Allow: /api/meal-plan/
+Allow: /api/products
+Allow: /api/category
+Allow: /api/homepage
+Allow: /api/reviews
+
+# Block sensitive API endpoints
+Disallow: /api/auth
+Disallow: /api/users
+Disallow: /api/admin
+Disallow: /api/seller
+Disallow: /api/drivers
+Disallow: /api/orders
+Disallow: /api/payments
+Disallow: /api/wallet
+Disallow: /api/cart
+Disallow: /api/wishlist
+Disallow: /api/upload
+Disallow: /api/subscriptions
+Disallow: /api/customizations
+Disallow: /api/hisaab
+
+# Allow static assets
+Allow: /assets/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.svg
+
+# Sitemap
+Sitemap: https://www.tastyaana.com/sitemap.xml

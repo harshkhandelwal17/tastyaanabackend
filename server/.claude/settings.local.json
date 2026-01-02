@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm start)",
+      "Read(/D:\\Products\\onlinestore\\frontend/**)",
+      "Read(/D:\\Products\\onlinestore\\frontend\\src\\components\\buyer/**)",
+      "Read(/D:\\Products\\onlinestore\\frontend\\src\\pages\\buyer/**)",
+      "Read(/D:\\Products\\onlinestore\\frontend\\src/**)",
+      "Bash(node:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,628 @@
+[
+  {
+    "title": "Aloo Paratha",
+    "name": "Aloo Paratha",
+    "slug": "Aloo-Paratha",
+    "description": "Delicious stuffed potato paratha made with fresh ingredients and aromatic spices. A traditional Indian flatbread perfect for breakfast or lunch.",
+    "shortDescription": "Traditional potato-stuffed Indian flatbread",
+    "price": 35,
+    "originalPrice": 35,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Aloo-paratha_dz65qs.jpg",
+        "alt": "Aloo Paratha",
+        "isPrimary": true
+      },
+    {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Aloo-paratha_dz65qs.jpg",
+        "alt": "Aloo Paratha",
+        "isPrimary": true
+      },
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Aloo-paratha_dz65qs.jpg",
+        "alt": "Aloo Paratha",
+        "isPrimary": true
+      }
+    ],
+    "weightOptions": [
+      {
+        "weight": "1 piece",
+        "price": 35,
+        "originalPrice": 35,
+        "discount": 0,
+        "stock": 50
+      }
+    ],
+    "stock": 50,
+    "isActive": true,
+    "featured": false,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed fresh and hot",
+    "ingredients": ["Wheat flour", "Potatoes", "Onions", "Spices", "Oil"],
+    "tags": ["paratha", "breakfast", "vegetarian", "indian", "traditional"]
+  },
+  {
+    "title": "Arrabbiata Pasta (Red Sauce)",
+    "name": "Arrabbiata Pasta (Red Sauce)",
+    "slug": "Arrabbiata-Pasta",
+    "description": "Spicy Italian pasta with a rich tomato-based arrabbiata sauce, garlic, and herbs. Perfect for those who love a kick of heat in their meal.",
+    "shortDescription": "Spicy Italian pasta with tomato-based red sauce",
+    "price": 130,
+    "originalPrice": 130,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Arrabbiata-Pasta_sawz4z.webp",
+        "alt": "Arrabbiata Pasta (Red Sauce)",
+        "isPrimary": true
+      },{
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Arrabbiata-Pasta_sawz4z.webp",
+        "alt": "Arrabbiata Pasta (Red Sauce)",
+        "isPrimary": true
+      },{
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Arrabbiata-Pasta_sawz4z.webp",
+        "alt": "Arrabbiata Pasta (Red Sauce)",
+        "isPrimary": true
+      }],
+    "weightOptions": [
+      {
+        "weight": "1 plate",
+        "price": 130,
+        "originalPrice": 130,
+        "discount": 0,
+        "stock": 30
+      }
+    ],
+    "stock": 30,
+    "isActive": true,
+    "featured": false,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot and fresh",
+    "ingredients": ["Pasta", "Tomatoes", "Garlic", "Red chili flakes", "Olive oil", "Herbs"],
+    "tags": ["pasta", "italian", "spicy", "red sauce", "arrabbiata"]
+  },
+  {
+    "title": "Alfredo Pasta (White Sauce)",
+    "name": "Alfredo Pasta (White Sauce)",
+    "slug": "Alfredo-Pasta",
+    "description": "Creamy and rich Alfredo pasta made with butter, cream, and parmesan cheese. A classic Italian comfort food that's indulgent and satisfying.",
+    "shortDescription": "Creamy Italian pasta with rich white Alfredo sauce",
+    "price": 130,
+    "originalPrice": 130,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252911/Alfredo-Pasta_pgmv4t.avif",
+        "alt": "Alfredo Pasta (White Sauce)",
+        "isPrimary": true
+      },
+    {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252911/Alfredo-Pasta_pgmv4t.avif",
+        "alt": "Alfredo Pasta (White Sauce)",
+        "isPrimary": true
+      }
+    ,
+{
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252911/Alfredo-Pasta_pgmv4t.avif",
+        "alt": "Alfredo Pasta (White Sauce)",
+        "isPrimary": true
+      }],
+    "weightOptions": [
+      {
+        "weight": "1 plate",
+        "price": 130,
+        "originalPrice": 130,
+        "discount": 0,
+        "stock": 30
+      }
+    ],
+    "stock": 30,
+    "isActive": true,
+    "featured": false,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot and fresh",
+    "ingredients": ["Pasta", "Butter", "Cream", "Parmesan cheese", "Garlic", "Black pepper"],
+    "tags": ["pasta", "italian", "creamy", "white sauce", "alfredo"]
+  },
+  {
+    "title": "Regular Pasta",
+    "name": "Regular Pasta",
+    "slug": "Regular-Pasta",
+    "description": "Simple and delicious pasta prepared with basic seasonings and herbs. A light and flavorful option for pasta lovers.",
+    "shortDescription": "Simple pasta with basic seasonings and herbs",
+    "price": 110,
+    "originalPrice": 110,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252909/regular-pasta_itv9hl.png",
+        "alt": "Regular Pasta",
+        "isPrimary": true
+      }],
+    "weightOptions": [
+      {
+        "weight": "1 plate",
+        "price": 110,
+        "originalPrice": 110,
+        "discount": 0,
+        "stock": 35
+      }
+    ],
+    "stock": 35,
+    "isActive": true,
+    "featured": false,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot and fresh",
+    "ingredients": ["Pasta", "Olive oil", "Garlic", "Herbs", "Salt", "Black pepper"],
+    "tags": ["pasta", "simple", "light", "herbs", "italian"]
+  },
+  {
+    "title": "Shahi Paneer",
+    "name": "Shahi Paneer",
+    "slug": "Shahi-Paneer",
+    "description": "Royal Indian curry made with cottage cheese cubes in a rich, creamy tomato and cashew gravy. A luxurious vegetarian dish fit for kings.",
+    "shortDescription": "Royal cottage cheese curry in rich creamy gravy",
+    "price": 230,
+    "originalPrice": 230,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252909/Shahi-Paneer_oi20yh.jpg",
+        "alt": "Shahi Paneer",
+        "isPrimary": true
+      },{
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252909/Shahi-Paneer_oi20yh.jpg",
+        "alt": "Shahi Paneer",
+        "isPrimary": true
+      },{
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252909/Shahi-Paneer_oi20yh.jpg",
+        "alt": "Shahi Paneer",
+        "isPrimary": true
+      }],
+    "weightOptions": [
+      {
+        "weight": "1 bowl",
+        "price": 230,
+        "originalPrice": 230,
+        "discount": 0,
+        "stock": 25
+      }
+    ],
+    "stock": 25,
+    "isActive": true,
+    "featured": true,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot",
+    "ingredients": ["Paneer", "Tomatoes", "Cashews", "Cream", "Onions", "Spices"],
+    "tags": ["paneer", "indian", "curry", "vegetarian", "royal", "creamy"]
+  },
+  {
+    "title": "Butter Paneer Masala",
+    "name": "Butter Paneer Masala",
+    "slug": "Butter-Paneer-Masala",
+    "description": "Popular Indian dish featuring soft paneer cubes in a rich, buttery tomato gravy. A restaurant-style favorite that's creamy and flavorful.",
+    "shortDescription": "Cottage cheese in rich buttery tomato gravy",
+    "price": 240,
+    "originalPrice": 240,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252909/Butter-Paneer-Masala_rxguct.jpg",
+        "alt": "Butter Paneer Masala",
+        "isPrimary": true
+      },
+    {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252909/Butter-Paneer-Masala_rxguct.jpg",
+        "alt": "Butter Paneer Masala",
+        "isPrimary": true
+      },{
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252909/Butter-Paneer-Masala_rxguct.jpg",
+        "alt": "Butter Paneer Masala",
+        "isPrimary": true
+      }
+    ],
+    "weightOptions": [
+      {
+        "weight": "1 bowl",
+        "price": 240,
+        "originalPrice": 240,
+        "discount": 0,
+        "stock": 25
+      }
+    ],
+    "stock": 25,
+    "isActive": true,
+    "featured": true,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot",
+    "ingredients": ["Paneer", "Butter", "Tomatoes", "Cream", "Onions", "Spices"],
+    "tags": ["paneer", "indian", "curry", "vegetarian", "butter", "masala"]
+  },
+  {
+    "title": "Jeera Rice",
+    "name": "Jeera Rice",
+    "slug": "Jeera-Rice",
+    "description": "Aromatic basmati rice cooked with cumin seeds and whole spices. A fragrant and flavorful rice dish that pairs perfectly with curries.",
+    "shortDescription": "Aromatic rice cooked with cumin seeds and spices",
+    "price": 110,
+    "originalPrice": 110,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252911/Jeera_Rice_pepyjz.png",
+        "alt": "Jeera Rice",
+        "isPrimary": true
+      },{
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252911/Jeera_Rice_pepyjz.png",
+        "alt": "Jeera Rice",
+        "isPrimary": true
+      },{
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252911/Jeera_Rice_pepyjz.png",
+        "alt": "Jeera Rice",
+        "isPrimary": true
+      }],
+    "weightOptions": [
+      {
+        "weight": "1 bowl",
+        "price": 110,
+        "originalPrice": 110,
+        "discount": 0,
+        "stock": 40
+      }
+    ],
+    "stock": 40,
+    "isActive": true,
+    "featured": false,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot",
+    "ingredients": ["Basmati rice", "Cumin seeds", "Ghee", "Salt", "Whole spices"],
+    "tags": ["rice", "indian", "aromatic", "cumin", "jeera", "basmati"]
+  },
+  {
+    "title": "Plain Rice",
+    "name": "Plain Rice",
+    "slug": "Plain-Rice",
+    "description": "Simple steamed basmati rice, perfectly cooked and fluffy. A staple accompaniment that goes well with all types of curries and dal.",
+    "shortDescription": "Simple steamed basmati rice",
+    "price": 90,
+    "originalPrice": 90,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Plain-Rice_fdctdq.webp",
+        "alt": "Plain Rice",
+        "isPrimary": true
+      },
+    {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Plain-Rice_fdctdq.webp",
+        "alt": "Plain Rice",
+        "isPrimary": true
+      },{
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Plain-Rice_fdctdq.webp",
+        "alt": "Plain Rice",
+        "isPrimary": true
+      }],
+    "weightOptions": [
+      {
+        "weight": "1 bowl",
+        "price": 90,
+        "originalPrice": 90,
+        "discount": 0,
+        "stock": 50
+      }
+    ],
+    "stock": 50,
+    "isActive": true,
+    "featured": false,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot",
+    "ingredients": ["Basmati rice", "Water", "Salt"],
+    "tags": ["rice", "plain", "steamed", "basmati", "simple"]
+  },
+  {
+    "title": "Butter Naan",
+    "name": "Butter Naan",
+    "slug": "Butter-Naan",
+    "description": "Soft and fluffy Indian bread brushed with butter and cooked in a tandoor. Perfect accompaniment for curries and gravies.",
+    "shortDescription": "Soft tandoor-baked bread brushed with butter",
+    "price": 50,
+    "originalPrice": 50,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Butter-Naan_mnx9do.png",
+        "alt": "Butter Naan",
+        "isPrimary": true
+      },
+    {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Butter-Naan_mnx9do.png",
+        "alt": "Butter Naan",
+        "isPrimary": true
+      },
+    {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Butter-Naan_mnx9do.png",
+        "alt": "Butter Naan",
+        "isPrimary": true
+      }],
+    "weightOptions": [
+      {
+        "weight": "1 piece",
+        "price": 50,
+        "originalPrice": 50,
+        "discount": 0,
+        "stock": 40
+      }
+    ],
+    "stock": 40,
+    "isActive": true,
+    "featured": false,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot and fresh",
+    "ingredients": ["Flour", "Yogurt", "Butter", "Baking powder", "Salt"],
+    "tags": ["naan", "bread", "indian", "tandoor", "butter"]
+  },
+  {
+    "title": "Tandoori Roti",
+    "name": "Tandoori Roti",
+    "slug": "Tandoori-Roti",
+    "description": "Traditional Indian whole wheat bread cooked in a tandoor oven. Soft, slightly smoky, and perfect with any curry or dal.",
+    "shortDescription": "Traditional whole wheat bread from tandoor",
+    "price": 12,
+    "originalPrice": 12,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Tandoori-Roti_bxxbdy.avif",
+        "alt": "Tandoori Roti",
+        "isPrimary": true
+      }, {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Tandoori-Roti_bxxbdy.avif",
+        "alt": "Tandoori Roti",
+        "isPrimary": true
+      }, {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252908/Tandoori-Roti_bxxbdy.avif",
+        "alt": "Tandoori Roti",
+        "isPrimary": true
+      }],
+    "weightOptions": [
+      {
+        "weight": "1 piece",
+        "price": 12,
+        "originalPrice": 12,
+        "discount": 0,
+        "stock": 60
+      }
+    ],
+    "stock": 60,
+    "isActive": true,
+    "featured": false,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot",
+    "ingredients": ["Whole wheat flour", "Water", "Salt"],
+    "tags": ["roti", "bread", "indian", "tandoor", "wheat"]
+  },
+  {
+    "title": "Tawa Roti",
+    "name": "Tawa Roti",
+    "slug": "Tawa-Roti",
+
+
+    "description": "Simple and healthy whole wheat flatbread cooked on a tawa (griddle). A staple Indian bread that's soft and nutritious.",
+    "shortDescription": "Simple whole wheat flatbread cooked on griddle",
+    "price": 10,
+    "originalPrice": 10,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Tawa-Roti_oa4c28.jpg",
+        "alt": "Tawa Roti",
+        "isPrimary": true
+      },
+       {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Tawa-Roti_oa4c28.jpg",
+        "alt": "Tawa Roti",
+        "isPrimary": true
+      }, {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Tawa-Roti_oa4c28.jpg",
+        "alt": "Tawa Roti",
+        "isPrimary": true
+      }
+    ],
+    "weightOptions": [
+      {
+        "weight": "1 piece",
+        "price": 10,
+        "originalPrice": 10,
+        "discount": 0,
+        "stock": 80
+      }
+    ],
+    "stock": 80,
+    "isActive": true,
+    "featured": false,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot",
+    "ingredients": ["Whole wheat flour", "Water", "Salt"],
+    "tags": ["roti", "bread", "indian", "tawa", "wheat", "healthy"]
+  },
+  {
+    "title": "Sev Tamatar",
+    "name": "Sev Tamatar",
+    "slug": "Sev-Tamatar",
+    "description": "Traditional Gujarati curry made with tomatoes and topped with crispy sev. A tangy and flavorful vegetarian dish with a unique texture.",
+    "shortDescription": "Traditional tomato curry topped with crispy sev",
+    "price": 120,
+    "originalPrice": 120,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Sev-Tamatar_falwbb.jpg",
+        "alt": "Sev Tamatar",
+        "isPrimary": true
+      }, {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Sev-Tamatar_falwbb.jpg",
+        "alt": "Sev Tamatar",
+        "isPrimary": true
+      }, {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Sev-Tamatar_falwbb.jpg",
+        "alt": "Sev Tamatar",
+        "isPrimary": true
+      }],
+    "weightOptions": [
+      {
+        "weight": "1 bowl",
+        "price": 120,
+        "originalPrice": 120,
+        "discount": 0,
+        "stock": 30
+      }
+    ],
+    "stock": 30,
+    "isActive": true,
+    "featured": false,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot",
+    "ingredients": ["Tomatoes", "Sev", "Onions", "Spices", "Oil"],
+    "tags": ["gujarati", "curry", "vegetarian", "tomato", "sev", "traditional"]
+  },
+  {
+    "title": "Daily Thali",
+    "name": "Daily Thali",
+    "slug": "Daily-Thali",
+    "description": "Complete Indian meal with rice, dal, vegetables, roti, and accompaniments. A wholesome and balanced meal perfect for daily dining.",
+    "shortDescription": "Complete Indian meal with rice, dal, vegetables, and roti",
+    "price": 80,
+    "originalPrice": 80,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Daily-Thali_zwsqee.jpg",
+        "alt": "Daily Thali",
+        "isPrimary": true
+      },
+     {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Daily-Thali_zwsqee.jpg",
+        "alt": "Daily Thali",
+        "isPrimary": true
+      },
+     {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Daily-Thali_zwsqee.jpg",
+        "alt": "Daily Thali",
+        "isPrimary": true
+      }],
+    "weightOptions": [
+      {
+        "weight": "1 thali",
+        "price": 80,
+        "originalPrice": 80,
+        "discount": 0,
+        "stock": 20
+      }
+    ],
+    "stock": 20,
+    "isActive": true,
+    "featured": false,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot and fresh",
+    "ingredients": ["Rice", "Dal", "Vegetables", "Roti", "Pickle", "Papad"],
+    "tags": ["thali", "complete meal", "indian", "vegetarian", "balanced", "daily"]
+  },
+  {
+    "title": "Daily Special Thali",
+    "name": "Daily Special Thali",
+    "slug": "Daily Special Thali",
+    "description": "Enhanced version of daily thali with premium ingredients and additional items. Includes special curry, dessert, and premium accompaniments.",
+    "shortDescription": "Premium thali with special curry, dessert, and extra items",
+    "price": 100,
+    "originalPrice": 100,
+    "discount": 0,
+    "category": "688fb41ebea1c163a6eda193",
+    "seller": "687242b702db822f91b13586",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Daily-Special-Thali_db8etl.png",
+        "alt": "Daily Special Thali",
+        "isPrimary": true
+      },
+       {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Daily-Special-Thali_db8etl.png",
+        "alt": "Daily Special Thali",
+        "isPrimary": true
+      },   {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Daily-Special-Thali_db8etl.png",
+        "alt": "Daily Special Thali",
+        "isPrimary": true
+      }],
+    "weightOptions": [
+      {
+        "weight": "1 thali",
+        "price": 100,
+        "originalPrice": 150,
+        "discount": 50,
+        "stock": 100
+      }
+    ],
+    "stock": 15,
+    "isActive": true,
+    "featured": true,
+    "unitType": "piece",
+    "isPerishable": true,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot and fresh",
+    "ingredients": ["Rice", "Dal", "Special curry", "Vegetables", "Roti", "Dessert", "Pickle", "Papad"],
+    "tags": ["thali", "special", "complete meal", "indian", "vegetarian", "premium", "dessert"]
+  }
+]

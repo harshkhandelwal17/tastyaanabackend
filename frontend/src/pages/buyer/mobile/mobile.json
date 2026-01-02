@@ -1,0 +1,882 @@
+{
+  "phones": [
+    {
+      "id": "iphone-15-pro-max",
+      "brand": "Apple",
+      "model": "iPhone 15 Pro Max",
+      "category": "smartphone",
+      "condition": "new",
+      "specifications": {
+        "display": {
+          "size": "6.7 inches",
+          "resolution": "2796 x 1290",
+          "type": "Super Retina XDR OLED"
+        },
+        "processor": "A17 Pro",
+        "storage": ["256GB", "512GB", "1TB"],
+        "ram": "8GB",
+        "camera": {
+          "rear": "48MP Main + 12MP Ultra Wide + 12MP Telephoto",
+          "front": "12MP TrueDepth"
+        },
+        "battery": "4441 mAh",
+        "os": "iOS 17",
+        "connectivity": ["5G", "WiFi 6E", "Bluetooth 5.3"],
+        "colors": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"]
+      },
+      "pricing": {
+        "new": {
+          "256GB": 1199,
+          "512GB": 1399,
+          "1TB": 1599
+        },
+        "used": {
+          "excellent": {
+            "256GB": 999,
+            "512GB": 1199,
+            "1TB": 1399
+          },
+          "good": {
+            "256GB": 899,
+            "512GB": 1099,
+            "1TB": 1299
+          },
+          "fair": {
+            "256GB": 799,
+            "512GB": 999,
+            "1TB": 1199
+          }
+        }
+      },
+      "availability": {
+        "inStock": true,
+        "quantity": 25,
+        "location": ["New York", "Los Angeles", "Chicago"]
+      },
+      "seller": {
+        "type": "retailer",
+        "name": "TechStore NYC",
+        "rating": 4.8,
+        "verified": true
+      },
+      "images": {
+        "primary": "https://example.com/images/iphone-15-pro-max-primary.jpg",
+        "gallery": [
+          "https://example.com/images/iphone-15-pro-max-front.jpg",
+          "https://example.com/images/iphone-15-pro-max-back.jpg",
+          "https://example.com/images/iphone-15-pro-max-side.jpg",
+          "https://example.com/images/iphone-15-pro-max-camera.jpg",
+          "https://example.com/images/iphone-15-pro-max-box.jpg"
+        ],
+        "views": {
+          "front": "https://example.com/images/iphone-15-pro-max-front.jpg",
+          "back": "https://example.com/images/iphone-15-pro-max-back.jpg",
+          "side": "https://example.com/images/iphone-15-pro-max-side.jpg",
+          "camera": "https://example.com/images/iphone-15-pro-max-camera.jpg",
+          "screen": "https://example.com/images/iphone-15-pro-max-screen.jpg",
+          "unboxing": "https://example.com/images/iphone-15-pro-max-box.jpg"
+        }
+      },
+      "warranty": {
+        "duration": "1 year",
+        "type": "manufacturer"
+      },
+      "listedDate": "2025-08-15T10:30:00Z"
+    },
+    {
+      "id": "iphone-15-pro",
+      "brand": "Apple",
+      "model": "iPhone 15 Pro",
+      "category": "smartphone",
+      "condition": "new",
+      "specifications": {
+        "display": {
+          "size": "6.1 inches",
+          "resolution": "2556 x 1179",
+          "type": "Super Retina XDR OLED"
+        },
+        "processor": "A17 Pro",
+        "storage": ["128GB", "256GB", "512GB", "1TB"],
+        "ram": "8GB",
+        "camera": {
+          "rear": "48MP Main + 12MP Ultra Wide + 12MP Telephoto",
+          "front": "12MP TrueDepth"
+        },
+        "battery": "3274 mAh",
+        "os": "iOS 17",
+        "connectivity": ["5G", "WiFi 6E", "Bluetooth 5.3"],
+        "colors": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"]
+      },
+      "pricing": {
+        "new": {
+          "128GB": 999,
+          "256GB": 1099,
+          "512GB": 1299,
+          "1TB": 1499
+        },
+        "used": {
+          "excellent": {
+            "128GB": 799,
+            "256GB": 899,
+            "512GB": 1099,
+            "1TB": 1299
+          },
+          "good": {
+            "128GB": 699,
+            "256GB": 799,
+            "512GB": 999,
+            "1TB": 1199
+          },
+          "fair": {
+            "128GB": 599,
+            "256GB": 699,
+            "512GB": 899,
+            "1TB": 1099
+          }
+        }
+      },
+      "availability": {
+        "inStock": true,
+        "quantity": 15,
+        "location": ["New York", "Miami"]
+      },
+      "seller": {
+        "type": "retailer",
+        "name": "TechStore NYC",
+        "rating": 4.8,
+        "verified": true
+      },
+      "images": {
+        "primary": "https://example.com/images/iphone-15-pro-primary.jpg",
+        "gallery": [
+          "https://example.com/images/iphone-15-pro-front.jpg",
+          "https://example.com/images/iphone-15-pro-back.jpg",
+          "https://example.com/images/iphone-15-pro-side.jpg",
+          "https://example.com/images/iphone-15-pro-camera.jpg"
+        ],
+        "views": {
+          "front": "https://example.com/images/iphone-15-pro-front.jpg",
+          "back": "https://example.com/images/iphone-15-pro-back.jpg",
+          "side": "https://example.com/images/iphone-15-pro-side.jpg",
+          "camera": "https://example.com/images/iphone-15-pro-camera.jpg",
+          "screen": "https://example.com/images/iphone-15-pro-screen.jpg"
+        }
+      },
+      "warranty": {
+        "duration": "1 year",
+        "type": "manufacturer"
+      },
+      "listedDate": "2025-08-15T10:30:00Z"
+    },
+    {
+      "id": "iphone-14-pro",
+      "brand": "Apple",
+      "model": "iPhone 14 Pro",
+      "category": "smartphone",
+      "condition": "used",
+      "specifications": {
+        "display": {
+          "size": "6.1 inches",
+          "resolution": "2556 x 1179",
+          "type": "Super Retina XDR OLED"
+        },
+        "processor": "A16 Bionic",
+        "storage": ["128GB", "256GB", "512GB", "1TB"],
+        "ram": "6GB",
+        "camera": {
+          "rear": "48MP Main + 12MP Ultra Wide + 12MP Telephoto",
+          "front": "12MP TrueDepth"
+        },
+        "battery": "3200 mAh",
+        "os": "iOS 16",
+        "connectivity": ["5G", "WiFi 6", "Bluetooth 5.3"],
+        "colors": ["Deep Purple", "Gold", "Silver", "Space Black"]
+      },
+      "pricing": {
+        "used": {
+          "excellent": {
+            "128GB": 699,
+            "256GB": 799,
+            "512GB": 999,
+            "1TB": 1199
+          },
+          "good": {
+            "128GB": 599,
+            "256GB": 699,
+            "512GB": 899,
+            "1TB": 1099
+          }
+        }
+      },
+      "availability": {
+        "inStock": true,
+        "quantity": 8,
+        "location": ["San Francisco"]
+      },
+      "seller": {
+        "type": "individual",
+        "name": "John D.",
+        "rating": 4.5,
+        "verified": true
+      },
+      "images": {
+        "primary": "https://example.com/images/iphone-14-pro-used-primary.jpg",
+        "gallery": [
+          "https://example.com/images/iphone-14-pro-used-front.jpg",
+          "https://example.com/images/iphone-14-pro-used-back.jpg",
+          "https://example.com/images/iphone-14-pro-used-condition.jpg"
+        ],
+        "views": {
+          "front": "https://example.com/images/iphone-14-pro-used-front.jpg",
+          "back": "https://example.com/images/iphone-14-pro-used-back.jpg",
+          "side": "https://example.com/images/iphone-14-pro-used-side.jpg",
+          "condition": "https://example.com/images/iphone-14-pro-used-condition.jpg"
+        }
+      },
+      "warranty": {
+        "duration": "30 days",
+        "type": "seller"
+      },
+      "listedDate": "2025-08-28T14:20:00Z"
+    },
+    {
+      "id": "iphone-13",
+      "brand": "Apple",
+      "model": "iPhone 13",
+      "category": "smartphone",
+      "condition": "refurbished",
+      "specifications": {
+        "display": {
+          "size": "6.1 inches",
+          "resolution": "2532 x 1170",
+          "type": "Super Retina XDR OLED"
+        },
+        "processor": "A15 Bionic",
+        "storage": ["128GB", "256GB", "512GB"],
+        "ram": "4GB",
+        "camera": {
+          "rear": "12MP Dual Camera System",
+          "front": "12MP TrueDepth"
+        },
+        "battery": "3240 mAh",
+        "os": "iOS 15",
+        "connectivity": ["5G", "WiFi 6", "Bluetooth 5.0"],
+        "colors": ["Pink", "Blue", "Midnight", "Starlight", "Red"]
+      },
+      "pricing": {
+        "refurbished": {
+          "128GB": 449,
+          "256GB": 549,
+          "512GB": 649
+        }
+      },
+      "availability": {
+        "inStock": true,
+        "quantity": 12,
+        "location": ["Dallas", "Houston"]
+      },
+      "seller": {
+        "type": "retailer",
+        "name": "RefurbTech Solutions",
+        "rating": 4.6,
+        "verified": true
+      },
+      "images": {
+        "primary": "https://example.com/images/iphone-13-refurb-primary.jpg",
+        "gallery": [
+          "https://example.com/images/iphone-13-refurb-front.jpg",
+          "https://example.com/images/iphone-13-refurb-back.jpg",
+          "https://example.com/images/iphone-13-refurb-side.jpg",
+          "https://example.com/images/iphone-13-refurb-box.jpg"
+        ],
+        "views": {
+          "front": "https://example.com/images/iphone-13-refurb-front.jpg",
+          "back": "https://example.com/images/iphone-13-refurb-back.jpg",
+          "side": "https://example.com/images/iphone-13-refurb-side.jpg",
+          "screen": "https://example.com/images/iphone-13-refurb-screen.jpg",
+          "packaging": "https://example.com/images/iphone-13-refurb-box.jpg"
+        }
+      },
+      "warranty": {
+        "duration": "6 months",
+        "type": "seller"
+      },
+      "listedDate": "2025-08-20T09:15:00Z"
+    },
+    {
+      "id": "samsung-s25-ultra",
+      "brand": "Samsung",
+      "model": "Galaxy S25 Ultra",
+      "category": "smartphone",
+      "condition": "new",
+      "specifications": {
+        "display": {
+          "size": "6.8 inches",
+          "resolution": "3200 x 1440",
+          "type": "Dynamic AMOLED 2X"
+        },
+        "processor": "Snapdragon 8 Gen 4",
+        "storage": ["256GB", "512GB", "1TB"],
+        "ram": "12GB",
+        "camera": {
+          "rear": "200MP Main + 50MP Periscope + 10MP Telephoto + 12MP Ultra Wide",
+          "front": "12MP"
+        },
+        "battery": "5000 mAh",
+        "os": "Android 15",
+        "connectivity": ["5G", "WiFi 7", "Bluetooth 5.4"],
+        "colors": ["Titanium Black", "Titanium Gray", "Titanium Violet", "Titanium Yellow"],
+        "spen": true
+      },
+      "pricing": {
+        "new": {
+          "256GB": 1299,
+          "512GB": 1419,
+          "1TB": 1659
+        }
+      },
+      "availability": {
+        "inStock": true,
+        "quantity": 20,
+        "location": ["Atlanta", "Seattle"]
+      },
+      "seller": {
+        "type": "retailer",
+        "name": "Samsung Official Store",
+        "rating": 4.9,
+        "verified": true
+      },
+      "images": {
+        "primary": "https://example.com/images/samsung-s25-ultra-primary.jpg",
+        "gallery": [
+          "https://example.com/images/samsung-s25-ultra-front.jpg",
+          "https://example.com/images/samsung-s25-ultra-back.jpg",
+          "https://example.com/images/samsung-s25-ultra-side.jpg",
+          "https://example.com/images/samsung-s25-ultra-camera.jpg"
+        ],
+        "views": {
+          "front": "https://example.com/images/samsung-s25-ultra-front.jpg",
+          "back": "https://example.com/images/samsung-s25-ultra-back.jpg",
+          "side": "https://example.com/images/samsung-s25-ultra-side.jpg",
+          "camera": "https://example.com/images/samsung-s25-ultra-camera.jpg",
+          "screen": "https://example.com/images/samsung-s25-ultra-screen.jpg"
+        }
+      },
+      "warranty": {
+        "duration": "1 year",
+        "type": "manufacturer"
+      },
+      "listedDate": "2025-08-25T11:00:00Z"
+    },
+    {
+      "id": "samsung-s25",
+      "brand": "Samsung",
+      "model": "Galaxy S25",
+      "category": "smartphone",
+      "condition": "new",
+      "specifications": {
+        "display": {
+          "size": "6.2 inches",
+          "resolution": "2340 x 1080",
+          "type": "Dynamic AMOLED 2X"
+        },
+        "processor": "Snapdragon 8 Gen 4",
+        "storage": ["128GB", "256GB", "512GB"],
+        "ram": "8GB",
+        "camera": {
+          "rear": "50MP Main + 12MP Ultra Wide + 10MP Telephoto",
+          "front": "12MP"
+        },
+        "battery": "4000 mAh",
+        "os": "Android 15",
+        "connectivity": ["5G", "WiFi 6E", "Bluetooth 5.3"],
+        "colors": ["Phantom Black", "Cream", "Lavender", "Mint"]
+      },
+      "pricing": {
+        "new": {
+          "128GB": 799,
+          "256GB": 859,
+          "512GB": 979
+        }
+      },
+      "availability": {
+        "inStock": true,
+        "quantity": 30,
+        "location": ["Boston", "Denver"]
+      },
+      "seller": {
+        "type": "retailer",
+        "name": "Samsung Official Store",
+        "rating": 4.9,
+        "verified": true
+      },
+      "images": {
+        "primary": "https://example.com/images/samsung-s25-primary.jpg",
+        "gallery": [
+          "https://example.com/images/samsung-s25-front.jpg",
+          "https://example.com/images/samsung-s25-back.jpg",
+          "https://example.com/images/samsung-s25-side.jpg"
+        ],
+        "views": {
+          "front": "https://example.com/images/samsung-s25-front.jpg",
+          "back": "https://example.com/images/samsung-s25-back.jpg",
+          "side": "https://example.com/images/samsung-s25-side.jpg",
+          "screen": "https://example.com/images/samsung-s25-screen.jpg"
+        }
+      },
+      "warranty": {
+        "duration": "1 year",
+        "type": "manufacturer"
+      },
+      "listedDate": "2025-08-25T11:00:00Z"
+    },
+    {
+      "id": "samsung-galaxy-z-flip-6",
+      "brand": "Samsung",
+      "model": "Galaxy Z Flip 6",
+      "category": "foldable",
+      "condition": "new",
+      "specifications": {
+        "display": {
+          "main": {
+            "size": "6.7 inches",
+            "resolution": "2640 x 1080",
+            "type": "Dynamic AMOLED 2X"
+          },
+          "cover": {
+            "size": "3.4 inches",
+            "resolution": "748 x 720",
+            "type": "Super AMOLED"
+          }
+        },
+        "processor": "Snapdragon 8 Gen 3",
+        "storage": ["256GB", "512GB"],
+        "ram": "12GB",
+        "camera": {
+          "rear": "50MP Main + 12MP Ultra Wide",
+          "front": "10MP"
+        },
+        "battery": "4000 mAh",
+        "os": "Android 14",
+        "connectivity": ["5G", "WiFi 6E", "Bluetooth 5.3"],
+        "colors": ["Silver Shadow", "Yellow", "Mint", "Blue"],
+        "foldable": true
+      },
+      "pricing": {
+        "new": {
+          "256GB": 1099,
+          "512GB": 1219
+        }
+      },
+      "availability": {
+        "inStock": true,
+        "quantity": 18,
+        "location": ["Phoenix", "Portland"]
+      },
+      "seller": {
+        "type": "retailer",
+        "name": "Samsung Official Store",
+        "rating": 4.9,
+        "verified": true
+      },
+      "images": {
+        "primary": "https://example.com/images/samsung-z-flip-6-primary.jpg",
+        "gallery": [
+          "https://example.com/images/samsung-z-flip-6-folded.jpg",
+          "https://example.com/images/samsung-z-flip-6-unfolded.jpg",
+          "https://example.com/images/samsung-z-flip-6-cover.jpg",
+          "https://example.com/images/samsung-z-flip-6-camera.jpg"
+        ],
+        "views": {
+          "folded": "https://example.com/images/samsung-z-flip-6-folded.jpg",
+          "unfolded": "https://example.com/images/samsung-z-flip-6-unfolded.jpg",
+          "cover": "https://example.com/images/samsung-z-flip-6-cover.jpg",
+          "camera": "https://example.com/images/samsung-z-flip-6-camera.jpg"
+        }
+      },
+      "warranty": {
+        "duration": "1 year",
+        "type": "manufacturer"
+      },
+      "listedDate": "2025-08-22T16:45:00Z"
+    },
+    {
+      "id": "samsung-galaxy-z-flip-5",
+      "brand": "Samsung",
+      "model": "Galaxy Z Flip 5",
+      "category": "foldable",
+      "condition": "used",
+      "specifications": {
+        "display": {
+          "main": {
+            "size": "6.7 inches",
+            "resolution": "2640 x 1080",
+            "type": "Dynamic AMOLED 2X"
+          },
+          "cover": {
+            "size": "3.4 inches",
+            "resolution": "748 x 720",
+            "type": "Super AMOLED"
+          }
+        },
+        "processor": "Snapdragon 8 Gen 2",
+        "storage": ["256GB", "512GB"],
+        "ram": "8GB",
+        "camera": {
+          "rear": "12MP Dual Camera",
+          "front": "10MP"
+        },
+        "battery": "3700 mAh",
+        "os": "Android 13",
+        "connectivity": ["5G", "WiFi 6E", "Bluetooth 5.3"],
+        "colors": ["Mint", "Lavender", "Cream", "Graphite"],
+        "foldable": true
+      },
+      "pricing": {
+        "used": {
+          "excellent": {
+            "256GB": 699,
+            "512GB": 799
+          },
+          "good": {
+            "256GB": 599,
+            "512GB": 699
+          },
+          "fair": {
+            "256GB": 499,
+            "512GB": 599
+          }
+        }
+      },
+      "availability": {
+        "inStock": true,
+        "quantity": 5,
+        "location": ["Austin"]
+      },
+      "seller": {
+        "type": "individual",
+        "name": "Sarah M.",
+        "rating": 4.7,
+        "verified": true
+      },
+      "images": {
+        "primary": "https://example.com/images/samsung-z-flip-5-used-primary.jpg",
+        "gallery": [
+          "https://example.com/images/samsung-z-flip-5-used-folded.jpg",
+          "https://example.com/images/samsung-z-flip-5-used-unfolded.jpg",
+          "https://example.com/images/samsung-z-flip-5-used-condition.jpg"
+        ],
+        "views": {
+          "folded": "https://example.com/images/samsung-z-flip-5-used-folded.jpg",
+          "unfolded": "https://example.com/images/samsung-z-flip-5-used-unfolded.jpg",
+          "condition": "https://example.com/images/samsung-z-flip-5-used-condition.jpg"
+        }
+      },
+      "warranty": {
+        "duration": "30 days",
+        "type": "seller"
+      },
+      "listedDate": "2025-08-30T19:22:00Z"
+    },
+    {
+      "id": "samsung-galaxy-z-flip-4",
+      "brand": "Samsung",
+      "model": "Galaxy Z Flip 4",
+      "category": "foldable",
+      "condition": "refurbished",
+      "specifications": {
+        "display": {
+          "main": {
+            "size": "6.7 inches",
+            "resolution": "2640 x 1080",
+            "type": "Dynamic AMOLED 2X"
+          },
+          "cover": {
+            "size": "1.9 inches",
+            "resolution": "260 x 512",
+            "type": "Super AMOLED"
+          }
+        },
+        "processor": "Snapdragon 8+ Gen 1",
+        "storage": ["128GB", "256GB", "512GB"],
+        "ram": "8GB",
+        "camera": {
+          "rear": "12MP Dual Camera",
+          "front": "10MP"
+        },
+        "battery": "3700 mAh",
+        "os": "Android 12",
+        "connectivity": ["5G", "WiFi 6", "Bluetooth 5.2"],
+        "colors": ["Bora Purple", "Graphite", "Pink Gold", "Blue"],
+        "foldable": true
+      },
+      "pricing": {
+        "refurbished": {
+          "128GB": 449,
+          "256GB": 549,
+          "512GB": 649
+        }
+      },
+      "availability": {
+        "inStock": true,
+        "quantity": 10,
+        "location": ["Las Vegas", "Orlando"]
+      },
+      "seller": {
+        "type": "retailer",
+        "name": "RefurbTech Solutions",
+        "rating": 4.6,
+        "verified": true
+      },
+      "images": {
+        "primary": "https://example.com/images/samsung-z-flip-4-refurb-primary.jpg",
+        "gallery": [
+          "https://example.com/images/samsung-z-flip-4-refurb-folded.jpg",
+          "https://example.com/images/samsung-z-flip-4-refurb-unfolded.jpg",
+          "https://example.com/images/samsung-z-flip-4-refurb-box.jpg"
+        ],
+        "views": {
+          "folded": "https://example.com/images/samsung-z-flip-4-refurb-folded.jpg",
+          "unfolded": "https://example.com/images/samsung-z-flip-4-refurb-unfolded.jpg",
+          "packaging": "https://example.com/images/samsung-z-flip-4-refurb-box.jpg"
+        }
+      },
+      "warranty": {
+        "duration": "6 months",
+        "type": "seller"
+      },
+      "listedDate": "2025-08-18T13:10:00Z"
+    },
+    {
+      "id": "google-pixel-8-pro",
+      "brand": "Google",
+      "model": "Pixel 8 Pro",
+      "category": "smartphone",
+      "condition": "new",
+      "specifications": {
+        "display": {
+          "size": "6.7 inches",
+          "resolution": "2992 x 1344",
+          "type": "LTPO OLED"
+        },
+        "processor": "Google Tensor G3",
+        "storage": ["128GB", "256GB", "512GB", "1TB"],
+        "ram": "12GB",
+        "camera": {
+          "rear": "50MP Main + 48MP Ultra Wide + 48MP Telephoto",
+          "front": "10.5MP"
+        },
+        "battery": "5050 mAh",
+        "os": "Android 14",
+        "connectivity": ["5G", "WiFi 7", "Bluetooth 5.3"],
+        "colors": ["Obsidian", "Porcelain", "Bay"]
+      },
+      "pricing": {
+        "new": {
+          "128GB": 999,
+          "256GB": 1059,
+          "512GB": 1179,
+          "1TB": 1399
+        }
+      },
+      "availability": {
+        "inStock": true,
+        "quantity": 22,
+        "location": ["Mountain View", "San Jose"]
+      },
+      "seller": {
+        "type": "retailer",
+        "name": "Google Store",
+        "rating": 4.8,
+        "verified": true
+      },
+      "images": {
+        "primary": "https://example.com/images/pixel-8-pro-primary.jpg",
+        "gallery": [
+          "https://example.com/images/pixel-8-pro-front.jpg",
+          "https://example.com/images/pixel-8-pro-back.jpg",
+          "https://example.com/images/pixel-8-pro-side.jpg",
+          "https://example.com/images/pixel-8-pro-camera.jpg"
+        ],
+        "views": {
+          "front": "https://example.com/images/pixel-8-pro-front.jpg",
+          "back": "https://example.com/images/pixel-8-pro-back.jpg",
+          "side": "https://example.com/images/pixel-8-pro-side.jpg",
+          "camera": "https://example.com/images/pixel-8-pro-camera.jpg",
+          "screen": "https://example.com/images/pixel-8-pro-screen.jpg"
+        }
+      },
+      "warranty": {
+        "duration": "1 year",
+        "type": "manufacturer"
+      },
+      "listedDate": "2025-08-19T08:30:00Z"
+    },
+    {
+      "id": "google-pixel-6",
+      "brand": "Google",
+      "model": "Pixel 6",
+      "category": "smartphone",
+      "condition": "used",
+      "specifications": {
+        "display": {
+          "size": "6.4 inches",
+          "resolution": "2400 x 1080",
+          "type": "AMOLED"
+        },
+        "processor": "Google Tensor",
+        "storage": ["128GB", "256GB"],
+        "ram": "8GB",
+        "camera": {
+          "rear": "50MP Main + 12MP Ultra Wide",
+          "front": "8MP"
+        },
+        "battery": "4614 mAh",
+        "os": "Android 12",
+        "connectivity": ["5G", "WiFi 6E", "Bluetooth 5.2"],
+        "colors": ["Stormy Black", "Kinda Coral", "Sorta Seafoam"]
+      },
+      "pricing": {
+        "used": {
+          "excellent": {
+            "128GB": 299,
+            "256GB": 349
+          },
+          "good": {
+            "128GB": 249,
+            "256GB": 299
+          },
+          "fair": {
+            "128GB": 199,
+            "256GB": 249
+          }
+        }
+      },
+      "availability": {
+        "inStock": true,
+        "quantity": 7,
+        "location": ["Nashville"]
+      },
+      "seller": {
+        "type": "individual",
+        "name": "Mike R.",
+        "rating": 4.3,
+        "verified": true
+      },
+      "images": {
+        "primary": "https://example.com/images/pixel-6-used-primary.jpg",
+        "gallery": [
+          "https://example.com/images/pixel-6-used-front.jpg",
+          "https://example.com/images/pixel-6-used-back.jpg",
+          "https://example.com/images/pixel-6-used-condition.jpg"
+        ],
+        "views": {
+          "front": "https://example.com/images/pixel-6-used-front.jpg",
+          "back": "https://example.com/images/pixel-6-used-back.jpg",
+          "condition": "https://example.com/images/pixel-6-used-condition.jpg"
+        }
+      },
+      "warranty": {
+        "duration": "14 days",
+        "type": "seller"
+      },
+      "listedDate": "2025-08-29T20:15:00Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "smartphone",
+      "name": "Smartphones",
+      "description": "Traditional smartphones with single displays"
+    },
+    {
+      "id": "foldable",
+      "name": "Foldable Phones",
+      "description": "Phones with foldable displays and dual screen functionality"
+    }
+  ],
+  "conditions": [
+    {
+      "id": "new",
+      "name": "Brand New",
+      "description": "Unopened, factory sealed with full manufacturer warranty"
+    },
+    {
+      "id": "refurbished",
+      "name": "Certified Refurbished",
+      "description": "Professionally restored to like-new condition with warranty"
+    },
+    {
+      "id": "used",
+      "name": "Used",
+      "subConditions": [
+        {
+          "id": "excellent",
+          "name": "Excellent",
+          "description": "Minimal wear, fully functional, like new appearance"
+        },
+        {
+          "id": "good",
+          "name": "Good",
+          "description": "Light wear, fully functional, minor cosmetic imperfections"
+        },
+        {
+          "id": "fair",
+          "name": "Fair",
+          "description": "Moderate wear, fully functional, visible cosmetic damage"
+        }
+      ]
+    }
+  ],
+  "sellerTypes": [
+    {
+      "id": "retailer",
+      "name": "Authorized Retailer",
+      "description": "Official stores and authorized dealers"
+    },
+    {
+      "id": "individual",
+      "name": "Individual Seller",
+      "description": "Private individuals selling their personal devices"
+    }
+  ],
+  "filters": {
+    "brands": ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi", "Nothing"],
+    "priceRanges": [
+      {"min": 0, "max": 300, "label": "Under $300"},
+      {"min": 300, "max": 600, "label": "$300 - $600"},
+      {"min": 600, "max": 900, "label": "$600 - $900"},
+      {"min": 900, "max": 1200, "label": "$900 - $1200"},
+      {"min": 1200, "max": 99999, "label": "Over $1200"}
+    ],
+    "storageOptions": ["64GB", "128GB", "256GB", "512GB", "1TB"],
+    "connectivity": ["4G", "5G", "WiFi 6", "WiFi 6E", "WiFi 7"],
+    "features": ["Wireless Charging", "Water Resistant", "Dual SIM", "S Pen", "Foldable"]
+  },
+  "api": {
+    "endpoints": {
+      "getAllPhones": "/api/phones",
+      "getPhoneById": "/api/phones/{id}",
+      "searchPhones": "/api/phones/search",
+      "filterPhones": "/api/phones/filter",
+      "createListing": "/api/phones/create",
+      "updateListing": "/api/phones/{id}",
+      "deleteListing": "/api/phones/{id}"
+    },
+    "searchParameters": [
+      "brand", "model", "condition", "minPrice", "maxPrice", 
+      "storage", "color", "location", "category"
+    ]
+  },
+  "metadata": {
+    "totalListings": 10,
+    "activeSellers": 6,
+    "averageRating": 4.68,
+    "supportedCurrencies": ["USD"],
+    "supportedLocations": [
+      "New York", "Los Angeles", "Chicago", "Miami", "San Francisco",
+      "Dallas", "Houston", "Atlanta", "Seattle", "Boston", "Denver",
+      "Las Vegas", "Orlando", "Austin", "Nashville", "Phoenix", "Portland"
+    ]
+  }
+}

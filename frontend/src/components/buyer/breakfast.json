@@ -1,0 +1,534 @@
+[
+  {
+    "title": "Fresh Poha",
+    "name": "Fresh Poha",
+    "description": "Traditional flattened rice breakfast dish made with fresh ingredients, onions, mustard seeds, curry leaves, and turmeric. A popular Madhya Pradesh morning staple.",
+    "shortDescription": "Classic flattened rice breakfast dish with authentic Indore flavors",
+    "price": 25,
+    "originalPrice": 30,
+    "discount": 17,
+    "discountPrice": 25,
+    "images": [
+      {
+        "url": "/images/fresh-poha-1.jpg",
+        "alt": "Fresh Poha - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "subCategory": "Breakfast Items",
+    "tags": ["breakfast", "traditional", "vegetarian", "healthy", "poha", "indore-special"],
+    "isCollegeBranded": false,
+    "variants": [
+      {
+        "size": "Regular",
+        "color": "Yellow",
+        "stock": 50,
+        "price": 25,
+        "sku": "POH-REG-001"
+      }
+    ],
+    "weightOptions": [
+      {
+        "weight": "250g",
+        "price": 25,
+        "originalPrice": 30,
+        "discount": 17,
+        "stock": 50
+      },
+      {
+        "weight": "500g",
+        "price": 45,
+        "originalPrice": 50,
+        "discount": 10,
+        "stock": 30
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 25
+      }
+    ],
+    "stock": 50,
+    "lowStockThreshold": 10,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Regional Special",
+    "specifications": [
+      {
+        "name": "Preparation Time",
+        "value": "Fresh made daily"
+      },
+      {
+        "name": "Spice Level",
+        "value": "Mild"
+      },
+      {
+        "name": "Type",
+        "value": "Breakfast"
+      }
+    ],
+    "ingredients": ["Flattened Rice", "Onions", "Mustard Seeds", "Curry Leaves", "Turmeric", "Green Chilies", "Oil", "Salt"],
+    "allergens": ["May contain traces of peanuts"],
+    "weight": 250,
+    "shelfLife": 1,
+    "storageInstructions": "Consume fresh, store in refrigerator for max 24 hours",
+    "seoData": {
+      "metaTitle": "Fresh Poha - Fresh & Authentic | Your Store Name",
+      "metaDescription": "Classic flattened rice breakfast dish with authentic Indore flavors",
+      "keywords": ["breakfast", "traditional", "vegetarian", "healthy", "poha", "indore-special"]
+    },
+    "slug": "fresh-poha",
+    "ratings": {
+      "average": 4.5,
+      "count": 128
+    },
+    "reviewCount": 128,
+    "views": 1250,
+    "salesCount": 89,
+    "unitType": "g",
+    "isPerishable": true,
+    "harvestDate": "2025-08-27T00:00:00.000Z",
+    "origin": "Indore, Madhya Pradesh",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Poha Jalebi Combo",
+    "name": "Poha Jalebi Combo",
+    "description": "The iconic Indore breakfast combination - crispy sweet jalebis paired with savory poha. A perfect blend of flavors that represents the authentic taste of Indore street food culture.",
+    "shortDescription": "Classic Indore breakfast combo - sweet jalebi with savory poha",
+    "price": 65,
+    "originalPrice": 75,
+    "discount": 13,
+    "discountPrice": 65,
+    "images": [
+      {
+        "url": "/images/poha-jalebi-combo-1.jpg",
+        "alt": "Poha Jalebi Combo - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "subCategory": "Combo Meals",
+    "tags": ["combo", "breakfast", "traditional", "vegetarian", "sweet", "jalebi", "poha", "indore-famous"],
+    "isCollegeBranded": false,
+    "weightOptions": [
+      {
+        "weight": "Combo (250g Poha + 6 Jalebis)",
+        "price": 65,
+        "originalPrice": 75,
+        "discount": 13,
+        "stock": 40
+      },
+      {
+        "weight": "Large Combo (400g Poha + 10 Jalebis)",
+        "price": 95,
+        "originalPrice": 110,
+        "discount": 14,
+        "stock": 25
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 65
+      }
+    ],
+    "stock": 40,
+    "lowStockThreshold": 8,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Regional Special",
+    "specifications": [
+      {
+        "name": "Serving Size",
+        "value": "1-2 persons"
+      },
+      {
+        "name": "Preparation",
+        "value": "Fresh prepared"
+      },
+      {
+        "name": "Taste Profile",
+        "value": "Sweet & Savory"
+      }
+    ],
+    "ingredients": ["Poha", "Jalebi", "Onions", "Mustard Seeds", "Sugar", "Refined Flour", "Ghee", "Saffron"],
+    "allergens": ["Contains gluten", "Contains dairy"],
+    "shelfLife": 1,
+    "storageInstructions": "Consume immediately for best taste",
+    "seoData": {
+      "metaTitle": "Poha Jalebi Combo - Fresh & Authentic | Your Store Name",
+      "metaDescription": "Classic Indore breakfast combo - sweet jalebi with savory poha",
+      "keywords": ["combo", "breakfast", "traditional", "vegetarian", "sweet", "jalebi", "poha", "indore-famous"]
+    },
+    "slug": "poha-jalebi-combo",
+    "ratings": {
+      "average": 4.7,
+      "count": 203
+    },
+    "reviewCount": 203,
+    "views": 2150,
+    "salesCount": 156,
+    "unitType": "piece",
+    "isPerishable": true,
+    "origin": "Indore, Madhya Pradesh",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Sabudana Khichdi",
+    "name": "Sabudana Khichdi",
+    "description": "Traditional fasting food made with tapioca pearls, peanuts, and mild spices. Perfect for Navratri, Ekadashi, or as a light meal. Prepared with authentic ingredients following traditional recipes.",
+    "shortDescription": "Traditional tapioca pearl dish perfect for fasting days",
+    "price": 35,
+    "originalPrice": 40,
+    "discount": 13,
+    "discountPrice": 35,
+    "images": [
+      {
+        "url": "/images/sabudana-khichdi-1.jpg",
+        "alt": "Sabudana Khichdi - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "subCategory": "Fasting Food",
+    "tags": ["fasting", "traditional", "vegetarian", "navratri", "ekadashi", "sabudana", "healthy"],
+    "isCollegeBranded": false,
+    "weightOptions": [
+      {
+        "weight": "250g",
+        "price": 35,
+        "originalPrice": 40,
+        "discount": 13,
+        "stock": 35
+      },
+      {
+        "weight": "500g",
+        "price": 65,
+        "originalPrice": 75,
+        "discount": 13,
+        "stock": 20
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 35
+      }
+    ],
+    "stock": 35,
+    "lowStockThreshold": 10,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": false,
+    "isOrganic": false,
+    "badge": "Festival Special",
+    "specifications": [
+      {
+        "name": "Fasting Food",
+        "value": "Yes"
+      },
+      {
+        "name": "Spice Level",
+        "value": "Mild"
+      },
+      {
+        "name": "Main Ingredient",
+        "value": "Sabudana (Tapioca)"
+      }
+    ],
+    "ingredients": ["Sabudana", "Peanuts", "Green Chilies", "Ginger", "Cumin Seeds", "Rock Salt", "Oil", "Curry Leaves"],
+    "allergens": ["Contains peanuts"],
+    "weight": 250,
+    "shelfLife": 2,
+    "storageInstructions": "Store in refrigerator, reheat before serving",
+    "seoData": {
+      "metaTitle": "Sabudana Khichdi - Fresh & Authentic | Your Store Name",
+      "metaDescription": "Traditional tapioca pearl dish perfect for fasting days",
+      "keywords": ["fasting", "traditional", "vegetarian", "navratri", "ekadashi", "sabudana", "healthy"]
+    },
+    "slug": "sabudana-khichdi",
+    "ratings": {
+      "average": 4.2,
+      "count": 67
+    },
+    "reviewCount": 67,
+    "views": 890,
+    "salesCount": 43,
+    "unitType": "g",
+    "isPerishable": true,
+    "origin": "Indore, Madhya Pradesh",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Khamand Dhokla",
+    "name": "Khamand Dhokla",
+    "description": "Soft and spongy steamed cake made from gram flour and semolina. This Gujarati delicacy is light, healthy, and perfect as a snack or breakfast item. Served with green chutney and sweet tamarind sauce.",
+    "shortDescription": "Soft, spongy steamed gram flour cakes - healthy and delicious",
+    "price": 45,
+    "originalPrice": 50,
+    "discount": 10,
+    "discountPrice": 45,
+    "images": [
+      {
+        "url": "/images/khamand-dhokla-1.jpg",
+        "alt": "Khamand Dhokla - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "subCategory": "Steamed Snacks",
+    "tags": ["steamed", "healthy", "vegetarian", "gujarati", "dhokla", "low-oil", "protein-rich"],
+    "isCollegeBranded": false,
+    "weightOptions": [
+      {
+        "weight": "4 pieces (200g)",
+        "price": 45,
+        "originalPrice": 50,
+        "discount": 10,
+        "stock": 30
+      },
+      {
+        "weight": "8 pieces (400g)",
+        "price": 85,
+        "originalPrice": 95,
+        "discount": 11,
+        "stock": 18
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 45
+      }
+    ],
+    "stock": 30,
+    "lowStockThreshold": 8,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": false,
+    "isOrganic": false,
+    "badge": "Fresh Harvest",
+    "specifications": [
+      {
+        "name": "Cooking Method",
+        "value": "Steamed"
+      },
+      {
+        "name": "Texture",
+        "value": "Soft & Spongy"
+      },
+      {
+        "name": "Protein Content",
+        "value": "High"
+      }
+    ],
+    "ingredients": ["Gram Flour", "Semolina", "Ginger-Green Chili Paste", "Turmeric", "Salt", "Eno", "Oil", "Mustard Seeds"],
+    "allergens": ["Gluten-free"],
+    "nutritionInfo": {
+      "calories": 180,
+      "protein": 8,
+      "carbs": 24,
+      "fat": 6,
+      "sugar": 3,
+      "fiber": 4
+    },
+    "weight": 200,
+    "shelfLife": 2,
+    "storageInstructions": "Best consumed fresh, can be refrigerated for up to 2 days",
+    "seoData": {
+      "metaTitle": "Khamand Dhokla - Fresh & Authentic | Your Store Name",
+      "metaDescription": "Soft, spongy steamed gram flour cakes - healthy and delicious",
+      "keywords": ["steamed", "healthy", "vegetarian", "gujarati", "dhokla", "low-oil", "protein-rich"]
+    },
+    "slug": "khamand-dhokla",
+    "ratings": {
+      "average": 4.3,
+      "count": 54
+    },
+    "reviewCount": 54,
+    "views": 720,
+    "salesCount": 38,
+    "unitType": "piece",
+    "isPerishable": true,
+    "origin": "Indore, Madhya Pradesh",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Samosa Kachori Combo",
+    "name": "Samosa Kachori Combo",
+    "description": "Popular street food combo featuring crispy samosas filled with spiced potatoes and kachoris with dal filling. Served hot with mint and tamarind chutneys. Perfect evening snack for tea time.",
+    "shortDescription": "Crispy samosa and kachori combo with chutneys",
+    "price": 55,
+    "originalPrice": 65,
+    "discount": 15,
+    "discountPrice": 55,
+    "images": [
+      {
+        "url": "/images/samosa-kachori-combo-1.jpg",
+        "alt": "Samosa Kachori Combo - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "subCategory": "Fried Snacks",
+    "tags": ["fried", "crispy", "evening-snack", "tea-time", "samosa", "kachori", "street-food", "spicy"],
+    "isCollegeBranded": true,
+    "weightOptions": [
+      {
+        "weight": "2 Samosa + 2 Kachori",
+        "price": 55,
+        "originalPrice": 65,
+        "discount": 15,
+        "stock": 45
+      },
+      {
+        "weight": "4 Samosa + 4 Kachori",
+        "price": 105,
+        "originalPrice": 125,
+        "discount": 16,
+        "stock": 25
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 55
+      }
+    ],
+    "stock": 45,
+    "lowStockThreshold": 12,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Master Crafted",
+    "specifications": [
+      {
+        "name": "Filling",
+        "value": "Potato & Dal"
+      },
+      {
+        "name": "Texture",
+        "value": "Crispy"
+      },
+      {
+        "name": "Served With",
+        "value": "Chutneys"
+      }
+    ],
+    "ingredients": ["All Purpose Flour", "Potatoes", "Dal", "Onions", "Spices", "Oil", "Mint", "Tamarind"],
+    "allergens": ["Contains gluten"],
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed hot and fresh",
+    "seoData": {
+      "metaTitle": "Samosa Kachori Combo - Fresh & Authentic | Your Store Name",
+      "metaDescription": "Crispy samosa and kachori combo with chutneys",
+      "keywords": ["fried", "crispy", "evening-snack", "tea-time", "samosa", "kachori", "street-food", "spicy"]
+    },
+    "slug": "samosa-kachori-combo",
+    "ratings": {
+      "average": 4.6,
+      "count": 189
+    },
+    "reviewCount": 189,
+    "views": 1890,
+    "salesCount": 134,
+    "unitType": "piece",
+    "isPerishable": true,
+    "origin": "Indore, Madhya Pradesh",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Aloo Bada",
+    "name": "Aloo Bada",
+    "description": "Traditional deep-fried potato fritters coated in gram flour batter. These golden, crispy badas are perfect for monsoon evenings with hot tea. Made with fresh potatoes and aromatic spices.",
+    "shortDescription": "Crispy deep-fried potato fritters perfect for rainy days",
+    "price": 30,
+    "originalPrice": 35,
+    "discount": 14,
+    "discountPrice": 30,
+    "images": [
+      {
+        "url": "/images/aloo-bada-1.jpg",
+        "alt": "Aloo Bada - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "subCategory": "Fried Snacks",
+    "tags": ["fried", "monsoon-special", "tea-time", "potato", "bada", "crispy", "vegetarian"],
+    "isCollegeBranded": false,
+    "weightOptions": [
+      {
+        "weight": "4 pieces (200g)",
+        "price": 30,
+        "originalPrice": 35,
+        "discount": 14,
+        "stock": 40
+      },
+      {
+        "weight": "8 pieces (400g)",
+        "price": 55,
+        "originalPrice": 65,
+        "discount": 15,
+        "stock": 22
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 30
+      }
+    ],
+    "stock": 40,
+    "lowStockThreshold": 10,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": false,
+    "isOrganic": false,
+    "badge": "Premium Royal",
+    "specifications": [
+      {
+        "name": "Main Ingredient",
+        "value": "Fresh Potatoes"
+      },
+      {
+        "name": "Coating",
+        "value": "Gram Flour Batter"
+      },
+      {
+        "name": "Best Season",
+        "value": "Monsoon"
+      }
+    ],
+    "ingredients": ["Potatoes", "Gram Flour", "Rice Flour", "Ginger", "Green Chilies", "Spices", "Oil", "Salt"],
+    "allergens": ["Gluten-free"],
+    "weight": 200,
+    "shelfLife": 1,
+    "storageInstructions": "Consume hot for best taste, can be reheated",
+    "seoData": {
+      "metaTitle": "Aloo Bada - Fresh & Authentic | Your Store Name",
+      "metaDescription": "Crispy deep-fried potato fritters perfect for rainy days",
+      "keywords": ["fried", "monsoon-special", "tea-time", "potato", "bada", "crispy", "vegetarian"]
+    },
+    "slug": "aloo-bada",
+    "ratings": {
+      "average": 4.1,
+      "count": 76
+    },
+    "reviewCount": 76,
+    "views": 950,
+    "salesCount": 52,
+    "unitType": "piece",
+    "isPerishable": true,
+    "origin": "Indore, Madhya Pradesh",
+    "returnPolicyDays": 0
+  }
+]

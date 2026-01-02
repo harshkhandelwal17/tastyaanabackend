@@ -1,0 +1,732 @@
+[ {
+    "title": "Chole Bhature",
+    "name": "Chole Bhature",
+    "description": "North Indian classic featuring spicy chickpea curry served with fluffy deep-fried bhature bread. Garnished with onions, pickles, and served with yogurt. A hearty and filling meal.",
+    "shortDescription": "Spicy chickpea curry with fluffy fried bhature bread",
+    "price": 90,
+    "originalPrice": 100,
+    "discount": 15,
+    "discountPrice": 85,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757099791/Chole_Bhature_pkq4kw.png",
+        "alt": "Chole Bhature - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "subCategory": "North Indian",
+    "tags": ["chole-bhature", "north-indian", "chickpeas", "fried-bread", "spicy", "filling", "classic"],
+    "isCollegeBranded": true,
+    "weightOptions": [
+      {
+        "weight": "2 Bhature + Chole",
+        "price": 85,
+        "originalPrice": 100,
+        "discount": 15,
+        "stock": 25
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 85
+      }
+    ],
+    "stock": 25,
+    "lowStockThreshold": 6,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": false,
+    "isOrganic": false,
+    "badge": "Master Crafted",
+    "specifications": [
+      {
+        "name": "Curry",
+        "value": "Spiced Chickpeas"
+      },
+      {
+        "name": "Bread",
+        "value": "Deep-fried Bhature"
+      },
+      {
+        "name": "Cuisine",
+        "value": "North Indian"
+      }
+    ],
+    "ingredients": ["Chickpeas", "Bhature", "Onions", "Tomatoes", "Spices", "Yogurt", "Pickles", "Coriander"],
+    "allergens": ["Contains gluten", "Contains dairy"],
+    "nutritionInfo": {
+      "calories": 550,
+      "protein": 18,
+      "carbs": 70,
+      "fat": 22,
+      "sugar": 8,
+      "fiber": 12
+    },
+    "weight": 400,
+    "shelfLife": 1,
+    "storageInstructions": "Serve hot with fresh bhature",
+    "seoData": {
+      "metaTitle": "Chole Bhature - North Indian Classic | Your Cafe Name",
+      "metaDescription": "Spicy chickpea curry with fluffy fried bhature bread",
+      "keywords": ["chole-bhature", "north-indian", "chickpeas", "fried-bread", "spicy", "filling", "classic"]
+    },
+    "slug": "chole-bhature",
+    "ratings": {
+      "average": 4.4,
+      "count": 98
+    },
+    "reviewCount": 98,
+    "views": 1230,
+    "salesCount": 145,
+    "unitType": "piece",
+    "isPerishable": true,
+    "origin": "Indore, Madhya Pradesh",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Veg Chowmein",
+    "name": "Veg Chowmein",
+    "description": "Indo-Chinese stir-fried noodles with fresh vegetables, soy sauce, and aromatic spices. Tossed with cabbage, carrots, capsicum, and served hot. A popular fusion dish loved by all.",
+    "shortDescription": "Indo-Chinese stir-fried noodles with fresh vegetables",
+    "price": 80,
+    "originalPrice": 70,
+    "discount": 14,
+    "discountPrice": 60,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757099815/Veg_Chowmein_bzzloh.png",
+        "alt": "Veg Chowmein - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "subCategory": "Indo-Chinese",
+    "tags": ["chowmein", "noodles", "indo-chinese", "stir-fried", "vegetables", "fusion", "popular"],
+    "isCollegeBranded": true,
+    "weightOptions": [
+      {
+        "weight": "Half Plate (200g)",
+        "price": 60,
+        "originalPrice": 70,
+        "discount": 14,
+        "stock": 40
+      },
+      {
+        "weight": "Full Plate (350g)",
+        "price": 95,
+        "originalPrice": 110,
+        "discount": 14,
+        "stock": 25
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 60
+      }
+    ],
+    "stock": 40,
+    "lowStockThreshold": 10,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Master Crafted",
+    "specifications": [
+      {
+        "name": "Noodle Type",
+        "value": "Wheat Noodles"
+      },
+      {
+        "name": "Cooking Style",
+        "value": "Stir-fried"
+      },
+      {
+        "name": "Cuisine",
+        "value": "Indo-Chinese"
+      }
+    ],
+    "ingredients": ["Noodles", "Cabbage", "Carrots", "Capsicum", "Onions", "Soy Sauce", "Vinegar", "Spices"],
+    "allergens": ["Contains gluten", "May contain soy"],
+    "nutritionInfo": {
+      "calories": 320,
+      "protein": 8,
+      "carbs": 55,
+      "fat": 8,
+      "sugar": 6,
+      "fiber": 4
+    },
+    "weight": 200,
+    "shelfLife": 1,
+    "storageInstructions": "Serve hot immediately",
+    "seoData": {
+      "metaTitle": "Veg Chowmein - Indo-Chinese Noodles | Your Cafe Name",
+      "metaDescription": "Indo-Chinese stir-fried noodles with fresh vegetables",
+      "keywords": ["chowmein", "noodles", "indo-chinese", "stir-fried", "vegetables", "fusion", "Burgers"],
+    "tags": ["burger", "vegetarian", "fast-food", "college-favorite", "crispy", "fresh"],
+    "isCollegeBranded": true,
+    "weightOptions": [
+      {
+        "weight": "Regular (150g)",
+        "price": 45,
+        "originalPrice": 55,
+        "discount": 18,
+        "stock": 60
+      },
+      {
+        "weight": "Large (200g)",
+        "price": 65,
+        "originalPrice": 75,
+        "discount": 13,
+        "stock": 35
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 45
+      }
+    ]
+    
+  } },
+   {
+    "title": "Paneer Roll",
+    "name": "Paneer Roll",
+    "description": "Soft roti wrapped with spiced paneer, onions, and fresh vegetables. Served with mint chutney and pickle. A protein-rich and filling Indian wrap perfect for any time.",
+    "shortDescription": "Soft roti wrap with spiced paneer and fresh vegetables",
+    "price": 250,
+    "originalPrice": 70,
+    "discount": 14,
+    "discountPrice": 60,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757099798/paneer_roll_ganreg.png",
+        "alt": "Paneer Roll - Main Image",
+        "isPrimary": true
+      }
+    ],
+    "subCategory": "Rolls & Wraps",
+    "tags": ["roll", "paneer", "wrap", "indian", "protein-rich", "spiced", "filling"],
+    "isCollegeBranded": true,
+    "weightOptions": [
+      {
+        "weight": "Regular (200g)",
+        "price": 60,
+        "originalPrice": 70,
+        "discount": 14,
+        "stock": 40
+      },
+      {
+        "weight": "Large (280g)",
+        "price": 85,
+        "originalPrice": 95,
+        "discount": 11,
+        "stock": 22
+      }
+    ],
+    "priceHistory": [
+      {
+        "date": "2025-08-27T00:00:00.000Z",
+        "price": 60
+      }
+    ],
+    "stock": 40,
+    "lowStockThreshold": 10,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "isOrganic": false,
+    "badge": "Regional Special",
+    "specifications": [
+      {
+        "name": "Protein",
+        "value": "Fresh Paneer"
+      },
+      {
+        "name": "Wrap",
+        "value": "Soft Roti"
+      },
+      {
+        "name": "Served With",
+        "value": "Chutney & Pickle"
+      }
+    ],
+    "ingredients": ["Roti", "Paneer", "Onions", "Tomatoes", "Spices", "Mint Chutney", "Green Chilies", "Oil"],
+    "allergens": ["Contains gluten", "Contains dairy"],
+    "nutritionInfo": {
+      "calories": 350,
+      "protein": 15,
+      "carbs": 40,
+      "fat": 14,
+      "sugar": 5,
+      "fiber": 3
+    },
+    "weight": 200,
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed fresh and warm",
+    "seoData": {
+      "metaTitle": "Paneer Roll - Protein-rich Indian Wrap | Your Cafe Name",
+      "metaDescription": "Soft roti wrap with spiced paneer and fresh vegetables",
+      "keywords": ["roll", "paneer", "wrap", "indian", "protein-rich", "spiced", "filling"]
+    },
+    "slug": "paneer-roll",
+    "ratings": {
+      "average": 4.3,
+      "count": 112
+    },
+    "reviewCount": 112,
+    "views": 1450,
+    "salesCount": 167,
+    "unitType": "piece",
+    "isPerishable": true,
+    "origin": "Indore, Madhya Pradesh",
+    "returnPolicyDays": 0
+  }, {
+    "title": "Chole Tikiya",
+    "name": "Chole Tikiya",
+    "slug": "chole-tikiya",
+    "description": "Crispy potato patties (aloo tikki) served with spicy chickpea curry (chole), topped with chutneys and onions. A classic North Indian street food combination.",
+    "shortDescription": "Potato patties with spicy chickpea curry",
+    "price": 50,
+    "originalPrice": 85,
+    "discountPrice": 80,
+    "discount": 5.9,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757103950/download_oeeis6.jpg",
+        "alt": "Chole Tikiya",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "6882f91f5b1ba9254864df03"
+    },
+    "tags": [
+      "chole",
+      "tikiya",
+      "north indian",
+      "street food",
+      "spicy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "size": "Regular",
+        "price": 80,
+        "originalPrice": 85,
+        "discount": 5.9,
+        "stock": 20
+      }
+    ],
+    "stock": 20,
+    "lowStockThreshold": 5,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": true,
+    "ingredients": [
+      "Potato",
+      "Chickpeas",
+      "Onion",
+      "Tomato",
+      "Garam Masala",
+      "Chutneys"
+    ],
+    "preparationTime": 12,
+    "isVegetarian": true,
+    "isVegan": true,
+    "spiceLevel": "Medium",
+    "storageInstructions": "Serve hot immediately after preparation",
+    "ratings": {
+      "average": 4.4,
+      "count": 167
+    },
+    "reviewCount": 167,
+    "views": 876,
+    "salesCount": 345,
+    "unitType": "serving",
+    "isPerishable": true,
+    "origin": "North India",
+    "returnPolicyDays": 0
+  },{
+    "title": "Vada Sambhar",
+    "name": "Vada Sambhar",
+    "slug": "vada-sambhar",
+    "description": "Traditional South Indian breakfast featuring crispy lentil donuts (vada) served with flavorful lentil curry (sambhar) and coconut chutney.",
+    "shortDescription": "Crispy lentil donuts with lentil curry",
+    "price": 80,
+    "originalPrice": 75,
+    "discountPrice": 70,
+    "discount": 6.7,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757099810/Vada_Sambhar_xquau8.png",
+        "alt": "Vada Sambhar",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "6882f91f5b1ba9254864df01"
+    },
+    "tags": [
+      "vada",
+      "sambhar",
+      "south indian",
+      "breakfast",
+      "traditional"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "1 plate",
+        "price": 70,
+        "originalPrice": 75,
+        "discount": 6.7,
+        "stock": 30
+      }
+    ],
+    "stock": 55,
+    "lowStockThreshold": 8,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "ingredients": [
+      "Urad Dal",
+      "Toor Dal",
+      "Vegetables",
+      "Tamarind",
+      "Curry Leaves",
+      "Spices"
+    ],
+    "preparationTime": 15,
+    "isVegetarian": true,
+    "isVegan": true,
+    "spiceLevel": "Medium",
+    "storageInstructions": "Serve hot immediately after preparation",
+    "ratings": {
+      "average": 4.6,
+      "count": 278
+    },
+    "reviewCount": 278,
+    "views": 1234,
+    "salesCount": 567,
+    "unitType": "serving",
+    "isPerishable": true,
+    "origin": "South India",
+    "returnPolicyDays": 0
+  },{
+    "title": "Idli Sambhar",
+    "name": "Idli Sambhar",
+    "slug": "idli-sambhar",
+    "description": "Soft, steamed rice cakes (idli) served with traditional lentil curry (sambhar) and coconut chutney. A healthy and light South Indian breakfast.",
+    "shortDescription": "Steamed rice cakes with lentil curry",
+    "price": 70,
+    "originalPrice": 70,
+    "discountPrice": 65,
+    "discount": 7.1,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757104154/8e06a35e-aa30-47ab-aeda-ed0fabdeba10.png",
+        "alt": "Idli Sambhar",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "6882f91f5b1ba9254864df01"
+    },
+    "tags": [
+      "idli",
+      "sambhar",
+      "south indian",
+      "healthy",
+      "breakfast"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "3 Idlis",
+        "price": 65,
+        "originalPrice": 70,
+        "discount": 7.1,
+        "stock": 40
+      }
+    ],
+    "stock": 75,
+    "lowStockThreshold": 10,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "ingredients": [
+      "Rice",
+      "Urad Dal",
+      "Toor Dal",
+      "Vegetables",
+      "Tamarind",
+      "Coconut"
+    ],
+    "preparationTime": 12,
+    "isVegetarian": true,
+    "isVegan": true,
+    "spiceLevel": "Mild",
+    "storageInstructions": "Serve hot immediately after preparation",
+    "ratings": {
+      "average": 4.7,
+      "count": 345
+    },
+    "reviewCount": 345,
+    "views": 1567,
+    "salesCount": 678,
+    "unitType": "serving",
+    "isPerishable": true,
+    "origin": "South India",
+    "returnPolicyDays": 0
+  },{
+    "title": "Dabeli",
+    "name": "Dabeli",
+    "slug": "dabeli",
+    "description": "Popular Gujarati street food with spiced potato filling, chutneys, pomegranate seeds, and sev in a pav bun. Sweet, tangy and spicy flavors combined perfectly.",
+    "shortDescription": "Gujarati street food with spiced potato filling",
+    "price": 40,
+    "originalPrice": 55,
+    "discountPrice": 50,
+    "discount": 9.1,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757099766/hot_dog_agerdp.png",
+        "alt": "Dabeli",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "6882f91f5b1ba9254864df03"
+    },
+    "tags": [
+      "dabeli",
+      "gujarati",
+      "street food",
+      "sweet",
+      "tangy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "Regular",
+        "price": 50,
+        "originalPrice": 55,
+        "discount": 9.1,
+        "stock": 30
+      }
+    ],
+    "stock": 30,
+    "lowStockThreshold": 8,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": true,
+    "ingredients": [
+      "Pav Bun",
+      "Potato",
+      "Dabeli Masala",
+      "Tamarind Chutney",
+      "Garlic Chutney",
+      "Pomegranate Seeds",
+      "Sev"
+    ],
+    "preparationTime": 8,
+    "isVegetarian": true,
+    "isVegan": false,
+    "spiceLevel": "Medium",
+    "storageInstructions": "Serve immediately for best taste",
+    "ratings": {
+      "average": 4.5,
+      "count": 203
+    },
+    "reviewCount": 203,
+    "views": 987,
+    "salesCount": 456,
+    "unitType": "piece",
+    "isPerishable": true,
+    "origin": "Gujarat",
+    "returnPolicyDays": 0
+  }, {
+    "title": "Cheese Uttapam",
+    "name": "Cheese Uttapam",
+    "slug": "cheese-uttapam",
+    "description": "Traditional South Indian uttapam enhanced with melted cheese topping. A fusion of authentic flavors with modern cheese goodness.",
+    "shortDescription": "Traditional uttapam with melted cheese",
+    "price": 110,
+    "originalPrice": 115,
+    "discountPrice": 110,
+    "discount": 4.3,
+    "images": [
+      {
+        "url": "https://example.com/images/cheese-uttapam.jpg",
+        "alt": "Cheese Uttapam",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "6882f91f5b1ba9254864df01"
+    },
+    "tags": [
+      "uttapam",
+      "cheese",
+      "south indian",
+      "fusion",
+      "breakfast"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular",
+        "price": 110,
+        "originalPrice": 115,
+        "discount": 4.3,
+        "stock": 20
+      }
+    ],
+    "stock": 20,
+    "lowStockThreshold": 5,
+    "isActive": true,
+    "featured": true,
+    "isNew": false,
+    "isBestseller": false,
+    "ingredients": [
+      "Rice Batter",
+      "Urad Dal",
+      "Cheese",
+      "Curry Leaves",
+      "Green Chili",
+      "Spices"
+    ],
+    "preparationTime": 12,
+    "isVegetarian": true,
+    "isVegan": false,
+    "spiceLevel": "Mild",
+    "storageInstructions": "Serve hot immediately after preparation",
+    "ratings": {
+      "average": 4.4,
+      "count": 167
+    },
+    "reviewCount": 167,
+    "views": 789,
+    "salesCount": 298,
+    "unitType": "piece",
+    "isPerishable": true,
+    "origin": "South India",
+    "returnPolicyDays": 0
+  }, {
+   
+    "title": "Onion Uttapam",
+    "name": "Onion Uttapam",
+    "slug": "onion-uttapam",
+    "description": "Traditional South Indian thick pancake made with fermented batter and topped with fresh onion slices. Served with sambhar and coconut chutney.",
+    "shortDescription": "Traditional uttapam with fresh onions",
+    "price": 100,
+    "originalPrice": 85,
+    "discountPrice": 80,
+    "discount": 5.9,
+    "images": [
+      {
+        "url": "https://example.com/images/onion-uttapam.jpg",
+        "alt": "Onion Uttapam",
+        "isPrimary": true
+      }
+    ],
+    "category": {
+      "$oid": "6882f91f5b1ba9254864df01"
+    },
+    "tags": [
+      "uttapam",
+      "onion",
+      "south indian",
+      "traditional",
+      "breakfast"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "sizeOptions": [
+      {
+        "size": "Regular",
+        "price": 80,
+        "originalPrice": 85,
+        "discount": 5.9,
+        "stock": 28
+      }
+    ],
+    "stock": 28,
+    "lowStockThreshold": 6,
+    "isActive": true,
+    "featured": false,
+    "isNew": false,
+    "isBestseller": true,
+    "ingredients": [
+      "Rice Batter",
+      "Urad Dal",
+      "Fresh Onion",
+      "Curry Leaves",
+      "Green Chili",
+      "Salt"
+    ],
+    "preparationTime": 10,
+    "isVegetarian": true,
+    "isVegan": true,
+    "spiceLevel": "Mild",
+    "storageInstructions": "Serve hot immediately after preparation",
+    "ratings": {
+      "average": 4.4,
+      "count": 198
+    },
+    "reviewCount": 198,
+    "views": 876,
+    "salesCount": 387,
+    "unitType": "piece",
+    "isPerishable": true,
+    "origin": "South India",
+    "returnPolicyDays": 0
+  }
+]
+
+
+
+
+
+
+
+
+
+

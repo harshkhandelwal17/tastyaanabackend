@@ -1,0 +1,153 @@
+[{
+  
+  "name": "Schezwan Plain Dosa",
+  "price": 100,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757513614/Schezwan_Plain_Dosa_vvil8s.png"
+  ],
+  "description": "Plain dosa with Schezwan flavor",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+},
+{
+  "name": "Paneer Masala Dosa",
+  "price": 120,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757513602/Paneer_Masala_Dosa_q17vys.png"
+  ],
+  "description": "Masala Dosa with spiced paneer filling",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+},
+{
+  
+  "name": "Butter Plain Dosa",
+  "price": 80,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757513601/Butter_Plain_Dosa_ngnksb.png"
+  ],
+  "description": "Plain dosa with butter",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+},
+{
+  
+  "name": "Cheese Plain Dosa",
+  "price": 100,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757513605/Cheese_Plain_Dosa_hytllk.png"
+  ],
+  "description": "Plain dosa with cheese",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+}
+,{
+  
+  "name": "Plain Dosa",
+  "price": 70,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757513614/Plain_Dosa_i4hr18.png"
+  ],
+  "description": "Classic plain dosa",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+}
+,
+{
+  
+  "name": "Tawa Roti",
+  "price": 10,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252907/Tawa-Roti_oa4c28.jpg"
+  ],
+  "description": "Simple and healthy whole wheat flatbread cooked on a tawa (griddle). A staple Indian bread that's soft and nutritious.",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+}
+,
+{
+  "name": "Special Dining Thali",
+  "price": 75,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755779163/WhatsApp_Image_2025-08-21_at_09.57.05_881a4eaf_mitbzr.jpg"
+  ],
+  "description": "Complete Indian meal with rice, dal, vegetables, and roti",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+}
+,
+{
+  
+  "name": "Cheese Chola Bhatura",
+  "price": 100,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755956742/products/kkc1lwpyn1s1egwpgoe8.jpg"
+  ],
+  "description": "Traditional chola bhatura enhanced with melted cheese",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+}
+,
+{
+  "name": "Veg Biryani",
+  "price": 50,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754475185/veg-biryani_w5r18e.jpg"
+  ],
+  "description": "Fragrant basmati rice cooked with mixed vegetables and aromatic spices in dum style.",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+},
+{
+  "name": "Veg Noodles",
+  "price": 90,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252911/Veg-Noodles_kfxukk.webp"
+  ],
+  "description": "Stir-fried noodles with fresh vegetables in sav",
+   "sellerId": { "$oid": "687242b702db822f91b13586" }
+},
+{
+  
+  "name": "Plain Maggi",
+  "price": 60,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/b_rgb:FFFFFF/c_crop,w_1080,h_1080/v1757103178/images_xe5njg.jpg"
+  ],
+  "description": "Classic instant noodles prepared with signature Maggi masala. Quick, tasty and satisfying comfort food that's perfect for any time of day.",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+}
+,
+{
+ 
+  "name": "Cheese Pav Bhaji",
+  "price": 90,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883809/43_qfvkvj.png"
+  ],
+  "description": "Classic pav bhaji topped with melted cheese for extra richness",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+}
+,
+{
+  
+  "name": "Pav Bhaji",
+  "price": 80,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1755883802/42_uyyz4t.png"
+  ],
+  "description": "Spiced mixed vegetable curry served with buttered bread rolls",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+},
+{
+ 
+  "name": "Chole Bhature",
+  "price": 90,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754252911/Chole-Bhature_atlgre.webp"
+  ],
+  "description": "Spicy chickpea curry served with deep-fried fluffy bread, a North Indian favorite.",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+},
+{
+  "name": "Veg Fried Rice",
+  "price": 90,
+  "image": [
+    "https://res.cloudinary.com/dcha7gy9o/image/upload/v1757099779/Veg_Biryani_tqz8h7.png"
+  ],
+  "description": "Aromatic and flavorful vegetable fried rice prepared with basmati rice, fresh mixed vegetables, and Indo-Chinese spices.",
+  "sellerId": { "$oid": "687242b702db822f91b13586" }
+}
+
+]

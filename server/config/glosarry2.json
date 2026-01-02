@@ -1,0 +1,3638 @@
+[
+  {
+    "title": "Silver Coin Traditional Chakki Atta",
+    "name": "Silver Coin Traditional Chakki Atta",
+    "slug": "Silver Coin Traditional Chakki Atta",
+    "description": "Freshly milled whole wheat flour for soft rotis and chapatis.",
+    "shortDescription": "Whole wheat flour for daily use.",
+    "price": 95,
+    "originalPrice": 95,
+    "discountPrice": 95,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812932/Silver_Coin_Traditional_Chakki_Atta_zwofln.png",
+        "alt": "Silver Coin Traditional Chakki Atta",
+        "author": "Tastyaana",
+        "title": "Wheat Flour (Atta)"
+      }
+    ],
+    "category":  {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+    },
+    "subcategory": "Grains & Pulses",
+    "tags": [
+      "atta",
+      "wheat",
+      "flour",
+      "grains"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "5 kg",
+        "price": 210,
+        "originalPrice": 210,
+        "discount": 0,
+        "stock": 50,
+        "unitType": "kg"
+      },
+      {
+        "weight": "10 kg",
+        "price": 420,
+        "originalPrice": 420,
+        "discount": 0,
+        "stock": 50,
+        "unitType": "kg"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "kg",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Aashirvaad Shudh Chakki Atta",
+    "name": "Aashirvaad Shudh Chakki Atta",
+    "slug": "Aashirvaad Shudh Chakki Atta",
+    "description": "Freshly milled whole wheat flour for soft rotis and chapatis.",
+    "shortDescription": "Whole wheat flour for daily use.",
+    "price": 95,
+    "originalPrice": 95,
+    "discountPrice": 95,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812897/Aashirvaad_Shudh_Chakki_Atta_biktr2.png",
+        "alt": "Aashirvaad Shudh Chakki Atta",
+        "author": "Tastyaana",
+        "title": "Wheat Flour (Atta)"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+     
+    },
+    "subcategory": "Grains & Pulses",
+    "tags": [
+      "atta",
+      "wheat",
+      "flour",
+      "grains"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "5 kg",
+        "price": 250,
+        "originalPrice": 250,
+        "discount": 0,
+        "stock": 50,
+        "unitType": "kg"
+      },
+      {
+        "weight": "10 kg",
+        "price": 500,
+        "originalPrice": 500,
+        "discount": 0,
+        "stock": 50,
+        "unitType": "kg"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "kg",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "silver coin Indori Thick Poha",
+    "name": "silver coin Indori Thick Poha",
+    "slug": "silver coin Indori Thick Poha",
+    "description": "Flattened rice used to prepare light and healthy breakfast dishes.",
+    "shortDescription": "Premium quality poha for breakfast.",
+    "price": 70,
+    "originalPrice": 70,
+    "discountPrice": 70,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323595/LaungClove_Whole_i7hcat.png",
+        "alt": "silver coin Indori Thick Poha"
+      }
+    ],
+    "category":{
+        "$oid": "6882f90c5b1ba9254864dfe9"
+    },
+    "subcategory": "Grains & Pulses",
+    "tags": [
+      "poha",
+      "grains",
+      "breakfast"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "1 kg",
+        "price": 70,
+        "originalPrice": 70,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "kg"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "kg",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+ {
+    "title": "Everest Compounded Yellow Hing Powder",
+    "name": "Everest Compounded Yellow Hing Powder",
+    "slug": "hing-asafoetida",
+    "description": "Strong and aromatic hing that enhances flavor and aids digestion in Indian cooking.",
+    "shortDescription": "Strong and aromatic asafoetida",
+    "price": 90,
+    "originalPrice": 90,
+    "discountPrice": 90,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812906/Everest_Compounded_Yellow_Hing_Powder_qet1h5.png",
+        "alt": "Everest Compounded Yellow Hing Powder"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+
+    },
+    "subcategory": "spices-masala",
+    "tags": [
+      "spices",
+      "hing",
+      "asafoetida"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "50 g",
+        "price": 96,
+        "originalPrice": 96,
+        "discount": 0,
+        "stock": 20,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 20,
+    "unitType": "packet",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  
+  {
+    "title": "Tata Salt",
+    "name": "Tata Salt",
+    "slug": "salt-iodized-rock",
+    "description": "Pure iodized or rock salt, suitable for everyday cooking and fasting meals.",
+    "shortDescription": "Iodized and rock salt options",
+    "price": 35,
+    "originalPrice": 35,
+    "discountPrice": 35,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812933/Tata_Salt_yqdefa.png",
+        "alt": "Tata Salt",
+        "author": "Tastyaana",
+        "title": "Salt"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+     
+    },
+    "subcategory": "spices-masala",
+    "tags": [
+      "spices",
+      "salt",
+      "rock salt",
+      "iodized"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "1 kg",
+        "price": 30,
+        "originalPrice": 30,
+        "discount": 0,
+        "stock": 20,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 20,
+    "unitType": "packet",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  
+  {
+    "title": "Tata Tea Agni Special Blend Tea",
+    "name": "Tata Tea Agni Special Blend Tea",
+    "slug": "tea-leavess",
+    "description": "Premium quality tea leaves for a strong and refreshing cup of tea.",
+    "shortDescription": "Premium quality tea leaves",
+    "price": 150,
+    "originalPrice": 150,
+    "discountPrice": 150,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812943/Tata_Tea_Agni_Special_Blend_Tea_cudier.png",
+        "alt": "Tata Tea Agni Special Blend Tea"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+    
+    },
+    "subcategory": "snacks-beverages",
+    "tags": [
+      "beverages",
+      "tea",
+      "leaves",
+      "grocery"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "250 g",
+        "price": 50,
+        "originalPrice": 50,
+        "discount": 0,
+        "stock": 30,
+        "unitType": "packet"
+      },
+      {
+        "weight": "500 g",
+        "price": 100,
+        "originalPrice": 100,
+        "discount": 0,
+        "stock": 30,
+        "unitType": "packet"
+      },
+      {
+        "weight": "1 kg",
+        "price": 200,
+        "originalPrice": 200,
+        "discount": 0,
+        "stock": 30,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 30,
+    "unitType": "packet",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+   {
+    "title": "Brooke Bond Red Label Natural Care Tea",
+    "name": "Brooke Bond Red Label Natural Care Tea",
+    "slug": "tea-leaves",
+    "description": "Premium quality tea leaves for a strong and refreshing cup of tea.",
+    "shortDescription": "Premium quality tea leaves",
+    "price": 150,
+    "originalPrice": 150,
+    "discountPrice": 150,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761829355/51aO_7bz3dL_dsdgqf.jpg",
+        "alt": "Tata Tea Agni Special Blend Tea"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+    
+    },
+    "subcategory": "snacks-beverages",
+    "tags": [
+      "beverages",
+      "tea",
+      "leaves",
+      "grocery"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "250 g",
+        "price": 160,
+        "originalPrice": 160,
+        "discount": 0,
+        "stock": 30,
+        "unitType": "packet"
+      },
+      {
+        "weight": "500 g",
+        "price": 320,
+        "originalPrice": 320,
+        "discount": 0,
+        "stock": 30,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 30,
+    "unitType": "packet",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Nescafe Classic - pocket Packs ",
+    "name": "Nescafe Classic",
+    "slug": "instant-coffee",
+    "description": "Rich, aromatic instant coffee made from premium roasted beans.",
+    "shortDescription": "Premium instant coffee powder",
+    "price": 200,
+    "originalPrice": 200,
+    "discountPrice": 200,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812924/Nescafe_Classic_-_Pocket_Packs_t26usc.png",
+        "alt": "Instant Coffee"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+
+    },
+    "subcategory": "snacks-beverages",
+    "tags": [
+      "beverages",
+      "coffee",
+      "instant",
+      "grocery",
+      "Nescafe Classic",
+      "Nescafe Classic - pocket Packs "
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "10 x 0.9",
+        "price": 20,
+        "originalPrice": 20,
+        "discount": 0,
+        "stock": 100,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 20,
+    "unitType": "jar",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+ {
+    "title": " Kpr Ratlami Sev namkeen ",
+    "name": " Kpr Ratlami Sev namkeen ",
+    "slug": "namkeen-mixture",
+    "description": "Crunchy and spicy traditional Indian namkeen mixture perfect for snacking.",
+    "shortDescription": "Traditional spicy namkeen mixture",
+    "price": 80,
+    "originalPrice": 80,
+    "discountPrice": 80,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323375/KPR_Laung_Sev_g9iiyf.png",
+        "alt": " "
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+    
+    },
+    "subcategory": "snacks-beverages",
+    "tags": [
+      "snacks",
+      "namkeen",
+      "mixture",
+      "spicy",
+      "Bikaji Bikaneri Bhujia"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "200 g",
+        "price": 40,
+        "originalPrice": 40,
+        "discount": 0,
+        "stock": 25,
+        "unitType": "packet"
+      },
+      {
+        "weight": "500 g",
+        "price": 90,
+        "originalPrice": 90,
+        "discount": 0,
+        "stock": 100,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 25,
+    "unitType": "packet",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+   {
+    "title": "Lay's India's Magic Masala Potato Chips",
+    "name": "Lay's India's Magic Masala Potato Chips",
+    "slug": "potato-chips-0",
+    "description": "Crispy and perfectly salted potato chips for all-time snacking.",
+    "shortDescription": "Crispy salted potato chips",
+    "price": 60,
+    "originalPrice": 60,
+    "discountPrice": 60,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812873/Lay_s_India_s_Magic_Masala_Potato_Chips_aluapa.png",
+        "alt": "Potato Chips"
+      }
+    ],
+    "category":{
+        "$oid": "6882f90c5b1ba9254864dfe9"
+      
+    },
+    "subcategory": "snacks-beverages",
+    "tags": [
+      "snacks",
+      "chips",
+      "potato",
+      "crispy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "60 g",
+        "price": 30,
+        "originalPrice": 30,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      },
+      {
+        "weight": "48 g",
+        "price": 20,
+        "originalPrice": 20,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "packet",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Lay's American Style Cream & Onion Potato Chips",
+    "name": "Lay's American Style Cream & Onion Potato Chips",
+    "slug": "potato-chips-1",
+    "description": "Crispy and perfectly salted potato chips for all-time snacking.",
+    "shortDescription": "Crispy salted potato chips",
+    "price": 60,
+    "originalPrice": 60,
+    "discountPrice": 60,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812868/Lay_s_American_Style_Cream_Onion_Potato_Chips_mxs7sp.png",
+        "alt": "Potato Chips"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+    },
+    "subcategory": "snacks-beverages",
+    "tags": [
+      "snacks",
+      "chips",
+      "potato",
+      "crispy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "60 g",
+        "price": 30,
+        "originalPrice": 30,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      },
+      {
+        "weight": "48 g",
+        "price": 20,
+        "originalPrice": 20,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "packet",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Lay's Chile Limon Flavour Potato Chips",
+    "name": "Lay's Chile Limon Flavour Potato Chips",
+    "slug": "potato-chips-2",
+    "description": "Crispy and perfectly salted potato chips for all-time snacking.",
+    "shortDescription": "Crispy salted potato chips",
+    "price": 60,
+    "originalPrice": 60,
+    "discountPrice": 60,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812871/Lay_s_Chile_Limon_Flavour_Potato_Chips_eawnlq.png",
+        "alt": "Potato Chips"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+  
+    },
+    "subcategory": "snacks-beverages",
+    "tags": [
+      "snacks",
+      "chips",
+      "potato",
+      "crispy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "60 g",
+        "price": 30,
+        "originalPrice": 30,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      },
+      {
+        "weight": "48 g",
+        "price": 20,
+        "originalPrice": 20,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "packet",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Lay's Spanish Tomato Tango Potato Chips",
+    "name": "Lay's Spanish Tomato Tango Potato Chips",
+    "slug": "potato-chips-3",
+    "description": "Crispy and perfectly salted potato chips for all-time snacking.",
+    "shortDescription": "Crispy salted potato chips",
+    "price": 60,
+    "originalPrice": 60,
+    "discountPrice": 60,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812876/Lay_s_Spanish_Tomato_Tango_Potato_Chips_ydt1pj.png",
+        "alt": "Potato Chips"
+      }
+    ],
+    "category":{
+        "$oid": "6882f90c5b1ba9254864dfe9"
+
+    },
+    "subcategory": "snacks-beverages",
+    "tags": [
+      "snacks",
+      "chips",
+      "potato",
+      "crispy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "60 g",
+        "price": 30,
+        "originalPrice": 30,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      },
+      {
+        "weight": "48 g",
+        "price": 20,
+        "originalPrice": 20,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "packet",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Lay's Classic Salted Potato Chips",
+    "name": "Lay's Classic Salted Potato Chips",
+    "slug": "potato-chips-4",
+    "description": "Crispy and perfectly salted potato chips for all-time snacking.",
+    "shortDescription": "Crispy salted potato chips",
+    "price": 60,
+    "originalPrice": 60,
+    "discountPrice": 60,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812871/Lay_s_Classic_Salted_Potato_Chips_hjnt9y.png",
+        "alt": "Potato Chips"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+    },
+    "subcategory": "snacks-beverages",
+    "tags": [
+      "snacks",
+      "chips",
+      "potato",
+      "crispy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "48 g",
+        "price": 20,
+        "originalPrice": 20,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "packet",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Lay's Wafer Style - Red Chilli Potato Chips",
+    "name": "Lay's Wafer Style - Red Chilli Potato Chips",
+    "slug": "potato-chips-5",
+    "description": "Crispy and perfectly salted potato chips for all-time snacking.",
+    "shortDescription": "Crispy salted potato chips",
+    "price": 60,
+    "originalPrice": 60,
+    "discountPrice": 60,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812877/Lay_s_Wafer_Style_-_Red_Chilli_Potato_Chips_ixzhiv.png",
+        "alt": "Potato Chips"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+    
+    },
+    "subcategory": "snacks-beverages",
+    "tags": [
+      "snacks",
+      "chips",
+      "potato",
+      "crispy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "60 g",
+        "price": 30,
+        "originalPrice": 30,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      },
+      {
+        "weight": "48 g",
+        "price": 20,
+        "originalPrice": 20,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "packet",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Halka Phulka",
+    "name": "Halka Phulka",
+    "slug": "potato-chips-6",
+    "description": "Crispy and perfectly salted potato chips for all-time snacking.",
+    "shortDescription": "Crispy salted potato chips",
+    "price": 60,
+    "originalPrice": 60,
+    "discountPrice": 60,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812860/Halka_Phulka_z2sauh.png",
+        "alt": "Potato Chips",
+        "author": "Tastyaana",
+        "title": "Potato Chips"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+      
+    },
+    "subcategory": "snacks-beverages",
+    "tags": [
+      "snacks",
+      "chips",
+      "potato",
+      "crispy"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "2 x 45 g",
+        "price": 20,
+        "originalPrice": 20,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "packet",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Amul Masti Pouch Curd",
+    "name": "Amul Masti Pouch Curd",
+    "slug": "curd-dahi",
+    "description": "Thick, creamy curd perfect for meals and digestive health.",
+    "shortDescription": "Thick and fresh curd",
+    "price": 50,
+    "originalPrice": 50,
+    "discountPrice": 50,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812828/Amul_Masti_Pouch_Curd_emhjlt.png",
+        "alt": "Curd Dahi"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+      
+    },
+    "subcategory": "dairy-bakery",
+    "tags": [
+      "dairy",
+      "curd",
+      "dahi",
+      "fresh",
+      "Amul Masti Pouch Curd"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+       {
+      "weight": "200 g",
+      "price": 25,
+      "originalPrice": 25,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "400 g",
+      "price": 45,
+      "originalPrice": 45,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 35,
+    "unitType": "cup",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Kelori white Bread",
+    "name": "Kelori Bread",
+    "slug": "bread-white-brown",
+    "description": "Soft and freshly baked white and brown bread loaves perfect for breakfast and snacks.",
+    "shortDescription": "Fresh white or brown bread",
+    "price": 50,
+    "originalPrice": 50,
+    "discountPrice": 50,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812867/Kelori_white_Bread_vtm3bw.png",
+        "alt": "Bread White Brown"
+      }
+    ],
+    "category":  {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+    
+    },
+    "subcategory": "dairy-bakery",
+    "tags": [
+      "bakery",
+      "bread",
+      "breakfast",
+      "fresh"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "600 g",
+        "price": 54,
+        "originalPrice": 54,
+        "discount": 0,
+        "stock": 50,
+        "unitType": "packet"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "packet",
+    "isPerishable": true,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Amul Pure Ghee",
+    "name": "Amul Pure Ghee",
+    "slug": "desi-ghee",
+    "description": "Pure desi ghee with rich aroma and flavor, perfect for traditional dishes.",
+    "shortDescription": "Pure aromatic desi ghee",
+    "price": 420,
+    "originalPrice": 420,
+    "discountPrice": 420,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812835/Amul_Pure_Ghee_y4zva5.png",
+        "alt": "Desi Ghee"
+      },
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812834/Amul_Pure_Ghee_3_kh6xjk.png",
+        "alt": "Desi Ghee"
+      },
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812834/Amul_Pure_Ghee_2_s7cvzj.png",
+        "alt": "Desi Ghee"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+  
+    },
+    "subcategory": "oils-ghee",
+    "tags": [
+      "ghee",
+      "dairy",
+      "pure"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "1 L packet",
+        "price": 650,
+        "originalPrice": 650,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "liter"
+      },
+      {
+        "weight": "1 L tin",
+        "price": 650,
+        "originalPrice": 650,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "liter"
+      },
+      {
+        "weight": "1 l bottle",
+        "price": 650,
+        "originalPrice": 650,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "liter"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "preparationTime": 0,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "liter",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Vim Lemon Dishwash Bar",
+    "name": "Vim Lemon Dishwash Bar",
+    "slug": "dishwashing-soap-liquid-vim",
+    "description": "Tough on grease, gentle on hands dishwashing solutions",
+    "shortDescription": "Dish cleaning soap or liquid",
+    "price": 90,
+    "originalPrice": 90,
+    "discountPrice": 90,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812819/Vim_Lemon_Dishwash_Bar_sg0qhv.png",
+        "alt": "Vim Lemon Dishwash Bar "
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+    
+    },
+    "subcategory": "Household Essentials",
+    "tags": [
+      "dishwashing",
+      "soap",
+      "cleaner"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "300 g",
+        "price": 30,
+        "originalPrice": 30,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "bottle"
+      },
+      {
+        "weight": "200 g",
+        "price": 20,
+        "originalPrice": 20,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "bottle"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "bottle",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Vim Anti Smell Pudina Dishwash Bar",
+    "name": "Vim Anti Smell Pudina Dishwash Bar",
+    "slug": "dishwashing-soap-liquid",
+    "description": "Tough on grease, gentle on hands dishwashing solutions",
+    "shortDescription": "Dish cleaning soap or liquid",
+    "price": 90,
+    "originalPrice": 90,
+    "discountPrice": 90,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812819/Vim_Anti_Smell_Pudina_Dishwash_Ba_czevip.png",
+        "alt": "Dishwashing Soap / Liquid"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+      
+    },
+    "subcategory": "Household Essentials",
+    "tags": [
+      "dishwashing",
+      "soap",
+      "cleaner"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "pack",
+        "price": 15,
+        "originalPrice": 15,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "bottle"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "bottle",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Harpic Disinfectant Bathroom Cleaner",
+    "name": "Harpic Disinfectant Bathroom Cleaner",
+    "slug": "toilet-cleaner",
+    "description": "Powerful toilet cleaner for hygiene and freshness",
+    "shortDescription": "Effective toilet cleaning liquid",
+    "price": 120,
+    "originalPrice": 120,
+    "discountPrice": 120,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812776/Harpic_Disinfectant_Bathroom_Cleaner_zc7d9k.png",
+        "alt": "Harpic Disinfectant Liquid Toilet Cleaner"
+      }
+    ],
+    "category":  {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+      
+    },
+    "subcategory": "Household Essentials",
+    "tags": [
+      "cleaner",
+      "toilet",
+      "hygiene"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "500 ml",
+        "price": 115,
+        "originalPrice": 115,
+        "discount": 0,
+        "stock": 40,
+        "unitType": "bottle"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 40,
+    "unitType": "bottle",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  
+  {
+    "title": "Lux Jasmine & Vitamin E Beauty Soap ",
+    "name": "Lux Jasmine & Vitamin E Beauty Soap ",
+    "slug": "bath-soap",
+    "description": "Moisturizing bath soap for clean and soft skin",
+    "shortDescription": "Bathing soap bar",
+    "price": 60,
+    "originalPrice": 60,
+    "discountPrice": 60,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812791/Lux_Jasmine_Vitamin_E_Beauty_Soap_f4qrjo.png",
+        "alt": "Lux Jasmine & Vitamin E Beauty Soap "
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+      
+    },
+    "subcategory": "Household Essentials",
+    "tags": [
+      "bath",
+      "soap",
+      "personal care"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "150 g",
+        "price": 60,
+        "originalPrice": 60,
+        "discount": 0,
+        "stock": 100,
+        "unitType": "bar"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 100,
+    "unitType": "bar",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Cinthol Lime Refreshing Deo Soap",
+    "name": "Cinthol Lime Refreshing Deo Soap",
+    "slug": "bath-soap-cinthol",
+    "description": "Moisturizing bath soap for clean and soft skin",
+    "shortDescription": "Bathing soap bar",
+    "price": 60,
+    "originalPrice": 60,
+    "discountPrice": 60,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812774/Cinthol_Lime_Refreshing_Deo_Soap_bkxxiz.png",
+        "alt": "Bath Soap"
+      }
+    ],
+    "category":  {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+     
+    },
+    "subcategory": "Household Essentials",
+    "tags": [
+      "bath",
+      "soap",
+      "personal care"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "150 g",
+        "price": 60,
+        "originalPrice": 60,
+        "discount": 0,
+        "stock": 100,
+        "unitType": "bar"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 100,
+    "unitType": "bar",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  
+  {
+    "title": "Sunsilk Stunning Black Shine Shampoo",
+    "name": "Sunsilk Stunning Black Shine Shampoo",
+    "slug": "shampoo",
+    "description": "Hair cleansing shampoo with nourishing ingredients",
+    "shortDescription": "Cleansing and conditioning shampoo",
+    "price": 160,
+    "originalPrice": 160,
+    "discountPrice": 160,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812812/Sunsilk_Stunning_Black_Shine_Shampoo_zeohkh.png",
+        "alt": "Shampoo"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+    },
+    "subcategory": "Household Essentials",
+    "tags": [
+      "shampoo",
+      "hair care",
+      "personal hygiene"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "180 ml",
+        "price": 150,
+        "originalPrice": 150,
+        "discount": 0,
+        "stock": 50,
+        "unitType": "bottle"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 50,
+    "unitType": "bottle",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  {
+    "title": "Colgate Strong Teeth Anticavity Toothpaste",
+    "name": "Colgate Strong Teeth Anticavity Toothpaste",
+    "slug": "toothpaste",
+    "description": "Fluoride toothpaste for clean teeth and fresh breath",
+    "shortDescription": "Daily oral hygiene toothpaste",
+    "price": 90,
+    "originalPrice": 90,
+    "discountPrice": 90,
+    "discount": 0,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812774/Colgate_Strong_Teeth_Anticavity_Toothpaste_alhq5k.png",
+        "alt": "Toothpaste",
+        "author": "Tastyaana",
+        "title": "Toothpaste"
+      }
+    ],
+    "category": {
+        "$oid": "6882f90c5b1ba9254864dfe9"
+      
+    },
+    "subcategory": "Household Essentials",
+    "tags": [
+      "toothpaste",
+      "oral care",
+      "hygiene"
+    ],
+    "seller": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "weightOptions": [
+      {
+        "weight": "150 g",
+        "price": 99,
+        "originalPrice": 99,
+        "discount": 0,
+        "stock": 70,
+        "unitType": "tube"
+      }
+    ],
+    "isActive": true,
+    "isVeg": true,
+    "isCollegeBranded": false,
+    "createdBy": {
+      "$oid": "687242b702db822f91b13586"
+    },
+    "stock": 70,
+    "unitType": "tube",
+    "isPerishable": false,
+    "ratings": {
+      "average": 0,
+      "count": 0
+    },
+    "updatedAt": {
+      "$date": "2025-09-26T00:00:00.000Z"
+    }
+  },
+  
+  {
+  "title": "Parle-G Original Glucose Biscuits",
+  "name": "Parle-G Original Glucose Biscuits",
+  "slug": "parle-g",
+  "description": "Parle-G is a classic glucose biscuit made from wheat flour and enriched with the goodness of milk and glucose. It provides instant energy and is loved by people of all ages.",
+  "shortDescription": "Classic glucose biscuits for energy and taste",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323381/parle_g_biscuit_frbvsw.png",
+      "alt": "Parle-G Original Glucose Biscuits"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "biscuits",
+    "snacks",
+    "energy food",
+    "parle-g"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "80 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Parle-G Gold Premium Glucose Biscuits",
+  "name": "Parle-G Gold Premium Glucose Biscuits",
+  "slug": "parle-g-gold",
+  "description": "Parle-G Gold is a richer and crunchier version of the iconic Parle-G biscuits. Made with the goodness of wheat flour, milk, and added glucose, it provides an enhanced taste and instant energy with every bite.",
+  "shortDescription": "Premium glucose biscuits for energy and taste",
+  "price": 30,
+  "originalPrice": 30,
+  "discountPrice": 30,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323382/parle_gGold_biscuit_l8ma2r.png",
+      "alt": "Parle-G Gold Premium Glucose Biscuits"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+  },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "biscuits",
+    "snacks",
+    "energy food",
+    "parle-g",
+    "premium"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "125 g",
+      "price": 30,
+      "originalPrice": 30,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Britannia Good Day Cashew Cookies",
+  "name": "Britannia Good Day Cashew Cookies",
+  "slug": "britannia-good-day-cashew-cookies",
+  "description": "Britannia Good Day Cashew Cookies are made with rich buttery dough and loaded with crunchy cashew bits. These cookies offer a delightful taste and melt-in-mouth texture that make every tea-time special.",
+  "shortDescription": "Buttery cookies packed with crunchy cashews",
+  "price": 35,
+  "originalPrice": 35,
+  "discountPrice": 35,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323374/Good_Day_j6zlhf.png ",
+      "alt": "Britannia Good Day Cashew Cookies"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "cookies",
+    "biscuits",
+    "snacks",
+    "britannia",
+    "cashew"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "100 g",
+      "price": 35,
+      "originalPrice": 35,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Britannia Good Day Butter Cookies",
+  "name": "Britannia Good Day Butter Cookies",
+  "slug": "britannia-good-day-butter-cookies",
+  "description": "Britannia Good Day Butter Cookies are deliciously rich and buttery cookies made from premium ingredients. With their soft crunch and smooth texture, they bring a perfect balance of sweetness and buttery flavor to every bite.",
+  "shortDescription": "Rich, buttery cookies with a soft crunch",
+  "price": 30,
+  "originalPrice": 30,
+  "discountPrice": 30,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323373/5_gbpseg.png",
+      "alt": "Britannia Good Day Butter Cookies"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+  },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "cookies",
+    "biscuits",
+    "snacks",
+    "britannia",
+    "butter"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "100 g",
+      "price": 30,
+      "originalPrice": 30,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Parle 20-20 Cashew Cookies 30g Pack",
+  "name": "Parle 20-20 Cashew Cookies 30g Pack",
+  "slug": "parle-20-20-cashew-cookies-30g",
+  "description": "Parle 20-20 Cashew Cookies 30g Pack offers the same rich taste of crunchy cashews and buttery flavor in a smaller, on-the-go pack. Perfect for quick snacks or tea-time treats.",
+  "shortDescription": "Mini pack of crispy cashew cookies for on-the-go snacking",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323374/2020_jfjhhy.png",
+      "alt": "Parle 20-20 Cashew Cookies 30g Pack"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+  },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "cookies",
+    "biscuits",
+    "snacks",
+    "parle",
+    "cashew",
+    "mini pack"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "30 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Parle Monaco Classic Salted Biscuits",
+  "name": "Parle Monaco Classic Salted Biscuits",
+  "slug": "parle-monaco",
+  "description": "Parle Monaco Classic Salted Biscuits are light, crispy, and perfectly salted crackers that make for a delightful snack any time of the day. They pair perfectly with tea, cheese, or your favorite toppings.",
+  "shortDescription": "Light and crispy salted biscuits for snacking",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323380/monaco_waqm8n.png",
+      "alt": "Parle Monaco Classic Salted Biscuits"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "biscuits",
+    "snacks",
+    "parle",
+    "salted",
+    "crackers"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "63 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Britannia Marie Gold Biscuits 10₹ Pack",
+  "name": "Britannia Marie Gold Biscuits 10₹ Pack",
+  "slug": "britannia-marie-gold-biscuits-10rs-pack",
+  "description": "Britannia Marie Gold 10₹ Pack offers the same classic, light, and crispy wheat biscuits in a smaller, travel-friendly pack. Perfect for tea-time or quick snacks, it’s a healthy and tasty choice made from the goodness of wheat.",
+  "shortDescription": "Mini pack of light and crispy wheat biscuits",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10, 
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323380/Mari_Gold_q0gsxa.png",
+      "alt": "Britannia Marie Gold Biscuits 10₹ Pack"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "biscuits",
+    "snacks",
+    "britannia",
+    "marie gold",
+    "mini pack",
+    "wheat biscuits"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "60 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Amul Gold Full Cream Milk",
+  "name": "Amul Gold Full Cream Milk",
+  "slug": "amul-gold-full-cream-milk",
+  "description": "Amul Gold Full Cream Milk is a rich and creamy milk with 6% milk fat, offering a delicious taste and complete nutrition. Perfect for drinking, making tea, coffee, or preparing Indian sweets and desserts. It is hygienically packed to retain freshness and purity.",
+  "shortDescription": "Rich and creamy full cream milk with 6% fat content",
+  "price": 33,
+  "originalPrice": 33,
+  "discountPrice": 33,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323349/Amul_Gold_rhs8ch.png",
+      "alt": "Amul Gold Full Cream Milk"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Dairy & Beverages",
+  "tags": [
+    "milk",
+    "amul",
+    "dairy",
+    "full cream",
+    "fresh milk"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "500 ml",
+      "price": 34,
+      "originalPrice": 34,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "1 L",
+      "price": 66,
+      "originalPrice": 66,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Sanchi Gold Full Cream Milk",
+  "name": "Sanchi Gold Full Cream Milk",
+  "slug": "sanchi-gold-full-cream-milk",
+  "description": "Sanchi Gold Full Cream Milk is a rich and wholesome milk variety with a high fat content, offering superior taste and nutrition. It is ideal for direct consumption, tea, coffee, and traditional Indian sweets. Packed hygienically to preserve its freshness and quality.",
+  "shortDescription": "Rich and creamy full cream milk from Sanchi",
+  "price": 33,
+  "originalPrice": 33,
+  "discountPrice": 33,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323362/Sanchi_Gold_Full_Cream_Milk_wq0vjh.png",
+      "alt": "Sanchi Gold Full Cream Milk"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Dairy & Beverages",
+  "tags": [
+    "milk",
+    "sanchi",
+    "dairy",
+    "full cream milk",
+    "fresh milk"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "500 ml",
+      "price": 34,
+      "originalPrice": 34,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "1 L",
+      "price": 68,
+      "originalPrice": 68,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Sanchi Smart Double Toned Milk",
+  "name": "Sanchi Smart Double Toned Milk",
+  "slug": "sanchi-smart-double-toned-milk",
+  "description": "Sanchi Smart Double Toned Milk is a healthy and nutritious choice for those who prefer low-fat milk without compromising on taste. It is rich in protein and calcium, making it ideal for everyday use in tea, coffee, and breakfast cereals. Hygienically processed and packed to retain freshness.",
+  "shortDescription": "Low-fat double toned milk rich in protein and calcium",
+  "price": 28,
+  "originalPrice": 28,
+  "discountPrice": 28,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323365/Sanchi_Smart_Double_Toned_Milk_fw7nwr.png",
+      "alt": "Sanchi Smart Double Toned Milk"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Dairy & Beverages",
+  "tags": [
+    "milk",
+    "sanchi",
+    "double toned milk",
+    "low fat",
+    "dairy",
+    "healthy milk"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "500 ml",
+      "price": 26,
+      "originalPrice": 26,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "1 L",
+      "price": 52,
+      "originalPrice": 52,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Sachamoti Sabudana (Mota)",
+  "name": "Sachamoti Sabudana (Mota)",
+  "slug": "sachamoti-sabudana-mota",
+  "description": "Sachamoti Sabudana (Mota) is made from premium quality tapioca pearls that cook into soft, fluffy pearls when soaked or boiled. Perfect for making traditional dishes like sabudana khichdi, kheer, and vadas. It is rich in carbohydrates, making it an excellent energy source.",
+  "shortDescription": "High-quality tapioca pearls ideal for khichdi, kheer, and vadas",
+  "price": 65,
+  "originalPrice": 65,
+  "discountPrice": 65,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323360/Sabudane_zb9gea.png",
+      "alt": "Sachamoti Sabudana (Mota)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Grains & Pulses",
+  "tags": [
+    "sabudana",
+    "tapioca pearls",
+    "fasting food",
+    "sago",
+    "grains",
+    "energy food"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "500 g",
+      "price": 45,
+      "originalPrice": 45,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "1 kg",
+      "price":80,
+      "originalPrice": 80,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Maggi 2-Minute Masala Noodles",
+  "name": "Maggi 2-Minute Masala Noodles",
+  "slug": "maggi-2-minute-masala-noodles",
+  "description": "Maggi 2-Minute Masala Noodles is India’s most-loved instant snack, made with choicest quality spices and wheat flour noodles. Ready in just 2 minutes, it offers a delicious masala taste that’s perfect for quick hunger cravings, tiffins, or evening snacks.",
+  "shortDescription": "Classic instant noodles with rich masala flavor",
+  "price": 15,
+  "originalPrice": 15,
+  "discountPrice": 15,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323350/maggi_oiewvs.png",
+      "alt": "Maggi 2-Minute Masala Noodles"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Instant Foods & Snacks",
+  "tags": [
+    "noodles",
+    "instant food",
+    "maggi",
+    "masala noodles",
+    "quick snack",
+    "2 minute noodles"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "70 g",
+      "price": 15,
+      "originalPrice": 15,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "280 g (4-Pack)",
+      "price": 60,
+      "originalPrice": 60,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Gangwal Besan (Gram Flour)",
+  "name": "Gangwal Besan (Gram Flour)",
+  "slug": "gangwal-besan-gram-flour",
+  "description": "Gangwal Besan (Gram Flour) is made from 100% pure and high-quality chana dal, finely ground to perfection. It is rich in protein, gluten-free, and ideal for preparing a variety of Indian dishes like pakoras, dhokla, chilla, and sweets such as ladoo. Hygienically processed and packed for freshness.",
+  "shortDescription": "Pure chana dal flour ideal for snacks and sweets",
+  "price": 60,
+  "originalPrice": 60,
+  "discountPrice": 60,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323350/Gangwal_pxy8bp.png",
+      "alt": "Gangwal Besan (Gram Flour)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Grains & Pulses",
+  "tags": [
+    "besan",
+    "gram flour",
+    "gangwal",
+    "flour",
+    "snacks",
+    "protein-rich"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "500 g",
+      "price": 60,
+      "originalPrice": 60,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "1 kg",
+      "price": 120,
+      "originalPrice": 120,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Gangwal Rawa (Sooji)",
+  "name": "Gangwal Rawa (Sooji)",
+  "slug": "gangwal-rawa-sooji",
+  "description": "Gangwal Rawa (Sooji) is made from high-quality wheat, finely milled to ensure a soft and grainy texture. Ideal for preparing dishes like upma, halwa, idli, and dhokla. It is rich in carbohydrates and provides instant energy, making it a staple for breakfast and snacks.",
+  "shortDescription": "Premium quality semolina ideal for upma, halwa, and idli",
+  "price": 30,
+  "originalPrice": 30,
+  "discountPrice": 30,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323348/15_fi6zb1.png",
+      "alt": "Gangwal Rawa (Sooji)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Flours & Grains",
+  "tags": [
+    "rava",
+    "sooji",
+    "semolina",
+    "gangwal",
+    "breakfast",
+    "grain"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "500 g",
+      "price": 30,
+      "originalPrice": 30,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "1 kg",
+      "price": 60,
+      "originalPrice": 60,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Gangwal Maida (Refined Flour)",
+  "name": "Gangwal Maida (Refined Flour)",
+  "slug": "gangwal-maida-refined-flour",
+  "description": "Gangwal Maida (Refined Flour) is made from premium quality wheat, finely milled to produce soft and smooth flour. Perfect for baking, frying, and preparing snacks like samosas, pastries, cakes, and puris. Hygienically processed and packed to retain freshness and purity.",
+  "shortDescription": "Finely milled refined wheat flour for baking and snacks",
+  "price": 30,
+  "originalPrice": 30,
+  "discountPrice": 30,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323349/16_cgjdrz.png",
+      "alt": "Gangwal Maida (Refined Flour)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Flours & Grains",
+  "tags": [
+    "maida",
+    "refined flour",
+    "gangwal",
+    "baking flour",
+    "flour",
+    "snacks"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "500 g",
+      "price": 30,
+      "originalPrice": 30,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "1 kg",
+      "price": 60,
+      "originalPrice": 60,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": " Moong Dal (Loose)",
+  "name": " Moong Dal (Loose)",
+  "slug": "open-moong-dal-loose",
+  "description": "Open Moong Dal is freshly sourced and cleaned to ensure the highest quality. Rich in protein, fiber, and essential nutrients, it’s perfect for preparing dal, khichdi, and other Indian dishes. Its natural freshness and aroma make it a healthy addition to daily meals.",
+  "shortDescription": "Protein-rich yellow moong dal perfect for everyday cooking",
+  "price": 120,
+  "originalPrice": 120,
+  "discountPrice": 120,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323359/Moog_Dal_aej9ui.png",
+      "alt": "Open Moong Dal (Loose)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Grains & Pulses",
+  "tags": [
+    "moong dal",
+    "lentils",
+    "pulses",
+    "protein",
+    "loose grains",
+    "dal"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "1 kg",
+      "price": 120,
+      "originalPrice": 120,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Toor Dal (Badi)(Loose)",
+  "name": " Toor Dal (Badi)(Loose)",
+  "slug": "open-toor-dal-badi",
+  "description": "Open Toor Dal (Badi) is premium-quality split pigeon peas, rich in protein and fiber. It cooks easily to a soft texture and has a natural, earthy aroma. Perfect for preparing traditional Indian dishes like sambar, dal fry, and other protein-rich meals.",
+  "shortDescription": "High-quality toor dal rich in protein and flavor",
+  "price": 120,
+  "originalPrice": 120,
+  "discountPrice": 120,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323369/Toor_Dal_badi_uk9vqr.png",
+      "alt": "Open Toor Dal (Badi)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Grains & Pulses",
+  "tags": [
+    "toor dal",
+    "arhar dal",
+    "pulses",
+    "lentils",
+    "badi dal",
+    "protein rich"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "1 kg",
+      "price": 120,
+      "originalPrice": 120,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Open Toor Dal (Choti)(Loose)",
+  "name": "Open Toor Dal (Choti)(Loose)",
+  "slug": "open-toor-dal-choti",
+  "description": "Open Toor Dal (Choti) is fine-quality split pigeon peas known for their smaller grain size and superior taste. Rich in protein and essential nutrients, it’s perfect for preparing dal fry, sambar, and other traditional Indian dishes. Easy to cook and full of natural aroma.",
+  "shortDescription": "Fine-quality toor dal with smaller grains and rich flavor",
+  "price": 110,
+  "originalPrice": 110,
+  "discountPrice": 110,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323371/toor_Dal_choti_lqdh8b.png",
+      "alt": "Open Toor Dal (Choti)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Grains & Pulses",
+  "tags": [
+    "toor dal",
+    "arhar dal",
+    "pulses",
+    "lentils",
+    "choti dal",
+    "protein rich"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "1 kg",
+      "price": 110,
+      "originalPrice": 110,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Open Chana Dal (Loose)",
+  "name": "Open Chana Dal (Loose)",
+  "slug": "open-chana-dal-loose",
+  "description": "Open Chana Dal is made from premium quality Bengal gram, cleaned and split to perfection. It is rich in protein, fiber, and iron, making it a nutritious choice for daily meals. Ideal for preparing dal, curries, and traditional Indian snacks like besan, pakoras, and vadas.",
+  "shortDescription": "Protein-rich chana dal ideal for dal, curries, and snacks",
+  "price": 100,
+  "originalPrice": 100,
+  "discountPrice": 100,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323349/Chaan_daal_st5krb.png",
+      "alt": "Open Chana Dal (Loose)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Grains & Pulses",
+  "tags": [
+    "chana dal",
+    "bengal gram",
+    "pulses",
+    "lentils",
+    "protein rich",
+    "loose dal"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "1 kg",
+      "price": 100,
+      "originalPrice": 100,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Open Masoor Dal (Loose)",
+  "name": "Open Masoor Dal (Loose)",
+  "slug": "open-masoor-dal-loose",
+  "description": "Open Masoor Dal (Loose) is high-quality red lentils, known for their quick cooking and delicious earthy flavor. Rich in protein, fiber, and iron, this dal is perfect for making light, nutritious curries, soups, and stews. A staple in Indian kitchens for its health benefits and taste.",
+  "shortDescription": "Protein-rich red lentils that cook fast and taste delicious",
+  "price": 100,
+  "originalPrice": 100,
+  "discountPrice": 100,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323351/Masoor_Dal_Loose_m1u3g5.png",
+      "alt": "Open Masoor Dal (Loose)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Grains & Pulses",
+  "tags": [
+    "masoor dal",
+    "red lentils",
+    "pulses",
+    "protein rich",
+    "lentils",
+    "loose dal"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "1 kg (Regular)",
+      "price": 100,
+      "originalPrice": 100,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "1 kg (Premium)",
+      "price": 120,
+      "originalPrice": 120,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Open Urad Dal White (Loose)",
+  "name": "Open Urad Dal White (Loose)",
+  "slug": "open-urad-dal-white-loose",
+  "description": "Open Urad Dal White (Loose) is premium quality split and skinned black gram, known for its smooth texture and rich protein content. Ideal for preparing idli, dosa, vada, and various South Indian dishes. It cooks quickly and gives a creamy consistency to your recipes.",
+  "shortDescription": "High-quality white urad dal perfect for idli, dosa, and vada",
+  "price": 140,
+  "originalPrice": 140,
+  "discountPrice": 140,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323374/Udaad_Duli_hui_nwq6nh.png",
+      "alt": "Open Urad Dal White (Loose)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Grains & Pulses",
+  "tags": [
+    "urad dal",
+    "white urad dal",
+    "split urad",
+    "lentils",
+    "protein rich",
+    "pulses"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "1 kg",
+      "price": 140,
+      "originalPrice": 140,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+,
+{
+  "title": "Open Urad Dal Black (Loose)",
+  "name": "Open Urad Dal Black (Loose)",
+  "slug": "open-urad-dal-black-loose",
+  "description": "Open Urad Dal Black (Loose) is unpolished whole black gram, rich in protein, iron, and fiber. It has a strong earthy flavor and is perfect for preparing dal makhani, Punjabi dal, and other traditional dishes. A nutritious addition to your daily diet.",
+  "shortDescription": "Whole black urad dal rich in protein and fiber",
+  "price": 130,
+  "originalPrice": 130,
+  "discountPrice": 130,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323373/Udad_Normal_ki67pu.png",
+      "alt": "Open Urad Dal Black (Loose)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Grains & Pulses",
+  "tags": [
+    "urad dal",
+    "black urad dal",
+    "whole urad",
+    "lentils",
+    "pulses",
+    "protein rich"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "1 kg",
+      "price": 130,
+      "originalPrice": 130,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Brooke Bond Taj Mahal Tea",
+  "name": "Brooke Bond Taj Mahal Tea",
+  "slug": "brooke-bond-taj-mahal-tea",
+  "description": "Brooke Bond Taj Mahal Tea is crafted from the finest Assam tea leaves to deliver an unmatched flavor, aroma, and freshness. Known for its rich taste and strong aroma, this premium blend offers a truly royal tea experience. Perfect for those who love a full-bodied, refreshing cup.",
+  "shortDescription": "Premium Assam tea with rich aroma and full-bodied taste",
+  "price": 180,
+  "originalPrice": 180,
+  "discountPrice": 180,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323367/Tata_Taj_tea_ul9gz9.png",
+      "alt": "Brooke Bond Taj Mahal Tea"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Tea & Beverages",
+  "tags": [
+    "tea",
+    "taj mahal",
+    "brooke bond",
+    "assam tea",
+    "premium tea",
+    "beverages"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "250 g",
+      "price": 180,
+      "originalPrice": 180,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Madhur Pure Sugar",
+  "name": "Madhur Pure Sugar",
+  "slug": "madhur-pure-sugar",
+  "description": "Madhur Pure Sugar is made from high-quality sugarcane and is 100% sulphur-free. Its crystal-clear texture and natural sweetness make it ideal for tea, coffee, desserts, and everyday cooking. Hygienically processed and packed to retain purity and freshness.",
+  "shortDescription": "100% pure sulphur-free sugar for daily use",
+  "price": 55,
+  "originalPrice": 55,
+  "discountPrice": 55,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323366/Sugar_Madhur_zacub0.png",
+      "alt": "Madhur Pure Sugar"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Essentials",
+  "tags": [
+    "sugar",
+    "madhur",
+    "sweetener",
+    "essentials",
+    "grocery",
+    "sulphur free"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "1 kg",
+      "price": 55,
+      "originalPrice": 55,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Open Sugar (Loose)",
+  "name": "Open Sugar (Loose)",
+  "slug": "open-sugar-loose",
+  "description": "Open Sugar (Loose) is made from high-quality sugarcane and refined naturally to preserve its sweetness and purity. Perfect for daily use in tea, coffee, desserts, and other household recipes. Cleaned and crystalized to ensure consistent quality and taste.",
+  "shortDescription": "Refined loose sugar ideal for tea, coffee, and desserts",
+  "price": 45,
+  "originalPrice": 45,
+  "discountPrice": 45,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323366/sugar_tv5v5i.png",
+      "alt": "Open Sugar (Loose)"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Essentials",
+  "tags": [
+    "sugar",
+    "open sugar",
+    "sweetener",
+    "loose sugar",
+    "grocery",
+    "essentials"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "1 kg",
+      "price": 45,
+      "originalPrice": 45,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Kissan Tomato Sauce",
+  "name": "Kissan Tomato Sauce",
+  "slug": "kissan-tomato-sauce",
+  "description": "Kissan Tomato Sauce is made from 100% real, juicy tomatoes to give a perfect blend of sweet and tangy taste. It enhances the flavor of snacks like samosas, pakoras, sandwiches, and fries, making them even more delicious. A trusted companion for every meal.",
+  "shortDescription": "Made from real tomatoes with a rich, tangy flavor",
+  "price": 50,
+  "originalPrice": 50,
+  "discountPrice": 50,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323350/Kissan_Tomato_Sauce_xwmmxf.png",
+      "alt": "Kissan Tomato Sauce 445g"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Sauces & Condiments",
+  "tags": [
+    "kissan",
+    "tomato sauce",
+    "sauce",
+    "condiments",
+    "snacks",
+    "dip"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "445 g",
+      "price": 50,
+      "originalPrice": 50,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Maggi Pichkoo Tomato Ketchup",
+  "name": "Maggi Pichkoo Tomato Ketchup",
+  "slug": "maggi-pichkoo-tomato-ketchup",
+  "description": "Maggi Pichkoo Tomato Ketchup is made from fresh, juicy tomatoes and blended with the perfect balance of tangy and sweet flavors. Its convenient squeezable Pichkoo pack makes it easy to use and store — ideal for quick snacks, samosas, sandwiches, and fries.",
+  "shortDescription": "Tangy and sweet tomato ketchup in an easy Pichkoo pack",
+  "price": 15,
+  "originalPrice": 15,
+  "discountPrice": 15,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762324753/LaungClove_Whole_1_ozygux.png",
+      "alt": "Maggi Pichkoo Tomato Ketchup"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Sauces & Condiments",
+  "tags": [
+    "maggi",
+    "tomato ketchup",
+    "pichkoo",
+    "sauce",
+    "condiments",
+    "snack dip"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "90 g",
+      "price": 15,
+      "originalPrice": 15,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Pushp Haldi Powder",
+  "name": "Pushp Haldi Powder",
+  "slug": "pushp-haldi-powder",
+  "description": "Pushp Haldi Powder is made from the finest quality turmeric roots, carefully cleaned, dried, and ground to perfection. It adds a rich golden color and earthy aroma to your dishes while offering natural antiseptic and healing properties.",
+  "shortDescription": "Pure turmeric powder for color, flavor, and health benefits",
+  "price": 25,
+  "originalPrice": 25,
+  "discountPrice": 25,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323360/Pushp_Turmeric_o4ke7i.png",
+      "alt": "Pushp Haldi Powder"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Spices & Masala",
+  "tags": [
+    "haldi",
+    "turmeric",
+    "pushp",
+    "spices",
+    "masala",
+    "healthy"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "100 g",
+      "price": 25,
+      "originalPrice": 25,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "200 g",
+      "price": 50,
+      "originalPrice": 50,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "500 g",
+      "price": 120,
+      "originalPrice": 120,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "1 kg",
+      "price": 240,
+      "originalPrice": 240,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Pushp Mirchi Powder",
+  "name": "Pushp Mirchi Powder",
+  "slug": "pushp-mirchi-powder",
+  "description": "Pushp Mirchi Powder is made from carefully selected, sun-dried red chilies that are finely ground to give a vibrant red color and perfect spiciness to every dish. Known for its aroma, freshness, and purity, it adds authentic Indian flavor to your meals.",
+  "shortDescription": "Pure red chili powder with rich color and strong flavor",
+  "price": 40,
+  "originalPrice": 40,
+  "discountPrice": 40,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323349/Chilli_Powder_xk2cq0.png",
+      "alt": "Pushp Mirchi Powder"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Spices & Masala",
+  "tags": [
+    "mirchi",
+    "red chili powder",
+    "pushp",
+    "spices",
+    "masala",
+    "hot"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "100 g",
+      "price": 40,
+      "originalPrice": 40,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "250 g",
+      "price": 80,
+      "originalPrice": 80,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "500 g",
+      "price": 190,
+      "originalPrice": 190,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "1 kg",
+      "price": 360,
+      "originalPrice": 360,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "KPR Lung Sev",
+  "name": "KPR Lung Sev",
+  "slug": "kpr-lung-sev",
+  "description": "KPR Lung Sev is a crispy, crunchy, and spicy Indian snack made from gram flour and special aromatic spices. Perfect for tea-time snacking or pairing with poha, upma, and chaats. It delivers a delicious balance of crunch and traditional flavor loved by all age groups.",
+  "shortDescription": "Crispy and spicy gram flour sev perfect for tea-time snacks",
+  "price": 40,
+  "originalPrice": 40,
+  "discountPrice": 40,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323350/kpr_laung_z3newq.png",
+      "alt": "KPR Lung Sev"
+    }
+  ],
+  "category":  {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Snacks & Namkeen",
+  "tags": [
+    "sev",
+    "namkeen",
+    "kpr",
+    "snacks",
+    "spicy sev",
+    "tea time"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "200 g",
+      "price": 40,
+      "originalPrice": 40,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "500 g",
+      "price": 90,
+      "originalPrice": 90,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},  
+{
+  "title": "Dove Beauty Bathing Bar",
+  "name": "Dove Beauty Bathing Bar",
+  "slug": "dove-beauty-bathing-bar",
+  "description": "Dove Beauty Bathing Bar is enriched with ¼ moisturizing cream and gentle cleansers that nourish the skin deeply. It helps make skin soft, smooth, and radiant after every wash. Ideal for daily use on face and body, suitable for all skin types.",
+  "shortDescription": "Moisturizing bathing bar for soft and smooth skin",
+  "price": 25,
+  "originalPrice": 25,
+  "discountPrice": 25,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323348/Dove_hadbfp.png",
+      "alt": "Dove Beauty Bathing Bar"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+ 
+  },
+  "subcategory": "Bath & Body",
+  "tags": [
+    "dove",
+    "bathing bar",
+    "soap",
+    "moisturizing",
+    "skin care",
+    "beauty bar"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "50 g",
+      "price": 25,
+      "originalPrice": 25,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "100 g",
+      "price": 60,
+      "originalPrice": 60,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": " No.1 Bathing Soap",
+  "name": "No.1 Bathing Soap",
+  "slug": "lifebuoy-no1-bathing-soap",
+  "description": "Lifebuoy No.1 Bathing Soap provides trusted germ protection with a refreshing fragrance. It helps keep your skin healthy and clean while giving a long-lasting freshness. Perfect for everyday hygiene for the entire family.",
+  "shortDescription": "Trusted germ protection soap for healthy and clean skin",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762323360/no1_ninnne.png",
+      "alt": "Lifebuoy No.1 Bathing Soap"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+
+  },
+  "subcategory": "Bath & Body",
+  "tags": [
+    "lifebuoy",
+    "no1 soap",
+    "bathing soap",
+    "personal care",
+    "antibacterial",
+    "hygiene"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "45 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "100 g",
+      "price": 28,
+      "originalPrice": 28,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+
+
+]

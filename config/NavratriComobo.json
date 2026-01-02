@@ -1,0 +1,278 @@
+[
+  {
+    "title": "2 Sabudana Bade Combo",
+    "name": "2 Sabudana Bade + Dahi + Chips + Banana",
+    "slug": "2-sabudana-bade-dahi-chips-banana",
+    "description": "Two crispy sabudana bade served with creamy dahi, a packet of chips, and a fresh banana. A perfect Falhari snack combo.",
+    "shortDescription": "2 Sabudana Bade + Dahi + Chips + Banana = ₹100",
+    "price": 100,
+    "originalPrice": 110,
+    "discountPrice": 100,
+    "discount": 9,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1758494104/IMG-20250922-WA0001_yjfeku.jpg",
+        "alt": "Sabudana Bade Combo",
+        "isPrimary": true
+      }
+    ],
+    "category": { "$oid": "68d05dcbbca1a367e0fe9458" },
+    "subcategory": "combo-falari",
+    "tags": ["sabudana", "bade", "dahi", "chips", "banana", "falhari", "combo"],
+    "seller": { "$oid": "687242b702db822f91b13586" },
+    "createdBy": { "$oid": "687242b702db822f91b13586" },
+    "weightOptions": [
+      {
+        "weight": "Standard",
+        "price": 100,
+        "originalPrice": 110,
+        "discount": 9,
+        "stock": 50
+      }
+    ],
+    "stock": 50,
+    "lowStockThreshold": 5,
+    "isActive": true,
+    "ingredients": ["Sabudana", "Potatoes", "Dahi", "Chips", "Banana", "Spices"],
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed fresh.",
+    "ratings": { "average": 0, "count": 0 },
+    "reviewCount": 0,
+    "views": 0,
+    "salesCount": 0,
+    "unitType": "combo",
+    "isPerishable": true,
+    "origin": "India",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Khichdi Falhari Combo",
+    "name": "Khichdi + Dahi + Chips + Banana + Fariyal Mixture",
+    "slug": "khichdi-dahi-chips-banana-fariyal",
+    "description": "Traditional falhari khichdi paired with dahi, a chips packet, banana, and Fariyal mixture for a wholesome meal.",
+    "shortDescription": "Khichdi Combo = ₹100",
+    "price": 100,
+    "originalPrice": 120,
+    "discountPrice": 100,
+    "discount": 17,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1758494105/IMG-20250922-WA0003_ss0inf.jpg",
+        "alt": "Khichdi Combo",
+        "isPrimary": true
+      }
+    ],
+    "category": { "$oid": "68d05dcbbca1a367e0fe9458" },
+    "subcategory": "combo-falari",
+    "tags": ["khichdi", "fariyal", "dahi", "chips", "banana", "falhari"],
+    "seller": { "$oid": "687242b702db822f91b13586" },
+    "createdBy": { "$oid": "687242b702db822f91b13586" },
+    "weightOptions": [
+      {
+        "weight": "Standard",
+        "price": 100,
+        "originalPrice": 120,
+        "discount": 17,
+        "stock": 60
+      }
+    ],
+    "stock": 60,
+    "lowStockThreshold": 5,
+    "isActive": true,
+    "ingredients": ["Sabudana", "Potatoes", "Fariyal Mixture", "Dahi", "Chips", "Banana"],
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed fresh.",
+    "ratings": { "average": 0, "count": 0 },
+    "reviewCount": 0,
+    "views": 0,
+    "salesCount": 0,
+    "unitType": "combo",
+    "isPerishable": true,
+    "origin": "India",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Khichdi + 2 Sabudana Bade Combo",
+    "name": "Khichdi + 2 Sabudana Bade + Dahi + Chips + 2 Banana",
+    "slug": "khichdi-2-sabudana-bade-dahi-chips-2banana",
+    "description": "A filling Falhari combo with khichdi, two sabudana bade, dahi, chips, and two bananas.",
+    "shortDescription": "Khichdi + Sabudana Bade Combo = ₹160",
+    "price": 160,
+    "originalPrice": 180,
+    "discountPrice": 160,
+    "discount": 11,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1758494104/IMG-20250922-WA0002_ukzgy0.jpg",
+        "alt": "Khichdi Sabudana Combo",
+        "isPrimary": true
+      }
+    ],
+    "category": { "$oid": "68d05dcbbca1a367e0fe9458" },
+    "subcategory": "combo-falari",
+    "tags": ["khichdi", "sabudana", "bade", "dahi", "banana", "chips", "falhari"],
+    "seller": { "$oid": "687242b702db822f91b13586" },
+    "createdBy": { "$oid": "687242b702db822f91b13586" },
+    "weightOptions": [
+      {
+        "weight": "Standard",
+        "price": 160,
+        "originalPrice": 180,
+        "discount": 11,
+        "stock": 40
+      }
+    ],
+    "stock": 40,
+    "lowStockThreshold": 5,
+    "isActive": true,
+    "ingredients": ["Sabudana", "Potatoes", "Dahi", "Chips", "Banana", "Khichdi"],
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed fresh.",
+    "ratings": { "average": 0, "count": 0 },
+    "reviewCount": 0,
+    "views": 0,
+    "salesCount": 0,
+    "unitType": "combo",
+    "isPerishable": true,
+    "origin": "India",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Khichdi + Sabudana + Khopra Patties Combo",
+    "name": "Khichdi + 2 Sabudana Bade + Dahi + Chips + 2 Banana + Khopra Patties + Chaas",
+    "slug": "khichdi-sabudana-khopra-chaas",
+    "description": "Premium Falhari combo with khichdi, sabudana bade, dahi, chips, bananas, khopra patties, and chaas.",
+    "shortDescription": "Khichdi + Sabudana Bade + Dahi + Chips + Banana + Khopra Patties + Chaas",
+    "price": 220,
+    "originalPrice": 250,
+    "discountPrice": 220,
+    "discount": 12,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1758494103/IMG-20250922-WA0007_dbzczb.jpg",
+        "alt": "Khichdi Khopra Combo",
+        "isPrimary": true
+      }
+    ],
+    "category": { "$oid": "68d05dcbbca1a367e0fe9458" },
+    "subcategory": "combo-falari",
+    "tags": ["khichdi", "sabudana", "khopra patties", "chaas", "falhari"],
+    "seller": { "$oid": "687242b702db822f91b13586" },
+    "createdBy": { "$oid": "687242b702db822f91b13586" },
+    "weightOptions": [
+      {
+        "weight": "Standard",
+        "price": 220,
+        "originalPrice": 250,
+        "discount": 12,
+        "stock": 30
+      }
+    ],
+    "stock": 30,
+    "lowStockThreshold": 5,
+    "isActive": true,
+    "ingredients": ["Khichdi", "Sabudana Bade", "Dahi", "Chips", "Banana", "Khopra Patties", "Chaas"],
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed fresh.",
+    "ratings": { "average": 0, "count": 0 },
+    "reviewCount": 0,
+    "views": 0,
+    "salesCount": 0,
+    "unitType": "combo",
+    "isPerishable": true,
+    "origin": "India",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "Khichdi + Sabudana + 2 Khopra Patties + Lassi",
+    "name": "Khichdi + 2 Sabudana Bade + Dahi + Chips + 2 Banana + 2 Khopra Patties + Lassi",
+    "slug": "khichdi-sabudana-khopra-lassi",
+    "description": "Deluxe Falhari combo with khichdi, sabudana bade, dahi, chips, bananas, two khopra patties, and lassi.",
+    "shortDescription": "Khichdi + 2 Sabudana Bade + Dahi + Chips + 2 Banana + 2 Khopra Patties + Lassi",
+    "price": 260,
+    "originalPrice": 290,
+    "discountPrice": 260,
+    "discount": 10,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1758494103/IMG-20250922-WA0006_bvgfuo.jpg",
+        "alt": "Khichdi Khopra Lassi Combo",
+        "isPrimary": true
+      }
+    ],
+    "category": { "$oid": "68d05dcbbca1a367e0fe9458" },
+    "subcategory": "combo-falari",
+    "tags": ["khichdi", "sabudana", "khopra patties", "lassi", "falhari"],
+    "seller": { "$oid": "687242b702db822f91b13586" },
+    "createdBy": { "$oid": "687242b702db822f91b13586" },
+    "weightOptions": [
+      {
+        "weight": "Standard",
+        "price": 260,
+        "originalPrice": 290,
+        "discount": 10,
+        "stock": 25
+      }
+    ],
+    "stock": 25,
+    "lowStockThreshold": 5,
+    "isActive": true,
+    "ingredients": ["Khichdi", "Sabudana Bade", "Dahi", "Chips", "Banana", "Khopra Patties", "Lassi"],
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed fresh.",
+    "ratings": { "average": 0, "count": 0 },
+    "reviewCount": 0,
+    "views": 0,
+    "salesCount": 0,
+    "unitType": "combo",
+    "isPerishable": true,
+    "origin": "India",
+    "returnPolicyDays": 0
+  },
+  {
+    "title": "2 Khopra Patties Combo",
+    "name": "2 Khopra Patties + Dahi + Chips",
+    "slug": "2-khopra-patties-dahi-chips",
+    "description": "Two delicious khopra patties with dahi and chips for a light Falhari snack.",
+    "shortDescription": "2 Khopra Patties Combo = ₹100",
+    "price": 100,
+    "originalPrice": 110,
+    "discountPrice": 100,
+    "discount": 9,
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1758489088/WhatsApp_Image_2025-09-22_at_01.39.34_7e51d0bc_deax01.jpg",
+        "alt": "Khopra Patties Combo",
+        "isPrimary": true
+      }
+    ],
+    "category": { "$oid": "68d05dcbbca1a367e0fe9458" },
+    "subcategory": "combo-falari",
+    "tags": ["khopra patties", "dahi", "chips", "falhari", "combo"],
+    "seller": { "$oid": "687242b702db822f91b13586" },
+    "createdBy": { "$oid": "687242b702db822f91b13586" },
+    "weightOptions": [
+      {
+        "weight": "Standard",
+        "price": 100,
+        "originalPrice": 110,
+        "discount": 9,
+        "stock": 35
+      }
+    ],
+    "stock": 35,
+    "lowStockThreshold": 5,
+    "isActive": true,
+    "ingredients": ["Khopra Patties", "Dahi", "Chips"],
+    "shelfLife": 1,
+    "storageInstructions": "Best consumed fresh.",
+    "ratings": { "average": 0, "count": 0 },
+    "reviewCount": 0,
+    "views": 0,
+    "salesCount": 0,
+    "unitType": "combo",
+    "isPerishable": true,
+    "origin": "India",
+    "returnPolicyDays": 0
+  }
+]

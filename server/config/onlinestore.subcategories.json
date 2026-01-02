@@ -1,0 +1,486 @@
+[{
+  "_id": {
+    "$oid": "694846dfd90c44797674c851"
+  },
+  "name": "Dosa",
+  "category": {
+    "$oid": "6882f8f15b1ba9254864dfe7"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c855"
+  },
+  "name": "Idli",
+  "category": {
+    "$oid": "6882f8f15b1ba9254864dfe7"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c858"
+  },
+  "name": "Uttapam",
+  "category": {
+    "$oid": "6882f8f15b1ba9254864dfe7"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c85b"
+  },
+  "name": "Upma",
+  "category": {
+    "$oid": "6882f8f15b1ba9254864dfe7"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c85d"
+  },
+  "name": "Poha",
+  "category": {
+    "$oid": "6882f8f15b1ba9254864dfe7"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c85f"
+  },
+  "name": "Curries",
+  "category": {
+    "$oid": "6882f90c5b1ba9254864dfe9"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c863"
+  },
+  "name": "Paneer Dishes",
+  "category": {
+    "$oid": "6882f90c5b1ba9254864dfe9"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c866"
+  },
+  "name": "Dal Varieties",
+  "category": {
+    "$oid": "6882f90c5b1ba9254864dfe9"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c869"
+  },
+  "name": "Veg Gravies",
+  "category": {
+    "$oid": "6882f90c5b1ba9254864dfe9"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c86a"
+  },
+  "name": "Rice Meals",
+  "category": {
+    "$oid": "6882f90c5b1ba9254864dfe9"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c86c"
+  },
+  "name": "Thali",
+  "category": {
+    "$oid": "6882f90c5b1ba9254864dfe9"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c86f"
+  },
+  "name": "Roti",
+  "category": {
+    "$oid": "6882f91f5b1ba9254864dfeb"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c872"
+  },
+  "name": "Naan",
+  "category": {
+    "$oid": "6882f91f5b1ba9254864dfeb"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c874"
+  },
+  "name": "Paratha",
+  "category": {
+    "$oid": "6882f91f5b1ba9254864dfeb"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c876"
+  },
+  "name": "Garlic Bread",
+  "category": {
+    "$oid": "6882f91f5b1ba9254864dfeb"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c877"
+  },
+  "name": "Buns",
+  "category": {
+    "$oid": "6882f91f5b1ba9254864dfeb"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c879"
+  },
+  "name": "Pizza",
+  "category": {
+    "$oid": "688e94341f64b64116fa23d1"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c87d"
+  },
+  "name": "Pasta",
+  "category": {
+    "$oid": "688e94341f64b64116fa23d1"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c880"
+  },
+  "name": "Burgers",
+  "category": {
+    "$oid": "688e94341f64b64116fa23d1"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c883"
+  },
+  "name": "Sandwiches",
+  "category": {
+    "$oid": "688e94341f64b64116fa23d1"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c885"
+  },
+  "name": "Wraps",
+  "category": {
+    "$oid": "688e94341f64b64116fa23d1"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c886"
+  },
+  "name": "Rolls",
+  "category": {
+    "$oid": "688e94341f64b64116fa23d1"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c888"
+  },
+  "name": "Fried Rice",
+  "category": {
+    "$oid": "688fb41ebea1c163a6eda193"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c88a"
+  },
+  "name": "Biryani",
+  "category": {
+    "$oid": "688fb41ebea1c163a6eda193"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c88d"
+  },
+  "name": "Pulao",
+  "category": {
+    "$oid": "688fb41ebea1c163a6eda193"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c88f"
+  },
+  "name": "Noodles",
+  "category": {
+    "$oid": "688fb41ebea1c163a6eda193"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c891"
+  },
+  "name": "Rice Bowls",
+  "category": {
+    "$oid": "688fb41ebea1c163a6eda193"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c892"
+  },
+  "name": "Chaat",
+  "category": {
+    "$oid": "68a9f92f7f446a4c68f0455a"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c894"
+  },
+  "name": "Samosa",
+  "category": {
+    "$oid": "68a9f92f7f446a4c68f0455a"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c897"
+  },
+  "name": "Kachori",
+  "category": {
+    "$oid": "68a9f92f7f446a4c68f0455a"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c898"
+  },
+  "name": "Vada Pav",
+  "category": {
+    "$oid": "68a9f92f7f446a4c68f0455a"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c899"
+  },
+  "name": "Pav Bhaji",
+  "category": {
+    "$oid": "68a9f92f7f446a4c68f0455a"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c89a"
+  },
+  "name": "Momos",
+  "category": {
+    "$oid": "68a9f92f7f446a4c68f0455a"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c89d"
+  },
+  "name": "Spring Rolls",
+  "category": {
+    "$oid": "68a9f92f7f446a4c68f0455a"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c89e"
+  },
+  "name": "Salads",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74447"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8a0"
+  },
+  "name": "Soups",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74447"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8a2"
+  },
+  "name": "Detox Drinks",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74447"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8a3"
+  },
+  "name": "Low-Calorie Meals",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74447"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8a4"
+  },
+  "name": "Indian Sweets",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74440"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8a6"
+  },
+  "name": "Cakes",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74440"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8a9"
+  },
+  "name": "Pastries",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74440"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8aa"
+  },
+  "name": "Ice Cream",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74440"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8ab"
+  },
+  "name": "Gelato",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74440"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8ac"
+  },
+  "name": "Tiramisu",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74440"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8ad"
+  },
+  "name": "Pancakes",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74440"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8ae"
+  },
+  "name": "Lassi",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74445"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8b0"
+  },
+  "name": "Shakes",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74445"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8b2"
+  },
+  "name": "Juices",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74445"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8b4"
+  },
+  "name": "Tea",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74445"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8b6"
+  },
+  "name": "Coffee",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74445"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8b8"
+  },
+  "name": "Vegan",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74441"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8b9"
+  },
+  "name": "Jain",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74441"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8ba"
+  },
+  "name": "Gluten-Free",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74441"
+  }
+},
+{
+  "_id": {
+    "$oid": "694846dfd90c44797674c8bb"
+  },
+  "name": "High-Protein",
+  "category": {
+    "$oid": "68b14f3debcbba39abe74441"
+  }
+}]
