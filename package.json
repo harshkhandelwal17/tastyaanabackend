@@ -60,6 +60,9 @@
   "prettier": "^3.0.2",
   "supertest": "^6.3.3"
  },
+ "overrides": {
+  "cloudinary": "^1.37.0"
+},
  "keywords": [
   "ecommerce",
   "seller-panel",
