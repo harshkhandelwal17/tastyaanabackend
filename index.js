@@ -153,10 +153,10 @@ const startServer = async () => {
     const { startSubscriptionExpiryJob } = require('./jobs/subscriptionExpiry');
     startSubscriptionExpiryJob();
     
-    // server.listen(PORT,'0.0.0.0',  () => {
-    //   console.log(`Server running at http://'0.0.0.0':${PORT}`);
-    //   console.log('Socket.IO initialized for real-time tracking');
-    // });
+    server.listen(PORT,'0.0.0.0',  () => {
+      console.log(`Server running at http://'0.0.0.0':${PORT}`);
+      console.log('Socket.IO initialized for real-time tracking');
+    });
     console.log('🚀 Starting automated cron jobs...');
     startAllJobs();
   } catch (err) {
