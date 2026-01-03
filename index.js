@@ -109,7 +109,7 @@ const connect = require('./config/database');
 const http = require('http');
 const { Server } = require('socket.io');
 const SocketService = require('./services/socketService');
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT ;
 const { startAllJobs } = require('./jobs/laundryJobs');
 
 // Create HTTP server
