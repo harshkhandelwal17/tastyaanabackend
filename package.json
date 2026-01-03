@@ -8,7 +8,7 @@
   "seed": "node scripts/seedData.js",
   "seed:grocery": "node seedGrocery.js",
   "seed:slots": "node scripts/seedCategorySlots.js",
-  "build": "npm install",
+  "build": "echo no build needed",
   "lint": "eslint .",
   "lint:fix": "eslint . --fix"
  },
@@ -16,7 +16,7 @@
   "axios": "^1.11.0",
   "bcrypt": "^6.0.0",
   "bcryptjs": "^2.4.3",
-  "cloudinary": "^1.37.0",
+"cloudinary": "1.21.0",
   "compression": "^1.7.4",
   "cookie-parser": "^1.4.7",
   "cors": "^2.8.5",
@@ -61,7 +61,7 @@
   "supertest": "^6.3.3"
  },
  "overrides": {
-  "cloudinary": "^1.37.0"
+"cloudinary": "1.21.0"
 },
  "keywords": [
   "ecommerce",
