@@ -75,7 +75,7 @@ const allowedOrigins = [
   'https://192.168.1.2:5173',
   'https://localhost:5173',
   "http://127.0.0.1:5500",
-          'https://tastyaanafrontendapp.vercel.app/',
+          'https://tastyaanafrontendapp.vercel.app',
 
   process.env.CLIENT_URL,
 ];

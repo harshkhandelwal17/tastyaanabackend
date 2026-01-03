@@ -126,7 +126,7 @@ const io = new Server(server, {
       'https://www.tastyaana.com',
         'https://192.168.1.2:5173',
         'https://localhost:5173',
-        'https://tastyaanafrontendapp.vercel.app/',
+        'https://tastyaanafrontendapp.vercel.app',
       process.env.CLIENT_URL
     ],
     methods: ['GET', 'POST'],
