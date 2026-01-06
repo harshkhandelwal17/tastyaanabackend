@@ -79,16 +79,16 @@ require('dotenv').config();
 // // app.use('*', (req, res) => {
 //   //   res.status(404).json({ message: 'Route not found' });
 //   // });
-  
+
 // // console.log('Routes initialized');
 // const startServer = async () => {
 //   try {
 //     // Connect to the database first
 //     await connect();
-    
+
 //     // Initialize scheduler if needed
 //     // initScheduler();
-    
+
 //     // Then start the server
 //     app.listen(5000, () => {
 //       console.log(`Server running in development  mode on port ${5000}`);
@@ -109,7 +109,7 @@ const connect = require('./config/database');
 const http = require('http');
 const { Server } = require('socket.io');
 const SocketService = require('./services/socketService');
-const PORT = process.env.PORT ;
+const PORT = process.env.PORT || 5000;
 const { startAllJobs } = require('./jobs/laundryJobs');
 
 // Create HTTP server
@@ -119,14 +119,14 @@ console.log("server js")
 const io = new Server(server, {
   cors: {
     origin: [
-      'http://localhost:5173',    
-        'http://localhost:5174',
+      'http://localhost:5173',
+      'http://localhost:5174',
       'https://tastyaana.vercel.app',
       'http://192.168.1.2:5173',
       'https://www.tastyaana.com',
-        'https://192.168.1.2:5173',
-        'https://localhost:5173',
-        'https://tastyaanafrontendapp.vercel.app',
+      'https://192.168.1.2:5173',
+      'https://localhost:5173',
+      'https://tastyaanafrontendapp.vercel.app',
       process.env.CLIENT_URL
     ],
     methods: ['GET', 'POST'],
@@ -145,16 +145,16 @@ global.io = io;
 const startServer = async () => {
   try {
     await connect();
-    
+
     // Initialize cron jobs after database connection
     const { initializeCronJobs } = require('./jobs/dailySubscriptionOrders');
     initializeCronJobs();
-    
+
     // Initialize subscription expiry cron job
     const { startSubscriptionExpiryJob } = require('./jobs/subscriptionExpiry');
     startSubscriptionExpiryJob();
-    
-    server.listen(PORT,'0.0.0.0',  () => {
+
+    server.listen(PORT, '0.0.0.0', () => {
       console.log(`Server running at http://'0.0.0.0':${PORT}`);
       console.log('Socket.IO initialized for real-time tracking');
     });

@@ -96,7 +96,7 @@
 // // router.post('/google/callback', async (req, res) => {
 // //   try {
 // //     const { code } = req.body;
-    
+
 // //     // Exchange authorization code for tokens
 // //     const { OAuth2Client } = require('google-auth-library');
 // //     const client = new OAuth2Client(
@@ -187,7 +187,7 @@
 // // router.get('/google/callback', async (req, res) => {
 // //   try {
 // //     const { code } = req.query; // Note: GET request, so use req.query not req.body
-    
+
 // //     if (!code) {
 // //       // Redirect to frontend with error
 // //       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
@@ -203,7 +203,7 @@
 // //     );
 
 // //     const { tokens } = await oauth2Client.getToken(code);
-    
+
 // //     if (!tokens.id_token) {
 // //       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
 // //       return res.redirect(`${frontendUrl}/auth/callback?error=no_token`);
@@ -277,7 +277,7 @@
 
 // //     // Return HTML page that communicates with parent window
 // //     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-    
+
 // //     const htmlResponse = `
 // //     <!DOCTYPE html>
 // //     <html>
@@ -309,12 +309,12 @@
 // //         <p>Authenticating... Please wait.</p>
 // //     </body>
 // //     </html>`;
-    
+
 // //     res.send(htmlResponse);
 
 // //   } catch (error) {
 // //     console.error('Google OAuth Callback Error:', error);
-    
+
 // //     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
 // //     const htmlResponse = `
 // //     <!DOCTYPE html>
@@ -337,7 +337,7 @@
 // //         <p>Authentication failed. Redirecting...</p>
 // //     </body>
 // //     </html>`;
-    
+
 // //     res.send(htmlResponse);
 // //   }
 // // });
@@ -347,7 +347,7 @@
 // // router.put('/profile', authenticate, async (req, res) => {
 // //   try {
 // //     const { name, phone, addresses } = req.body;
-    
+
 // //     const user = await User.findByIdAndUpdate(
 // //       req.user.id,
 // //       { name, phone, addresses },
@@ -446,7 +446,7 @@
 //     const existingUser = await User.findOne({ 
 //       $or: [{ email }, { phone }] 
 //     });
-    
+
 //     if (existingUser) {
 //       return res.status(400).json({ 
 //         success: false,
@@ -594,7 +594,7 @@
 // router.put('/profile', authenticate, async (req, res) => {
 //   try {
 //     const { name, phone, addresses } = req.body;
-    
+
 //     const user = await User.findByIdAndUpdate(
 //       req.user._id,
 //       { name, phone, addresses },
@@ -624,7 +624,7 @@
 //       secure: process.env.NODE_ENV === 'production',
 //       sameSite: 'lax'
 //     });
-    
+
 //     res.json({ 
 //       success: true,
 //       message: 'Logged out successfully' 
@@ -704,7 +704,7 @@ const sendOTPEmail = async (email, otp) => {
       </div>
     </div>
   `;
-  
+
   await sendEmail(
     email,
     'Email Verification - Tastyaana',
@@ -744,10 +744,10 @@ router.post('/send-otp', async (req, res) => {
     // Check if email service is configured
     if (!isEmailConfigured()) {
       console.log('📧 Email service not configured, using development mode');
-      
+
       // Use development OTP service
       const result = devOtpService.generateAndStore(email);
-      
+
       return res.json({
         success: true,
         message: 'OTP sent successfully (Development Mode)',
@@ -771,17 +771,17 @@ router.post('/send-otp', async (req, res) => {
     // Send OTP email
     try {
       await sendOTPEmail(email, otp);
-      
+
       res.json({
         success: true,
         message: 'OTP sent successfully to your email'
       });
     } catch (emailError) {
       console.error('Email sending failed, falling back to development mode:', emailError.message);
-      
+
       // Fallback to development mode if email fails
       const result = devOtpService.generateAndStore(email);
-      
+
       res.json({
         success: true,
         message: 'OTP sent successfully (Fallback Mode)',
@@ -821,7 +821,7 @@ router.post('/verify-otp', async (req, res) => {
     } else {
       // Try email-based OTP storage
       const storedData = otpStorage.get(email);
-      
+
       if (storedData) {
         // Check if OTP is expired
         if (Date.now() > storedData.expiry) {
@@ -935,10 +935,10 @@ router.post('/resend-otp', async (req, res) => {
     // Check if email service is configured
     if (!isEmailConfigured()) {
       console.log('📧 Email service not configured, using development mode for resend');
-      
+
       // Use development OTP service
       const result = devOtpService.generateAndStore(email);
-      
+
       return res.json({
         success: true,
         message: 'OTP resent successfully (Development Mode)',
@@ -962,17 +962,17 @@ router.post('/resend-otp', async (req, res) => {
     // Send new OTP email
     try {
       await sendOTPEmail(email, otp);
-      
+
       res.json({
         success: true,
         message: 'OTP resent successfully to your email'
       });
     } catch (emailError) {
       console.error('Email resending failed, falling back to development mode:', emailError.message);
-      
+
       // Fallback to development mode if email fails
       const result = devOtpService.generateAndStore(email);
-      
+
       res.json({
         success: true,
         message: 'OTP resent successfully (Fallback Mode)',
@@ -1005,7 +1005,7 @@ if (process.env.NODE_ENV !== 'production') {
           source: 'email'
         });
       }
-      
+
       const devOtps = devOtpService.getAll().map(otp => ({
         ...otp,
         source: 'development'
@@ -1037,14 +1037,14 @@ router.post('/refresh', authenticate, async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    res.json({ 
+    res.json({
       success: true,
-      token 
+      token
     });
   } catch (error) {
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      message: error.message 
+      message: error.message
     });
   }
 });
@@ -1058,9 +1058,9 @@ router.get('/me', authenticate, async (req, res) => {
       user
     });
   } catch (error) {
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      message: error.message 
+      message: error.message
     });
   }
 });
@@ -1072,21 +1072,21 @@ router.post('/register', async (req, res) => {
 
     // Validation
     if (!name || !email || !phone || !password) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'All fields are required' 
+        message: 'All fields are required'
       });
     }
 
     // Check if user exists
-    const existingUser = await User.findOne({ 
-      $or: [{ email }, { phone }] 
+    const existingUser = await User.findOne({
+      $or: [{ email }, { phone }]
     });
-    
+
     if (existingUser) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'User with this email or phone already exists' 
+        message: 'User with this email or phone already exists'
       });
     }
 
@@ -1103,7 +1103,7 @@ router.post('/register', async (req, res) => {
 
     // Generate token
     const token = jwt.sign(
-      { id: user._id, role: user.role }, 
+      { id: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '30d' }
     );
@@ -1125,10 +1125,10 @@ router.post('/register', async (req, res) => {
     });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       message: 'Registration failed',
-      error: error.message 
+      error: error.message
     });
   }
 });
@@ -1140,44 +1140,44 @@ router.post('/login', async (req, res) => {
 
     // Validation
     if (!email || !password) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'Email and password are required' 
+        message: 'Email and password are required'
       });
     }
 
     // Find user
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'Invalid credentials' 
+        message: 'Invalid credentials'
       });
     }
 
     if (user.isBlocked) {
-      return res.status(403).json({ 
+      return res.status(403).json({
         success: false,
-        message: 'Account blocked' 
+        message: 'Account blocked'
       });
     }
 
     // Check password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'Invalid credentials' 
+        message: 'Invalid credentials'
       });
     }
 
     // Update last login
     user.lastLogin = new Date();
-    await user.save();
+    await User.updateOne({ _id: user._id }, { $set: { lastLogin: user.lastLogin } });
 
     // Generate token
     const token = jwt.sign(
-      { id: user._id, role: user.role }, 
+      { id: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '30d' }
     );
@@ -1202,10 +1202,10 @@ router.post('/login', async (req, res) => {
     });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       message: 'Login failed',
-      error: error.message 
+      error: error.message
     });
   }
 });
@@ -1219,10 +1219,10 @@ router.get('/profile', authenticate, async (req, res) => {
       user
     });
   } catch (error) {
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       message: 'Failed to get profile',
-      error: error.message 
+      error: error.message
     });
   }
 });
@@ -1231,7 +1231,7 @@ router.get('/profile', authenticate, async (req, res) => {
 router.put('/profile', authenticate, async (req, res) => {
   try {
     const { name, phone, addresses } = req.body;
-    
+
     const user = await User.findByIdAndUpdate(
       req.user._id,
       { name, phone, addresses },
@@ -1245,10 +1245,10 @@ router.put('/profile', authenticate, async (req, res) => {
     });
   } catch (error) {
     console.error('Profile update error:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       message: 'Failed to update profile',
-      error: error.message 
+      error: error.message
     });
   }
 });
@@ -1261,15 +1261,15 @@ router.post('/logout', (req, res) => {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax'
     });
-    
-    res.json({ 
+
+    res.json({
       success: true,
-      message: 'Logged out successfully' 
+      message: 'Logged out successfully'
     });
   } catch (error) {
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      message: 'Logout failed' 
+      message: 'Logout failed'
     });
   }
 });
