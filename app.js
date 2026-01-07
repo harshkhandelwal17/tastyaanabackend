@@ -58,7 +58,6 @@ const medicineRoutes = require('./routes/medicineRoutes');
 const sellergadgetsRoutes  = require('./routes/sellerGadgetsRoutes');
 const zoneRoutes = require('./routes/zoneRoutes');
 const app = express();
-console.log("inside new application")
 // Middleware
 app.use(morgan('dev'));
 app.use(cookieParser());

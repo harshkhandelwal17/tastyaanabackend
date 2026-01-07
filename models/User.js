@@ -1023,6 +1023,23 @@ const userSchema = new mongoose.Schema({
       morning: Boolean,
       evening: Boolean
     },
+    // New Fields for Enhanced UI
+    storeMedia: {
+      logo: { type: String, default: null },
+      cover: { type: String, default: null },
+      photos: [String],
+      video: { type: String, default: null }
+    },
+    cuisines: {
+      type: [String],
+      default: []
+    },
+    priceRange: {
+      min: { type: Number, default: 0 },
+      max: { type: Number, default: 0 },
+      costForTwo: { type: Number, default: 0 }
+    },
+    tags: [String] // e.g. "Best Seller", "Pure Veg"
   },
 
   // ===== Addresses (Enhanced) =====

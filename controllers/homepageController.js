@@ -12,7 +12,7 @@ const Banner = require('../models/Banner');
 const isFoodCategory = (categoryName) => {
   if (!categoryName) return false;
   const name = categoryName.toLowerCase();
-  
+
   // Food-related keywords
   const foodKeywords = [
     'foodzone', 'food', 'fast food', 'sweets', 'dessert',
@@ -23,19 +23,19 @@ const isFoodCategory = (categoryName) => {
     'drinks', 'juice', 'coffee', 'tea', 'bakery', 'biscuits',
     'vrat', 'meal', 'tiffin', 'lunch', 'dinner', 'snack'
   ];
-  
+
   // Non-food categories to exclude
   const nonFoodKeywords = [
     'stationery', 'stationary', 'phones', 'real estate',
     'grocery', 'vegetables', 'dairy', 'aata', 'rice', 'dal',
     'masala', 'oil', 'medicine', 'courier', 'laundry'
   ];
-  
+
   // Check if it's explicitly non-food
   if (nonFoodKeywords.some(keyword => name.includes(keyword))) {
     return false;
   }
-  
+
   // Check if it's food-related
   return foodKeywords.some(keyword => name.includes(keyword));
 };
@@ -53,27 +53,27 @@ const homepageController = {
         testimonials
       ] = await Promise.all([
         // Featured Products
-        Product.find({ 
-          featured: true, 
-          isActive: true 
+        Product.find({
+          featured: true,
+          isActive: true
         })
-        .populate('category', 'name slug')
-        .sort({ createdAt: -1 })
-        .lean(),
+          .populate('category', 'name slug')
+          .sort({ createdAt: -1 })
+          .lean(),
 
         // Meal Plans
-        MealPlan.find({ 
-          status: 'active' 
+        MealPlan.find({
+          status: 'active'
         })
-        .sort({ tier: 1, createdAt: -1 })
-        .lean(),
+          .sort({ tier: 1, createdAt: -1 })
+          .lean(),
 
         // Categories - Return all active categories
-        Category.find({ 
-          isActive: true 
+        Category.find({
+          isActive: true
         })
-        .sort({ sortOrder: 1, name: 1 })
-        .lean(),
+          .sort({ sortOrder: 1, name: 1 })
+          .lean(),
 
         // Today's Meal
         DailyMeal.findOne({
@@ -113,15 +113,15 @@ const homepageController = {
   getFeaturedProducts: async (req, res) => {
     try {
       const { limit = 8 } = req.query;
-      
-      const products = await Product.find({ 
-        featured: true, 
-        isActive: true 
+
+      const products = await Product.find({
+        featured: true,
+        isActive: true
       })
-      .populate('category', 'name slug')
-      .sort({ createdAt: -1 })
-      .limit(parseInt(limit))
-      .lean();
+        .populate('category', 'name slug')
+        .sort({ createdAt: -1 })
+        .limit(parseInt(limit))
+        .lean();
 
       res.json({
         success: true,
@@ -140,12 +140,12 @@ const homepageController = {
   // Get homepage meal plans
   getHomepageMealPlans: async (req, res) => {
     try {
-      const mealPlans = await MealPlan.find({ 
-        status: 'active' 
+      const mealPlans = await MealPlan.find({
+        status: 'active'
       })
-      .sort({ tier: 1, createdAt: -1 })
-      .limit(3)
-      .lean();
+        .sort({ tier: 1, createdAt: -1 })
+        .limit(3)
+        .lean();
 
       // Add savings calculation
       const enrichedPlans = mealPlans.map(plan => ({
@@ -173,11 +173,11 @@ const homepageController = {
   // Get homepage categories - returns all active categories
   getHomepageCategories: async (req, res) => {
     try {
-      const categories = await Category.find({ 
-        isActive: true 
+      const categories = await Category.find({
+        isActive: true
       })
-      .sort({ sortOrder: 1, name: 1 })
-      .lean();
+        .sort({ sortOrder: 1, name: 1 })
+        .lean();
 
       res.json({
         success: true,
@@ -196,11 +196,11 @@ const homepageController = {
   // Get Food Categories for Food Homepage - ONLY FOOD-RELATED
   getFoodCategories: async (req, res) => {
     try {
-      const categories = await Category.find({ 
-        isActive: true 
+      const categories = await Category.find({
+        isActive: true
       })
-      .sort({ sortOrder: 1, name: 1 })
-      .lean();
+        .sort({ sortOrder: 1, name: 1 })
+        .lean();
 
       // Filter only food-related categories
       const foodCategories = categories.filter(cat => isFoodCategory(cat.name));
@@ -236,7 +236,7 @@ const homepageController = {
   getTodaysSpecial: async (req, res) => {
     try {
       const today = new Date().toISOString().split('T')[0];
-      
+
       const todaysMeal = await DailyMeal.findOne({
         date: today,
         isActive: true
@@ -275,7 +275,7 @@ const homepageController = {
   getHomepageStats: async (req, res) => {
     try {
       const stats = await homepageController.calculateStats();
-      
+
       res.json({
         success: true,
         data: stats
@@ -294,7 +294,7 @@ const homepageController = {
   getTestimonials: async (req, res) => {
     try {
       const testimonials = await homepageController.getTestimonials();
-      
+
       res.json({
         success: true,
         data: testimonials
@@ -347,14 +347,14 @@ const homepageController = {
   getTestimonials: async () => {
     try {
       // Get recent reviews with high ratings
-      const recentReviews = await Review.find({ 
-        rating: { $gte: 4 } 
+      const recentReviews = await Review.find({
+        rating: { $gte: 4 }
       })
-      .populate('user', 'name')
-      .populate('product', 'name')
-      .sort({ createdAt: -1 })
-      .limit(3)
-      .lean();
+        .populate('user', 'name')
+        .populate('product', 'name')
+        .sort({ createdAt: -1 })
+        .limit(3)
+        .lean();
 
       // If we have real reviews, format them
       if (recentReviews.length > 0) {
@@ -404,7 +404,7 @@ const homepageController = {
   // Get hero slides data
   getHeroSlides: async (req, res) => {
     try {
-      const slides = [ 
+      const slides = [
         //  {
         //   id:1,
         //   title: "Happy Ganesh Chaturthi",
@@ -459,7 +459,7 @@ const homepageController = {
         //   imagebg: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754262452/Celebrate_the_Bond_of_Love_This_Raksha_Bandhan_1_nuh9d1.png"
 
         // },
-          {
+        {
           id: 4,
           title: "Fresh Vegetables",
           subtitle: "Quality ingredients for your kitchen",
@@ -470,9 +470,9 @@ const homepageController = {
           imagebg: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754266144/Green_Clean_Healthy_Food_Presentation_uxxpgn.jpg"
 
         }
-          ,
-          {
-          id:5,
+        ,
+        {
+          id: 5,
           title: "Stationery Essentials",
           subtitle: "Your One-Stop Shop for Quality Stationery",
           description: "Explore our wide range of stationery products, from notebooks to pens, all designed to inspire creativity and productivity.",
@@ -493,7 +493,7 @@ const homepageController = {
         //   imagebg: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1756290228/WhatsApp_Image_2025-08-26_at_21.53.53_034523be_ohpvel.jpg"
 
         // }
-         
+
       ];
 
       res.json({
@@ -513,35 +513,39 @@ const homepageController = {
   // Get stores/sellers for homepage
   getStores: async (req, res) => {
     try {
-      const { limit = 20, page = 1 } = req.query;
+      const { limit = 20, page = 1, type } = req.query;
       const skip = (parseInt(page) - 1) * parseInt(limit);
-      // Get all active sellers with their profiles
-      const sellers = await User.find({ 
+
+      const query = {
         role: 'seller',
         isActive: true,
-        isBlocked: false,
-        // 'sellerProfile.storeStatus': { $ne: 'closed' }
-      })
-      .select('name email avatar sellerProfile rating')
-      .sort({ 'sellerProfile.ratings.average': -1, createdAt: -1 })
-      .skip(skip)
-      .limit(parseInt(limit))
-      .lean();
+        isBlocked: false
+      };
 
+      if (type) {
+        // Case-insensitive check for sellerType (e.g. 'tiffin', 'food', 'grocery')
+        query['sellerProfile.sellerType'] = { $regex: new RegExp(type, 'i') };
+      }
+
+      // Get all active sellers with their profiles
+      const sellers = await User.find(query)
+        .select('name email avatar sellerProfile rating addresses priceRange')
+        .sort({ 'sellerProfile.ratings.average': -1, createdAt: -1 })
+        .skip(skip)
+        .limit(parseInt(limit))
+        .lean();
       // Get product counts and categories for each seller
       const storesWithDetails = await Promise.all(
         sellers.map(async (seller) => {
           // Get products for this seller
-          const products = await Product.find({ 
-            seller: seller._id, 
-            isActive: true 
+          const products = await Product.find({
+            seller: seller._id,
+            isActive: true
           })
-          .populate('category', 'name slug image icon')
-          .lean();
-
+          
           // Debug log
           console.log(`Seller: ${seller.sellerProfile?.storeName || seller.name}, Products: ${products.length}`);
-
+          
           // Get unique categories
           const categories = [];
           const categoryMap = new Map();
@@ -558,10 +562,10 @@ const homepageController = {
               });
             }
           });
-
+          
           // Get primary product image for cover - fallback to storeMedia if no products
           let coverImage = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80';
-          
+
           if (products.length > 0) {
             // Try to get image from products
             const productWithImage = products.find(p => p.images && p.images.length > 0);
@@ -569,11 +573,11 @@ const homepageController = {
               coverImage = productWithImage.images[0].url;
             }
           }
-          
+
           // Fallback to store media photos if no product images
-          if (coverImage === 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80' && 
-              seller.sellerProfile?.storeMedia?.photos && 
-              seller.sellerProfile.storeMedia.photos.length > 0) {
+          if (coverImage === 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80' &&
+            seller.sellerProfile?.storeMedia?.photos &&
+            seller.sellerProfile.storeMedia.photos.length > 0) {
             coverImage = seller.sellerProfile.storeMedia.photos[0];
           }
 
@@ -597,6 +601,7 @@ const homepageController = {
           return {
             id: seller._id,
             name: seller.sellerProfile?.storeName || seller.name,
+            logo: seller.sellerProfile?.storeMedia?.logo || seller.avatar,
             rating: (seller.sellerProfile?.ratings?.average || seller.rating || 4.5).toFixed(1),
             cover: coverImage,
             type: storeType,
@@ -606,7 +611,9 @@ const homepageController = {
             productCount: products.length,
             isVerified: seller.sellerProfile?.isVerified || false,
             storeStatus: seller.sellerProfile?.storeStatus || 'open',
-            storeDescription: seller.sellerProfile?.storeDescription || ''
+            storeDescription: seller.sellerProfile?.storeDescription || '',
+            area: seller.addresses?.[0]?.city || 'Indore',
+            priceRange: seller.sellerProfile?.priceRange || {}
           };
         })
       );
@@ -614,13 +621,13 @@ const homepageController = {
       // Filter out stores with no products OR show all stores
       // Option 1: Show only stores with products (default - comment out if you want to show all)
       // const activeStores = storesWithDetails.filter(store => store.productCount > 0);
-      
+
       // Option 2: Show all stores even without products (uncomment to show stores without products)
       const activeStores = storesWithDetails;
-      
+
       console.log(`Total sellers found: ${sellers.length}, Stores with details: ${storesWithDetails.length}, Active stores: ${activeStores.length}`);
 
-      const total = await User.countDocuments({ 
+      const total = await User.countDocuments({
         role: 'seller',
         isActive: true,
         isBlocked: false
@@ -656,12 +663,12 @@ const homepageController = {
       const categoriesWithDetails = await Promise.all(
         categories.map(async (category) => {
           // Get products in this category
-          const products = await Product.find({ 
-            category: category._id, 
-            isActive: true 
+          const products = await Product.find({
+            category: category._id,
+            isActive: true
           })
-          .select('seller')
-          .lean();
+            .select('seller')
+            .lean();
 
           // Get unique sellers
           const sellerIds = [...new Set(products.map(p => p.seller?.toString()).filter(Boolean))];
@@ -702,14 +709,14 @@ const homepageController = {
   getQuickActions: async (req, res) => {
     try {
       // Get popular products by sales/view count
-      const popularProducts = await Product.find({ 
-        isActive: true 
+      const popularProducts = await Product.find({
+        isActive: true
       })
-      .select('title name images category')
-      .populate('category', 'name slug')
-      .sort({ salesCount: -1, views: -1 })
-      .limit(8)
-      .lean();
+        .select('title name images category')
+        .populate('category', 'name slug')
+        .sort({ salesCount: -1, views: -1 })
+        .limit(8)
+        .lean();
 
       // Map products to quick action format
       const quickActions = popularProducts.map((product, index) => {
@@ -727,7 +734,7 @@ const homepageController = {
 
         const productName = (product.name || product.title || '').toLowerCase();
         let icon = product.images?.[0]?.url;
-        
+
         // Try to match icon from map
         for (const [key, iconUrl] of Object.entries(iconMap)) {
           if (productName.includes(key)) {
@@ -795,26 +802,26 @@ const homepageController = {
         startDate: { $lte: new Date() },
         endDate: { $gte: new Date() }
       })
-      .populate('applicableCategories', 'name slug image icon')
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .lean();
+        .populate('applicableCategories', 'name slug image icon')
+        .sort({ createdAt: -1 })
+        .limit(5)
+        .lean();
 
       // Get featured products grouped by categories for curated collections
       const featuredProducts = await Product.find({
         featured: true,
         isActive: true
       })
-      .populate('category', 'name slug')
-      .sort({ salesCount: -1, ratings: -1 })
-      .limit(50)
-      .lean();
+        .populate('category', 'name slug')
+        .sort({ salesCount: -1, ratings: -1 })
+        .limit(50)
+        .lean();
 
       // Group products by price ranges and categories for curated collections
       const curatedCollections = [];
 
       // 1. Healthy Eats - Products with low calories or organic
-      const healthyProducts = featuredProducts.filter(p => 
+      const healthyProducts = featuredProducts.filter(p =>
         p.isOrganic || (p.nutritionInfo?.calories && p.nutritionInfo.calories < 300)
       );
       if (healthyProducts.length > 0) {
@@ -832,8 +839,8 @@ const homepageController = {
       // 2. Sweet Tooth - Products in sweets/desserts category
       const sweetProducts = featuredProducts.filter(p => {
         const catName = p.category?.name?.toLowerCase() || '';
-        return catName.includes('sweet') || catName.includes('dessert') || 
-               (p.name || p.title || '').toLowerCase().includes('sweet');
+        return catName.includes('sweet') || catName.includes('dessert') ||
+          (p.name || p.title || '').toLowerCase().includes('sweet');
       });
       if (sweetProducts.length > 0) {
         curatedCollections.push({
@@ -879,7 +886,7 @@ const homepageController = {
       }
 
       // 5. New Arrivals - Recently added products
-      const newArrivals = featuredProducts.filter(p => p.isNew || 
+      const newArrivals = featuredProducts.filter(p => p.isNew ||
         (new Date(p.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000))
       );
       if (newArrivals.length > 0) {
@@ -925,7 +932,7 @@ const homepageController = {
   getVendorStories: async (req, res) => {
     try {
       const { limit = 10 } = req.query;
-      
+
       // Get active sellers with their products
       const sellers = await User.find({
         role: 'seller',
@@ -933,27 +940,27 @@ const homepageController = {
         isBlocked: false,
         'sellerProfile.storeStatus': { $ne: 'closed' }
       })
-      .select('name avatar sellerProfile')
-      .sort({ 'sellerProfile.ratings.average': -1, createdAt: -1 })
-      .limit(parseInt(limit) * 2) // Get more to filter food-related
-      .lean();
+        .select('name avatar sellerProfile')
+        .sort({ 'sellerProfile.ratings.average': -1, createdAt: -1 })
+        .limit(parseInt(limit) * 2) // Get more to filter food-related
+        .lean();
 
       const stories = await Promise.all(
         sellers.map(async (seller) => {
           // FIRST CHECK: If sellerType includes "food", directly include (even without products)
           const sellerType = seller.sellerProfile?.sellerType || [];
-          const isFoodSeller = sellerType.some(type => 
+          const isFoodSeller = sellerType.some(type =>
             type && type.toString().toLowerCase() === 'food'
           );
-          
+
           // Get products with categories to check if seller has food products
           const products = await Product.find({
             seller: seller._id,
             isActive: true
           })
-          .populate('category', 'name')
-          .select('images category')
-          .lean();
+            .populate('category', 'name')
+            .select('images category')
+            .lean();
 
           // If sellerType is food, include them (even if no products yet)
           if (isFoodSeller) {
@@ -1048,8 +1055,8 @@ const homepageController = {
           { endDate: null }
         ]
       })
-      .sort({ sortOrder: 1, createdAt: -1 })
-      .lean();
+        .sort({ sortOrder: 1, createdAt: -1 })
+        .lean();
 
       if (banner) {
         return res.json({
@@ -1122,11 +1129,11 @@ const homepageController = {
           { salesCount: { $gte: 5 } }
         ]
       })
-      .populate('seller', 'name sellerProfile')
-      .populate('category', 'name')
-      .sort({ salesCount: -1, 'ratings.average': -1, views: -1 })
-      .limit(parseInt(limit) * 2) // Get more to ensure we have enough
-      .lean();
+        .populate('seller', 'name sellerProfile')
+        .populate('category', 'name')
+        .sort({ salesCount: -1, 'ratings.average': -1, views: -1 })
+        .limit(parseInt(limit) * 2) // Get more to ensure we have enough
+        .lean();
 
       // Double-check: filter by category name as well
       const foodProducts = trendingProducts.filter(product => {
@@ -1139,7 +1146,7 @@ const homepageController = {
         const image = product.images?.[0]?.url || 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&q=80';
         const price = product.discountPrice || product.price || 0;
         const rating = product.ratings?.average || 4.5;
-        
+
         // Calculate estimated delivery time (mock for now)
         const timeOptions = ['25 min', '30 min', '40 min', '20 min', '35 min'];
         const time = timeOptions[Math.floor(Math.random() * timeOptions.length)];
@@ -1183,124 +1190,124 @@ const homepageController = {
 
   // Get Food Restaurants (Enhanced for Food Homepage)
   // IMPORTANT: Returns same sellers as getVendorStories for consistency
-getFoodRestaurants: async (req, res) => {
-  try {
-    const { limit = 20, page = 1, type, vegOnly, sortBy } = req.query;
+  getFoodRestaurants: async (req, res) => {
+    try {
+      const { limit = 20, page = 1, type, vegOnly, sortBy } = req.query;
 
-    console.log("--- DEBUGGING STARTED ---");
+      console.log("--- DEBUGGING STARTED ---");
 
-    // 1. Simplified Query (Bina kisi complex filter ke pehle check karo)
-    const query = {
-      role: 'seller',
-      isActive: true, // Data me true hai
-      isBlocked: false, // Data me false hai
-      // 'sellerProfile.storeStatus': { $ne: 'closed' }, // Ise abhi comment kar raha hu testing ke liye
-      'sellerProfile.sellerType': { $in: ['food', 'Food'] } // Case insensitive check
-    };
+      // 1. Simplified Query (Bina kisi complex filter ke pehle check karo)
+      const query = {
+        role: 'seller',
+        isActive: true, // Data me true hai
+        isBlocked: false, // Data me false hai
+        // 'sellerProfile.storeStatus': { $ne: 'closed' }, // Ise abhi comment kar raha hu testing ke liye
+        'sellerProfile.sellerType': { $in: ['food', 'Food'] } // Case insensitive check
+      };
 
-    console.log("Query Object:", JSON.stringify(query, null, 2));
+      console.log("Query Object:", JSON.stringify(query, null, 2));
 
-    // 2. Sirf Sellers Fetch karo
-    const sellers = await User.find(query)
-      .select('name email avatar sellerProfile rating foodPreferences')
-      .lean();
-
-    console.log(`Found ${sellers.length} Sellers matching the query.`);
-
-    if (sellers.length === 0) {
-      // Agar yaha 0 aaya, iska matlab Query User Schema ke sath match nahi ho rahi
-      return res.json({ success: true, message: "No sellers found in DB matching query", data: [] });
-    }
-
-    // 3. Process Sellers (Products check karo par seller ko reject mat karo)
-    const restaurantPromises = sellers.map(async (seller) => {
-      try {
-        console.log(`Processing Seller: ${seller.name} (ID: ${seller._id})`);
-
-        // Products fetch karo
-        const products = await Product.find({
-          seller: seller._id,
-          isActive: true
-        })
-        .select('name price discountPrice category images')
-        .populate('category', 'name')
+      // 2. Sirf Sellers Fetch karo
+      const sellers = await User.find(query)
+        .select('name email avatar sellerProfile rating foodPreferences')
         .lean();
 
-        console.log(`-- Found ${products.length} products for ${seller.name}`);
+      console.log(`Found ${sellers.length} Sellers matching the query.`);
 
-        // --- MAJOR CHANGE: Agar products nahi hain, tab bhi seller dikhao ---
-        const hasProducts = products && products.length > 0;
-
-        // Default values agar products na ho
-        let coverImage = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500&q=80';
-        let priceForTwo = 250; // Default price
-        let cuisines = 'North Indian';
-
-        if (hasProducts) {
-          // Logic agar products exist karte hain
-          const uniqueCategories = [...new Set(products.map(p => p.category?.name).filter(Boolean))];
-          cuisines = uniqueCategories.slice(0, 3).join(', ') || cuisines;
-
-          const totalParams = products.reduce((acc, curr) => acc + (curr.discountPrice || curr.price || 0), 0);
-          const avgItemPrice = Math.round(totalParams / products.length);
-          priceForTwo = Math.round(avgItemPrice * 2.5);
-
-          const productWithImg = products.find(p => p.images && p.images.length > 0);
-          if (productWithImg) coverImage = productWithImg.images[0].url;
-        }
-
-        // Store ki photo ko priority do
-        if (seller.sellerProfile?.storeMedia?.photos?.length > 0) {
-          coverImage = seller.sellerProfile.storeMedia.photos[0];
-        }
-
-        // Veg Logic
-        const isDietaryVeg = seller.foodPreferences?.dietaryType === 'vegetarian';
-        
-        // Final Object
-        return {
-          id: seller._id,
-          name: seller.sellerProfile?.storeName || seller.name,
-          rating: (seller.sellerProfile?.ratings?.average || 0).toFixed(1),
-          time: '30-40 min',
-          distance: '2.0 km',
-          price: priceForTwo,
-          category: 'restaurant',
-          isVeg: isDietaryVeg,
-          cuisines: cuisines,
-          offer: hasProducts ? '20% OFF' : 'New', // Agar products nahi h to New likho
-          img: coverImage,
-          logo: seller.avatar || seller.sellerProfile?.storeMedia?.logo,
-          isLive: seller.sellerProfile?.storeStatus === 'open',
-          productCount: products.length // Debugging ke liye frontend pe dekh sako
-        };
-
-      } catch (err) {
-        console.error(`Error processing seller ${seller.name}:`, err);
-        return null;
+      if (sellers.length === 0) {
+        // Agar yaha 0 aaya, iska matlab Query User Schema ke sath match nahi ho rahi
+        return res.json({ success: true, message: "No sellers found in DB matching query", data: [] });
       }
-    });
 
-    const allRestaurants = await Promise.all(restaurantPromises);
-    const validRestaurants = allRestaurants.filter(r => r !== null);
+      // 3. Process Sellers (Products check karo par seller ko reject mat karo)
+      const restaurantPromises = sellers.map(async (seller) => {
+        try {
+          console.log(`Processing Seller: ${seller.name} (ID: ${seller._id})`);
 
-    console.log(`Returning ${validRestaurants.length} final restaurants.`);
+          // Products fetch karo
+          const products = await Product.find({
+            seller: seller._id,
+            isActive: true
+          })
+            .select('name price discountPrice category images')
+            .populate('category', 'name')
+            .lean();
 
-    res.json({
-      success: true,
-      data: validRestaurants,
-      // Debug info bhej raha hu response me
-      debugInfo: {
-        totalSellersFound: sellers.length,
-        queryUsed: query
-      }
-    });
+          console.log(`-- Found ${products.length} products for ${seller.name}`);
 
-  } catch (error) {
-    console.error('SERVER ERROR:', error);
-    res.status(500).json({ success: false, error: error.message });
+          // --- MAJOR CHANGE: Agar products nahi hain, tab bhi seller dikhao ---
+          const hasProducts = products && products.length > 0;
+
+          // Default values agar products na ho
+          let coverImage = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500&q=80';
+          let priceForTwo = 250; // Default price
+          let cuisines = 'North Indian';
+
+          if (hasProducts) {
+            // Logic agar products exist karte hain
+            const uniqueCategories = [...new Set(products.map(p => p.category?.name).filter(Boolean))];
+            cuisines = uniqueCategories.slice(0, 3).join(', ') || cuisines;
+
+            const totalParams = products.reduce((acc, curr) => acc + (curr.discountPrice || curr.price || 0), 0);
+            const avgItemPrice = Math.round(totalParams / products.length);
+            priceForTwo = Math.round(avgItemPrice * 2.5);
+
+            const productWithImg = products.find(p => p.images && p.images.length > 0);
+            if (productWithImg) coverImage = productWithImg.images[0].url;
+          }
+
+          // Store ki photo ko priority do
+          if (seller.sellerProfile?.storeMedia?.photos?.length > 0) {
+            coverImage = seller.sellerProfile.storeMedia.photos[0];
+          }
+
+          // Veg Logic
+          const isDietaryVeg = seller.foodPreferences?.dietaryType === 'vegetarian';
+
+          // Final Object
+          return {
+            id: seller._id,
+            name: seller.sellerProfile?.storeName || seller.name,
+            rating: (seller.sellerProfile?.ratings?.average || 0).toFixed(1),
+            time: '30-40 min',
+            distance: '2.0 km',
+            price: priceForTwo,
+            category: 'restaurant',
+            isVeg: isDietaryVeg,
+            cuisines: cuisines,
+            offer: hasProducts ? '20% OFF' : 'New', // Agar products nahi h to New likho
+            img: coverImage,
+            logo: seller.avatar || seller.sellerProfile?.storeMedia?.logo,
+            isLive: seller.sellerProfile?.storeStatus === 'open',
+            productCount: products.length // Debugging ke liye frontend pe dekh sako
+          };
+
+        } catch (err) {
+          console.error(`Error processing seller ${seller.name}:`, err);
+          return null;
+        }
+      });
+
+      const allRestaurants = await Promise.all(restaurantPromises);
+      const validRestaurants = allRestaurants.filter(r => r !== null);
+
+      console.log(`Returning ${validRestaurants.length} final restaurants.`);
+
+      res.json({
+        success: true,
+        data: validRestaurants,
+        // Debug info bhej raha hu response me
+        debugInfo: {
+          totalSellersFound: sellers.length,
+          queryUsed: query
+        }
+      });
+
+    } catch (error) {
+      console.error('SERVER ERROR:', error);
+      res.status(500).json({ success: false, error: error.message });
+    }
   }
-}
 };
 
 module.exports = homepageController; 
