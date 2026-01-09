@@ -11,40 +11,40 @@ const { getAllOrders } = require('../controllers/adminController');
  * @desc    Create new order (both cart-based and direct food orders)
  * @access  Private
  */
-router.post('/', 
+router.post('/',
   authenticate, [
-    // Common validations
-    body('type')
-      .optional()
-      .isIn(['gkk', 'custom', 'addon', 'sunday-special', 'product'])
-      .withMessage('Invalid order type'),
-    body('paymentMethod')
-      .isIn(['razorpay', 'wallet', 'cod', 'subscription', 'card', 'upi','COD'])
-      .withMessage('Invalid payment method'),
-    
-    // Cart-based order validations
-    body('items')
-      .if(body('type').equals('product'))
-      .isArray({ min: 1 })
-      .withMessage('At least one item is required'),
-    
-    // Food order validations
-    body('deliveryDate')
-      .if(body('type').not().equals('product'))
-      .isISO8601()
-      .withMessage('Valid delivery date required')
-      .custom(value => new Date(value) >= new Date().setHours(0,0,0,0))
-      .withMessage('Delivery date cannot be in past'),
-    body('deliverySlot')
-      .if(body('type').not().equals('product'))
-      .isIn(['breakfast', 'lunch', 'dinner', 'anytime'])
-      .withMessage('Invalid delivery slot'),
-    body('items.*.customizations')
-      .if(body('type').not().equals('product'))
-      .optional()
-      .isArray()
-      .withMessage('Customizations must be array')
-  ],
+  // Common validations
+  body('type')
+    .optional()
+    .isIn(['gkk', 'custom', 'addon', 'sunday-special', 'product'])
+    .withMessage('Invalid order type'),
+  body('paymentMethod')
+    .isIn(['razorpay', 'wallet', 'cod', 'subscription', 'card', 'upi', 'COD'])
+    .withMessage('Invalid payment method'),
+
+  // Cart-based order validations
+  body('items')
+    .if(body('type').equals('product'))
+    .isArray({ min: 1 })
+    .withMessage('At least one item is required'),
+
+  // Food order validations
+  body('deliveryDate')
+    .if(body('type').not().equals('product'))
+    .isISO8601()
+    .withMessage('Valid delivery date required')
+    .custom(value => new Date(value) >= new Date().setHours(0, 0, 0, 0))
+    .withMessage('Delivery date cannot be in past'),
+  body('deliverySlot')
+    .if(body('type').not().equals('product'))
+    .isIn(['breakfast', 'lunch', 'dinner', 'anytime'])
+    .withMessage('Invalid delivery slot'),
+  body('items.*.customizations')
+    .if(body('type').not().equals('product'))
+    .optional()
+    .isArray()
+    .withMessage('Customizations must be array')
+],
   orderController.createOrder
 );
 
@@ -55,23 +55,23 @@ router.post('/',
  */
 router.get('/my-orders',
   authenticate, [
-    body('status')
-      .optional()
-      .isIn(['pending', 'confirmed', 'delivered', 'cancelled'])
-      .withMessage('Invalid status filter'),
-    body('type')
-      .optional()
-      .isIn(['gkk', 'addon', 'product'])
-      .withMessage('Invalid type filter'),
-    body('limit')
-      .optional()
-      .isInt({ min: 1, max: 100 })
-      .withMessage('Limit must be 1-100'),
-    body('page')
-      .optional()
-      .isInt({ min: 1 })
-      .withMessage('Page must be positive')
-  ],
+  body('status')
+    .optional()
+    .isIn(['pending', 'confirmed', 'delivered', 'cancelled'])
+    .withMessage('Invalid status filter'),
+  body('type')
+    .optional()
+    .isIn(['gkk', 'addon', 'product'])
+    .withMessage('Invalid type filter'),
+  body('limit')
+    .optional()
+    .isInt({ min: 1, max: 100 })
+    .withMessage('Limit must be 1-100'),
+  body('page')
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage('Page must be positive')
+],
   orderController.getOrders
 );
 
@@ -100,13 +100,13 @@ router.get('/details/:orderId',
  * @desc    Cancel order
  * @access  Private
  */
-router.put('/:orderNumber/cancel',
+router.put('/:id/cancel',
   authenticate, [
-    body('reason')
-      .trim()
-      .isLength({ min: 3, max: 200 })
-      .withMessage('Reason must be 3-200 characters')
-  ],
+  body('reason')
+    .trim()
+    .isLength({ min: 3, max: 200 })
+    .withMessage('Reason must be 3-200 characters')
+],
   orderController.cancelOrder
 );
 
@@ -143,24 +143,24 @@ router.post('/:orderId/pay-customization', authenticate, orderController.payCust
 router.get('/',
   authenticate,
   authorize('admin'), [
-    body('status')
-      .optional()
-      .isIn(['pending', 'confirmed', 'delivered', 'cancelled'])
-      .withMessage('Invalid status filter'),
-    body('fromDate')
-      .optional()
-      .isISO8601()
-      .withMessage('Valid from date required'),
-    body('toDate')
-      .optional()
-      .isISO8601()
-      .withMessage('Valid to date required'),
-    body('search')
-      .optional()
-      .trim()
-      .isLength({ min: 3 })
-      .withMessage('Search requires 3+ characters')
-  ],
+  body('status')
+    .optional()
+    .isIn(['pending', 'confirmed', 'delivered', 'cancelled'])
+    .withMessage('Invalid status filter'),
+  body('fromDate')
+    .optional()
+    .isISO8601()
+    .withMessage('Valid from date required'),
+  body('toDate')
+    .optional()
+    .isISO8601()
+    .withMessage('Valid to date required'),
+  body('search')
+    .optional()
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage('Search requires 3+ characters')
+],
   getAllOrders
 );
 
@@ -171,15 +171,15 @@ router.get('/',
  */
 router.put('/:orderNumber/status',
   authenticate,
-  authorize(['admin','delivery','driver']), [
-    body('status')
-      .isIn(['confirmed', 'preparing', 'ready', 'out-for-delivery', 'delivered', 'cancelled'])
-      .withMessage('Invalid status'),
-    body('trackingNumber')
-      .if(body('status').equals('out-for-delivery'))
-      .notEmpty()
-      .withMessage('Tracking number required for dispatch')
-  ],
+  authorize(['admin', 'delivery', 'driver']), [
+  body('status')
+    .isIn(['confirmed', 'preparing', 'ready', 'out-for-delivery', 'delivered', 'cancelled'])
+    .withMessage('Invalid status'),
+  body('trackingNumber')
+    .if(body('status').equals('out-for-delivery'))
+    .notEmpty()
+    .withMessage('Tracking number required for dispatch')
+],
   orderController.updateOrderStatus
 );
 
@@ -190,16 +190,16 @@ router.put('/:orderNumber/status',
  */
 router.put('/:orderNumber/payment-status',
   authenticate,
-  authorize(['admin','delivery','driver']), [
-    body('paymentStatus')
-      .isIn(['pending', 'paid', 'failed', 'refunded', 'completed'])
-      .withMessage('Invalid payment status'),
-    body('description')
-      .optional()
-      .trim()
-      .isLength({ min: 3, max: 200 })
-      .withMessage('Description must be 3-200 characters')
-  ],
+  authorize(['admin', 'delivery', 'driver']), [
+  body('paymentStatus')
+    .isIn(['pending', 'paid', 'failed', 'refunded', 'completed'])
+    .withMessage('Invalid payment status'),
+  body('description')
+    .optional()
+    .trim()
+    .isLength({ min: 3, max: 200 })
+    .withMessage('Description must be 3-200 characters')
+],
   orderController.updatePaymentStatus
 );
 
