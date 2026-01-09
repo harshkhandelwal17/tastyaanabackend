@@ -485,7 +485,7 @@ const homepageController = {
           }).sort({ salesCount: -1, views: -1 }); // Sort by Popularity to show Best Selling item as cover
 
           // Debug log
-          console.log(`Seller: ${seller.sellerProfile?.storeName || seller.name}, Products: ${products.length}`);
+          
 
           // Get unique categories
           const categories = [];
@@ -572,7 +572,7 @@ const homepageController = {
       // Option 2: Show all stores even without products (uncomment to show stores without products)
       const activeStores = storesWithDetails;
 
-      console.log(`Total sellers found: ${sellers.length}, Stores with details: ${storesWithDetails.length}, Active stores: ${activeStores.length}`);
+      
 
       const total = await User.countDocuments({
         role: 'seller',
@@ -1141,7 +1141,6 @@ const homepageController = {
     try {
       const { limit = 20, page = 1, type, vegOnly, sortBy } = req.query;
 
-      console.log("--- DEBUGGING STARTED ---");
 
       // 1. Simplified Query (Bina kisi complex filter ke pehle check karo)
       const query = {
@@ -1152,15 +1151,12 @@ const homepageController = {
         'sellerProfile.sellerType': { $in: ['food', 'Food'] } // Case insensitive check
       };
 
-      console.log("Query Object:", JSON.stringify(query, null, 2));
 
       // 2. Sirf Sellers Fetch karo
       const sellers = await User.find(query)
         .select('name email avatar sellerProfile rating foodPreferences')
         .lean();
 
-      console.log(`Found ${sellers.length} Sellers matching the query.`);
-console.log(sellers);
       if (sellers.length === 0) {
         // Agar yaha 0 aaya, iska matlab Query User Schema ke sath match nahi ho rahi
         return res.json({ success: true, message: "No sellers found in DB matching query", data: [] });
@@ -1169,7 +1165,6 @@ console.log(sellers);
       // 3. Process Sellers (Products check karo par seller ko reject mat karo)
       const restaurantPromises = sellers.map(async (seller) => {
         try {
-          console.log(`Processing Seller: ${seller.name} (ID: ${seller._id})`);
 
           // Products fetch karo
           const products = await Product.find({
@@ -1180,7 +1175,6 @@ console.log(sellers);
             .populate('category', 'name')
             .lean();
 
-          console.log(`-- Found ${products.length} products for ${seller.name}`);
 
           // --- MAJOR CHANGE: Agar products nahi hain, tab bhi seller dikhao ---
           const hasProducts = products && products.length > 0;
@@ -1198,7 +1192,6 @@ console.log(sellers);
             const totalParams = products.reduce((acc, curr) => acc + (curr.discountPrice || curr.price || 0), 0);
             const avgItemPrice = Math.round(totalParams / products.length);
             priceForTwo = Math.round(avgItemPrice * 2.5);
-console.log(seller.sellerProfile)
 
             // Store ki photo ko priority do for FoodHomePage
             if (seller.sellerProfile?.storeMedia.cover) {
@@ -1206,7 +1199,6 @@ console.log(seller.sellerProfile)
             } else {
               coverImage = seller.sellerProfile.storeMedia.photos[0];
             }
-console.log(`-- Cover Image for ${seller.name}: ${coverImage}`);
             // Veg Logic
             const isDietaryVeg = seller.foodPreferences?.dietaryType === 'vegetarian';
 
@@ -1236,7 +1228,6 @@ console.log(`-- Cover Image for ${seller.name}: ${coverImage}`);
       const allRestaurants = await Promise.all(restaurantPromises);
       const validRestaurants = allRestaurants.filter(r => r !== null);
 
-      console.log(`Returning ${validRestaurants.length} final restaurants.`);
 
       res.json({
         success: true,

@@ -114,7 +114,6 @@ const { startAllJobs } = require('./jobs/laundryJobs');
 
 // Create HTTP server
 const server = http.createServer(app);
-console.log("server js")
 // Initialize Socket.IO
 const io = new Server(server, {
   cors: {

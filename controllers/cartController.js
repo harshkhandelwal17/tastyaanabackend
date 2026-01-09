@@ -5,7 +5,6 @@ const cartController = {
   // Get user's cart
   getCart: async (req, res) => {
     try {
-      // console.log("Fetching cart for user:", req.user.id);
       let cart = await Cart.findOne({ user: req.user.id })
       .populate({
         path: 'items.product',
@@ -30,7 +29,6 @@ const cartController = {
         cart = new Cart({ user: req.user.id, items: [] });
         await cart.save();
       }
-// console.log("Cart found:", cart.items);
       res.json({ cart });
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -61,7 +59,6 @@ const cartController = {
       
       // Verify product and weight option
       const product = await Product.findById(productId);
-      console.log("Product:", payload);
       
       if (!product) {
         return res.status(404).json({ 
@@ -97,8 +94,7 @@ const cartController = {
         product.isCollegeBranded = true; // Update local instance
       }    
       
-      console.log("weight is  : ", weight);
-      console.log("Product weightOptions:", product.weightOptions);
+     
       
       // Find weight option - try exact match first, then use first available if not found
       let weightOption = product.weightOptions?.find(w => w.weight === weight);
@@ -106,7 +102,7 @@ const cartController = {
       // If weight option not found, use first available weight option
       if (!weightOption && product.weightOptions && product.weightOptions.length > 0) {
         weightOption = product.weightOptions[0];
-        console.log(`Weight "${weight}" not found, using first available: "${weightOption.weight}"`);
+       
       }
       
       // If still no weight option and product has no weightOptions, create a default one
@@ -118,7 +114,6 @@ const cartController = {
           originalPrice: product.originalPrice || product.price || 0,
           stock: product.stockQty || 999
         };
-        console.log("No weightOptions found, using product price directly");
       }
 
       if (weightOption.stock < quantity) {
@@ -146,19 +141,9 @@ const cartController = {
           cart.items[existingItemIndex].seller = product.seller;
         }
         
-        // Debug: Log existing item update
-        console.log('Updating existing cart item:', {
-          productName: product.name,
-          existingItem: cart.items[existingItemIndex]
-        });
+       
       } else {
-        // Debug: Log college information before adding to cart
-        console.log('Adding item to cart with college info:', {
-          productName: product.name,
-          isCollegeBranded: product.isCollegeBranded,
-          collegeName: collegeName,
-          payload: payload
-        });
+        
 
         // Add new item with vendor/seller information
         cart.items.push({
@@ -173,7 +158,6 @@ const cartController = {
         });
 
         // Debug: Log the actual item being added
-        console.log('Cart item being added:', cart.items[cart.items.length - 1]);
       }
 
       // Calculate totals
@@ -185,12 +169,7 @@ const cartController = {
       cart.updatedAt = new Date();
       await cart.save();
 
-      // Debug: Log saved cart to verify college information persistence
-      console.log('Cart saved with items:', cart.items.map(item => ({
-        productId: item.product,
-        isCollegeBranded: item.isCollegeBranded,
-        collegeName: item.collegeName
-      })));
+     
 
       const populatedCart = await Cart.findById(cart._id)
         .populate({
