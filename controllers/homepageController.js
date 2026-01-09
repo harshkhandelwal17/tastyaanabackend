@@ -405,111 +405,52 @@ const homepageController = {
   getHeroSlides: async (req, res) => {
     try {
       const slides = [
-        //  {
-        //   id:1,
-        //   title: "Happy Ganesh Chaturthi",
-        //   subtitle: "",
-        //   description: "",
-        //   image: "",
-        //   cta: "",
-        //   ctaLink: "/products",
-        //   imagebg: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1756222241/Pink_Gradient_Ganesh_Chaturthi_Greeting_Card_ajy19u.png"
-
-        // },
         {
-          id: 2,
-          title: "Fresh Homestyle Meals",
-          subtitle: "Delivered to your doorstep daily",
-          description: "Experience the warmth of home-cooked meals prepared with love and delivered with care.",
-          image: `https://res.cloudinary.com/dcha7gy9o/image/upload/v1753560646/thali_dtajpw.png`,
+          id: "slide_01",
+          title: "The Gold Standard of Tiffins",
+          subtitle: "Indore's Elite Home Kitchens",
+          description: "Curated homestyle meals prepared with handpicked ingredients. Zero compromise on health.",
+          // 3D Transparent PNG for floating effect
+          image: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1753560646/thali_dtajpw.png",
+          // Background: Minimalist aesthetic table setting
+          imagebg: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=1600&auto=format",
+          tag: "EXECUTIVE SELECTION",
           cta: "Order Now",
-          ctaLink: "/ghar/ka/bhojan",
-          imagebg: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754267172/Food_Delivery_Banner_Template_1_pathp0.png"
-
+          ctaLink: "/ghar/ka/khana",
+          overlay: "from-slate-950/90 via-slate-950/40 to-transparent"
         },
-        // {
-        //   id: 2,
-        //   title: "Premium Sweets Collection",
-        //   subtitle: "Traditional recipes, modern convenience",
-        //   description: "Indulge in our handcrafted sweets made with authentic recipes and premium ingredients.",
-        //   image: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1753560647/sweets1_xrztin.png",
-        //   cta: "Explore Sweets",
-        //   ctaLink: "/products",
-        //   imagebg: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1753560645/herosweetbg_wtxktc.jpg"
-        // },
-        // {
-        //   id: 3,
-        //   title: "Fresh Groceries",
-        //   subtitle: "Quality ingredients for your kitchen",
-        //   description: "Get fresh vegetables, fruits, and groceries delivered to your home with guaranteed quality.",
-        //   image: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1753560646/groceries_klnxdn.png",
-        //   cta: "Shop Groceries",
-        //   ctaLink: "/groceries",
-        //   imagebg: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1753560645/herosweetbg_wtxktc.jpg"
-
-        // },
-        //  {
-        //   id: 3,
-        //   title: "Rakhi Special",
-        //   subtitle: "Celebrate the Bond of Love This Raksha Bandhan",
-        //   description: "Discover thoughtfully crafted rakhis, delightful sweets, and heartwarming gift boxes—because every sibling deserves something special.",
-        //   image: "",
-        //   cta: "",
-        //   ctaLink: "/sweets",
-        //   imagebg: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754262452/Celebrate_the_Bond_of_Love_This_Raksha_Bandhan_1_nuh9d1.png"
-
-        // },
         {
-          id: 4,
-          title: "Fresh Vegetables",
-          subtitle: "Quality ingredients for your kitchen",
-          description: "Get fresh vegetables, fruits, and groceries delivered to your home with guaranteed quality.",
+          id: "slide_02",
+          title: "Commute Without Limits",
+          subtitle: "Premium Bike & Scooty Rental",
+          description: "Indore's most reliable fleet. Verified vehicles, Transparent pricing, Zero hidden fees.",
+          image: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1766867491/Rental_vehical_adx2v7.png",
+          // Background: Clean urban asphalt texture
+          imagebg: "https://images.unsplash.com/photo-1449491026613-f52148080d9e?q=80&w=1600&auto=format",
+          tag: "SMART MOBILITY",
+          cta: "Book a Ride",
+          ctaLink: "/rental",
+          overlay: "from-slate-950/95 via-slate-900/50 to-transparent"
+        },
+        {
+          id: "slide_03",
+          title: "Farm to Table, Within 60m",
+          subtitle: "Organic Produce Standards",
+          description: "Experience the freshness of Indore's local farms delivered to your kitchen instantly.",
           image: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1753560646/groceries_klnxdn.png",
-          cta: "",
-          ctaLink: "/vegetables",
-          imagebg: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754266144/Green_Clean_Healthy_Food_Presentation_uxxpgn.jpg"
-
+          // Background: Moody high-contrast farm soil/greens
+          imagebg: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format",
+          tag: "QUALITY ASSURED",
+          cta: "Shop Store",
+          ctaLink: "/grocery",
+          overlay: "from-slate-950/95 via-slate-950/50 to-transparent"
         }
-        ,
-        {
-          id: 5,
-          title: "Stationery Essentials",
-          subtitle: "Your One-Stop Shop for Quality Stationery",
-          description: "Explore our wide range of stationery products, from notebooks to pens, all designed to inspire creativity and productivity.",
-          image: "",
-          cta: "",
-          ctaLink: "/stationery",
-          imagebg: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1754266712/stationery-img_vzjajk.png"
-
-        },
-        //   {
-        //   id:7,
-        //   title: "Happy Ganesh Chaturthi",
-        //   subtitle: "",
-        //   description: "",
-        //   image: "",
-        //   cta: "",
-        //   ctaLink: "/products",
-        //   imagebg: "https://res.cloudinary.com/dcha7gy9o/image/upload/v1756290228/WhatsApp_Image_2025-08-26_at_21.53.53_034523be_ohpvel.jpg"
-
-        // }
-
       ];
-
-      res.json({
-        success: true,
-        data: slides
-      });
+      res.json({ success: true, data: slides });
     } catch (error) {
-      console.error('Error fetching hero slides:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Error fetching hero slides',
-        error: error.message
-      });
+      res.status(500).json({ success: false, error: error.message });
     }
   },
-
   // Get stores/sellers for homepage
   getStores: async (req, res) => {
     try {
@@ -541,15 +482,15 @@ const homepageController = {
           const products = await Product.find({
             seller: seller._id,
             isActive: true
-          })
-          
+          }).sort({ salesCount: -1, views: -1 }); // Sort by Popularity to show Best Selling item as cover
+
           // Debug log
           console.log(`Seller: ${seller.sellerProfile?.storeName || seller.name}, Products: ${products.length}`);
-          
+
           // Get unique categories
           const categories = [];
           const categoryMap = new Map();
-          
+
           products.forEach(product => {
             if (product.category && !categoryMap.has(product.category._id.toString())) {
               categoryMap.set(product.category._id.toString(), product.category);
@@ -562,24 +503,30 @@ const homepageController = {
               });
             }
           });
-          
+
           // Get primary product image for cover - fallback to storeMedia if no products
           let coverImage = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80';
 
           if (products.length > 0) {
-            // Try to get image from products
-            const productWithImage = products.find(p => p.images && p.images.length > 0);
-            if (productWithImage?.images?.[0]?.url) {
+            // Try to get image from products - loop through sorted products to find one with a valid image
+            // We sorted by salesCount and views, so this will be the "best" product with an image
+            const productWithImage = products.find(p => p.images && p.images.length > 0 && p.images[0].url);
+
+            if (productWithImage) {
               coverImage = productWithImage.images[0].url;
             }
           }
 
-          // Fallback to store media photos if no product images
+          // EXPLICIT REQUIREMENT: Do NOT use storeMedia/banner photos. 
+          // Only use Product Image or Default Placeholder.
+
+          /* REMOVED FALLBACK TO STORE MEDIA
           if (coverImage === 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80' &&
             seller.sellerProfile?.storeMedia?.photos &&
             seller.sellerProfile.storeMedia.photos.length > 0) {
             coverImage = seller.sellerProfile.storeMedia.photos[0];
           }
+          */
 
           // Calculate average delivery time (mock for now, can be calculated from orders)
           const deliveryTime = '25 min';
@@ -1213,7 +1160,7 @@ const homepageController = {
         .lean();
 
       console.log(`Found ${sellers.length} Sellers matching the query.`);
-
+console.log(sellers);
       if (sellers.length === 0) {
         // Agar yaha 0 aaya, iska matlab Query User Schema ke sath match nahi ho rahi
         return res.json({ success: true, message: "No sellers found in DB matching query", data: [] });
@@ -1251,42 +1198,40 @@ const homepageController = {
             const totalParams = products.reduce((acc, curr) => acc + (curr.discountPrice || curr.price || 0), 0);
             const avgItemPrice = Math.round(totalParams / products.length);
             priceForTwo = Math.round(avgItemPrice * 2.5);
+console.log(seller.sellerProfile)
 
-            const productWithImg = products.find(p => p.images && p.images.length > 0);
-            if (productWithImg) coverImage = productWithImg.images[0].url;
+            // Store ki photo ko priority do for FoodHomePage
+            if (seller.sellerProfile?.storeMedia.cover) {
+              coverImage = seller.sellerProfile.storeMedia.cover;
+            } else {
+              coverImage = seller.sellerProfile.storeMedia.photos[0];
+            }
+console.log(`-- Cover Image for ${seller.name}: ${coverImage}`);
+            // Veg Logic
+            const isDietaryVeg = seller.foodPreferences?.dietaryType === 'vegetarian';
+
+            return {
+              id: seller._id,
+              name: seller.sellerProfile?.storeName || seller.name,
+              rating: (seller.sellerProfile?.ratings?.average || 0).toFixed(1),
+              time: '30-40 min',
+              distance: '2.0 km',
+              price: priceForTwo,
+              category: 'restaurant',
+              isVeg: isDietaryVeg,
+              cuisines: cuisines,
+              offer: hasProducts ? '20% OFF' : 'New',
+              img: coverImage || "",
+              logo: seller.avatar || seller.sellerProfile?.storeMedia?.logo,
+              isLive: seller.sellerProfile?.storeStatus === 'open',
+              isVerified: seller.isEmailVerified || false, // Added for frontend filter
+              productCount: products.length
+            };
           }
-
-          // Store ki photo ko priority do
-          if (seller.sellerProfile?.storeMedia?.photos?.length > 0) {
-            coverImage = seller.sellerProfile.storeMedia.photos[0];
-          }
-
-          // Veg Logic
-          const isDietaryVeg = seller.foodPreferences?.dietaryType === 'vegetarian';
-
-          // Final Object
-          return {
-            id: seller._id,
-            name: seller.sellerProfile?.storeName || seller.name,
-            rating: (seller.sellerProfile?.ratings?.average || 0).toFixed(1),
-            time: '30-40 min',
-            distance: '2.0 km',
-            price: priceForTwo,
-            category: 'restaurant',
-            isVeg: isDietaryVeg,
-            cuisines: cuisines,
-            offer: hasProducts ? '20% OFF' : 'New', // Agar products nahi h to New likho
-            img: coverImage,
-            logo: seller.avatar || seller.sellerProfile?.storeMedia?.logo,
-            isLive: seller.sellerProfile?.storeStatus === 'open',
-            productCount: products.length // Debugging ke liye frontend pe dekh sako
-          };
-
-        } catch (err) {
-          console.error(`Error processing seller ${seller.name}:`, err);
+        } catch (innerError) {
+          console.error(`Error processing seller ${seller._id}:`, innerError);
           return null;
-        }
-      });
+        }});
 
       const allRestaurants = await Promise.all(restaurantPromises);
       const validRestaurants = allRestaurants.filter(r => r !== null);

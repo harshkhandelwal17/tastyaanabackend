@@ -542,7 +542,8 @@ const productController = {
     }
   },
 
-  // Search products
+  // --- SMART SEARCH ENGINE ---
+  // Synonyms Dictionary for "Related Words" features
   searchProducts: async (req, res) => {
     try {
       const { search, category, page = 1, limit = 12 } = req.query;
@@ -552,108 +553,158 @@ const productController = {
         return res.status(400).json({ message: 'Search query required' });
       }
 
-      // console.log("Searching for products with query:", search);
+      // 1. QUERY EXPANSION (Synonyms)
+      // Map common user terms to related keywords
+      const SYNONYMS = {
+        "morning": ["poha", "jalebi", "tea", "coffee", "breakfast", "paratha"],
+        "breakfast": ["poha", "jalebi", "samosa", "kachori", "tea"],
+        "lunch": ["thali", "rice", "dal", "roti", "sabji", "chawal"],
+        "dinner": ["thali", "roti", "curry", "paneer", "biryani"],
+        "sweet": ["cake", "pastry", "gulab jamun", "shake", "dessert", "mithai"],
+        "gym": ["eggs", "chicken", "protein", "salad", "boiled"],
+        "healthy": ["salad", "juice", "fruit", "oats", "khichdi"],
+        "fast": ["falahari", "sabudana", "chips", "fruit"],
+        "vrat": ["falahari", "sabudana", "chips", "fruit"]
+      };
 
-      const searchQuery = {
+      let searchTerms = [search.toLowerCase()];
+      const searchLower = search.toLowerCase();
+
+      // Check if search query matches any synonym key
+      Object.keys(SYNONYMS).forEach(key => {
+        if (searchLower.includes(key)) {
+          searchTerms = [...searchTerms, ...SYNONYMS[key]];
+        }
+      });
+
+      // Also check if search query IS a value in synonyms (reverse lookup - optional but good)
+      // For now, let's stick to direct expansion to keep it fast.
+
+      // Create Regex for all terms
+      const searchRegex = new RegExp(searchTerms.join("|"), 'i');
+
+      console.log(`[Smart Search] Query: "${search}" | Expanded: [${searchTerms.join(", ")}]`);
+
+      // 2. BUILD AGGREGATION PIPELINE
+      const pipeline = [];
+
+      // A. MATCH STAGE (Filter Candidates)
+      const matchStage = {
         isActive: true,
         $or: [
-          { name: { $regex: search, $options: 'i' } },
-          { description: { $regex: search, $options: 'i' } },
-          { tags: { $in: [new RegExp(search, 'i')] } }
+          { name: { $regex: searchRegex } },
+          { title: { $regex: searchRegex } }, // Cover both name/title
+          { description: { $regex: searchRegex } },
+          { tags: { $in: searchTerms.map(t => new RegExp(t, 'i')) } }
         ]
       };
 
-      // Handle category filter
+      // Apply Category Filter if present
       if (category) {
-        // Check if category is a valid ObjectId
         if (mongoose.Types.ObjectId.isValid(category)) {
-          searchQuery.category = category;
+          matchStage.category = new mongoose.Types.ObjectId(category);
         } else {
-          // If not a valid ObjectId, try to find category by name
+          // Try to find category by name/slug first (Blocking call, but needed)
           try {
-            const categoryObj = await Category.findOne({
+            const catObj = await Category.findOne({
               $or: [
                 { name: { $regex: new RegExp(category, 'i') } },
                 { slug: { $regex: new RegExp(category, 'i') } }
               ]
             });
-
-            if (categoryObj) {
-              searchQuery.category = categoryObj._id;
-            } else {
-              // If category not found, return empty results
-              return res.json({
-                products: [],
-                searchTerm: search,
-                pagination: {
-                  page: parseInt(page),
-                  limit: parseInt(limit),
-                  total: 0,
-                  pages: 0
-                }
-              });
-            }
-          } catch (err) {
-            console.log("Error finding category:", err);
-            // Continue with empty category to avoid breaking the API
-            return res.json({
-              products: [],
-              searchTerm: search,
-              pagination: {
-                page: parseInt(page),
-                limit: parseInt(limit),
-                total: 0,
-                pages: 0
-              }
-            });
-          }
+            if (catObj) matchStage.category = catObj._id;
+          } catch (e) { console.log("Category lookup failed", e); }
         }
       }
 
-      // Check if we should populate seller data
-      const shouldPopulateSeller = req.query.populate === 'seller';
+      pipeline.push({ $match: matchStage });
 
-      let productsQuery = Product.find(searchQuery)
-        .populate('category', 'name slug');
-
-      if (shouldPopulateSeller) {
-        productsQuery = productsQuery.populate({
-          path: 'seller',
-          select: 'sellerProfile',
-          populate: {
-            path: 'sellerProfile',
-            select: 'storeStatus',
-            model: 'User'
+      // B. SCORING FIELDS (Add Fields)
+      // We calculate relevance score based on WHERE the match was found
+      pipeline.push({
+        $addFields: {
+          // Exact match on Name/Title gets highest score
+          score_exact: {
+            $cond: [{ $regexMatch: { input: "$name", regex: new RegExp(`^${search}$`, 'i') } }, 20, 0]
+          },
+          // Partial match on Name gets high score
+          score_name: {
+            $cond: [{ $regexMatch: { input: "$name", regex: new RegExp(search, 'i') } }, 10, 0]
+          },
+          // Tag match gets good score
+          score_tags: {
+            $cond: [{ $gt: [{ $size: { $filter: { input: "$tags", as: "tag", cond: { $regexMatch: { input: "$$tag", regex: searchRegex } } } } }, 0] }, 8, 0]
+          },
+          // Expanded synonym match in name
+          score_synonym: {
+            $cond: [{ $regexMatch: { input: "$name", regex: searchRegex } }, 5, 0]
+          },
+          // Description match is lowest priority
+          score_desc: {
+            $cond: [{ $regexMatch: { input: "$description", regex: searchRegex } }, 2, 0]
           }
-        });
-      }
+        }
+      });
 
-      const products = await productsQuery
-        .sort({ rating: -1, createdAt: -1 })
-        .skip(skip)
-        .limit(parseInt(limit))
-        .lean();
+      // C. CALCULATE TOTAL SCORE
+      pipeline.push({
+        $addFields: {
+          totalScore: { $add: ["$score_exact", "$score_name", "$score_tags", "$score_synonym", "$score_desc"] }
+        }
+      });
 
-      // Add storeStatus to each product if seller is populated
-      if (shouldPopulateSeller) {
-        products.forEach(product => {
-          try {
-            // Safely access storeStatus with optional chaining
-            const storeStatus = product.seller?.sellerProfile?.storeStatus || 'open';
-            product.storeStatus = storeStatus;
+      // D. SORT BY SCORE DESCENDING
+      pipeline.push({ $sort: { totalScore: -1, rating: -1, createdAt: -1 } });
 
-            // Clean up the response by removing the nested sellerProfile
-            if (product.seller?.sellerProfile) {
-              delete product.seller.sellerProfile;
-            }
-          } catch (err) {
-            console.error('Error processing seller profile:', err);
-            product.storeStatus = 'open';
-          }
-        });
-      }
+      // E. FACET FOR PAGINATION
+      pipeline.push({
+        $facet: {
+          metadata: [{ $count: "total" }],
+          data: [
+            { $skip: skip },
+            { $limit: parseInt(limit) },
+            // Populate logic lookup (manual lookup in aggregation is hard, so we just return IDs and populate later OR use $lookup)
+            // Using $lookup for Seller and Category
+            {
+              $lookup: {
+                from: "categories",
+                localField: "category",
+                foreignField: "_id",
+                as: "category"
+              }
+            },
+            { $unwind: { path: "$category", preserveNullAndEmptyArrays: true } },
+            {
+              $lookup: {
+                from: "users",
+                localField: "seller",
+                foreignField: "_id",
+                as: "seller"
+              }
+            },
+            { $unwind: { path: "$seller", preserveNullAndEmptyArrays: true } },
+          ]
+        }
+      });
 
-      const total = await Product.countDocuments(searchQuery);
+      const result = await Product.aggregate(pipeline);
+
+      const products = result[0].data;
+      const total = result[0].metadata[0]?.total || 0;
+
+      // F. POST-PROCESSING (Formatting Seller Info)
+      // The aggregation $lookup returns the full seller object. We need to format specific fields if needed
+      // to match the previous response structure (sellerProfile, storeStatus).
+      products.forEach(p => {
+        if (p.seller && p.seller.sellerProfile) {
+          p.storeStatus = p.seller.sellerProfile.storeStatus || 'open';
+          // Security: don't expose password/salt
+          delete p.seller.password;
+          delete p.seller.salt;
+        } else {
+          p.storeStatus = 'open';
+        }
+      });
 
       res.json({
         products,
@@ -665,8 +716,9 @@ const productController = {
           pages: Math.ceil(total / limit)
         }
       });
+
     } catch (error) {
-      console.error("Search error:", error);
+      console.error("Smart Search error:", error);
       res.status(500).json({ message: error.message });
     }
   },
