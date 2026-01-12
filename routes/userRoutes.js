@@ -52,6 +52,27 @@ router.put('/profile',
   userController.updateProfile
 );
 
+// App Preferences
+router.put('/app-preferences',
+  authenticate,
+  userController.updateAppSettings
+);
+
+// Account Security
+router.post('/change-password',
+  authenticate, [
+  body('newPassword')
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters')
+],
+  userController.changePassword
+);
+
+router.delete('/account',
+  authenticate,
+  userController.deleteAccount
+);
+
 // Address Management
 router.post('/address',
   authenticate, [
@@ -65,7 +86,8 @@ router.post('/address',
     .withMessage('Street must be 5-200 characters'),
   body('pincode')
     .matches(/^\d{6}$/)
-    .withMessage('6-digit pincode required')
+    .withMessage('6-digit pincode required'),
+  validateRequest
 ],
   userController.addAddress
 );
@@ -74,11 +96,20 @@ router.post('/address',
 //   authenticate, [
 //     body('isDefault')
 //       .optional()
-//       .isBoolean()
-//       .withMessage('isDefault must be boolean')
-//   ],
-//   userController.updateAddress
-// );
+// Update Address
+router.put('/address/:id',
+  authenticate, [
+  // Validation rules could be reused here or handled in controller
+  // For now rely on controller logic or add minimal validation if needed
+  validateRequest
+],
+  userController.updateAddress
+);
+
+router.delete('/address/:id',
+  authenticate,
+  userController.deleteAddress
+);
 
 // // Food Preferences
 // router.put('/preferences', 

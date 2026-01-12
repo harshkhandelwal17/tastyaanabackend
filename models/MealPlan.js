@@ -19,7 +19,7 @@ const mealPlanSchema = new mongoose.Schema({
   pricing: [
     { days: Number, price: Number, name: String, totalthali: Number, mealperday: Number }
   ],
-  seller: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+  seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   includes: [{
     name: String,
     quantity: Number,

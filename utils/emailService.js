@@ -329,7 +329,7 @@ class EmailService {
             <p style="margin: 5px 0; color: #555;">${subscription.deliveryAddress.street}</p>
             <p style="margin: 5px 0; color: #555;">${subscription.deliveryAddress.city}, ${subscription.deliveryAddress.state} ${subscription.deliveryAddress.pincode}</p>
             ${subscription.deliveryAddress.instructions ? `
-            <p style="margin: 10px 0 0 0; color: #666; font-style: italic;">
+            <p style="margin: 10px 0 0 0; color: #666; font-style:  ;">
               <strong>Delivery Instructions:</strong> ${subscription.deliveryAddress.instructions}
             </p>
             ` : ''}
@@ -473,7 +473,7 @@ class EmailService {
           <!-- Gift Message -->
           <div style="background: #fce4ec; padding: 20px; border-radius: 10px; border-left: 4px solid #e91e63; margin: 20px 0;">
             <h3 style="margin: 0 0 10px 0; color: #c2185b;">🎁 Gift Message</h3>
-            <p style="margin: 0; color: #666; font-style: italic;">"${order.giftMessage}"</p>
+            <p style="margin: 0; color: #666; font-style:  ;">"${order.giftMessage}"</p>
           </div>
           ` : ''}
 

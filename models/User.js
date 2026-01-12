@@ -1289,6 +1289,10 @@ const userSchema = new mongoose.Schema({
       email: { type: Boolean, default: true },
       sms: { type: Boolean, default: true },
       push: { type: Boolean, default: true }
+    },
+    location: {
+      type: Boolean,
+      default: true
     }
   }
 }, {

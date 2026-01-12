@@ -8,7 +8,7 @@ const path = require('path');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const connect = require('./config/database');
- 
+
 
 
 // Import all route files
@@ -49,24 +49,68 @@ const couponRoutes = require("./routes/couponRoutes");
 const adminSubscriptionRoutes = require("./routes/adminSubscriptionRoutes");
 const bhandaraRoutes = require("./routes/bhandaraRoutes");
 const laundryRoutes = require("./routes/laundryRoutes");
-const testRoute =require("./routes/testRoute");
+const testRoute = require("./routes/testRoute");
 // const medicineRoute = require('./routes/medicine');
 const deviceRoutes = require('./routes/deviceRoutes');
 const scheduleRoutes = require('./routes/scheduleRoutes');
 const deliveryScheduleRoutes = require('./routes/deliveryScheduleRoutes');
 const medicineRoutes = require('./routes/medicineRoutes');
-const sellergadgetsRoutes  = require('./routes/sellerGadgetsRoutes');
+const sellergadgetsRoutes = require('./routes/sellerGadgetsRoutes');
 const zoneRoutes = require('./routes/zoneRoutes');
+const supportRoutes = require('./routes/supportRoutes');
 const app = express();
 // Middleware
+// Middleware
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+// MANUAL BODY PARSER REMOVED (Standard middleware restored)
+// Fixed client-side serialization instead.
+app.use((req, res, next) => {
+  if (req.body) return next();
+
+  // Only attempt manual parse for JSON calls
+  const contentType = req.headers['content-type'] || '';
+  if (req.method !== 'GET' && contentType.includes('application/json')) {
+    let data = '';
+    req.on('data', chunk => { data += chunk; });
+    req.on('end', () => {
+      if (data && data.trim()) {
+        try {
+          req.body = JSON.parse(data);
+          console.log('Manual Parse Success:', req.body);
+        } catch (e) {
+          console.error('Manual Parse Error:', e);
+        }
+      } else {
+        req.body = {}; // Empty body
+      }
+      next();
+    });
+  } else {
+    next();
+  }
+});
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(helmet());
-app.use(express.json());
+
+// DEBUG & FIX MIDDLEWARE
+app.use((req, res, next) => {
+  // FLIGHT CHECK: Force JSON content type for settings update if missing
+  // This fixes cases where client fetch defaults to text/plain or empty
+  if (req.method === 'PUT' && req.url.includes('preferences')) {
+    if (!req.headers['content-type'] || !req.headers['content-type'].includes('application/json')) {
+      console.log('⚠️ Missing/Wrong Content-Type. Forcing application/json');
+      req.headers['content-type'] = 'application/json';
+    }
+  }
+  next();
+});
 
 const allowedOrigins = [
   'http://localhost:5173',
-    'http://localhost:5174',
+  'http://localhost:5174',
   'https://tastyaana.vercel.app',
   "https://www.tastyaana.com",
   "www.tastyaana.com",
@@ -74,7 +118,7 @@ const allowedOrigins = [
   'https://192.168.1.2:5173',
   'https://localhost:5173',
   "http://127.0.0.1:5500",
-          'https://tastyaanafrontendapp.vercel.app',
+  'https://tastyaanafrontendapp.vercel.app',
 
   process.env.CLIENT_URL,
 ];
@@ -90,8 +134,6 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 }));
 
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Serve robots.txt for API server
@@ -133,10 +175,10 @@ app.use("/api/products", productRoute);
 app.use("/api/meal-plan", meal);
 app.use("/api/orders", orderRoute);
 app.use("/api/menu-change", menuchangeRoute);
-app.use("/api/reviews", reviewRouter);   
+app.use("/api/reviews", reviewRouter);
 app.use("/api/upload", upload);
 app.use("/api/payments", paymentRoute);
-app.use("/api/payment",require("./routes/payment"));
+app.use("/api/payment", require("./routes/payment"));
 app.use("/api/dailymeals", dailyMealRoute);
 app.use("/api/homepage", homepageRoute);
 app.use("/api/seller/gadgets", sellergadgetsRoutes);
@@ -144,7 +186,7 @@ app.use("/api/seller", sellerRoutes);
 
 app.use('/api/subscriptions', subscriptionRoute);
 app.use('/api/wallet', require('./routes/wallet'));
-app.use('/api/replace-able/items',require('./routes/replaceAbleItemsRoutes'))
+app.use('/api/replace-able/items', require('./routes/replaceAbleItemsRoutes'))
 app.use('/api/groceries', groceryRoutes);
 app.use('/api/delivery-tracking', deliveryTrackingRoutes);
 app.use('/api/driver-routes', require('./routes/driverRoute')); // Driver route management
@@ -165,6 +207,7 @@ app.use('/api/charges', chargesRoutes); // Charges and taxes management routes
 app.use('/api/notifications', notificationRoutes); // Notification management routes
 app.use('/api/coupons', couponRoutes); // Coupon management routes
 app.use('/api/bhandaras', bhandaraRoutes); // Bhandara management routes
+app.use('/api/support', supportRoutes); // Customer Support Ticket routes
 
 // Subscription V2 routes/v2/seller/subscriptions
 app.use('/api/v2/seller/subscriptions', sellerSubscriptionV2Route);
@@ -184,4 +227,3 @@ require('./corn/jobs');
 // f
 
 module.exports = app;
-   

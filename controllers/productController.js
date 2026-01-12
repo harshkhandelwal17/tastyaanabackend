@@ -567,23 +567,43 @@ const productController = {
         "vrat": ["falahari", "sabudana", "chips", "fruit"]
       };
 
-      let searchTerms = [search.toLowerCase()];
+      let searchTerms = [];
       const searchLower = search.toLowerCase();
 
-      // Check if search query matches any synonym key
+      // 0. TOKENIZE & CLEAN (Stopwords)
+      const STOP_WORDS = new Set([
+        'bhai', 'bhiya', 'muje', 'mujhe', 'ko', 'hai', 'h', 'ka', 'ki', 'ke', 'aur', 'and', 'for', 'the', 'with',
+        'want', 'eat', 'khana', 'chiye', 'chahiye', 'kro', 'do', 'plz', 'please', 'me', 'in', 'at', 'i', 'to', 'a'
+      ]);
+
+      // Split by spaces and special chars
+      const rawTokens = searchLower.split(/[\s,.-]+/).filter(t => t.length > 0);
+
+      const validTokens = rawTokens.filter(t => !STOP_WORDS.has(t));
+
+      // If we filtered out everything (e.g. user entered only stopwords "h ko"), use original to be safe
+      const tokensToUse = validTokens.length > 0 ? validTokens : rawTokens;
+
+      // Add tokens to search terms
+      searchTerms = [...tokensToUse];
+
+      // 1. QUERY EXPANSION (Synonyms) - Check each clean token against synonyms
       Object.keys(SYNONYMS).forEach(key => {
-        if (searchLower.includes(key)) {
+        // If any token matches a proper synonym key (e.g. 'morning'), add its expansion
+        if (tokensToUse.some(t => t === key || t.includes(key))) {
           searchTerms = [...searchTerms, ...SYNONYMS[key]];
         }
       });
 
-      // Also check if search query IS a value in synonyms (reverse lookup - optional but good)
-      // For now, let's stick to direct expansion to keep it fast.
+      // Deduplicate
+      searchTerms = [...new Set(searchTerms)];
 
-      // Create Regex for all terms
-      const searchRegex = new RegExp(searchTerms.join("|"), 'i');
+      // Create Regex for all terms - permissive OR search
+      // Escape special regex chars in terms just in case
+      const escapedTerms = searchTerms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const searchRegex = new RegExp(escapedTerms.join("|"), 'i');
 
-      console.log(`[Smart Search] Query: "${search}" | Expanded: [${searchTerms.join(", ")}]`);
+      console.log(`[Smart Search] Query: "${search}" | Tokens: [${tokensToUse}] | Final Regex: ${searchRegex}`);
 
       // 2. BUILD AGGREGATION PIPELINE
       const pipeline = [];
