@@ -208,6 +208,7 @@ app.use('/api/notifications', notificationRoutes); // Notification management ro
 app.use('/api/coupons', couponRoutes); // Coupon management routes
 app.use('/api/bhandaras', bhandaraRoutes); // Bhandara management routes
 app.use('/api/support', supportRoutes); // Customer Support Ticket routes
+app.use('/api/subcategories', require('./routes/subCategoryRoutes')); // SubCategory routes
 
 // Subscription V2 routes/v2/seller/subscriptions
 app.use('/api/v2/seller/subscriptions', sellerSubscriptionV2Route);

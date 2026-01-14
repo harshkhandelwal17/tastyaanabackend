@@ -6,7 +6,7 @@ const categoryController = {
   createCategory: async (req, res) => {
     try {
       const categoryData = req.body;
-      
+
       // Generate slug
       categoryData.slug = req.body.name
         .toLowerCase()
@@ -46,7 +46,10 @@ const categoryController = {
         })
       );
 
-      res.json({ categories: categoriesWithCount });
+      res.json({
+        success: true,
+        data: categoriesWithCount
+      });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -81,7 +84,7 @@ const categoryController = {
 
       // Build query
       let query = { isActive: true };
-      
+
       if (category._id !== 'thali-category') {
         query.category = category._id;
       } else {
