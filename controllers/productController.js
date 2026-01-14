@@ -305,7 +305,7 @@ const productController = {
       if (shouldPopulateSeller) {
         productsQuery = productsQuery.populate({
           path: 'seller',
-          select: 'sellerProfile',
+          select: 'sellerProfile name avatar phone',
           populate: {
             path: 'sellerProfile',
             select: 'storeStatus',
@@ -329,9 +329,9 @@ const productController = {
             product.storeStatus = storeStatus;
 
             // Clean up the response by removing the nested sellerProfile
-            if (product.seller?.sellerProfile) {
-              delete product.seller.sellerProfile;
-            }
+            // if (product.seller?.sellerProfile) {
+            //   delete product.seller.sellerProfile;
+            // }
           } catch (err) {
             console.error('Error processing seller profile:', err);
             product.storeStatus = 'open';
