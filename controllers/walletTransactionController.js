@@ -2,6 +2,12 @@ const WalletTransaction = require('../models/WalletTransaction');
 const User = require('../models/User');
 const Razorpay = require('razorpay');
 
+// Debug log for Razorpay config (Masked)
+console.log('Razorpay Config:', {
+  key_id: process.env.RAZORPAY_KEY_ID ? 'Exists' : 'Missing',
+  key_secret: process.env.RAZORPAY_KEY_SECRET ? 'Exists' : 'Missing'
+});
+
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
@@ -13,7 +19,7 @@ const razorpay = new Razorpay({
 const getWalletBalance = async (req, res) => {
   try {
     const userId = req.user.id;
-    
+
     const user = await User.findById(userId).select('wallet loyaltyPoints');
     if (!user) {
       return res.status(404).json({
@@ -21,7 +27,7 @@ const getWalletBalance = async (req, res) => {
         message: 'User not found'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: {
@@ -30,7 +36,7 @@ const getWalletBalance = async (req, res) => {
         lastUpdated: user.wallet.lastTopUp || user.updatedAt
       }
     });
-    
+
   } catch (error) {
     console.error('Error fetching wallet balance:', error);
     res.status(500).json({
@@ -47,33 +53,33 @@ const addMoneyToWallet = async (req, res) => {
   try {
     const { amount } = req.body;
     const userId = req.user.id;
-    
+
     if (!amount || amount < 10) {
       return res.status(400).json({
         success: false,
         message: 'Minimum amount to add is ₹10'
       });
     }
-    
+
     if (amount > 50000) {
       return res.status(400).json({
         success: false,
         message: 'Maximum amount to add is ₹50,000'
       });
     }
-    
+
     // Create Razorpay order for wallet top-up
     const razorpayOrder = await razorpay.orders.create({
       amount: Math.round(amount * 100), // Convert to paise
       currency: 'INR',
-      receipt: `wallet_topup_${userId}_${Date.now()}`,
+      receipt: `w_${userId.toString().slice(-6)}_${Date.now().toString().slice(-8)}`, // Max 40 chars
       notes: {
         purpose: 'wallet_topup',
         userId: userId.toString(),
         amount: amount.toString()
       }
     });
-    
+
     // Create pending wallet transaction
     const walletTransaction = new WalletTransaction({
       user: userId,
@@ -88,9 +94,9 @@ const addMoneyToWallet = async (req, res) => {
         purpose: 'wallet_topup'
       }
     });
-    
+
     await walletTransaction.save();
-    
+
     res.status(200).json({
       success: true,
       message: 'Payment order created for wallet top-up',
@@ -102,12 +108,12 @@ const addMoneyToWallet = async (req, res) => {
         transactionId: walletTransaction.transactionId
       }
     });
-    
+
   } catch (error) {
     console.error('Error creating wallet top-up order:', error);
     res.status(500).json({
       success: false,
-      message: 'Failed to create wallet top-up order'
+      message: `Failed to create wallet top-up order: ${error.message || JSON.stringify(error)}`
     });
   }
 };
@@ -123,23 +129,23 @@ const verifyWalletTopup = async (req, res) => {
       razorpay_signature,
       transactionId
     } = req.body;
-    
+
     const userId = req.user.id;
-    
+
     // Verify payment signature
     const crypto = require('crypto');
     const expectedSignature = crypto
       .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest('hex');
-    
+
     if (expectedSignature !== razorpay_signature) {
       return res.status(400).json({
         success: false,
         message: 'Invalid payment signature'
       });
     }
-    
+
     // Find the pending transaction
     const walletTransaction = await WalletTransaction.findOne({
       transactionId: transactionId,
@@ -147,25 +153,25 @@ const verifyWalletTopup = async (req, res) => {
       status: 'pending',
       referenceId: razorpay_order_id
     });
-    
+
     if (!walletTransaction) {
       return res.status(404).json({
         success: false,
         message: 'Transaction not found'
       });
     }
-    
+
     // Get payment details from Razorpay
     const payment = await razorpay.payments.fetch(razorpay_payment_id);
     const paidAmount = payment.amount / 100; // Convert from paise
-    
+
     if (paidAmount !== walletTransaction.amount) {
       return res.status(400).json({
         success: false,
         message: 'Payment amount mismatch'
       });
     }
-    
+
     // Update transaction status
     walletTransaction.status = 'completed';
     walletTransaction.metadata.razorpayPaymentId = razorpay_payment_id;
@@ -175,17 +181,17 @@ const verifyWalletTopup = async (req, res) => {
       cardId: payment.card_id,
       status: payment.status
     };
-    
+
     await walletTransaction.save();
-    
+
     // Update user's last top-up time
     await User.findByIdAndUpdate(userId, {
       $set: { 'wallet.lastTopUp': new Date() }
     });
-    
+
     // Fetch updated balance
     const user = await User.findById(userId).select('wallet');
-    
+
     res.status(200).json({
       success: true,
       message: 'Wallet topped up successfully',
@@ -199,7 +205,7 @@ const verifyWalletTopup = async (req, res) => {
         }
       }
     });
-    
+
   } catch (error) {
     console.error('Error verifying wallet top-up:', error);
     res.status(500).json({
@@ -215,31 +221,31 @@ const verifyWalletTopup = async (req, res) => {
 const getWalletTransactions = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { 
-      page = 1, 
-      limit = 20, 
-      type, 
-      status, 
-      startDate, 
+    const {
+      page = 1,
+      limit = 20,
+      type,
+      status,
+      startDate,
       endDate,
       method
     } = req.query;
-    
+
     // Build filter
     const filter = { user: userId };
-    
+
     if (type && ['credit', 'debit'].includes(type)) {
       filter.type = type;
     }
-    
+
     if (status && ['pending', 'completed', 'failed', 'refunded'].includes(status)) {
       filter.status = status;
     }
-    
+
     if (method && ['razorpay', 'card', 'upi', 'netbanking', 'wallet', 'refund', 'cashback'].includes(method)) {
       filter.method = method;
     }
-    
+
     if (startDate || endDate) {
       filter.createdAt = {};
       if (startDate) filter.createdAt.$gte = new Date(startDate);
@@ -249,16 +255,16 @@ const getWalletTransactions = async (req, res) => {
         filter.createdAt.$lte = end;
       }
     }
-    
+
     const transactions = await WalletTransaction.find(filter)
       .populate('user', 'name email phone')
       .sort({ createdAt: -1 })
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .lean();
-    
+
     const total = await WalletTransaction.countDocuments(filter);
-    
+
     // Calculate aggregated stats
     const stats = await WalletTransaction.aggregate([
       { $match: filter },
@@ -276,7 +282,7 @@ const getWalletTransactions = async (req, res) => {
         }
       }
     ]);
-    
+
     res.status(200).json({
       success: true,
       data: {
@@ -296,7 +302,7 @@ const getWalletTransactions = async (req, res) => {
         }
       }
     });
-    
+
   } catch (error) {
     console.error('Error fetching all wallet transactions:', error);
     res.status(500).json({
@@ -317,23 +323,23 @@ const manualWalletAdjustment = async (req, res) => {
         message: 'Admin access required'
       });
     }
-    
+
     const { userId, amount, type, reason } = req.body;
-    
+
     if (!userId || !amount || !type || !reason) {
       return res.status(400).json({
         success: false,
         message: 'All fields are required'
       });
     }
-    
+
     if (!['credit', 'debit'].includes(type)) {
       return res.status(400).json({
         success: false,
         message: 'Type must be either credit or debit'
       });
     }
-    
+
     // Check if user exists
     const user = await User.findById(userId);
     if (!user) {
@@ -342,7 +348,7 @@ const manualWalletAdjustment = async (req, res) => {
         message: 'User not found'
       });
     }
-    
+
     // For debit, check if user has sufficient balance
     if (type === 'debit' && user.wallet.balance < amount) {
       return res.status(400).json({
@@ -350,7 +356,7 @@ const manualWalletAdjustment = async (req, res) => {
         message: 'User has insufficient wallet balance'
       });
     }
-    
+
     // Create adjustment transaction
     const adjustmentTransaction = new WalletTransaction({
       user: userId,
@@ -367,12 +373,12 @@ const manualWalletAdjustment = async (req, res) => {
         previousBalance: user.wallet.balance
       }
     });
-    
+
     await adjustmentTransaction.save();
-    
+
     // Get updated user data
     const updatedUser = await User.findById(userId).select('wallet');
-    
+
     res.status(200).json({
       success: true,
       message: 'Wallet adjustment completed successfully',
@@ -394,7 +400,7 @@ const manualWalletAdjustment = async (req, res) => {
         }
       }
     });
-    
+
   } catch (error) {
     console.error('Error processing manual wallet adjustment:', error);
     res.status(500).json({
@@ -415,9 +421,9 @@ const getWalletAnalytics = async (req, res) => {
         message: 'Admin access required'
       });
     }
-    
+
     const { period = '30d' } = req.query;
-    
+
     // Calculate date range
     let startDate = new Date();
     switch (period) {
@@ -436,7 +442,7 @@ const getWalletAnalytics = async (req, res) => {
       default:
         startDate.setDate(startDate.getDate() - 30);
     }
-    
+
     // Overall stats
     const [totalStats, periodStats, dailyStats] = await Promise.all([
       // Total wallet stats
@@ -450,14 +456,14 @@ const getWalletAnalytics = async (req, res) => {
           }
         }
       ]),
-      
+
       // Period stats
       WalletTransaction.aggregate([
-        { 
-          $match: { 
+        {
+          $match: {
             status: 'completed',
             createdAt: { $gte: startDate }
-          } 
+          }
         },
         {
           $group: {
@@ -467,14 +473,14 @@ const getWalletAnalytics = async (req, res) => {
           }
         }
       ]),
-      
+
       // Daily breakdown for the period
       WalletTransaction.aggregate([
-        { 
-          $match: { 
+        {
+          $match: {
             status: 'completed',
             createdAt: { $gte: startDate }
-          } 
+          }
         },
         {
           $group: {
@@ -489,7 +495,7 @@ const getWalletAnalytics = async (req, res) => {
         { $sort: { '_id.date': 1 } }
       ])
     ]);
-    
+
     // Process stats
     const processStats = (stats) => {
       const result = { credit: { amount: 0, count: 0 }, debit: { amount: 0, count: 0 } };
@@ -498,21 +504,21 @@ const getWalletAnalytics = async (req, res) => {
       });
       return result;
     };
-    
+
     // Active wallets count
     const activeWallets = await User.countDocuments({
       'wallet.balance': { $gt: 0 }
     });
-    
+
     // Top users by wallet balance
     const topUsers = await User.find({
       'wallet.balance': { $gt: 0 }
     })
-    .select('name email wallet.balance')
-    .sort({ 'wallet.balance': -1 })
-    .limit(10)
-    .lean();
-    
+      .select('name email wallet.balance')
+      .sort({ 'wallet.balance': -1 })
+      .limit(10)
+      .lean();
+
     res.status(200).json({
       success: true,
       data: {
@@ -530,7 +536,7 @@ const getWalletAnalytics = async (req, res) => {
         topUsers: topUsers
       }
     });
-    
+
   } catch (error) {
     console.error('Error fetching wallet analytics:', error);
     res.status(500).json({
@@ -546,41 +552,41 @@ const transferMoney = async (req, res) => {
   try {
     const { recipientEmail, amount, note } = req.body;
     const userId = req.user.id;
-    
+
     if (!recipientEmail || !amount || amount < 1) {
       return res.status(400).json({
         success: false,
         message: 'Invalid transfer details'
       });
     }
-    
+
     if (amount > 10000) {
       return res.status(400).json({
         success: false,
         message: 'Maximum transfer amount is ₹10,000'
       });
     }
-    
+
     // Find sender and recipient
     const [sender, recipient] = await Promise.all([
       User.findById(userId),
       User.findOne({ email: recipientEmail })
     ]);
-    
+
     if (!sender || !recipient) {
       return res.status(404).json({
         success: false,
         message: 'User not found'
       });
     }
-    
+
     if (sender._id.toString() === recipient._id.toString()) {
       return res.status(400).json({
         success: false,
         message: 'Cannot transfer money to yourself'
       });
     }
-    
+
     // Check sender balance
     if (sender.wallet.balance < amount) {
       return res.status(400).json({
@@ -588,10 +594,10 @@ const transferMoney = async (req, res) => {
         message: 'Insufficient wallet balance'
       });
     }
-    
+
     // Create transactions
     const transferId = `TXN_${Date.now()}`;
-    
+
     // Debit from sender
     const debitTransaction = new WalletTransaction({
       user: sender._id,
@@ -608,7 +614,7 @@ const transferMoney = async (req, res) => {
         transferNote: note
       }
     });
-    
+
     // Credit to recipient
     const creditTransaction = new WalletTransaction({
       user: recipient._id,
@@ -625,13 +631,13 @@ const transferMoney = async (req, res) => {
         transferNote: note
       }
     });
-    
+
     // Save both transactions
     await Promise.all([
       debitTransaction.save(),
       creditTransaction.save()
     ]);
-    
+
     res.status(200).json({
       success: true,
       message: 'Money transferred successfully',
@@ -645,7 +651,7 @@ const transferMoney = async (req, res) => {
         senderNewBalance: sender.wallet.balance - amount
       }
     });
-    
+
   } catch (error) {
     console.error('Error transferring money:', error);
     res.status(500).json({
@@ -662,25 +668,25 @@ const generateWalletStatement = async (req, res) => {
   try {
     const userId = req.user.id;
     const { startDate, endDate, format = 'json' } = req.query;
-    
+
     if (!startDate || !endDate) {
       return res.status(400).json({
         success: false,
         message: 'Start date and end date are required'
       });
     }
-    
+
     const start = new Date(startDate);
     const end = new Date(endDate);
     end.setHours(23, 59, 59, 999);
-    
+
     // Fetch transactions
     const transactions = await WalletTransaction.find({
       user: userId,
       createdAt: { $gte: start, $lte: end },
       status: 'completed'
     }).sort({ createdAt: 1 }).lean();
-    
+
     // Calculate running balance
     let runningBalance = 0;
     const statement = transactions.map(txn => {
@@ -689,7 +695,7 @@ const generateWalletStatement = async (req, res) => {
       } else {
         runningBalance -= txn.amount;
       }
-      
+
       return {
         date: txn.createdAt,
         transactionId: txn.transactionId,
@@ -701,10 +707,10 @@ const generateWalletStatement = async (req, res) => {
         status: txn.status
       };
     });
-    
+
     // Get user details
     const user = await User.findById(userId).select('name email phone');
-    
+
     const statementData = {
       user: {
         name: user.name,
@@ -728,14 +734,14 @@ const generateWalletStatement = async (req, res) => {
       },
       transactions: statement
     };
-    
+
     if (format === 'csv') {
       // Generate CSV format
       const csvHeader = 'Date,Transaction ID,Description,Type,Amount,Balance,Method,Status\n';
-      const csvData = statement.map(txn => 
+      const csvData = statement.map(txn =>
         `${txn.date},${txn.transactionId},"${txn.description}",${txn.type},${txn.amount},${txn.balance},${txn.method},${txn.status}`
       ).join('\n');
-      
+
       res.setHeader('Content-Type', 'text/csv');
       res.setHeader('Content-Disposition', `attachment; filename="wallet_statement_${userId}_${start.toISOString().split('T')[0]}_to_${end.toISOString().split('T')[0]}.csv"`);
       res.send(csvHeader + csvData);
@@ -745,7 +751,7 @@ const generateWalletStatement = async (req, res) => {
         data: statementData
       });
     }
-    
+
   } catch (error) {
     console.error('Error generating wallet statement:', error);
     res.status(500).json({
@@ -762,7 +768,7 @@ const checkLowBalanceAlert = async (req, res) => {
   try {
     const userId = req.user.id;
     const { threshold = 100 } = req.query; // Default threshold ₹100
-    
+
     const user = await User.findById(userId).select('wallet');
     if (!user) {
       return res.status(404).json({
@@ -770,9 +776,9 @@ const checkLowBalanceAlert = async (req, res) => {
         message: 'User not found'
       });
     }
-    
+
     const isLowBalance = user.wallet.balance < threshold;
-    
+
     res.status(200).json({
       success: true,
       data: {
@@ -782,7 +788,7 @@ const checkLowBalanceAlert = async (req, res) => {
         recommendedTopup: isLowBalance ? Math.max(500, threshold * 2) : 0
       }
     });
-    
+
   } catch (error) {
     console.error('Error checking low balance alert:', error);
     res.status(500).json({
@@ -803,7 +809,7 @@ module.exports = {
   transferMoney,
   generateWalletStatement,
   checkLowBalanceAlert,
-//   getAllWalletTransactions,
+  //   getAllWalletTransactions,
   manualWalletAdjustment,
   getWalletAnalytics
 };

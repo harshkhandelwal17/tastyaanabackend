@@ -9,11 +9,32 @@ const productController = {
   getGroceryProducts: async (req, res) => {
     try {
       const { category, minPrice, maxPrice, sortBy, sortOrder, search, page = 1, limit = 10 } = req.query;
-      const query = { 'tags': 'grocery', isActive: true };
+      // Base query - only enforce active status
+      const query = { isActive: true };
 
       // Apply filters
       if (category) {
-        query['tags'] = { $all: ['grocery', category] };
+        // Check if category is a valid ObjectId (could be category or subcategory ID)
+        if (mongoose.Types.ObjectId.isValid(category)) {
+          query.$or = [
+            { category: category },
+            { subCategory: category }
+          ];
+        } else {
+          // Fallback to Slug or Tags
+          query.$or = [
+            { tags: { $in: [category, 'grocery'] } },
+            { 'category.slug': category }
+          ];
+        }
+
+        // Keep simplified tag logic as fallback/legacy support
+        if (!query.$or && !query.category && !query.subCategory) {
+          query['tags'] = category === 'all' ? 'grocery' : category;
+        }
+      } else {
+        // Default to grocery if nothing specified
+        query['tags'] = 'grocery';
       }
 
       if (minPrice || maxPrice) {

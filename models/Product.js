@@ -64,8 +64,10 @@ const productSchema = new mongoose.Schema({
     ref: 'Category',
     required: true
   },
-  subCategory: {
-    type:String
+   subCategory: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'subCategory',
+    required: true
   },
   tags: [String],
   isCollegeBranded: {
