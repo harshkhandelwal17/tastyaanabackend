@@ -1,6 +1,6 @@
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
-const Order = require('../models/Order'); 
+const Order = require('../models/Order');
 const User = require('../models/User');
 const Subscription = require('../models/Subscription');
 const Coupon = require('../models/Coupon');
@@ -290,7 +290,7 @@ const createRazorpayOrder = async (req, res) => {
 
     // Generate order number manually to ensure it's set
     const orderCount = await Order.countDocuments();
-    const orderNumber = `GKK${String(orderCount+2000 + 1).padStart(6, '0')}`;
+    const orderNumber = `GKK${String(orderCount + 2000 + 1).padStart(6, '0')}`;
 
     // Create order in database first (pending status)
     const newOrder = new Order({
@@ -299,7 +299,7 @@ const createRazorpayOrder = async (req, res) => {
       type: orderData.type || 'gkk',
       items: await Promise.all(orderData.items.map(async (item) => {
         let sellerId = item.seller;
-        
+
         // If seller ID not provided, try to fetch from product
         if (!sellerId && item.productId) {
           try {
@@ -312,7 +312,7 @@ const createRazorpayOrder = async (req, res) => {
             console.warn(`Could not fetch seller for product ${item.productId}:`, error.message);
           }
         }
-        
+
         return {
           name: item.name,
           quantity: item.quantity,
@@ -373,7 +373,7 @@ const createRazorpayOrder = async (req, res) => {
     if (orderData.couponCode && orderData.couponId) {
       try {
         console.log(`Recording coupon usage: ${orderData.couponCode} for user ${userId} on order ${savedOrder.orderNumber}`);
-        
+
         const couponUsage = new CouponUsage({
           couponId: orderData.couponId,
           userId: userId,
@@ -394,12 +394,12 @@ const createRazorpayOrder = async (req, res) => {
         console.log(`✅ Coupon ${orderData.couponCode} usage recorded successfully for order ${savedOrder.orderNumber} with discount ₹${orderData.discount || 0}`);
       } catch (couponError) {
         console.error('❌ Error recording coupon usage:', couponError);
-        
+
         // Check if it's a duplicate key error (user already used this coupon)
         if (couponError.code === 11000) {
           console.log(`⚠️ User ${userId} has already used coupon ${orderData.couponCode}`);
         }
-        
+
         // Don't fail order creation if coupon tracking fails
       }
     } else {
@@ -626,27 +626,44 @@ const handlePaymentSuccess = async (req, res) => {
 // ============================================
 const handlePaymentFailure = async (req, res) => {
   try {
-    const { orderId, razorpay_order_id, error } = req.body;
+    const { orderId, recordId, razorpay_order_id, error, type } = req.body;
+    const finalRecordId = recordId || orderId;
 
-    // Update order status to failed
-    const order = await Order.findById(orderId);
+    if (type === 'subscription') {
+      const Subscription = require('../models/Subscription');
+      const subscription = await Subscription.findById(finalRecordId);
+      if (subscription) {
+        subscription.paymentStatus = 'failed';
+        // Optionally cancelled if it was pending payment
+        // subscription.status = 'cancelled';
+        await subscription.save();
+      }
+      return res.status(200).json({
+        success: false,
+        message: 'Subscription match failed',
+        recordId: finalRecordId
+      });
+    }
+
+    // Default: Order
+    const order = await Order.findById(finalRecordId);
     if (order) {
       order.paymentStatus = 'failed';
       order.status = 'cancelled';
-      order.cancellationReason = `Payment failed: ${error.description || 'Unknown error'}`;
+      order.cancellationReason = `Payment failed: ${error?.description || 'Unknown error'}`;
       order.cancelledAt = new Date();
       order.statusHistory.push({
         status: 'cancelled',
         timestamp: new Date(),
-        note: `Payment failed: ${error.description || 'Unknown error'}`
+        note: `Payment failed: ${error?.description || 'Unknown error'}`
       });
       await order.save();
     }
 
     res.status(200).json({
       success: false,
-      message: 'Payment failed',
-      orderId: orderId
+      message: 'Payment failed processed',
+      orderId: finalRecordId
     });
 
   } catch (error) {

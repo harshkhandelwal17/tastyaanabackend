@@ -11,10 +11,11 @@ const {
   checkLowBalanceAlert,
   getAllWalletTransactions,
   manualWalletAdjustment,
-  getWalletAnalytics
+  getWalletAnalytics,
+  handleWalletPaymentFailure
 } = require('../controllers/walletTransactionController');
 
-const { authenticate:auth, authorize:adminAuth } = require('../middlewares/auth');
+const { authenticate: auth, authorize: adminAuth } = require('../middlewares/auth');
 
 // ============================================
 // Wallet Management Routes
@@ -28,6 +29,9 @@ router.post('/add-money', auth, addMoneyToWallet);
 
 // Verify wallet top-up payment
 router.post('/verify-topup', auth, verifyWalletTopup);
+
+// Handle wallet payment failure
+router.post('/payment-failed', auth, handleWalletPaymentFailure);
 
 // Get wallet transactions
 router.get('/transactions', auth, getWalletTransactions);

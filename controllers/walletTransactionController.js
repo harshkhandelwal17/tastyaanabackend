@@ -184,12 +184,13 @@ const verifyWalletTopup = async (req, res) => {
 
     await walletTransaction.save();
 
-    // Update user's last top-up time
+    // Update user's balance and last top-up time
     await User.findByIdAndUpdate(userId, {
+      $inc: { 'wallet.balance': walletTransaction.amount },
       $set: { 'wallet.lastTopUp': new Date() }
     });
 
-    // Fetch updated balance
+    // Fetch updated balance for response
     const user = await User.findById(userId).select('wallet');
 
     res.status(200).json({
@@ -211,6 +212,54 @@ const verifyWalletTopup = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to verify wallet top-up'
+    });
+  }
+};
+
+// ============================================
+// 3.5. Handle Wallet Payment Failure
+// ============================================
+const handleWalletPaymentFailure = async (req, res) => {
+  try {
+    const { recordId, error } = req.body;
+    const userId = req.user.id;
+
+    console.log(`Handling wallet payment failure for record: ${recordId}`, error);
+
+    // Find transaction by transactionId or _id
+    // RazorpayComponent might send recordId which maps to transactionId
+    const walletTransaction = await WalletTransaction.findOne({
+      $or: [{ transactionId: recordId }, { _id: recordId }],
+      user: userId,
+      status: 'pending'
+    });
+
+    if (walletTransaction) {
+      walletTransaction.status = 'failed';
+      walletTransaction.metadata = {
+        ...walletTransaction.metadata,
+        failureReason: error?.description || 'Payment Failed/Cancelled',
+        errorDetails: error
+      };
+      await walletTransaction.save();
+
+      return res.status(200).json({
+        success: true,
+        message: 'Transaction marked as failed'
+      });
+    }
+
+    // If not found or already processed
+    return res.status(404).json({
+      success: false,
+      message: 'Transaction not found or already processed'
+    });
+
+  } catch (error) {
+    console.error('Error handling wallet payment failure:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to process payment failure'
     });
   }
 };
@@ -811,5 +860,6 @@ module.exports = {
   checkLowBalanceAlert,
   //   getAllWalletTransactions,
   manualWalletAdjustment,
-  getWalletAnalytics
+  getWalletAnalytics,
+  handleWalletPaymentFailure
 };
