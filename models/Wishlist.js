@@ -8,8 +8,15 @@ const wishlistSchema = new mongoose.Schema({
   items: [{
     product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
-      required: true
+      ref: 'Product'
+    },
+    vendor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    mealPlan: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'MealPlan'
     },
     addedAt: {
       type: Date,
