@@ -20,7 +20,7 @@ exports.getWishlist = async (req, res) => {
       .populate({
         path: 'items.mealPlan',
         select: 'title price description type isActive images', // Basic plan info
-        populate: { path: 'vendor', select: 'name area' }
+        populate: { path: 'seller', select: 'name area' }
       });
 
     if (!wishlist) {
@@ -108,7 +108,7 @@ exports.addToWishlist = async (req, res) => {
       .populate({
         path: 'items.mealPlan',
         select: 'title price description type isActive images',
-        populate: { path: 'vendor', select: 'name area' }
+        populate: { path: 'seller', select: 'name area' }
       });
 
     res.status(200).json({
@@ -165,7 +165,7 @@ exports.removeFromWishlist = async (req, res) => {
       .populate({
         path: 'items.mealPlan',
         select: 'title price description type isActive images',
-        populate: { path: 'vendor', select: 'name area' }
+        populate: { path: 'seller', select: 'name area' }
       });
 
     res.status(200).json({
