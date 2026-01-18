@@ -1,7 +1,7 @@
 const Driver = require('../models/Driver');
 const Order = require('../models/Order');
 const DeliveryTracking = require('../models/DeliveryTracking');
-const { io } = require('../index');
+
 const User = require('../models/User')
 
 // Dynamic delivery partner categories
@@ -122,7 +122,7 @@ const getAvailablePartnersForCategory = async (req, res) => {
         vehicle: driver.vehicle,
         currentLocation: driver.currentLocation,
         specialization: driver.specialization,
-        distance: lat && lng && driver.currentLocation?.lat && driver.currentLocation?.lng 
+        distance: lat && lng && driver.currentLocation?.lat && driver.currentLocation?.lng
           ? calculateDistance(parseFloat(lat), parseFloat(lng), driver.currentLocation.lat, driver.currentLocation.lng).toFixed(2)
           : null
       }))
@@ -166,9 +166,9 @@ const autoAssignDeliveryPartner = async (req, res) => {
 
     // Find best available driver
     const bestDriver = await findBestDriverForOrder(order, orderCategory);
-    
+
     if (!bestDriver) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         message: 'No available delivery partners found for this order',
         category: orderCategory,
         suggestion: 'Please try again later or contact support'
@@ -179,7 +179,7 @@ const autoAssignDeliveryPartner = async (req, res) => {
     tracking.driverId = bestDriver._id;
     tracking.status = 'assigned';
     tracking.assignedCategory = orderCategory;
-    
+
     // Add timeline entry
     tracking.timeline.push({
       status: 'assigned',
@@ -322,7 +322,7 @@ const getDeliveryStatsByCategory = async (req, res) => {
       totalDeliveries: stat.totalDeliveries,
       completedDeliveries: stat.completedDeliveries,
       activeDeliveries: stat.activeDeliveries,
-      completionRate: stat.totalDeliveries > 0 
+      completionRate: stat.totalDeliveries > 0
         ? ((stat.completedDeliveries / stat.totalDeliveries) * 100).toFixed(2)
         : 0
     }));
@@ -341,10 +341,10 @@ const getDeliveryStatsByCategory = async (req, res) => {
 // const getDriverDashboard = async (req, res) => {
 //   try {
 //     const driverId = req.user.id;
-    
+
 //     // Get driver details
 //     const driver = await Driver.findById(driverId);
-    
+
 //     // Get active deliveries
 //     const activeDeliveries = await DeliveryTracking.find({
 //       driverId,
@@ -354,7 +354,7 @@ const getDeliveryStatsByCategory = async (req, res) => {
 //     // Get today's completed deliveries
 //     const today = new Date();
 //     today.setHours(0, 0, 0, 0);
-    
+
 //     const todayDeliveries = await DeliveryTracking.countDocuments({
 //       driverId,
 //       status: 'delivered',
@@ -415,7 +415,7 @@ const determineOrderCategory = (items) => {
   items.forEach(item => {
     const category = item.category?.toLowerCase() || 'general';
     const priority = categoryPriority[category] || 5;
-    
+
     if (priority < highestPriority) {
       highestPriority = priority;
       bestCategory = category;
@@ -442,7 +442,7 @@ const findBestDriverForOrder = async (order, category) => {
     }
 
     const drivers = await Driver.find(query);
-    
+
     if (drivers.length === 0) {
       return null;
     }
@@ -450,13 +450,13 @@ const findBestDriverForOrder = async (order, category) => {
     // Calculate distance and score for each driver
     const scoredDrivers = drivers.map(driver => {
       let score = 0;
-      
+
       // Rating score (0-40 points)
       score += (driver.rating / 5) * 40;
-      
+
       // Experience score (0-30 points)
       score += Math.min(driver.deliveries / 100, 1) * 30;
-      
+
       // Distance score (0-30 points) - closer is better
       let distanceScore = 30;
       if (deliveryLat && deliveryLng && driver.currentLocation?.lat && driver.currentLocation?.lng) {
@@ -477,7 +477,7 @@ const findBestDriverForOrder = async (order, category) => {
 
     // Sort by score (highest first)
     scoredDrivers.sort((a, b) => b.score - a.score);
-    
+
     return scoredDrivers[0];
   } catch (error) {
     console.error('Error finding best driver:', error);
@@ -489,11 +489,11 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
   const R = 6371; // Radius of the Earth in kilometers
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distance = R * c;
   return distance;
 };
@@ -514,16 +514,16 @@ const getDriverDashboard = async (req, res) => {
       deliveryPartner: driverId,
       status: { $in: ['confirmed', 'preparing', 'ready', 'out-for-delivery'] }
     })
-    .populate('userId', 'name phone')
-    .sort({ createdAt: -1 });
+      .populate('userId', 'name phone')
+      .sort({ createdAt: -1 });
 
     // Get delivery stats
     const deliveryStats = await Order.aggregate([
-      { 
-        $match: { 
+      {
+        $match: {
           deliveryPartner: driver._id,
           status: 'delivered'
-        } 
+        }
       },
       {
         $group: {
@@ -536,14 +536,14 @@ const getDriverDashboard = async (req, res) => {
 
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
-    
+
     const todayEarnings = await Order.aggregate([
-      { 
-        $match: { 
+      {
+        $match: {
           deliveryPartner: driver._id,
           status: 'delivered',
           updatedAt: { $gte: todayStart }
-        } 
+        }
       },
       {
         $group: {
@@ -578,7 +578,7 @@ const getDriverDashboard = async (req, res) => {
         customerPhone: order.userContactNo,
         specialInstructions: order.specialInstructions,
         items: order.items,
-        estimatedDeliveryTime: order.estimatedDelivery ? 
+        estimatedDeliveryTime: order.estimatedDelivery ?
           new Date(order.estimatedDelivery).toLocaleTimeString() : 'Calculating...'
       })),
       stats

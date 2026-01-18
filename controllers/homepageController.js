@@ -464,115 +464,109 @@ const homepageController = {
       };
 
       if (type) {
-        // Case-insensitive check for sellerType (e.g. 'tiffin', 'food', 'grocery')
+        // Case-insensitive check for sellerType
         query['sellerProfile.sellerType'] = { $regex: new RegExp(type, 'i') };
       }
 
-      // Get all active sellers with their profiles
+      // 1. Get all active sellers with their profiles
       const sellers = await User.find(query)
         .select('name email avatar sellerProfile rating addresses priceRange')
         .sort({ 'sellerProfile.ratings.average': -1, createdAt: -1 })
         .skip(skip)
         .limit(parseInt(limit))
         .lean();
-      // Get product counts and categories for each seller
-      const storesWithDetails = await Promise.all(
-        sellers.map(async (seller) => {
-          // Get products for this seller
-          const products = await Product.find({
-            seller: seller._id,
-            isActive: true
-          }).sort({ salesCount: -1, views: -1 }); // Sort by Popularity to show Best Selling item as cover
 
-          // Debug log
-          
+      // 2. Optimization: Get ALL products for these sellers in ONE query
+      const sellerIds = sellers.map(s => s._id);
+      const allProducts = await Product.find({
+        seller: { $in: sellerIds },
+        isActive: true
+      })
+        .select('seller category name title images salesCount views discount discountPrice nutritionInfo isOrganic link')
+        .populate('category', 'name slug image icon')
+        .sort({ salesCount: -1, views: -1 }) // Sort all globally to ensure we pick best ones later
+        .lean();
 
-          // Get unique categories
-          const categories = [];
-          const categoryMap = new Map();
+      // 3. Group products by seller ID directly in memory
+      const productsBySeller = {};
+      allProducts.forEach(product => {
+        const sId = product.seller.toString();
+        if (!productsBySeller[sId]) {
+          productsBySeller[sId] = [];
+        }
+        productsBySeller[sId].push(product);
+      });
 
-          products.forEach(product => {
-            if (product.category && !categoryMap.has(product.category._id.toString())) {
-              categoryMap.set(product.category._id.toString(), product.category);
-              categories.push({
-                id: product.category._id,
-                name: product.category.name,
-                slug: product.category.slug,
-                image: product.category.image,
-                icon: product.category.icon
-              });
-            }
-          });
+      // 4. Map sellers to their details using the grouped products
+      const storesWithDetails = sellers.map((seller) => {
+        // Get products for this seller from map
+        const products = productsBySeller[seller._id.toString()] || [];
 
-          // Get primary product image for cover - fallback to storeMedia if no products
-          let coverImage = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80';
+        // Get unique categories
+        const categories = [];
+        const categoryMap = new Map();
 
-          if (products.length > 0) {
-            // Try to get image from products - loop through sorted products to find one with a valid image
-            // We sorted by salesCount and views, so this will be the "best" product with an image
-            const productWithImage = products.find(p => p.images && p.images.length > 0 && p.images[0].url);
-
-            if (productWithImage) {
-              coverImage = productWithImage.images[0].url;
-            }
+        products.forEach(product => {
+          if (product.category && !categoryMap.has(product.category._id.toString())) {
+            categoryMap.set(product.category._id.toString(), product.category);
+            categories.push({
+              id: product.category._id,
+              name: product.category.name,
+              slug: product.category.slug,
+              image: product.category.image,
+              icon: product.category.icon
+            });
           }
+        });
 
-          // EXPLICIT REQUIREMENT: Do NOT use storeMedia/banner photos. 
-          // Only use Product Image or Default Placeholder.
+        // Get primary product image for cover
+        let coverImage = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80';
 
-          /* REMOVED FALLBACK TO STORE MEDIA
-          if (coverImage === 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80' &&
-            seller.sellerProfile?.storeMedia?.photos &&
-            seller.sellerProfile.storeMedia.photos.length > 0) {
-            coverImage = seller.sellerProfile.storeMedia.photos[0];
+        if (products.length > 0) {
+          // Products are already sorted by sales/popularity in the main query
+          const productWithImage = products.find(p => p.images && p.images.length > 0 && p.images[0].url);
+
+          if (productWithImage) {
+            coverImage = productWithImage.images[0].url;
           }
-          */
+        }
 
-          // Calculate average delivery time (mock for now, can be calculated from orders)
-          const deliveryTime = '25 min';
+        const deliveryTime = '25 min';
 
-          // Determine store type based on categories or sellerType
-          let storeType = 'Store';
-          if (categories.length > 0) {
-            storeType = categories[0].name;
-          } else if (seller.sellerProfile?.sellerType && seller.sellerProfile.sellerType.length > 0) {
-            // Use sellerType from profile if no categories
-            const sellerType = seller.sellerProfile.sellerType[0];
-            storeType = sellerType.charAt(0).toUpperCase() + sellerType.slice(1);
-          }
+        // Determine store type based on categories or sellerType
+        let storeType = 'Store';
+        if (categories.length > 0) {
+          storeType = categories[0].name;
+        } else if (seller.sellerProfile?.sellerType && seller.sellerProfile.sellerType.length > 0) {
+          const sellerType = seller.sellerProfile.sellerType[0];
+          storeType = sellerType.charAt(0).toUpperCase() + sellerType.slice(1);
+        }
 
-          // Get offer/badge if any
-          const hasOffer = products.some(p => p.discount > 0 || p.discountPrice);
-          const offer = hasOffer ? 'Best Seller' : '';
+        // Get offer/badge if any
+        const hasOffer = products.some(p => p.discount > 0 || p.discountPrice);
+        const offer = hasOffer ? 'Best Seller' : '';
 
-          return {
-            id: seller._id,
-            name: seller.sellerProfile?.storeName || seller.name,
-            logo: seller.sellerProfile?.storeMedia?.logo || seller.avatar,
-            rating: (seller.sellerProfile?.ratings?.average || seller.rating || 4.5).toFixed(1),
-            cover: coverImage,
-            type: storeType,
-            time: deliveryTime,
-            offer: offer,
-            categories: categories,
-            productCount: products.length,
-            isVerified: seller.sellerProfile?.isVerified || false,
-            storeStatus: seller.sellerProfile?.storeStatus || 'open',
-            storeDescription: seller.sellerProfile?.storeDescription || '',
-            area: seller.addresses?.[0]?.city || 'Indore',
-            priceRange: seller.sellerProfile?.priceRange || {}
-          };
-        })
-      );
+        return {
+          id: seller._id,
+          name: seller.sellerProfile?.storeName || seller.name,
+          logo: seller.sellerProfile?.storeMedia?.logo || seller.avatar,
+          rating: (seller.sellerProfile?.ratings?.average || seller.rating || 4.5).toFixed(1),
+          cover: coverImage,
+          type: storeType,
+          time: deliveryTime,
+          offer: offer,
+          categories: categories,
+          productCount: products.length,
+          isVerified: seller.sellerProfile?.isVerified || false,
+          storeStatus: seller.sellerProfile?.storeStatus || 'open',
+          storeDescription: seller.sellerProfile?.storeDescription || '',
+          area: seller.addresses?.[0]?.city || 'Indore',
+          priceRange: seller.sellerProfile?.priceRange || {}
+        };
+      });
 
-      // Filter out stores with no products OR show all stores
-      // Option 1: Show only stores with products (default - comment out if you want to show all)
-      // const activeStores = storesWithDetails.filter(store => store.productCount > 0);
-
-      // Option 2: Show all stores even without products (uncomment to show stores without products)
+      // Show all stores (Option 2 from original code)
       const activeStores = storesWithDetails;
-
-      
 
       const total = await User.countDocuments({
         role: 'seller',
@@ -1223,7 +1217,8 @@ const homepageController = {
         } catch (innerError) {
           console.error(`Error processing seller ${seller._id}:`, innerError);
           return null;
-        }});
+        }
+      });
 
       const allRestaurants = await Promise.all(restaurantPromises);
       const validRestaurants = allRestaurants.filter(r => r !== null);

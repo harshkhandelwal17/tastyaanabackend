@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
+const compression = require('compression'); // Added compression
 const path = require('path');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -58,9 +59,11 @@ const medicineRoutes = require('./routes/medicineRoutes');
 const sellergadgetsRoutes = require('./routes/sellerGadgetsRoutes');
 const zoneRoutes = require('./routes/zoneRoutes');
 const supportRoutes = require('./routes/supportRoutes');
+const groupOrderRoutes = require('./routes/groupOrderRoutes');
 const app = express();
 // Middleware
 // Middleware
+app.use(compression()); // Enable GZIP compression
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
@@ -209,6 +212,7 @@ app.use('/api/coupons', couponRoutes); // Coupon management routes
 app.use('/api/bhandaras', bhandaraRoutes); // Bhandara management routes
 app.use('/api/support', supportRoutes); // Customer Support Ticket routes
 app.use('/api/subcategories', require('./routes/subCategoryRoutes')); // SubCategory routes
+app.use('/api/group-orders', groupOrderRoutes); // Tastyaana Party routes
 
 // Subscription V2 routes/v2/seller/subscriptions
 app.use('/api/v2/seller/subscriptions', sellerSubscriptionV2Route);

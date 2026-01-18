@@ -43,7 +43,7 @@
 //       enum: ['main', 'addon', 'sweets', 'beverage', 'tiffin', 'vegetable', 'fastfood', 'product'] 
 //     },
 //     customizations: [String],
-    
+
 //     // E-commerce Fields
 //     product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: false },
 //     seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -213,16 +213,16 @@ const orderSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true, 
+    required: true,
     index: true
   },
   restaurantId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-    
+
   // === Order Type ===
-           
+
   type: {
     type: String,
     enum: ['gkk', 'custom', 'addon', 'sunday-special', 'product'],
@@ -244,15 +244,15 @@ const orderSchema = new mongoose.Schema({
     name: { type: String, required: true },
     quantity: { type: Number, required: true, min: 1 },
     price: { type: Number, required: true, min: 0 },
-    category: { 
+    category: {
       // type: mongoose.Schema.Types.ObjectId, 
       // ref: 'Category',
       // required: false // Make optional for backward compatibility
-      type:String,
-      required:true
+      type: String,
+      required: true
     },
     customizations: [String],
-    
+
     // E-commerce Fields
     product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
     seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -280,22 +280,33 @@ const orderSchema = new mongoose.Schema({
     },
     trackingNumber: String,
     courier: String,
+    trackingNumber: String,
+    courier: String,
     shippedAt: Date,
-    deliveredAt: Date
+    deliveredAt: Date,
+    // --- Group Order Fields ---
+    participantName: String,
+    participantId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    participantAvatar: String,
+    paymentStatus: {
+      type: String,
+      enum: ['pending', 'paid'],
+      default: 'pending'
+    }
   }],
 
   // === Delivery Details ===
-  deliveryDate: { 
+  deliveryDate: {
     type: Date,
     validate: {
-      validator: function(v) {
+      validator: function (v) {
         return !v || v >= new Date();
       },
       message: 'Delivery date cannot be in the past'
     }
   },
-  
-  deliverySlot: { 
+
+  deliverySlot: {
     type: String,
     // enum: ['breakfast', 'lunch', 'dinner', 'anytime', 'morning','evening','night','afternoon'],
     default: 'anytime'
@@ -304,24 +315,24 @@ const orderSchema = new mongoose.Schema({
     street: { type: String, required: true },
     city: { type: String, required: true },
     state: { type: String, required: true },
-    pincode: { 
-      type: String, 
+    pincode: {
+      type: String,
       required: true,
       validate: {
-        validator: function(v) {
+        validator: function (v) {
           return /^\d{6}$/.test(v);
         },
         message: 'Pincode must be 6 digits'
       }
     },
     country: { type: String, default: 'India' },
-    coordinates: { 
+    coordinates: {
       lat: { type: Number, min: -90, max: 90 },
       lng: { type: Number, min: -180, max: 180 }
     },
     instructions: String
   },
-  deliveryPartner: { type: mongoose.Schema.Types.ObjectId, ref: 'User',default:null },
+  deliveryPartner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   estimatedDelivery: Date,
   actualDelivery: Date,
   preparationTime: String,
@@ -353,7 +364,7 @@ const orderSchema = new mongoose.Schema({
   },
   delayReason: String,
   delayedAt: Date,
-  
+
   // === Handover Tracking ===
   handoverDetails: {
     restaurantMarkedReady: {
@@ -377,26 +388,26 @@ const orderSchema = new mongoose.Schema({
   },
 
   // === Pricing ===
-  subtotal: { 
-    type: Number, 
+  subtotal: {
+    type: Number,
     required: true,
     min: 0
   },
-  discountAmount: { 
-    type: Number, 
+  discountAmount: {
+    type: Number,
     default: 0,
     min: 0
   },
   taxes: {
- type: Object
+    type: Object
   },
-  totalAmount: { 
-    type: Number, 
+  totalAmount: {
+    type: Number,
     required: true,
     min: 0
   },
-  refundAmount: { 
-    type: Number, 
+  refundAmount: {
+    type: Number,
     default: 0,
     min: 0
   },
@@ -409,7 +420,7 @@ const orderSchema = new mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    enum: ['pending', 'paid', 'failed', 'refunded','completed'],
+    enum: ['pending', 'paid', 'failed', 'refunded', 'completed'],
     default: 'pending',
     index: true
   },
@@ -418,9 +429,9 @@ const orderSchema = new mongoose.Schema({
     index: true
   },
   paidAt: Date,
-  userContactNo:{
-  type:Number,
-  required:true
+  userContactNo: {
+    type: Number,
+    required: true
   },
   // === Enhanced Payment Details ===
   paymentDetails: {
@@ -436,6 +447,13 @@ const orderSchema = new mongoose.Schema({
     createdAt: Date,
     fee: Number,
     tax: Number
+  },
+
+  // === Group Order Details ===
+  splitMethod: {
+    type: String,
+    enum: ['ITEMS', 'EQUAL'],
+    default: 'ITEMS'
   },
 
   // === Refund Details ===
@@ -455,9 +473,9 @@ const orderSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: [
-      'pending', 'confirmed', 'preparing', 'ready', 
+      'pending', 'confirmed', 'preparing', 'ready',
       'out-for-delivery', 'delivered', 'cancelled',
-      'processing', 'shipped', 'returned','assigned'
+      'processing', 'shipped', 'returned', 'assigned'
     ],
     default: 'pending',
     index: true
@@ -467,9 +485,9 @@ const orderSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    timestamp: { 
-      type: Date, 
-      default: Date.now 
+    timestamp: {
+      type: Date,
+      default: Date.now
     },
     note: String,
     updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
@@ -477,15 +495,15 @@ const orderSchema = new mongoose.Schema({
 
   // === GKK Specifics ===
   cancelBefore: Date,
-  isAutoOrder: { 
-    type: Boolean, 
-    default: false 
+  isAutoOrder: {
+    type: Boolean,
+    default: false
   },
-  isPartOfSubscription: { 
-    type: Boolean, 
-    default: false 
+  isPartOfSubscription: {
+    type: Boolean,
+    default: false
   },
-  orderDate: { 
+  orderDate: {
     type: Date,
     default: Date.now
   },
@@ -497,13 +515,13 @@ const orderSchema = new mongoose.Schema({
     }],
     total: { type: Number, default: 0 }
   },
-  isCustomized: { 
-    type: Boolean, 
-    default: false 
+  isCustomized: {
+    type: Boolean,
+    default: false
   },
-  specialSunday: { 
-    type: Boolean, 
-    default: false 
+  specialSunday: {
+    type: Boolean,
+    default: false
   },
   specialInstructions: {
     type: String,
@@ -518,7 +536,7 @@ const orderSchema = new mongoose.Schema({
     phone: {
       type: String,
       validate: {
-        validator: function(v) {
+        validator: function (v) {
           return !v || /^\+?[\d\s\-\(\)]{10,15}$/.test(v);
         },
         message: 'Invalid phone number format'
@@ -538,28 +556,28 @@ const orderSchema = new mongoose.Schema({
     type: String,
     maxlength: 1000
   },
-  isGift: { 
-    type: Boolean, 
-    default: false 
+  isGift: {
+    type: Boolean,
+    default: false
   },
   giftMessage: String,
 
   // === Feedback ===
   rating: {
-    food: { 
-      type: Number, 
-      min: 1, 
-      max: 5 
+    food: {
+      type: Number,
+      min: 1,
+      max: 5
     },
-    delivery: { 
-      type: Number, 
-      min: 1, 
-      max: 5 
+    delivery: {
+      type: Number,
+      min: 1,
+      max: 5
     },
-    overall: { 
-      type: Number, 
-      min: 1, 
-      max: 5 
+    overall: {
+      type: Number,
+      min: 1,
+      max: 5
     },
     comment: {
       type: String,
@@ -581,7 +599,7 @@ const orderSchema = new mongoose.Schema({
   },
   priceForSeller: {
     type: Number,
-    default: function() {
+    default: function () {
       return this.totalAmount * 0.8; // 80% for seller, 20% for app
     }
   },
@@ -618,22 +636,22 @@ orderSchema.index({ deliveryDate: 1, deliverySlot: 1 });
 orderSchema.index({ transactionId: 1 });
 
 // === VIRTUALS ===
-orderSchema.virtual('canBeCancelled').get(function() {
+orderSchema.virtual('canBeCancelled').get(function () {
   const cancellableStatuses = ['pending', 'confirmed'];
   if (!this.createdAt) return false;
   const timeLimit = this.cancelBefore || new Date(this.createdAt.getTime() + 30 * 60 * 1000); // 30 minutes default
   return cancellableStatuses.includes(this.status) && new Date() < timeLimit;
 });
 
-orderSchema.virtual('isDelivered').get(function() {
+orderSchema.virtual('isDelivered').get(function () {
   return this.status === 'delivered';
 });
 
-orderSchema.virtual('formattedTotal').get(function() {
+orderSchema.virtual('formattedTotal').get(function () {
   return `₹${this.totalAmount?.toFixed(2)}`;
 });
 
-orderSchema.virtual('timeRemaining').get(function() {
+orderSchema.virtual('timeRemaining').get(function () {
   if (!this.preparationDeadline || this.status === 'delivered' || this.status === 'cancelled') {
     return null;
   }
@@ -642,20 +660,20 @@ orderSchema.virtual('timeRemaining').get(function() {
   return timeLeft > 0 ? Math.ceil(timeLeft / (1000 * 60)) : 0; // minutes remaining
 });
 
-orderSchema.virtual('isOverdue').get(function() {
+orderSchema.virtual('isOverdue').get(function () {
   if (!this.preparationDeadline || this.status === 'delivered' || this.status === 'cancelled') {
     return false;
   }
   return new Date() > this.preparationDeadline;
 });
 
-orderSchema.virtual('handoverFlag').get(function() {
+orderSchema.virtual('handoverFlag').get(function () {
   const handover = this.handoverDetails;
   if (!handover) return null;
-  
+
   const restaurantReady = handover.restaurantMarkedReady?.markedAt;
   const deliveryPickup = handover.deliveryPartnerPickup?.pickedUpAt;
-  
+
   if (restaurantReady && !deliveryPickup) {
     const waitTime = (new Date() - new Date(restaurantReady)) / (1000 * 60); // minutes
     if (waitTime > 10) { // Flag if waiting more than 10 minutes
@@ -666,12 +684,12 @@ orderSchema.virtual('handoverFlag').get(function() {
       };
     }
   }
-  
+
   return null;
 });
 
 // === PRE-SAVE MIDDLEWARE ===
-orderSchema.pre('save', async function(next) {
+orderSchema.pre('save', async function (next) {
   // Generate order number if not exists
   if (!this.orderNumber) {
     const prefix = this.type === 'gkk' ? 'GKK' : 'ORD';
@@ -689,18 +707,18 @@ orderSchema.pre('save', async function(next) {
     this.statusHistory.push({
       status: this.status,
       timestamp: new Date(),
-      note:` Status changed to ${this.status}`
+      note: ` Status changed to ${this.status}`
     });
-    
+
     // Start countdown timer when order is confirmed
     if (this.status === 'confirmed' && !this.preparationStartTime) {
       this.preparationStartTime = new Date();
       this.preparationDeadline = new Date(Date.now() + this.preparationDurationMinutes * 60 * 1000);
     }
-    
+
     // Check for delays when status changes
-    if (this.preparationDeadline && new Date() > this.preparationDeadline && 
-        !['delivered', 'cancelled'].includes(this.status) && !this.isDelayed) {
+    if (this.preparationDeadline && new Date() > this.preparationDeadline &&
+      !['delivered', 'cancelled'].includes(this.status) && !this.isDelayed) {
       this.isDelayed = true;
       this.delayedAt = new Date();
       this.delayReason = 'Order preparation exceeded 25-minute limit';
@@ -710,7 +728,7 @@ orderSchema.pre('save', async function(next) {
 
   // Validate total amount calculation
   const calculatedTotal = this.subtotal - this.discountAmount + this.taxes.total
-  
+
   // Debug logging for Order model validation
   console.log('Order Model Validation Debug:', {
     subtotal: this.subtotal,
@@ -730,7 +748,7 @@ orderSchema.pre('save', async function(next) {
       calculatedTotal
     }
   });
-  
+
   if (Math.abs(calculatedTotal - this.totalAmount) > 0.01) {
     const error = new Error(`Total amount calculation mismatch. Expected: ${calculatedTotal}, Got: ${this.totalAmount}`);
     error.name = 'ValidationError';
@@ -741,15 +759,15 @@ orderSchema.pre('save', async function(next) {
 });
 
 // === STATIC METHODS ===
-orderSchema.statics.findByOrderNumber = function(orderNumber) {
+orderSchema.statics.findByOrderNumber = function (orderNumber) {
   return this.findOne({ orderNumber });
 };
 
-orderSchema.statics.findPendingPayments = function() {
+orderSchema.statics.findPendingPayments = function () {
   return this.find({ paymentStatus: 'pending', status: { $ne: 'cancelled' } });
 };
 
-orderSchema.statics.getOrderStats = function(userId) {
+orderSchema.statics.getOrderStats = function (userId) {
   return this.aggregate([
     { $match: { userId: mongoose.Types.ObjectId(userId) } },
     {
@@ -763,11 +781,11 @@ orderSchema.statics.getOrderStats = function(userId) {
 };
 
 // === INSTANCE METHODS ===
-orderSchema.methods.cancel = function(reason) {
+orderSchema.methods.cancel = function (reason) {
   if (!this.canBeCancelled) {
     throw new Error('Order cannot be cancelled at this time');
   }
-  
+
   this.status = 'cancelled';
   this.cancelledAt = new Date();
   this.cancellationReason = reason;
@@ -776,11 +794,11 @@ orderSchema.methods.cancel = function(reason) {
     timestamp: new Date(),
     note: `Order cancelled: ${reason}`
   });
-  
+
   return this.save();
 };
 
-orderSchema.methods.updateStatus = function(newStatus, note, updatedBy) {
+orderSchema.methods.updateStatus = function (newStatus, note, updatedBy) {
   this.status = newStatus;
   this.statusHistory.push({
     status: newStatus,
@@ -788,40 +806,40 @@ orderSchema.methods.updateStatus = function(newStatus, note, updatedBy) {
     note: note,
     updatedBy: updatedBy
   });
-  
+
   return this.save();
 };
 
-orderSchema.methods.markRestaurantReady = function(userId) {
+orderSchema.methods.markRestaurantReady = function (userId) {
   if (!this.handoverDetails) {
     this.handoverDetails = {};
   }
-  
+
   this.handoverDetails.restaurantMarkedReady = {
     markedAt: new Date(),
     markedBy: userId
   };
   this.handoverDetails.handoverStatus = 'ready-waiting-pickup';
   this.status = 'ready';
-  
+
   return this.save();
 };
 
-orderSchema.methods.markDeliveryPickup = function(deliveryPartnerId, otp) {
+orderSchema.methods.markDeliveryPickup = function (deliveryPartnerId, otp) {
   if (!this.handoverDetails) {
     this.handoverDetails = {};
   }
-  
+
   this.handoverDetails.deliveryPartnerPickup = {
     pickedUpAt: new Date(),
     pickedUpBy: deliveryPartnerId,
     otp: otp
   };
-  
+
   // Validate handover
   const restaurantReady = this.handoverDetails.restaurantMarkedReady?.markedAt;
   const deliveryPickup = this.handoverDetails.deliveryPartnerPickup?.pickedUpAt;
-  
+
   if (restaurantReady && deliveryPickup) {
     // Check if timestamps are reasonable (within 2 hours)
     const timeDiff = Math.abs(new Date(deliveryPickup) - new Date(restaurantReady)) / (1000 * 60 * 60);
@@ -835,20 +853,20 @@ orderSchema.methods.markDeliveryPickup = function(deliveryPartnerId, otp) {
       this.handoverDetails.flagReason = 'Time mismatch between ready and pickup';
     }
   }
-  
+
   return this.save();
 };
 
 // Get countdown information
-orderSchema.methods.getCountdownInfo = function() {
+orderSchema.methods.getCountdownInfo = function () {
   if (!this.preparationDeadline) {
     return null;
   }
-  
+
   const now = new Date();
   const timeRemaining = this.preparationDeadline - now;
   const isOverdue = timeRemaining < 0;
-  
+
   return {
     preparationDeadline: this.preparationDeadline,
     timeRemaining: Math.max(0, timeRemaining),
@@ -860,13 +878,13 @@ orderSchema.methods.getCountdownInfo = function() {
   };
 };
 
-orderSchema.methods.getDelayInfo = function() {
+orderSchema.methods.getDelayInfo = function () {
   if (!this.isDelayed || !this.preparationDeadline) {
     return null;
   }
-  
+
   const delayMinutes = Math.floor((new Date() - this.preparationDeadline) / (1000 * 60));
-  
+
   return {
     isDelayed: true,
     delayMinutes,

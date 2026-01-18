@@ -339,7 +339,7 @@ const productController = {
         .sort({ [sortBy]: sortOrder === 'desc' ? -1 : 1 })
         .skip(skip)
         .limit(parseInt(limit))
-        .lean();
+        .lean(); // Optimization: Return plain JS objects instead of Mongoose documents
 
       // Add storeStatus to each product if seller is populated
       if (shouldPopulateSeller) {

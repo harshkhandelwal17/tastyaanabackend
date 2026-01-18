@@ -12,19 +12,17 @@ exports.createTicket = async (req, res) => {
 
         // Validate Order Ownership if orderId is provided
         if (orderId) {
-            const order = await Order.findOne({ _id: orderId, customer: req.user._id }); // Assuming 'customer' field references user in Order model
+            // Validate Order Ownership using 'userId' field from Order model
+            const order = await Order.findOne({ _id: orderId, userId: req.user._id });
             if (!order) {
-                // Try checking 'user' field if 'customer' doesn't exist (depends on your Order schema)
-                const orderFallback = await Order.findOne({ _id: orderId, user: req.user._id });
-                if (!orderFallback) {
-                    return res.status(403).json({ success: false, message: "Invalid Order ID or unauthorized access" });
-                }
+                return res.status(403).json({ success: false, message: "Invalid Order ID or unauthorized access" });
             }
         }
 
         const ticket = new Ticket({
             user: req.user._id,
             order: orderId || null,
+            ticketId: "TKT-" + Math.floor(100000 + Math.random() * 900000), // Explicitly generate ID to pass validation
             category,
             subject,
             description,
@@ -89,11 +87,81 @@ exports.getTicketById = async (req, res) => {
     }
 };
 
-// Add message (Reply)
+// Get all tickets (Admin)
+exports.getAllTickets = async (req, res) => {
+    try {
+        const { status, search, category, page = 1, limit = 10 } = req.query;
+        let query = {};
+
+        if (status && status !== 'All') query.status = status;
+        if (category) query.category = category;
+        if (search) {
+            query.$or = [
+                { subject: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } },
+                { ticketId: { $regex: search, $options: 'i' } }
+            ];
+        }
+
+        const tickets = await Ticket.find(query)
+            .populate('user', 'name email phone avatar') // Populate user details
+            .sort({ createdAt: -1 })
+            .limit(limit * 1)
+            .skip((page - 1) * limit);
+
+        const count = await Ticket.countDocuments(query);
+
+        res.status(200).json({
+            success: true,
+            data: tickets,
+            totalPages: Math.ceil(count / limit),
+            currentPage: page
+        });
+    } catch (error) {
+        console.error("Admin Get Tickets Error:", error);
+        res.status(500).json({ success: false, message: "Failed to fetch tickets" });
+    }
+};
+
+// Update Ticket Status (Admin)
+exports.updateTicketStatus = async (req, res) => {
+    try {
+        const { status } = req.body;
+        const validStatuses = ["Open", "In Progress", "Resolved", "Closed"];
+
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({ success: false, message: "Invalid status" });
+        }
+
+        const ticket = await Ticket.findByIdAndUpdate(
+            req.params.id,
+            { status, updatedAt: Date.now() },
+            { new: true }
+        );
+
+        if (!ticket) {
+            return res.status(404).json({ success: false, message: "Ticket not found" });
+        }
+
+        res.status(200).json({ success: true, message: "Status updated", data: ticket });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Failed to update status" });
+    }
+};
+
+// Add message (Reply) - Updated for Attachments and Admin
 exports.addMessage = async (req, res) => {
     try {
-        const { message } = req.body;
-        const ticket = await Ticket.findOne({ _id: req.params.id, user: req.user._id });
+        const { message, attachments } = req.body;
+        const sender = req.user.role === 'admin' || req.user.role === 'support' ? 'admin' : 'user';
+
+        // If user, ensure they own the ticket
+        let query = { _id: req.params.id };
+        if (sender === 'user') {
+            query.user = req.user._id;
+        }
+
+        const ticket = await Ticket.findOne(query);
 
         if (!ticket) {
             return res.status(404).json({ success: false, message: "Ticket not found" });
@@ -104,13 +172,14 @@ exports.addMessage = async (req, res) => {
         }
 
         ticket.messages.push({
-            sender: "user",
+            sender,
             message,
+            attachments: attachments || [],
             timestamp: new Date()
         });
 
-        // Auto-reopen if resolved (optional logic)
-        if (ticket.status === "Resolved") {
+        // Auto-reopen if resolved (if user replies)
+        if (sender === 'user' && ticket.status === "Resolved") {
             ticket.status = "Open";
         }
 

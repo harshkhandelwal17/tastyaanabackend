@@ -3,10 +3,7 @@ const User = require('../models/User');
 const Razorpay = require('razorpay');
 
 // Debug log for Razorpay config (Masked)
-console.log('Razorpay Config:', {
-  key_id: process.env.RAZORPAY_KEY_ID ? 'Exists' : 'Missing',
-  key_secret: process.env.RAZORPAY_KEY_SECRET ? 'Exists' : 'Missing'
-});
+
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,

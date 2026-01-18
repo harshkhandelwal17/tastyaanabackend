@@ -263,7 +263,11 @@ const orderController = {
             image: item?.image?.url,
             variant: item.variant || {},
             isCollegeBranded: item.isCollegeBranded || false,
-            ...(item.collegeName && { collegeName: item.collegeName }) // Include college name if present
+            ...(item.collegeName && { collegeName: item.collegeName }), // Include college name if present
+            // Group Order Mapping
+            participantName: item.participantName,
+            participantId: item.participantId,
+            participantAvatar: item.participantAvatar
           };
         });
 
@@ -434,10 +438,20 @@ const orderController = {
       const finalAmount = Math.round((totalAmount - discount + gst + deliveryCharges + packagingCharges + rainCharges + serviceCharges) * 100) / 100;
 
       // Generate order metadata
+      // Generate order metadata
       const orderNumber = await generateOrderNumber(type);
       const otp = type === 'gkk' ? generateOTP(4) : null;
-      const cancelBefore = deliveryDate ? new Date(deliveryDate) : new Date();
-      cancelBefore.setHours(6, 0, 0, 0);
+
+      let cancelBefore = null;
+      if (type === 'gkk') {
+        cancelBefore = deliveryDate ? new Date(deliveryDate) : new Date();
+        cancelBefore.setHours(6, 0, 0, 0);
+        // If ordering after 6 AM for today, it might be too late? 
+        // Assuming frontend handles 'valid delivery dates'.
+      } else {
+        // For other orders, default to 30 mins from now (handled by Model Virtual or set here)
+        cancelBefore = new Date(Date.now() + 30 * 60 * 1000);
+      }
 
       // Create Order
       const order = new Order({
@@ -755,19 +769,27 @@ const orderController = {
       const { orderNumber } = req.params;
       const orderId = req.params.orderId || orderNumber;
 
+      console.log(`[GetOrderDetails] Searching for: ${orderId} (Param: ${orderNumber})`);
+
       // Try to find by orderNumber first, then by _id
       let order = await Order.findOne({ orderNumber: orderId })
         .populate('userId', 'name email phone')
         .populate('deliveryPartner', 'name phone email isOnline');
 
       if (!order) {
-        order = await Order.findById(orderId)
-          .populate('userId', 'name email phone')
-          .populate('deliveryPartner', 'name phone email isOnline');
+        console.log(`[GetOrderDetails] Not found by OrderNumber. Generic ID search...`);
+        // Validate if it is valid ObjectId before querying
+        if (mongoose.Types.ObjectId.isValid(orderId)) {
+          order = await Order.findById(orderId)
+            .populate('userId', 'name email phone')
+            .populate('deliveryPartner', 'name phone email isOnline');
+        } else {
+          console.log(`[GetOrderDetails] Invalid ObjectId: ${orderId}`);
+        }
       }
 
       if (!order) {
-        console.log("order id ", req.params)
+        console.log(`[GetOrderDetails] Order NOT FOUND: ${orderId}`);
         return res.status(404).json({
           success: false,
           message: 'Orders not found'
@@ -812,11 +834,19 @@ const orderController = {
         _id: id,
         $or: [
           { userId: req.user?._id },
-          { userId: req.user?.id }
+          { userId: req.user?.id },
+          { 'items.participantId': req.user?._id } // Allow access participants
         ]
       })
         .populate('userId', 'name email phone')
-        .populate('items.product')
+        .populate({
+          path: 'items.product',
+          select: 'name price image'
+        })
+        .populate({
+          path: 'items.participantId',
+          select: 'name email phone avatar'
+        })
         .populate('deliveryPartner', 'name phone');
 
       if (!order) {
@@ -871,8 +901,10 @@ const orderController = {
       } = req.query;
 
       const filter = {
-        ...(req.user?.id ? { userId: req.user.id } : {}),
-        ...(req.userId ? { userId: req.userId } : {})
+        $or: [
+          { userId: req.user.id || req.userId },
+          { 'items.participantId': req.user.id || req.userId }
+        ]
       };
 
       if (status) filter.status = status;
@@ -1534,6 +1566,124 @@ const getCategoryDisplayName = (category) => {
   };
 
   return categoryNames[category] || 'General Items';
+};
+
+
+// Hisaab: Toggle payment status for internal split
+orderController.toggleItemPaymentStatus = async (req, res) => {
+  try {
+    const { orderId, itemId } = req.body;
+    const userId = req.user.id;
+
+    const order = await Order.findById(orderId);
+    if (!order) return res.status(404).json({ success: false, message: "Order not found" });
+
+    // Only Host can toggle payment status
+    if (order.userId.toString() !== userId) {
+      return res.status(403).json({ success: false, message: "Only host can manage payments" });
+    }
+
+    const item = order.items.id(itemId);
+    if (!item) return res.status(404).json({ success: false, message: "Item not found" });
+
+    // Toggle
+    item.paymentStatus = item.paymentStatus === 'paid' ? 'pending' : 'paid';
+    await order.save();
+
+    res.json({ success: true, item });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+orderController.sendPaymentReminder = async (req, res) => {
+  try {
+    const { orderId, participantName } = req.body;
+    const order = await Order.findById(orderId).populate('items.participantId');
+
+    if (!order) return res.status(404).json({ message: 'Order not found' });
+
+    // Find items for this participant to calculate amount
+    const participantItems = order.items.filter(item =>
+      (item.participantName === participantName) && item.paymentStatus !== 'paid'
+    );
+
+    if (participantItems.length === 0) {
+      return res.status(400).json({ message: 'No pending items found or participant not found' });
+    }
+
+    // Find email if participantId is linked
+    const participantUser = participantItems[0].participantId;
+    // Fallback: If no participantUser, but we have name, we can't send email unless we have an email on item?
+    // Current schema populates participantId with Name/Email/Phone.
+    if (!participantUser || !participantUser.email) {
+      return res.status(400).json({ message: 'Participant email not available' });
+    }
+
+    const totalPending = participantItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
+    const { sendEmail } = require('../utils/emailService');
+
+    await sendEmail({
+      to: participantUser.email,
+      subject: `Payment Reminder: Share for Order #${order.orderNumber}`,
+      html: `
+          <div style="font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 10px;">
+            <h2 style="color: #ea580c;">Payment Reminder 🔔</h2>
+            <p>Hi ${participantUser.name},</p>
+            <p>Your friend <strong>${req.user.name}</strong> (Host) is requesting payment for the shared order.</p>
+            
+            <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0;">
+              <h3>Pending Amount: ₹${totalPending}</h3>
+              <ul style="padding-left: 20px; color: #64748b;">
+                ${participantItems.map(item => `<li>${item.quantity} x ${item.name}</li>`).join('')}
+              </ul>
+            </div>
+            
+            <p>Please settle this amount with the host directly.</p>
+            <p style="font-size: 12px; color: #94a3b8;">Order #${order.orderNumber}</p>
+          </div>
+        `
+    });
+
+    res.json({ success: true, message: 'Reminder sent successfully' });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/**
+ * Update Split Method (Host Only)
+ */
+/**
+ * Update Split Method (Host Only)
+ */
+orderController.updateSplitMethod = async (req, res) => {
+  try {
+    const { orderId, splitMethod } = req.body;
+
+    const order = await Order.findById(orderId);
+    if (!order) return res.status(404).json({ message: 'Order not found' });
+
+    // Host Check
+    if (order.userId.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'Only host can change split method' });
+    }
+
+    if (!['ITEMS', 'EQUAL'].includes(splitMethod)) {
+      return res.status(400).json({ message: 'Invalid split method' });
+    }
+
+    order.splitMethod = splitMethod;
+    await order.save();
+
+    res.json({ success: true, splitMethod: order.splitMethod, message: 'Split method updated' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
 };
 
 module.exports = orderController;

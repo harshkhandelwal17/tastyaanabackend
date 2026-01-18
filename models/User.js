@@ -1303,6 +1303,8 @@ const userSchema = new mongoose.Schema({
 userSchema.index({ email: 1 });
 userSchema.index({ googleId: 1 });
 userSchema.index({ referralCode: 1 });
+userSchema.index({ role: 1 }); // Added widely used index
+userSchema.index({ phone: 1 }); // Added index
 userSchema.index({ 'sellerProfile.storeStatus': 1, role: 1 });
 userSchema.index({ 'sellerProfile.deliveryAreas': 1 });
 

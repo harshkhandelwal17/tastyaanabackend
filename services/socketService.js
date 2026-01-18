@@ -9,7 +9,7 @@
 //     this.connectedUsers = new Map(); // userId -> socketId
 //     this.connectedDrivers = new Map(); // driverId -> socketId
 //     this.trackingRooms = new Map(); // orderId -> Set of socketIds
-    
+
 //     this.setupEventHandlers();
 //   }
 
@@ -20,12 +20,12 @@
 //       // Handle user joining tracking room
 //       socket.on('join-tracking', (orderId) => {
 //         socket.join(`tracking-${orderId}`);
-        
+
 //         if (!this.trackingRooms.has(orderId)) {
 //           this.trackingRooms.set(orderId, new Set());
 //         }
 //         this.trackingRooms.get(orderId).add(socket.id);
-        
+
 //         console.log(`Client ${socket.id} joined tracking room for order ${orderId}`);
 //       });
 
@@ -33,20 +33,20 @@
 //       socket.on('driver-connect', async (data) => {
 //         try {
 //           const { driverId, token } = data;
-          
+
 //           // Verify driver token here if needed - using User model
 //           const driver = await User.findById(driverId);
 //           if (driver && driver.role === 'delivery') {
 //             this.connectedDrivers.set(driverId, socket.id);
 //             socket.driverId = driverId;
 //             socket.join(`driver-${driverId}`);
-            
+
 //             // Update driver online status
 //             driver.isOnline = true;
 //             await driver.save();
-            
+
 //             console.log(`Driver ${driverId} connected`);
-            
+
 //             socket.emit('driver-connected', {
 //               message: 'Successfully connected',
 //               driverId
@@ -63,7 +63,7 @@
 //         try {
 //           const { orderId, lat, lng, heading, speed } = data;
 //           const driverId = socket.driverId;
-          
+
 //           if (!driverId) {
 //             socket.emit('error', { message: 'Driver not authenticated' });
 //             return;
@@ -77,7 +77,7 @@
 //             path: 'driverId',
 //             select: 'name phone rating vehicle'
 //           });
-          
+
 //           if (tracking) {
 //             // Update location in tracking record
 //             tracking.currentLocation = { lat, lng };
@@ -91,7 +91,7 @@
 
 //             // Get order details
 //             const order = await Order.findById(orderId).populate('userId', 'name phone');
-            
+
 //             // Broadcast to all clients tracking this order
 //             this.io.to(`tracking-${orderId}`).emit('location-update', {
 //               location: { lat, lng, heading, speed },
@@ -136,7 +136,7 @@
 //         try {
 //           const { orderId, status, description, location } = data;
 //           const driverId = socket.driverId;
-          
+
 //           if (!driverId) {
 //             socket.emit('error', { message: 'Driver not authenticated' });
 //             return;
@@ -146,11 +146,11 @@
 //             orderId, 
 //             driverId 
 //           }).populate('driverId', 'name phone');
-          
+
 //           if (tracking) {
 //             // Update tracking status
 //             tracking.status = status;
-            
+
 //             // Add timeline entry
 //             tracking.timeline.push({
 //               status,
@@ -159,7 +159,7 @@
 //               completed: true,
 //               location: location
 //             });
-            
+
 //             await tracking.save();
 
 //             // Update order status as well
@@ -171,7 +171,7 @@
 //               }
 //               await order.save();
 //             }
-            
+
 //             // Broadcast status update
 //             this.io.to(`tracking-${orderId}`).emit('status-update', {
 //               status,
@@ -210,7 +210,7 @@
 //         try {
 //           const { orderId } = data;
 //           const driverId = socket.driverId;
-          
+
 //           if (!driverId) {
 //             socket.emit('error', { message: 'Driver not authenticated' });
 //             return;
@@ -228,7 +228,7 @@
 //         try {
 //           const { orderId, otp } = data;
 //           const driverId = socket.driverId;
-          
+
 //           if (!driverId) {
 //             socket.emit('error', { message: 'Driver not authenticated' });
 //             return;
@@ -243,7 +243,7 @@
 
 //           // Update status to delivered
 //           await this.updateDeliveryStatus(orderId, driverId, 'delivered', 'Order has been delivered successfully');
-          
+
 //           // Update driver earnings and completion count
 //           const driver = await Driver.findById(driverId);
 //           if (driver) {
@@ -266,7 +266,7 @@
 //               driver.isOnline = false;
 //               await driver.save();
 //             }
-            
+
 //             this.connectedDrivers.delete(driverId);
 //             console.log(`Driver ${driverId} disconnected`);
 //           } catch (error) {
@@ -278,7 +278,7 @@
 //       // Handle client disconnect
 //       socket.on('disconnect', async () => {
 //         console.log('Client disconnected:', socket.id);
-        
+
 //         // Remove from tracking rooms
 //         for (const [orderId, socketIds] of this.trackingRooms.entries()) {
 //           socketIds.delete(socket.id);
@@ -296,7 +296,7 @@
 //               driver.isOnline = false;
 //               await driver.save();
 //             }
-            
+
 //             this.connectedDrivers.delete(driverId);
 //             console.log(`Driver ${driverId} went offline`);
 //           } catch (error) {
@@ -336,20 +336,20 @@
 //       // This would integrate with Google Maps Distance Matrix API
 //       // For now, using simple calculation
 //       if (!deliveryAddress.coordinates) return null;
-      
+
 //       const distance = this.calculateDistance(
 //         driverLocation.lat,
 //         driverLocation.lng,
 //         deliveryAddress.coordinates.lat,
 //         deliveryAddress.coordinates.lng
 //       );
-      
+
 //       // Assume average speed of 25 km/h in city traffic
 //       const estimatedMinutes = Math.ceil((distance / 25) * 60);
-      
+
 //       const now = new Date();
 //       const eta = new Date(now.getTime() + estimatedMinutes * 60000);
-      
+
 //       return eta.toLocaleTimeString('en-IN', {
 //         hour: '2-digit',
 //         minute: '2-digit'
@@ -378,7 +378,7 @@
 //     try {
 //       // This would integrate with FCM or other push notification service
 //       console.log(`Notification for order ${orderId}: ${status} - ${description}`);
-      
+
 //       // Emit to tracking room as well
 //       this.io.to(`tracking-${orderId}`).emit('notification', {
 //         type: 'status-change',
@@ -396,7 +396,7 @@
 //     try {
 //       const tracking = await DeliveryTracking.findOne({ orderId, driverId }).populate('driverId', 'name phone');
 //       const order = await Order.findById(orderId);
-      
+
 //       if (tracking && order) {
 //         // Update tracking
 //         tracking.status = status;
@@ -458,7 +458,7 @@
 //       'delivered': 'Your order has been delivered successfully',
 //       'cancelled': 'Your order has been cancelled'
 //     };
-    
+
 //     return descriptions[status] || 'Status updated';
 //   }
 
@@ -485,22 +485,22 @@ class SocketService {
     this.io = io;
     this.connectedUsers = new Map(); // userId -> socketId
     this.connectedDrivers = new Map(); // driverId -> socketId
-    
+
     console.log('Socket service initialized');
-    
+
     // Initialize order socket service
     this.orderSocketService = new OrderSocketService(io);
-    
+
     this.setupEventHandlers();
   }
 
   setupEventHandlers() {
     // Initialize order socket handlers
     this.orderSocketService.initializeOrderSockets();
-    
+
     this.io.on('connection', (socket) => {
       console.log('Client connected:', socket.id, 'from origin:', socket.handshake.headers.origin);
-      
+
       socket.emit('welcome', {
         message: 'Connected to Tastyaana tracking server',
         socketId: socket.id,
@@ -530,7 +530,7 @@ class SocketService {
           const { driverId } = data;
           console.log("Driver connection attempt - data:", data);
           console.log("driverId inside socketService:", driverId);
-          
+
           // Note: In a real app, you'd verify a token here
           const driver = await User.findById(driverId);
           console.log("Driver found in database:", driver ? {
@@ -539,12 +539,12 @@ class SocketService {
             hasDriverProfile: !!driver.driverProfile,
             driverProfileKeys: driver.driverProfile ? Object.keys(driver.driverProfile) : 'None'
           } : 'Not found');
-          
+
           if (driver && driver.role === 'delivery') {
             this.connectedDrivers.set(driverId, socket.id);
             socket.driverId = driverId;
             socket.join(`driver-${driverId}`);
-            
+
             // Update driver online status
             if (driver.driverProfile) {
               driver.driverProfile.isOnline = true;
@@ -571,9 +571,9 @@ class SocketService {
               await driver.save();
               console.log(`Created missing driverProfile for driver ${driverId}`);
             }
-            
+
             console.log(`Driver ${driverId} connected successfully. Socket ID: ${socket.id}`);
-            
+
             // Update any existing DeliveryTracking records for this driver
             try {
               const updatedTracking = await DeliveryTracking.updateMany(
@@ -584,14 +584,14 @@ class SocketService {
             } catch (trackingError) {
               console.log(`⚠️ Could not update tracking records:`, trackingError.message);
             }
-            
+
             socket.emit('driver-connected', {
               message: 'Successfully connected',
               driverId
             });
           } else {
             console.log(`Driver connection failed: role=${driver?.role}, found=${!!driver}`);
-            socket.emit('connection-error', { 
+            socket.emit('connection-error', {
               message: 'Driver not found or not authorized for delivery',
               details: {
                 found: !!driver,
@@ -611,7 +611,7 @@ class SocketService {
         try {
           socket.join(`tracking-${orderId}`);
           console.log(`Client ${socket.id} joined tracking room for order ${orderId}`);
-          
+
           // Confirm the join operation
           socket.emit('tracking-joined', {
             orderId,
@@ -624,12 +624,24 @@ class SocketService {
         }
       });
 
+      // --- GROUP ORDERING EVENTS ---
+      socket.on('join_party', (code) => {
+        socket.join(code);
+        console.log(`Client ${socket.id} joined party room: ${code}`);
+      });
+
+      socket.on('leave_party', (code) => {
+        socket.leave(code);
+        console.log(`Client ${socket.id} left party room: ${code}`);
+      });
+      // -----------------------------
+
       // Handle real-time location updates from driver
       socket.on('driver-location-update', async (data) => {
         try {
           const { orderId, lat, lng, heading, speed, accuracy, timestamp, isBackground } = data;
           const driverId = socket.driverId;
-          
+
           console.log(`📍 Driver location update received:`, {
             socketId: socket.id,
             driverId: driverId,
@@ -638,16 +650,16 @@ class SocketService {
             isBackground: isBackground,
             hasDriverId: !!driverId
           });
-          
+
           if (!driverId) {
             console.log(`❌ Location update rejected: Driver not authenticated. Socket ID: ${socket.id}`);
             return socket.emit('error', { message: 'Driver not authenticated' });
           }
 
           // Validate coordinates
-          if (typeof lat !== 'number' || typeof lng !== 'number' || 
-              isNaN(lat) || isNaN(lng) || 
-              lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+          if (typeof lat !== 'number' || typeof lng !== 'number' ||
+            isNaN(lat) || isNaN(lng) ||
+            lat < -90 || lat > 90 || lng < -180 || lng > 180) {
             console.log(`❌ Invalid coordinates received: lat=${lat}, lng=${lng}`);
             return socket.emit('error', { message: 'Invalid coordinates received' });
           }
@@ -658,39 +670,39 @@ class SocketService {
             driverId: tracking.driverId?._id,
             status: tracking.status
           } : 'Not found');
-          
+
           if (tracking) {
             // Update tracking record with real driver location and ensure driverId is set
-            tracking.currentLocation = { 
-              lat: Number(lat), 
-              lng: Number(lng), 
-              heading: heading ? Number(heading) : undefined, 
-              speed: speed ? Number(speed) : undefined 
+            tracking.currentLocation = {
+              lat: Number(lat),
+              lng: Number(lng),
+              heading: heading ? Number(heading) : undefined,
+              speed: speed ? Number(speed) : undefined
             };
             tracking.lastLocationUpdate = new Date();
-            
+
             // Ensure driverId is set in the tracking record
             if (!tracking.driverId) {
               tracking.driverId = driverId;
               console.log(`✅ Set driverId ${driverId} in tracking record for order ${orderId}`);
             }
-            
+
             // Add location update to timeline if not in background mode
             if (!isBackground) {
               const timelineUpdate = {
-                  status: "on-the-way",
-                  timestamp: new Date(),
-                  description: "Driver is on the way.",
-                  location: { lat: Number(lat), lng: Number(lng) }
+                status: "on-the-way",
+                timestamp: new Date(),
+                description: "Driver is on the way.",
+                location: { lat: Number(lat), lng: Number(lng) }
               };
-              
+
               // Avoid duplicate "on-the-way" status
               const lastStatus = tracking.timeline.length > 0 ? tracking.timeline[tracking.timeline.length - 1] : null;
               if (!lastStatus || lastStatus.status !== "on-the-way") {
-                  tracking.timeline.push(timelineUpdate);
+                tracking.timeline.push(timelineUpdate);
               }
             }
-            
+
             await tracking.save();
             console.log(`✅ Tracking record updated successfully for order ${orderId} with location: ${lat}, ${lng}`);
 
@@ -719,10 +731,10 @@ class SocketService {
 
             // Emit to tracking room
             this.io.to(`tracking-${orderId}`).emit('location-update', locationData);
-            
+
             // Emit to driver-specific room
             this.io.to(`driver-${driverId}`).emit('location-update', locationData);
-            
+
             console.log(`📡 Location update broadcasted for order ${orderId}`);
           } else {
             console.log(`⚠️ No tracking record found for order ${orderId}`);
@@ -738,12 +750,12 @@ class SocketService {
       socket.on('heartbeat', async (data) => {
         try {
           const { driverId, orderId, timestamp, isBackground } = data;
-          
+
           console.log(`💓 Heartbeat received from driver ${driverId} for order ${orderId}`, {
             isBackground: isBackground,
             timestamp: timestamp
           });
-          
+
           // Acknowledge heartbeat
           socket.emit('heartbeat-ack', {
             driverId,
@@ -751,7 +763,7 @@ class SocketService {
             timestamp: new Date().toISOString(),
             received: timestamp
           });
-          
+
           // If in background mode, send acknowledgment
           if (isBackground) {
             socket.emit('background-mode', {
@@ -759,7 +771,7 @@ class SocketService {
               timestamp: new Date().toISOString()
             });
           }
-          
+
           // Update driver's last activity
           if (driverId) {
             try {
@@ -771,7 +783,7 @@ class SocketService {
               console.log('⚠️ Could not update driver last activity:', error.message);
             }
           }
-          
+
         } catch (error) {
           console.error('Heartbeat handling error:', error);
         }
@@ -782,16 +794,16 @@ class SocketService {
         try {
           const { orderId, status, description } = data;
           const driverId = socket.driverId;
-          
+
           if (!driverId) {
             return socket.emit('error', { message: 'Driver not authenticated' });
           }
 
           const tracking = await DeliveryTracking.findOneAndUpdate(
             { orderId },
-            { 
+            {
               $set: { status },
-              $push: { 
+              $push: {
                 timeline: {
                   status,
                   description: description || status,
@@ -804,14 +816,14 @@ class SocketService {
 
           if (tracking) {
             await Order.findByIdAndUpdate(orderId, { status });
-            
+
             const updateData = {
               status,
               timeline: tracking.timeline,
               timestamp: new Date(),
               driver: tracking.driverId
             };
-            
+
             this.io.to(`tracking-${orderId}`).emit('status-update', updateData);
             console.log(`Status updated for order ${orderId}: ${status}`);
           }
@@ -825,8 +837,8 @@ class SocketService {
       socket.on('disconnect', async () => {
         console.log('Client disconnected:', socket.id);
         if (socket.driverId) {
-          await User.findByIdAndUpdate(socket.driverId, { 
-            'driverProfile.isOnline': false 
+          await User.findByIdAndUpdate(socket.driverId, {
+            'driverProfile.isOnline': false
           });
           this.connectedDrivers.delete(socket.driverId);
           console.log(`Driver ${socket.driverId} disconnected and marked as offline.`);
@@ -842,7 +854,7 @@ class SocketService {
   // Method to emit driver assignment updates in real-time
   emitDriverAssignment(orderId, driverData, trackingData) {
     console.log(`Emitting driver assignment for order ${orderId}`);
-    
+
     // Emit to tracking room for this order
     this.io.to(`tracking-${orderId}`).emit('driver-assigned', {
       orderId,

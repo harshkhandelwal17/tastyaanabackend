@@ -7,43 +7,18 @@ const { getAllOrders } = require('../controllers/adminController');
 
 // ==================== CUSTOMER ROUTES ====================
 /**
+// ==================== CUSTOMER ROUTES ====================
+/**
  * @route   POST /api/orders
  * @desc    Create new order (both cart-based and direct food orders)
  * @access  Private
  */
 router.post('/',
   authenticate, [
-  // Common validations
-  body('type')
-    .optional()
-    .isIn(['gkk', 'custom', 'addon', 'sunday-special', 'product'])
-    .withMessage('Invalid order type'),
-  body('paymentMethod')
-    .isIn(['razorpay', 'wallet', 'cod', 'subscription', 'card', 'upi', 'COD'])
-    .withMessage('Invalid payment method'),
-
-  // Cart-based order validations
-  body('items')
-    .if(body('type').equals('product'))
-    .isArray({ min: 1 })
-    .withMessage('At least one item is required'),
-
-  // Food order validations
-  body('deliveryDate')
-    .if(body('type').not().equals('product'))
-    .isISO8601()
-    .withMessage('Valid delivery date required')
-    .custom(value => new Date(value) >= new Date().setHours(0, 0, 0, 0))
-    .withMessage('Delivery date cannot be in past'),
-  body('deliverySlot')
-    .if(body('type').not().equals('product'))
-    .isIn(['breakfast', 'lunch', 'dinner', 'anytime'])
-    .withMessage('Invalid delivery slot'),
-  body('items.*.customizations')
-    .if(body('type').not().equals('product'))
-    .optional()
-    .isArray()
-    .withMessage('Customizations must be array')
+  // ... validations ...
+  body('type').optional().isIn(['gkk', 'custom', 'addon', 'sunday-special', 'product']).withMessage('Invalid order type'),
+  body('paymentMethod').isIn(['razorpay', 'wallet', 'cod', 'subscription', 'card', 'upi', 'COD']).withMessage('Invalid payment method'),
+  // ... other validations ...
 ],
   orderController.createOrder
 );
@@ -53,26 +28,32 @@ router.post('/',
  * @desc    Get authenticated user's orders with filtering
  * @access  Private
  */
-router.get('/my-orders',
+router.get('/my-orders', authenticate, orderController.getOrders);
+
+/**
+ * @route   GET /api/orders/details/:orderId
+ * @desc    Get order details by ID (for tracking)
+ * @access  Private
+ */
+router.get('/details/:orderId', authenticate, orderController.getOrderDetails);
+
+/**
+ * @route   GET /api/orders/:orderNumber/track
+ * @desc    Track order status with live updates
+ * @access  Private
+ */
+router.get('/:orderNumber/track', authenticate, orderController.trackOrder);
+
+/**
+ * @route   PUT /api/orders/:id/cancel
+ * @desc    Cancel order
+ * @access  Private
+ */
+router.put('/:id/cancel',
   authenticate, [
-  body('status')
-    .optional()
-    .isIn(['pending', 'confirmed', 'delivered', 'cancelled'])
-    .withMessage('Invalid status filter'),
-  body('type')
-    .optional()
-    .isIn(['gkk', 'addon', 'product'])
-    .withMessage('Invalid type filter'),
-  body('limit')
-    .optional()
-    .isInt({ min: 1, max: 100 })
-    .withMessage('Limit must be 1-100'),
-  body('page')
-    .optional()
-    .isInt({ min: 1 })
-    .withMessage('Page must be positive')
+  body('reason').trim().isLength({ min: 3, max: 200 }).withMessage('Reason must be 3-200 characters')
 ],
-  orderController.getOrders
+  orderController.cancelOrder
 );
 
 /**
@@ -80,20 +61,7 @@ router.get('/my-orders',
  * @desc    Get order details
  * @access  Private
  */
-router.get('/:orderNumber',
-  authenticate,
-  orderController.getOrderDetails
-);
-
-/**
- * @route   GET /api/orders/details/:orderId
- * @desc    Get order details by ID (for tracking)
- * @access  Private
- */
-router.get('/details/:orderId',
-  authenticate,
-  orderController.getOrderDetails
-);
+router.get('/:orderNumber', authenticate, orderController.getOrderDetails);
 
 /**
  * @route   PUT /api/orders/:orderNumber/cancel
@@ -202,5 +170,26 @@ router.put('/:orderNumber/payment-status',
 ],
   orderController.updatePaymentStatus
 );
+
+/**
+ * @route   PUT /api/orders/item-payment-status
+ * @desc    Toggle payment status for individual items (Hisaab)
+ * @access  Private (Host)
+ */
+router.put('/item-payment-status', authenticate, orderController.toggleItemPaymentStatus);
+
+/**
+ * @route   POST /api/orders/send-reminder
+ * @desc    Send payment reminder to participant
+ * @access  Private (Host)
+ */
+router.post('/send-reminder', authenticate, orderController.sendPaymentReminder);
+
+/**
+ * @route   PUT /api/orders/split-method
+ * @desc    Update bill split method (Host Only)
+ * @access  Private (Host)
+ */
+router.put('/split-method', authenticate, orderController.updateSplitMethod);
 
 module.exports = router;

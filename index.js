@@ -117,17 +117,7 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: [
-      'http://localhost:5173',
-      'http://localhost:5174',
-      'https://tastyaana.vercel.app',
-      'http://192.168.1.2:5173',
-      'https://www.tastyaana.com',
-      'https://192.168.1.2:5173',
-      'https://localhost:5173',
-      'https://tastyaanafrontendapp.vercel.app',
-      process.env.CLIENT_URL
-    ],
+    origin: "*", // Allow all for dev stability
     methods: ['GET', 'POST'],
     credentials: true
   }

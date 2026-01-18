@@ -44,9 +44,9 @@ const productSchema = new mongoose.Schema({
   images: [{
     url: String,
     alt: String,
-    isPrimary: { 
-      type: Boolean, 
-      default: false 
+    isPrimary: {
+      type: Boolean,
+      default: false
     }
   }],
 
@@ -64,7 +64,7 @@ const productSchema = new mongoose.Schema({
     ref: 'Category',
     required: true
   },
-   subCategory: {
+  subCategory: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'subCategory',
     required: true
@@ -96,9 +96,9 @@ const productSchema = new mongoose.Schema({
   variants: [{
     size: String,
     color: String,
-    stock: { 
-      type: Number, 
-      default: 0 
+    stock: {
+      type: Number,
+      default: 0
     },
     price: Number,
     sku: String
@@ -114,7 +114,7 @@ const productSchema = new mongoose.Schema({
       type: String,
       default: '00:00',
       validate: {
-        validator: function(v) {
+        validator: function (v) {
           return /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(v);
         },
         message: 'Start time must be in HH:MM format'
@@ -124,7 +124,7 @@ const productSchema = new mongoose.Schema({
       type: String,
       default: '23:59',
       validate: {
-        validator: function(v) {
+        validator: function (v) {
           return /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(v);
         },
         message: 'End time must be in HH:MM format'
@@ -154,11 +154,11 @@ const productSchema = new mongoose.Schema({
       default: 0
     }
   }],
-priceHistory: [{
-  date: { type: Date, default: Date.now },
-  price: Number
-}]
-,
+  priceHistory: [{
+    date: { type: Date, default: Date.now },
+    price: Number
+  }]
+  ,
   // Stock Information
   stock: {
     type: Number,
@@ -179,7 +179,7 @@ priceHistory: [{
     type: Boolean,
     default: false
   },
-  isNew: {
+  isProductNew: {
     type: Boolean,
     default: false
   },
@@ -193,7 +193,7 @@ priceHistory: [{
   },
   badge: {
     type: String,
-    enum: ['Premium Royal', 'Master Crafted', 'Gift Special', 'Regional Special', 'Festival Special',"Fresh Harvest"]
+    enum: ['Premium Royal', 'Master Crafted', 'Gift Special', 'Regional Special', 'Festival Special', "Fresh Harvest"]
   },
 
   // Product Specifications
@@ -240,15 +240,15 @@ priceHistory: [{
 
   // Ratings & Performance
   ratings: {
-    average: { 
-      type: Number, 
+    average: {
+      type: Number,
       default: 0,
       min: 0,
       max: 5
     },
-    count: { 
-      type: Number, 
-      default: 0 
+    count: {
+      type: Number,
+      default: 0
     }
   },
   reviewCount: {
@@ -291,12 +291,15 @@ priceHistory: [{
 productSchema.index({ title: 'text', description: 'text', tags: 'text' });
 productSchema.index({ seller: 1, isActive: 1 });
 productSchema.index({ category: 1, isActive: 1 });
+productSchema.index({ subCategory: 1, isActive: 1 }); // Added index
 productSchema.index({ createdAt: -1 });
 productSchema.index({ salesCount: -1 });
 productSchema.index({ 'ratings.average': -1 });
+productSchema.index({ isProductNew: 1 }); // Added index
+productSchema.index({ featured: 1 }); // Added index
 
 // Method to check if product is available at current time
-productSchema.methods.isAvailableNow = function() {
+productSchema.methods.isAvailableNow = function () {
   const now = new Date();
   const currentDay = now.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
   const currentTime = now.toTimeString().slice(0, 5); // HH:MM format
@@ -314,31 +317,31 @@ productSchema.methods.isAvailableNow = function() {
 };
 
 // Method to check if a specific day is available
-productSchema.methods.isDayAvailable = function(day) {
+productSchema.methods.isDayAvailable = function (day) {
   const availabilityDays = this.availability.days;
-  
+
   if (availabilityDays === 'all') return true;
   if (availabilityDays === day) return true;
-  
+
   if (availabilityDays === 'weekdays') {
     return ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'].includes(day);
   }
-  
+
   if (availabilityDays === 'weekends') {
     return ['saturday', 'sunday'].includes(day);
   }
-  
+
   return false;
 };
 
 // Method to get next available time
-productSchema.methods.getNextAvailableTime = function() {
+productSchema.methods.getNextAvailableTime = function () {
   const now = new Date();
   const currentDay = now.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
   const currentTime = now.toTimeString().slice(0, 5);
   const currentMinutes = timeToMinutes(currentTime);
   const startMinutes = timeToMinutes(this.availability.startTime);
-  
+
   // If available today and time hasn't passed
   if (this.isDayAvailable(currentDay) && currentMinutes < startMinutes) {
     return {
@@ -347,15 +350,15 @@ productSchema.methods.getNextAvailableTime = function() {
       endTime: this.availability.endTime
     };
   }
-  
+
   // Find next available day
   const daysOrder = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   const currentDayIndex = daysOrder.indexOf(currentDay);
-  
+
   for (let i = 1; i <= 7; i++) {
     const dayIndex = (currentDayIndex + i) % 7;
     const checkDay = daysOrder[dayIndex];
-    
+
     if (this.isDayAvailable(checkDay)) {
       return {
         day: checkDay,
@@ -364,7 +367,7 @@ productSchema.methods.getNextAvailableTime = function() {
       };
     }
   }
-  
+
   return null;
 };
 
@@ -375,7 +378,7 @@ function timeToMinutes(timeStr) {
 }
 
 // Pre-save hook to ensure name matches title
-productSchema.pre('save', function(next) {
+productSchema.pre('save', function (next) {
   if (!this.name) {
     this.name = this.title;
   }

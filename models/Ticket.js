@@ -49,6 +49,9 @@ const ticketSchema = new mongoose.Schema({
                 type: String,
                 required: true
             },
+            attachments: [{
+                type: String // URL of the uploaded file
+            }],
             timestamp: {
                 type: Date,
                 default: Date.now
