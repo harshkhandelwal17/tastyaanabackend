@@ -23,9 +23,22 @@ const subCategoryController = {
     getSubCategoriesByCategory: async (req, res) => {
         try {
             const { categoryId } = req.params;
+            let queryCategoryId = categoryId;
+
+            // Check if input is a valid ObjectId
+            const isValidObjectId = require('mongoose').Types.ObjectId.isValid(categoryId);
+
+            if (!isValidObjectId) {
+                // If not ObjectId, try to find category by slug
+                const category = await Category.findOne({ slug: categoryId });
+                if (!category) {
+                    return res.status(404).json({ success: false, message: 'Category not found' });
+                }
+                queryCategoryId = category._id;
+            }
 
             const subcategories = await SubCategory.find({
-                category: categoryId,
+                category: queryCategoryId,
                 isActive: true
             })
                 .populate('category', 'name slug')
