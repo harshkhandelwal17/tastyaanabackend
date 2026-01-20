@@ -1069,39 +1069,52 @@ const userSchema = new mongoose.Schema({
     instructions: String
   }],
 
-  // ===== Wallet & Loyalty =====
+  // ===== Wallet (Real Money) =====
   wallet: {
     balance: {
       type: Number,
       default: 0
     },
     transactions: [{
-      amount: Number,
+      amount: Number, // Amount in Rupees
       type: {
         type: String,
         enum: ['credit', 'debit']
+      },
+      category: {
+        type: String,
+        enum: ['refund', 'topup', 'purchase', 'withdrawal', 'referral'],
+        default: 'purchase'
       },
       note: String,
       timestamp: {
         type: Date,
         default: Date.now
       },
-      isActive: {
-        type: Boolean,
-        default: true
-      },
-      lastTopUp: Date,
-      referenceId: String,
-      currency: {
+      status: {
         type: String,
-        default: 'INR'
+        enum: ['success', 'pending', 'failed'],
+        default: 'success'
       },
+      referenceId: String
     }]
   },
-  loyaltyPoints: {
-    type: Number,
-    default: 0
+
+  // ===== T-Coins (Loyalty System) =====
+  tCoins: {
+    balance: { type: Number, default: 0 },
+    history: [{
+      points: Number,
+      action: {
+        type: String,
+        enum: ['earned', 'redeemed', 'expired', 'bonus']
+      },
+      reason: String, // e.g. "Order #1234 Reward"
+      date: { type: Date, default: Date.now }
+    }]
   },
+
+  loyaltyPoints: { type: Number, default: 0 }, // Deprecated field, keep for migration safety
   // ===== Food Preferences (GKK Specific) =====
   foodPreferences: {
     dietaryType: {

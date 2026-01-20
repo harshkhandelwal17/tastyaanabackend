@@ -412,6 +412,11 @@ const orderSchema = new mongoose.Schema({
     min: 0
   },
 
+  // === T-Coins Loyalty ===
+  coinsRedeemed: { type: Number, default: 0 },
+  coinDiscount: { type: Number, default: 0 },
+  coinsEarned: { type: Number, default: 0 },
+
   // === Payment ===
   paymentMethod: {
     type: String,

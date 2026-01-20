@@ -434,8 +434,52 @@ const orderController = {
         }
       }
 
-      // Match the Order model validation formula exactly - now includes all charges
-      const finalAmount = Math.round((totalAmount - discount + gst + deliveryCharges + packagingCharges + rainCharges + serviceCharges) * 100) / 100;
+      // === T-Coins Redemption Logic ===
+      // Rate: 10 T-Coins = ₹1
+      const COIN_CONVERSION_RATE = 0.1;
+      let coinsRedeemed = 0;
+      let coinDiscount = 0;
+
+      if (req.body.useCoins && req.user) {
+        const user = await User.findById(req.user.id);
+        if (user && user.tCoins && user.tCoins.balance > 0) {
+
+          // Calculate max discount possible from coins
+          const maxCoinDiscount = user.tCoins.balance * COIN_CONVERSION_RATE;
+
+          // Calculate current total before coin discount but after other discounts
+          const currentTotal = totalAmount - discount + gst + deliveryCharges + packagingCharges + rainCharges + serviceCharges;
+
+          // Limit discount to 50% of order value (Safety mechanism)
+          const maxAllowedDiscount = currentTotal * 0.5;
+
+          // Determine actual discount to apply
+          let discountToApply = Math.min(maxCoinDiscount, currentTotal, maxAllowedDiscount);
+
+          // Round down to nearest rupee for clean accounting if desired, or keep precise
+          discountToApply = Math.floor(discountToApply);
+
+          if (discountToApply > 0) {
+            coinsRedeemed = Math.ceil(discountToApply / COIN_CONVERSION_RATE);
+            coinDiscount = discountToApply;
+
+            // Deduct coins from user immediately
+            user.tCoins.balance -= coinsRedeemed;
+            user.tCoins.history.push({
+              points: -coinsRedeemed,
+              action: 'redeemed',
+              reason: `Used in Order`,
+              date: new Date()
+            });
+            await user.save();
+
+            console.log(`💎 T-Coins Applied: ${coinsRedeemed} coins for ₹${coinDiscount} discount`);
+          }
+        }
+      }
+
+      // Match the Order model validation formula exactly - now includes coinDiscount
+      const finalAmount = Math.round((totalAmount - discount - coinDiscount + gst + deliveryCharges + packagingCharges + rainCharges + serviceCharges) * 100) / 100;
 
       // Generate order metadata
       // Generate order metadata
@@ -484,7 +528,9 @@ const orderController = {
         isGift,
         userContactNo: customer.phone,
         couponCode: couponCode,
-        couponId: couponId
+        couponId: couponId,
+        coinsRedeemed,
+        coinDiscount
       });
 
       // Handle wallet payment
@@ -1284,6 +1330,33 @@ orderController.updatePaymentStatus = async (req, res) => {
       // If order status is still pending, update to confirmed
       if (order.status === 'pending') {
         order.status = 'confirmed';
+      }
+
+      // === T-Coins Earning Logic ===
+      // Rate: 1 Coin per ₹10 spent
+      const EARN_RATE = 0.1;
+
+      // Ensure we don't double award coins if already earned
+      if (order.coinsEarned === 0) {
+        const coinsToEarn = Math.floor(order.totalAmount * EARN_RATE);
+
+        if (coinsToEarn > 0) {
+          order.coinsEarned = coinsToEarn;
+
+          // Update user wallet
+          const customer = await User.findById(order.userId);
+          if (customer) {
+            customer.tCoins.balance += coinsToEarn;
+            customer.tCoins.history.push({
+              points: coinsToEarn,
+              action: 'earned',
+              reason: `Earned from Order #${order.orderNumber}`,
+              date: new Date()
+            });
+            await customer.save();
+            console.log(`🌟 T-Coins Earned: ${coinsToEarn} for Order ${order.orderNumber}`);
+          }
+        }
       }
     }
 
