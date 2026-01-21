@@ -1519,6 +1519,25 @@ const processDailyDeductions = async () => {
           subscription.pausedAt = new Date();
 
           await subscription.save({ session });
+
+          // Send notification for auto-pause
+          try {
+            await createNotification({
+              userId: subscription.user._id,
+              title: 'Subscription Paused due to Low Balance',
+              message: `Your subscription has been paused because your wallet balance is insufficient for today's meal. Please recharge to resume.`,
+              type: 'payment_failed',
+              priority: 'high',
+              data: {
+                subscriptionId: subscription._id,
+                reason: 'insufficient_wallet_balance',
+                requiredAmount: totalDeductionAmount
+              }
+            });
+          } catch (notifError) {
+            console.error('Failed to send auto-pause notification:', notifError);
+          }
+
           await session.commitTransaction();
 
           failed++;

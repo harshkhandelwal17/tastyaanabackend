@@ -65,6 +65,21 @@ const Notification = require('../models/Notification');
 const User = require('../models/User');
 const { sendEmail } = require('./emailService');
 const { sendSMS } = require('./smsService');
+const webPush = require('web-push');
+
+// Configure VAPID keys if available
+if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
+  try {
+    webPush.setVapidDetails(
+      'mailto:support@tastyaana.com',
+      process.env.VAPID_PUBLIC_KEY,
+      process.env.VAPID_PRIVATE_KEY
+    );
+    console.log('✅ Web Push configured successfully');
+  } catch (err) {
+    console.error('❌ Web Push configuration failed:', err.message);
+  }
+}
 
 class NotificationService {
   /**
@@ -111,7 +126,7 @@ class NotificationService {
         'maintenance',
         'security'
       ];
-      
+
       if (!validTypes.includes(type)) {
         throw new Error(`Invalid notification type: ${type}. Valid types are: ${validTypes.join(', ')}`);
       }
@@ -178,7 +193,7 @@ class NotificationService {
 
       // Safely access notification channels with defaults
       const channels = notification.channels || {};
-      
+
       // Send email notification if enabled and user has email
       if (channels.email && user.email) {
         try {
@@ -208,7 +223,7 @@ class NotificationService {
             to: user.phone,
             message: `${notification.title}: ${notification.message}`
           });
-          
+
           notification.smsSentAt = new Date();
           await notification.save();
         } catch (smsError) {
@@ -220,7 +235,7 @@ class NotificationService {
       if (channels.push) {
         try {
           await this.sendPushNotification(user, notification);
-          
+
           notification.pushSentAt = new Date();
           await notification.save();
         } catch (pushError) {
@@ -239,12 +254,61 @@ class NotificationService {
    * @param {Object} notification - The notification object
    */
   static async sendPushNotification(user, notification) {
-    // Implement with your push notification service (FCM, APNs, etc.)
-    console.log('Push notification would be sent:', {
-      userId: user._id,
+    if (!user.pushSubscriptions || user.pushSubscriptions.length === 0) {
+      return;
+    }
+
+    // Ensure VAPID keys are configured
+    if (!process.env.VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
+      console.warn('⚠️ VAPID keys not configured, skipping push notification');
+      return;
+    }
+
+    const payload = JSON.stringify({
       title: notification.title,
-      message: notification.message
+      body: notification.body || notification.message,
+      icon: '/pwa-192x192.png',
+      badge: '/pwa-192x192.png',
+      url: notification.data?.actionUrl || '/', // Default to home if no action URL
+      data: {
+        ...notification.data,
+        notificationId: notification._id
+      }
     });
+
+    console.log(`🚀 Sending Push Notification to ${user.pushSubscriptions.length} subscriptions for user ${user._id}`);
+
+    const validSubscriptions = [];
+    const promises = user.pushSubscriptions.map(async (sub) => {
+      try {
+        await webPush.sendNotification(sub, payload);
+        validSubscriptions.push(sub); // Keep valid subscription
+      } catch (error) {
+        if (error.statusCode === 410 || error.statusCode === 404) {
+          // Subscription expired/invalid - don't add to validSubscriptions
+          console.log('🗑️ Removing expired push subscription');
+        } else {
+          console.error('❌ Push notification error:', error.message);
+          validSubscriptions.push(sub); // Keep potentially valid subscription on other errors
+        }
+      }
+    });
+
+    await Promise.all(promises);
+
+    // Update user subscriptions if any were removed (cleanup expired tokens)
+    if (validSubscriptions.length !== user.pushSubscriptions.length) {
+      try {
+        // Use updateOne to avoid validation issues on full save
+        await User.updateOne(
+          { _id: user._id },
+          { $set: { pushSubscriptions: validSubscriptions } }
+        );
+        console.log(`🧹 Cleaned up push subscriptions for user ${user._id}`);
+      } catch (err) {
+        console.error('Error updating user push subscriptions:', err);
+      }
+    }
   }
 
   /**
@@ -265,7 +329,7 @@ class NotificationService {
       } = options;
 
       const filter = { userId };
-      
+
       if (type) filter.type = type;
       if (isRead !== undefined) filter.isRead = isRead;
       if (priority) filter.priority = priority;
@@ -370,7 +434,7 @@ class NotificationService {
   static async sendBulkNotifications(userIds, notificationData) {
     try {
       const notifications = [];
-      
+
       for (const userId of userIds) {
         try {
           const notification = await this.createNotification({
@@ -397,13 +461,13 @@ class NotificationService {
    */
   static async notifyAllSellers(notificationData) {
     try {
-      const sellers = await User.find({ 
-        role: 'seller', 
-        isActive: true 
+      const sellers = await User.find({
+        role: 'seller',
+        isActive: true
       }).select('_id');
 
       const sellerIds = sellers.map(seller => seller._id);
-      
+
       return await this.sendBulkNotifications(sellerIds, notificationData);
     } catch (error) {
       console.error('Notify all sellers error:', error);
@@ -418,13 +482,13 @@ class NotificationService {
    */
   static async notifyAllAdmins(notificationData) {
     try {
-      const admins = await User.find({ 
+      const admins = await User.find({
         role: { $in: ['admin', 'super-admin'] },
-        isActive: true 
+        isActive: true
       }).select('_id');
 
       const adminIds = admins.map(admin => admin._id);
-      
+
       return await this.sendBulkNotifications(adminIds, notificationData);
     } catch (error) {
       console.error('Notify all admins error:', error);
@@ -497,7 +561,7 @@ class NotificationService {
       }
 
       const result = stats[0];
-      
+
       // Process type statistics
       result.byType = result.byType.reduce((acc, item) => {
         if (!acc[item.type]) {

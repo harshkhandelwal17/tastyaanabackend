@@ -411,9 +411,12 @@ router.post('/refresh', authenticate, async (req, res) => {
 router.get('/me', authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password');
+    const userObj = user.toObject();
+    delete userObj.password;
+
     res.json({
       success: true,
-      user
+      user: userObj
     });
   } catch (error) {
     res.status(500).json({
@@ -469,17 +472,14 @@ router.post('/register', async (req, res) => {
     // Set cookie
     res.cookie('token', token, cookieOptions);
 
+    const userObj = user.toObject();
+    delete userObj.password;
+
     res.status(201).json({
       success: true,
       message: 'User registered successfully',
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        role: user.role
-      }
+      user: userObj
     });
   } catch (error) {
     console.error('Registration error:', error);
@@ -506,6 +506,7 @@ router.post('/login', async (req, res) => {
 
     // Find user
     const user = await User.findOne({ email });
+    console.log(user)
     if (!user) {
       return res.status(400).json({
         success: false,
@@ -543,20 +544,14 @@ router.post('/login', async (req, res) => {
     // Set cookie
     res.cookie('token', token, cookieOptions);
 
+    const userObj = user.toObject();
+    delete userObj.password;
+
     res.json({
       success: true,
       message: 'Login successful',
       token,
-      user: {
-        _id: user._id,
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        role: user.role,
-        avatar: user.avatar,
-        googleLinked: !!user.googleId
-      }
+      user: userObj
     });
   } catch (error) {
     console.error('Login error:', error);

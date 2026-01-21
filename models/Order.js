@@ -314,7 +314,7 @@ const orderSchema = new mongoose.Schema({
   deliveryAddress: {
     street: { type: String, required: true },
     city: { type: String, required: true },
-    state: { type: String, required: true },
+    state: { type: String },
     pincode: {
       type: String,
       required: true,

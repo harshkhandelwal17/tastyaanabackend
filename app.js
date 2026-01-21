@@ -226,9 +226,4 @@ app.use('/api/laundry', laundryRoutes);
 // Initialize cron jobs
 require('./corn/jobs');
 
-// Error handling middleware (must be after all routes)
-// const { errorHandler } = require('./middlewares/errorHandler');
-// app.use(errorHandler);
-// f
-
 module.exports = app;

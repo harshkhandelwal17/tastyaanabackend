@@ -24,22 +24,22 @@ const ReplaceableItem = require('../models/replaceableItems');
  */
 function generateAdminCustomizationSummary(customization, replacementMeal) {
   const summaryParts = [];
-  
+
   // Replacement meal
   if (replacementMeal) {
     summaryParts.push(`Meal: ${replacementMeal.name}`);
   }
-  
+
   // Dietary preferences
   if (customization.dietaryPreference && customization.dietaryPreference !== 'regular') {
     summaryParts.push(`Diet: ${customization.dietaryPreference}`);
   }
-  
+
   // Spice level
   if (customization.spiceLevel && customization.spiceLevel !== 'medium') {
     summaryParts.push(`Spice: ${customization.spiceLevel}`);
   }
-  
+
   // Preferences
   const prefs = customization.preferences;
   if (prefs) {
@@ -55,30 +55,30 @@ function generateAdminCustomizationSummary(customization, replacementMeal) {
       summaryParts.push(`Special: ${prefs.specialInstructions}`);
     }
   }
-  
+
   // Add-ons
   if (customization.addons && customization.addons.length > 0) {
-    const addonNames = customization.addons.map(addon => 
+    const addonNames = customization.addons.map(addon =>
       `${addon.name} (₹${addon.price} x${addon.quantity})`
     ).join(', ');
     summaryParts.push(`Addons: ${addonNames}`);
   }
-  
+
   // Extra items
   if (customization.extraItems && customization.extraItems.length > 0) {
-    const extraNames = customization.extraItems.map(extra => 
+    const extraNames = customization.extraItems.map(extra =>
       `${extra.name} (₹${extra.price} x${extra.quantity})`
     ).join(', ');
     summaryParts.push(`Extras: ${extraNames}`);
   }
-  
+
   // Price adjustment info
   if (customization.totalpayablePrice > 0) {
     summaryParts.push(`+₹${customization.totalpayablePrice} (${customization.paymentStatus})`);
   } else if (customization.totalpayablePrice < 0) {
     summaryParts.push(`-₹${Math.abs(customization.totalpayablePrice)} discount`);
   }
-  
+
   return summaryParts.length > 0 ? summaryParts.join(' | ') : 'Customized';
 }
 
@@ -123,16 +123,16 @@ exports.getAdminDashboard = async (req, res) => {
 exports.getSellers = async (req, res) => {
   try {
     const { page = 1, limit = 20, status, search } = req.query;
-    
+
     let query = { role: 'seller' };
-    
+
     if (status) {
       if (status === 'approved') query['sellerInfo.isApproved'] = true;
       else if (status === 'pending') query['sellerInfo.isApproved'] = false;
       else if (status === 'active') query.isActive = true;
       else if (status === 'inactive') query.isActive = false;
     }
-    
+
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: 'i' } },
@@ -193,7 +193,22 @@ exports.approveSeller = async (req, res) => {
     const { subject, html, text } = emailTemplates[template](seller, reason);
     await sendEmail(seller.email, subject, html, text);
 
-    res.json({ 
+    // Send in-app notification
+    await createNotification({
+      userId: seller._id,
+      title: approved ? 'Seller Account Approved' : 'Seller Account Rejected',
+      message: approved
+        ? 'Your seller account has been approved! You can now start listing products.'
+        : `Your seller account application was rejected. Reason: ${reason || 'Not specified'}`,
+      type: 'general',
+      priority: approved ? 'high' : 'normal',
+      data: {
+        action: approved ? 'seller_approved' : 'seller_rejected',
+        reason
+      }
+    });
+
+    res.json({
       message: `Seller ${approved ? 'approved' : 'rejected'} successfully`,
       seller: seller.toObject()
     });
@@ -226,18 +241,18 @@ exports.updateSellerCommission = async (req, res) => {
 // Admin Orders Management
 exports.getAllOrders = async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 20, 
-      status, 
-      seller, 
-      startDate, 
+    const {
+      page = 1,
+      limit = 20,
+      status,
+      seller,
+      startDate,
       endDate,
-      search 
+      search
     } = req.query;
 
     let matchStage = {};
-    
+
     if (status) matchStage.status = status;
     if (seller) matchStage['items.seller'] = seller;
     if (startDate && endDate) {
@@ -278,7 +293,7 @@ exports.getDeliveryBoys = async (req, res) => {
     const { page = 1, limit = 50, status, search } = req.query;
 
     let query = { role: 'delivery' };
-    
+
     if (status) {
       query.isActive = status === 'active';
     }
@@ -331,8 +346,8 @@ exports.assignDeliveryBoy = async (req, res) => {
     const { orderId, deliveryBoyId } = req.body;
 
     if (!orderId || !deliveryBoyId) {
-      return res.status(400).json({ 
-        message: 'Order ID and Delivery Boy ID are required' 
+      return res.status(400).json({
+        message: 'Order ID and Delivery Boy ID are required'
       });
     }
 
@@ -345,16 +360,16 @@ exports.assignDeliveryBoy = async (req, res) => {
     }
 
     if (order.deliveryPartner) {
-      return res.status(400).json({ 
-        message: 'Order already has a delivery partner assigned' 
+      return res.status(400).json({
+        message: 'Order already has a delivery partner assigned'
       });
     }
 
     // Find the delivery boy
-    const deliveryBoy = await User.findOne({ 
-      _id: deliveryBoyId, 
-      role: 'delivery', 
-      isActive: true 
+    const deliveryBoy = await User.findOne({
+      _id: deliveryBoyId,
+      role: 'delivery',
+      isActive: true
     });
 
     if (!deliveryBoy) {
@@ -366,7 +381,7 @@ exports.assignDeliveryBoy = async (req, res) => {
     if (order.status === 'pending') {
       order.status = 'confirmed';
     }
-    
+
     // Add status history
     order.statusHistory.push({
       status: 'confirmed',
@@ -459,7 +474,7 @@ exports.assignDeliveryBoy = async (req, res) => {
     // Emit real-time updates via sockets
     try {
       const socketService = req.app.get('socketService');
-      
+
       if (socketService) {
         const driverData = {
           id: deliveryBoy._id,
@@ -580,17 +595,17 @@ exports.getAdminStats = async (req, res) => {
 // Product Management
 exports.getAllProducts = async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 20, 
-      category, 
-      seller, 
+    const {
+      page = 1,
+      limit = 20,
+      category,
+      seller,
       status,
-      search 
+      search
     } = req.query;
 
     let query = {};
-    
+
     if (category) query.category = category;
     if (seller) query.seller = seller;
     if (status !== undefined) query.isActive = status === 'active';
@@ -628,9 +643,9 @@ exports.removeProduct = async (req, res) => {
 
     const product = await Product.findByIdAndUpdate(
       productId,
-      { 
+      {
         isActive: false,
-        adminNotes: reason 
+        adminNotes: reason
       },
       { new: true }
     ).populate('seller', 'name email');
@@ -642,6 +657,20 @@ exports.removeProduct = async (req, res) => {
     // Notify seller
     const { subject, html, text } = emailTemplates.productRemoved(product, reason);
     await sendEmail(product.seller.email, subject, html, text);
+
+    // Send in-app notification
+    await createNotification({
+      userId: product.seller._id,
+      title: 'Product Removed by Admin',
+      message: `Your product "${product.title}" has been removed by admin. Reason: ${reason}`,
+      type: 'security',
+      priority: 'high',
+      data: {
+        productId: product._id,
+        productName: product.title,
+        reason
+      }
+    });
 
     res.json({ message: 'Product removed successfully' });
   } catch (error) {
@@ -685,7 +714,7 @@ exports.processPayouts = async (req, res) => {
     const { sellerIds, payoutDate } = req.body;
 
     const payoutResults = [];
-    
+
     for (const sellerId of sellerIds) {
       try {
         const payout = await processSinglePayout(sellerId, payoutDate);
@@ -780,13 +809,15 @@ exports.getSellerStats = async () => {
 
 exports.getSellerMetrics = async (sellerId) => {
   const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-  
+
   const metrics = await Order.aggregate([
     { $unwind: '$items' },
-    { $match: { 
-      'items.seller': sellerId,
-      createdAt: { $gte: thirtyDaysAgo }
-    }},
+    {
+      $match: {
+        'items.seller': sellerId,
+        createdAt: { $gte: thirtyDaysAgo }
+      }
+    },
     {
       $group: {
         _id: null,
@@ -797,9 +828,9 @@ exports.getSellerMetrics = async (sellerId) => {
     }
   ]);
 
-  const productCount = await Product.countDocuments({ 
-    seller: sellerId, 
-    isActive: true 
+  const productCount = await Product.countDocuments({
+    seller: sellerId,
+    isActive: true
   });
 
   return {
@@ -843,16 +874,16 @@ exports.processSinglePayout = async (sellerId, payoutDate) => {
   // Calculate payout amount
   const cutoffDate = new Date(payoutDate);
   const lastPayout = await getLastPayoutDate(sellerId);
-  
+
   const earnings = await Order.aggregate([
     { $unwind: '$items' },
     {
       $match: {
         'items.seller': sellerId,
         paymentStatus: 'paid',
-        createdAt: { 
+        createdAt: {
           $gte: lastPayout,
-          $lte: cutoffDate 
+          $lte: cutoffDate
         }
       }
     },
@@ -1006,7 +1037,7 @@ exports.getDailySubscriptionMeals = async (req, res) => {
 
     for (const subscription of subscriptions) {
       const shifts = subscription.mealPlan?.shifts || ['morning', 'evening'];
-      
+
       for (const mealShift of shifts) {
         // Skip if filtering by specific shift
         if (shift !== 'both' && shift !== mealShift) continue;
@@ -1039,19 +1070,19 @@ exports.getDailySubscriptionMeals = async (req, res) => {
         // Validate customization payment status
         let validCustomization = null;
         if (customization) {
-          const paymentValid = customization.paymentStatus === 'paid' || 
-                              (customization.totalpayablePrice <= 0) ||
-                              customization.paymentStatus === 'not_required';
-          
+          const paymentValid = customization.paymentStatus === 'paid' ||
+            (customization.totalpayablePrice <= 0) ||
+            customization.paymentStatus === 'not_required';
+
           if (paymentValid) {
             validCustomization = customization;
           }
         }
 
         // Apply status filter
-        const mealStatus = isSkipped ? 'skipped' : 
-                          replacement ? 'replaced' : 
-                          validCustomization ? 'customized' : 'active';
+        const mealStatus = isSkipped ? 'skipped' :
+          replacement ? 'replaced' :
+            validCustomization ? 'customized' : 'active';
 
         if (status !== 'all' && status !== mealStatus) continue;
 
@@ -1275,7 +1306,7 @@ exports.exportDailyMeals = async (req, res) => {
 
       res.setHeader('Content-Type', 'text/csv');
       res.setHeader('Content-Disposition', `attachment; filename=daily-meals-${date}.csv`);
-      
+
       // Simple CSV generation (you might want to use a library like csv-writer)
       const headers = Object.keys(csvData[0] || {});
       const csvContent = [
@@ -1334,18 +1365,18 @@ exports.getMealPlans = async (req, res) => {
 
     // Build query conditions
     let query = {};
-    
+
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: 'i' } },
         { description: { $regex: search, $options: 'i' } }
       ];
     }
-    
+
     if (status) {
       query.isActive = status === 'active';
     }
-    
+
     if (category) {
       query.category = category;
     }
@@ -1358,16 +1389,16 @@ exports.getMealPlans = async (req, res) => {
     const sampleDoc = await MealPlan.findOne().limit(1);
     if (sampleDoc) {
       const schemaFields = Object.keys(sampleDoc.toObject());
-      
+
       // Only populate if the field exists in schema
       if (schemaFields.includes('createdBy')) {
         mealPlansQuery = mealPlansQuery.populate('createdBy', 'name email');
       }
-      
+
       if (schemaFields.includes('updatedBy')) {
         mealPlansQuery = mealPlansQuery.populate('updatedBy', 'name email');
       }
-      
+
       // Don't populate category for now since it's causing the error
     }
 
@@ -1677,8 +1708,8 @@ exports.getUserDailyMeals = async (req, res) => {
       startDate: { $lte: new Date(date) },
       endDate: { $gte: new Date(date) }
     })
-    .populate('mealPlan')
-    .populate('user', 'name email phone addresses');
+      .populate('mealPlan')
+      .populate('user', 'name email phone addresses');
 
     if (!subscriptions.length) {
       return res.json({
@@ -1693,7 +1724,7 @@ exports.getUserDailyMeals = async (req, res) => {
 
     for (const subscription of subscriptions) {
       const shifts = subscription.mealPlan?.shifts || ['morning', 'evening'];
-      
+
       for (const mealShift of shifts) {
         // Note: Removed Sunday evening skip - meals should be delivered every day as per subscription shift
 
@@ -1740,21 +1771,21 @@ exports.getUserDailyMeals = async (req, res) => {
           isSkipped: !!skippedMeal,
           isReplaced: !!replacement,
           isCustomized: !!customization,
-          
+
           // Skip details
           skipReason: skippedMeal?.description,
           skipDate: skippedMeal?.createdAt,
           refundAmount: skippedMeal?.refundAmount,
-          
+
           // Replacement details
           replacementThali: replacementThali,
           replacementReason: replacement?.reason,
-          
+
           // Customization details
           customizations: customization?.customizations || [],
           selectedAddons: customization?.selectedAddons || [],
           selectedExtraItems: customization?.selectedExtraItems || [],
-          
+
           // Delivery details
           deliveryAddress: subscription.user.addresses?.find(addr => addr.isDefault) || subscription.user.addresses?.[0],
           deliveryInstructions: subscription.deliveryInstructions

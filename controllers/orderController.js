@@ -1468,6 +1468,20 @@ orderController.updatePaymentStatus = async (req, res) => {
       } catch (notificationError) {
         console.error('Error sending payment notification:', notificationError);
       }
+
+      // Send In-App Notification
+      await createNotification({
+        userId: order.userId._id, // Populated above
+        title: 'Payment Received',
+        message: `Payment of ₹${order.totalAmount} for Order #${order.orderNumber} was successful.`,
+        type: 'order_confirmed',
+        priority: 'normal',
+        data: {
+          orderId: order._id,
+          orderNumber: order.orderNumber,
+          paymentStatus
+        }
+      });
     }
 
     res.json({
@@ -1526,6 +1540,31 @@ orderController.updateOrderStatus = async (req, res) => {
       });
       console.log(`📡 Socket: Emitted order-update for ${order.orderNumber} to ${order.userId}`);
     }
+
+    // Send In-App Notification
+    let notificationTitle = `Order Status: ${status.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`;
+    let notificationMessage = `Your order #${order.orderNumber} is now ${status.replace(/-/g, ' ')}.`;
+
+    if (status === 'out-for-delivery') {
+      notificationTitle = 'Order Out for Delivery 🚚';
+      notificationMessage = `Your order #${order.orderNumber} is out for delivery! Track it live.`;
+    } else if (status === 'delivered') {
+      notificationTitle = 'Order Delivered 🎉';
+      notificationMessage = `Your order #${order.orderNumber} has been delivered. Enjoy your meal!`;
+    }
+
+    await createNotification({
+      userId: order.userId,
+      title: notificationTitle,
+      message: notificationMessage,
+      type: status === 'delivered' ? 'order_delivered' : 'order_shipped',
+      priority: 'normal',
+      data: {
+        orderId: order._id,
+        orderNumber: order.orderNumber,
+        status
+      }
+    });
 
     res.json({
       message: 'Order status updated successfully',
@@ -1846,6 +1885,121 @@ orderController.updateSplitMethod = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
+  }
+};
+
+/**
+ * Cancel Order
+ */
+orderController.cancelOrder = async (req, res) => {
+  try {
+    const { id } = req.params; // Using orderId from params (frontend likely sends _id)
+    const { reason } = req.body;
+    const userId = req.user.id;
+
+    // Try finding by _id first, then orderNumber
+    let order = await Order.findOne({
+      $or: [
+        { _id: mongoose.isValidObjectId(id) ? id : null },
+        { orderNumber: id }
+      ],
+      userId: userId
+    });
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found'
+      });
+    }
+
+    // Check cancellation eligibility
+    // 1. Check status
+    if (['out-for-delivery', 'delivered', 'cancelled'].includes(order.status)) {
+      return res.status(400).json({
+        success: false,
+        message: `Order cannot be cancelled in '${order.status}' status`
+      });
+    }
+
+    // 2. Check time (if cancelBefore is set)
+    if (order.cancelBefore && new Date() > new Date(order.cancelBefore)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Cancellation window has expired'
+      });
+    }
+
+    // Process Refund if Paid
+    if (order.paymentStatus === 'paid') {
+      const user = await User.findById(userId);
+
+      // Simple refund to wallet logic
+      user.wallet.balance += order.totalAmount;
+      user.wallet.transactions.push({
+        amount: order.totalAmount,
+        type: 'credit',
+        note: `Refund for Cancelled Order #${order.orderNumber}`,
+        referenceId: `REF-${order.orderNumber}`,
+        timestamp: new Date()
+      });
+      await user.save();
+
+      order.paymentStatus = 'refunded';
+      order.refundAmount = order.totalAmount;
+      console.log(`💸 Refunded ₹${order.totalAmount} to wallet for user ${userId}`);
+    }
+
+    // Update Order Status
+    order.status = 'cancelled';
+    order.cancellationReason = reason || 'User cancelled';
+    order.cancelledAt = new Date();
+
+    // Add to history
+    order.statusHistory.push({
+      status: 'cancelled',
+      timestamp: new Date(),
+      note: reason,
+      updatedBy: userId
+    });
+
+    await order.save();
+
+    // Notify User
+    await createNotification({
+      userId: userId,
+      title: 'Order Cancelled',
+      message: `Your order #${order.orderNumber} has been cancelled successfully.${order.paymentStatus === 'refunded' ? ' Refund has been processed to your wallet.' : ''}`,
+      type: 'order',
+      priority: 'high',
+      data: { orderId: order._id, orderNumber: order.orderNumber }
+    });
+
+    // Notify Seller(s)
+    if (global.io) {
+      // Notify each seller involved
+      const sellerIds = [...new Set(order.items.map(item => item.seller?.toString()).filter(Boolean))];
+      sellerIds.forEach(sellerId => {
+        global.io.to(`user-${sellerId}`).emit('notification', {
+          title: 'Order Cancelled',
+          message: `Order #${order.orderNumber} has been cancelled by the customer.`,
+          type: 'alert'
+        });
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Order cancelled successfully',
+      data: order
+    });
+
+  } catch (error) {
+    console.error('Cancel order error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
   }
 };
 

@@ -1,4 +1,4 @@
-  // controllers/sellerController.js
+// controllers/sellerController.js
 const User = require('../models/User');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
@@ -20,12 +20,12 @@ const { BadRequestError } = require('../utils/errors');
 exports.getDashboard = async (req, res) => {
   try {
     const sellerId = req.user._id;
-    
+
     // Use IST timezone for proper date calculation
     const moment = require('moment-timezone');
     const today = moment().tz('Asia/Kolkata').startOf('day').toDate();
     const tomorrow = moment().tz('Asia/Kolkata').startOf('day').add(1, 'day').toDate();
-    
+
     console.log('Dashboard date range:', { today, tomorrow, sellerId });
 
     // Today's orders metrics - properly count distinct normal orders (type: 'addon'), not items
@@ -56,13 +56,13 @@ exports.getDashboard = async (req, res) => {
     todayOrders.forEach(order => {
       // Check if this order belongs to this seller
       const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      const hasSellerItems = order.items && order.items.some(item => 
+      const hasSellerItems = order.items && order.items.some(item =>
         item.seller && item.seller.toString() === sellerId.toString()
       );
 
       if (isRestaurantOrder || hasSellerItems) {
         todayOrdersCount++;
-        
+
         if (order.isCustomized) {
           customizedOrdersCount++;
         }
@@ -73,10 +73,10 @@ exports.getDashboard = async (req, res) => {
           todayRevenue += order.totalAmount || 0;
         } else if (hasSellerItems) {
           // If multi-vendor order, calculate seller's portion
-          const sellerItems = order.items.filter(item => 
+          const sellerItems = order.items.filter(item =>
             item.seller && item.seller.toString() === sellerId.toString()
           );
-          const sellerAmount = sellerItems.reduce((sum, item) => 
+          const sellerAmount = sellerItems.reduce((sum, item) =>
             sum + (item.price * item.quantity), 0
           );
           todayRevenue += sellerAmount;
@@ -115,21 +115,21 @@ exports.getDashboard = async (req, res) => {
 
     lifetimeOrders.forEach(order => {
       const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      
+
       if (isRestaurantOrder) {
         // If restaurantId matches, count the order and add total amount
         lifetimeOrdersCount++;
         lifetimeRevenue += order.totalAmount || 0;
       } else {
         // Check if order has items from this seller
-        const sellerItems = (order.items || []).filter(item => 
+        const sellerItems = (order.items || []).filter(item =>
           item.seller && item.seller.toString() === sellerId.toString()
         );
-        
+
         if (sellerItems.length > 0) {
           lifetimeOrdersCount++;
           // Add seller-specific revenue
-          const sellerTotal = sellerItems.reduce((sum, item) => 
+          const sellerTotal = sellerItems.reduce((sum, item) =>
             sum + (item.price * item.quantity), 0
           );
           lifetimeRevenue += sellerTotal;
@@ -150,14 +150,14 @@ exports.getDashboard = async (req, res) => {
           _id: null,
           total: { $sum: 1 },
           active: { $sum: { $cond: ['$isActive', 1, 0] } },
-          lowStock: { 
-            $sum: { 
+          lowStock: {
+            $sum: {
               $cond: [
-                { $lte: ['$stock', '$lowStockThreshold'] }, 
-                1, 
-                0 
-              ] 
-            } 
+                { $lte: ['$stock', '$lowStockThreshold'] },
+                1,
+                0
+              ]
+            }
           }
         }
       }
@@ -190,19 +190,19 @@ exports.getDashboard = async (req, res) => {
     const recentOrders = await Order.find({
       'items.seller': sellerId
     })
-    .populate('userId', 'name email phone')
-    .populate('items.product', 'title images')
-    .sort({ createdAt: -1 })
-    .limit(10)
-    .lean();
+      .populate('userId', 'name email phone')
+      .populate('items.product', 'title images')
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .lean();
 
     // Process recent orders to show only seller's items
     const processedRecentOrders = recentOrders.map(order => {
-      const sellerItems = order.items.filter(item => 
+      const sellerItems = order.items.filter(item =>
         item.seller && item.seller.toString() === sellerId.toString()
       );
-      
-      const sellerTotal = sellerItems.reduce((sum, item) => 
+
+      const sellerTotal = sellerItems.reduce((sum, item) =>
         sum + (item.price * item.quantity), 0
       );
 
@@ -230,26 +230,26 @@ exports.getDashboard = async (req, res) => {
       seller: sellerId,
       $expr: { $lte: ['$stock', '$lowStockThreshold'] }
     })
-    .select('title stock lowStockThreshold')
-    .limit(5)
-    .lean()
-    .then(products => 
-      products.map(product => ({
-        _id: product._id,
-        name: product.title,
-        stock: product.stock,
-        threshold: product.lowStockThreshold || 10
-      }))
-    );
+      .select('title stock lowStockThreshold')
+      .limit(5)
+      .lean()
+      .then(products =>
+        products.map(product => ({
+          _id: product._id,
+          name: product.title,
+          stock: product.stock,
+          threshold: product.lowStockThreshold || 10
+        }))
+      );
 
     // Unread notifications
     const notifications = await Notification.find({
       userId: sellerId,
       isRead: false
     })
-    .sort({ createdAt: -1 })
-    .limit(5)
-    .lean();
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .lean();
 
     // Custom meal requests for today
     const todayCustomRequests = await CustomMealRequest.countDocuments({
@@ -287,10 +287,10 @@ exports.getDashboard = async (req, res) => {
     let liveOrdersCount = 0;
     liveOrders.forEach(order => {
       const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      const hasSellerItems = order.items && order.items.some(item => 
+      const hasSellerItems = order.items && order.items.some(item =>
         item.seller && item.seller.toString() === sellerId.toString()
       );
-      
+
       if (isRestaurantOrder || hasSellerItems) {
         liveOrdersCount++;
       }
@@ -298,15 +298,48 @@ exports.getDashboard = async (req, res) => {
 
     // Get seller commission rate - fixed to 20% as requested
     const commissionRate = 20; // Fixed 20% commission
-    
+
     // Calculate commission breakdown
     const todayGrossRevenue = Math.round(todayStats.totalRevenue);
     const todayCommission = Math.round((todayGrossRevenue * commissionRate) / 100);
     const todayNetRevenue = todayGrossRevenue - todayCommission;
-    
+
     const lifetimeGrossRevenue = Math.round(lifetime.totalRevenue);
     const lifetimeCommission = Math.round((lifetimeGrossRevenue * commissionRate) / 100);
     const lifetimeNetRevenue = lifetimeGrossRevenue - lifetimeCommission;
+
+
+    const liveOrdersBreakdown = {
+      pending: 0,
+      preparing: 0,
+      ready: 0
+    };
+
+    liveOrders.forEach(order => {
+      const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
+      const hasSellerItems = order.items && order.items.some(item =>
+        item.seller && item.seller.toString() === sellerId.toString()
+      );
+
+      if (isRestaurantOrder || hasSellerItems) {
+        if (order.status === 'pending' || order.status === 'confirmed') liveOrdersBreakdown.pending++;
+        if (order.status === 'preparing') liveOrdersBreakdown.preparing++;
+        if (order.status === 'ready' || order.status === 'ready_for_pickup') liveOrdersBreakdown.ready++;
+      }
+    });
+
+    // Calculate unique customers count (proxy for visits)
+    const uniqueCustomers = new Set();
+    todayOrders.forEach(order => {
+      // Check if this order belongs to this seller
+      const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
+      const hasSellerItems = order.items && order.items.some(item =>
+        item.seller && item.seller.toString() === sellerId.toString()
+      );
+      if ((isRestaurantOrder || hasSellerItems) && order.userId) {
+        uniqueCustomers.add(order.userId.toString());
+      }
+    });
 
     res.json({
       success: true,
@@ -320,10 +353,17 @@ exports.getDashboard = async (req, res) => {
           customizedOrders: todayStats.customizedOrders,
           nonCustomizedOrders: todayStats.totalOrders - todayStats.customizedOrders,
           customRequests: todayCustomRequests,
-          pendingBids: pendingBids
+          pendingBids: pendingBids,
+          visits: uniqueCustomers.size // Real unique customers
         },
         liveOrders: {
-          count: liveOrdersCount
+          count: liveOrdersCount,
+          ...liveOrdersBreakdown // Add breakdown
+        },
+        inventory: { // Match frontend expectation
+          lowStock: products.lowStock || 0,
+          outOfStock: products.outOfStock || 0, // Need to ensure products stats includes this
+          total: products.total || 0
         },
         lifetime: {
           orders: lifetime.totalOrders,
@@ -362,10 +402,10 @@ exports.getDashboard = async (req, res) => {
  */
 exports.getSubscriptionOrders = async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 20, 
-      status, 
+    const {
+      page = 1,
+      limit = 20,
+      status,
       date = 'all',
       shift = 'both',
       search,
@@ -381,7 +421,7 @@ exports.getSubscriptionOrders = async (req, res) => {
     // Build date filter
     let dateFilter = {};
     const today = new Date();
-    
+
     if (date !== 'all') {
       switch (date) {
         case 'today':
@@ -415,7 +455,7 @@ exports.getSubscriptionOrders = async (req, res) => {
 
     // Convert sellerId to ObjectId for proper comparison
     const sellerObjectId = new mongoose.Types.ObjectId(sellerId);
-    
+
     // Build the main query for subscription orders (type: 'gkk')
     const mainQuery = {
       $or: [
@@ -471,27 +511,27 @@ exports.getSubscriptionOrders = async (req, res) => {
     // Process subscription orders to show subscription-specific data
     const processedOrders = orders.map(order => {
       console.log('Processing subscription order:', order.orderNumber);
-      
+
       let sellerItems = [];
       let sellerTotal = 0;
-      
+
       // Check if this order belongs to the seller
       const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      
+
       if (isRestaurantOrder) {
         // If restaurantId matches, include all items
         sellerItems = order.items || [];
         console.log('Restaurant subscription order - using all items:', sellerItems.length);
       } else {
         // Filter items that have seller field matching the sellerId
-        sellerItems = (order.items || []).filter(item => 
+        sellerItems = (order.items || []).filter(item =>
           item.seller && item.seller.toString() === sellerId.toString()
         );
         console.log('Multi-vendor subscription order - filtered items:', sellerItems.length);
       }
 
       // Calculate seller-specific total
-      sellerTotal = sellerItems.reduce((sum, item) => 
+      sellerTotal = sellerItems.reduce((sum, item) =>
         sum + (item.price * item.quantity), 0
       );
 
@@ -597,11 +637,11 @@ exports.getSubscriptionOrders = async (req, res) => {
  */
 exports.getProducts = async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 100, 
-      status, 
-      category, 
+    const {
+      page = 1,
+      limit = 100,
+      status,
+      category,
       search,
       sortBy = 'createdAt',
       sortOrder = 'desc'
@@ -609,19 +649,19 @@ exports.getProducts = async (req, res) => {
 
     const sellerId = req.user._id;
     // const skip = (parseInt(page) - 1) * parseInt(limit);
-    
+
     // Build query
     let query = { seller: sellerId };
     // const pr = await Product.find(query);
     if (status) {
       query.isActive = true;
     }
-    
+
     if (category) {
       query.category = category;
     }
-    
-    if (search&&!search==="all") {
+
+    if (search && !search === "all") {
       query.$or = [
         { title: { $regex: search, $options: 'i' } },
         { description: { $regex: search, $options: 'i' } },
@@ -640,7 +680,7 @@ exports.getProducts = async (req, res) => {
       .lean();
     // console.log(products);
     const total = await Product.countDocuments(query);
-  
+
 
     res.json({
       success: true,
@@ -690,7 +730,7 @@ exports.getProducts = async (req, res) => {
 //     // Build date filter
 //     let dateFilter = {};
 //     const today = new Date();
-    
+
 //     switch (date) {
 //       case 'today':
 //         const startOfDay = new Date(today);
@@ -798,7 +838,7 @@ exports.getProducts = async (req, res) => {
 //       { $skip: skip },
 //       { $limit: parseInt(limit) }
 //     ]);
- 
+
 //     // Get total count
 //     const totalResult = await Order.aggregate([
 //       ...pipeline,
@@ -862,10 +902,10 @@ exports.getProducts = async (req, res) => {
 
 exports.getOrders = async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 100, 
-      status, 
+    const {
+      page = 1,
+      limit = 100,
+      status,
       type,
       customized,
       search,
@@ -883,7 +923,7 @@ exports.getOrders = async (req, res) => {
     // Build date filter
     let dateFilter = {};
     const today = new Date();
-    
+
     if (date !== 'all') {
       switch (date) {
         case 'today':
@@ -919,7 +959,7 @@ exports.getOrders = async (req, res) => {
 
     // Convert sellerId to ObjectId for proper comparison
     const sellerObjectId = new mongoose.Types.ObjectId(sellerId);
-    
+
     // Build the main query for normal orders (type: 'addon' or legacy orders without type)
     const mainQuery = {
       $and: [
@@ -956,7 +996,7 @@ exports.getOrders = async (req, res) => {
       const itemsSellerQuery = await Order.find({ 'items.seller': sellerObjectId }).countDocuments();
       console.log('Restaurant query count:', restaurantQuery);
       console.log('Items seller query count:', itemsSellerQuery);
-      
+
       // Check what orders exist for debugging
       const allOrders = await Order.find({}).select('orderNumber restaurantId items.seller');
       // console.log('Sample orders in DB:', allOrders);
@@ -964,7 +1004,7 @@ exports.getOrders = async (req, res) => {
 
     // Build additional filters
     const additionalFilters = {};
-    
+
     if (status && status !== 'all') {
       additionalFilters.status = status;
     }
@@ -999,7 +1039,7 @@ exports.getOrders = async (req, res) => {
 
     // Execute the query to get orders
     const orders = await Order.find(finalQuery)
-      .populate('userId', 'name email phone') 
+      .populate('userId', 'name email phone')
       .sort(sortObj)
       // .skip(skip)
       // .limit(parseInt(limit))
@@ -1014,28 +1054,28 @@ exports.getOrders = async (req, res) => {
     // Process orders to show only seller-specific data
     const processedOrders = orders.map(order => {
       console.log('Processing order:', order.orderNumber);
-      
+
       let sellerItems = [];
       let sellerTotal = 0;
       let customizationTotal = 0;
-      
+
       // Check if this order belongs to the seller
       const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      
+
       if (isRestaurantOrder) {
         // If restaurantId matches, include all items
         sellerItems = order.items || [];
         console.log('Restaurant order - using all items:', sellerItems.length);
       } else {
         // Filter items that have seller field matching the sellerId
-        sellerItems = (order.items || []).filter(item => 
+        sellerItems = (order.items || []).filter(item =>
           item.seller && item.seller.toString() === sellerId.toString()
         );
         console.log('Multi-vendor order - filtered items:', sellerItems.length);
       }
 
       // Calculate seller-specific total
-      sellerTotal = sellerItems.reduce((sum, item) => 
+      sellerTotal = sellerItems.reduce((sum, item) =>
         sum + (item.price * item.quantity), 0
       );
 
@@ -1043,11 +1083,11 @@ exports.getOrders = async (req, res) => {
       if (order.customizationCharges && order.customizationCharges.items) {
         const customizations = order.customizationCharges.items;
         const sellerCustomizations = customizations.filter(customItem => {
-          return sellerItems.some(item => 
+          return sellerItems.some(item =>
             item.customizations && item.customizations.includes(customItem.name)
           );
         });
-        customizationTotal = sellerCustomizations.reduce((sum, item) => 
+        customizationTotal = sellerCustomizations.reduce((sum, item) =>
           sum + (item.price * item.quantity), 0
         );
       } else {
@@ -1059,7 +1099,7 @@ exports.getOrders = async (req, res) => {
       // Calculate countdown information for active orders
       let countdownInfo = null;
       let delayInfo = null;
-      
+
       if (['pending', 'confirmed', 'preparing', 'ready', 'out-for-delivery'].includes(order.status)) {
         // Get countdown info if order has preparation deadline
         if (order.preparationDeadline) {
@@ -1067,7 +1107,7 @@ exports.getOrders = async (req, res) => {
           const timeRemaining = new Date(order.preparationDeadline) - now;
           const minutesRemaining = Math.max(0, Math.ceil(timeRemaining / (1000 * 60)));
           const isOverdue = timeRemaining < 0;
-          
+
           countdownInfo = {
             preparationDeadline: order.preparationDeadline,
             timeRemaining: Math.max(0, timeRemaining),
@@ -1077,7 +1117,7 @@ exports.getOrders = async (req, res) => {
             delayReason: order.delayReason,
             penaltyAmount: order.penaltyAmount
           };
-          
+
           delayInfo = {
             isDelayed: order.isDelayed,
             delayReason: order.delayReason,
@@ -1090,7 +1130,7 @@ exports.getOrders = async (req, res) => {
           // If order is confirmed but preparation hasn't started, start the countdown
           const preparationDurationMinutes = order.preparationDurationMinutes || 25;
           const preparationDeadline = new Date(Date.now() + preparationDurationMinutes * 60 * 1000);
-          
+
           countdownInfo = {
             preparationDeadline,
             timeRemaining: preparationDurationMinutes * 60 * 1000,
@@ -1100,7 +1140,7 @@ exports.getOrders = async (req, res) => {
             delayReason: null,
             penaltyAmount: 0
           };
-          
+
           delayInfo = {
             isDelayed: false,
             delayReason: null,
@@ -1117,7 +1157,7 @@ exports.getOrders = async (req, res) => {
         orderNumber: order.orderNumber,
         customer: order.userId ? {
           name: order.userId.name,
-          phone: order.userId.phone||order.userContactNo,
+          phone: order.userId.phone || order.userContactNo,
           email: order.userId.email
         } : {
           name: order.billingAddress?.name || 'N/A',
@@ -1182,7 +1222,7 @@ exports.getOrders = async (req, res) => {
       totalOrders: processedOrders.length,
       totalRevenue: processedOrders.reduce((sum, order) => sum + (order.sellerRevenue || 0), 0),
       customizedOrders: processedOrders.filter(order => order.isCustomized).length,
-      averageOrderValue: processedOrders.length > 0 ? 
+      averageOrderValue: processedOrders.length > 0 ?
         Math.round(processedOrders.reduce((sum, order) => sum + (order.sellerRevenue || 0), 0) / processedOrders.length) : 0,
       pendingOrders: processedOrders.filter(order => order.status === 'pending').length,
       confirmedOrders: processedOrders.filter(order => order.status === 'confirmed').length,
@@ -1228,18 +1268,18 @@ exports.getOrders = async (req, res) => {
  */
 exports.getThaliOrders = async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 100, 
-      status, 
+    const {
+      page = 1,
+      limit = 100,
+      status,
       search,
       date = 'today',
       sortBy = 'createdAt',
       sortOrder = 'desc'
     } = req.query;
 
-    if(!(req.user.id=="68aac6dd973de34afcf19fc3")){
-      return res.json({success:true,data:[]})
+    if (!(req.user.id == "68aac6dd973de34afcf19fc3")) {
+      return res.json({ success: true, data: [] })
     }
     // Thali IDs to filter for
     const THALI_NAMES = [
@@ -1249,11 +1289,11 @@ exports.getThaliOrders = async (req, res) => {
     ];
 
     const skip = (parseInt(page) - 1) * parseInt(limit);
-    
+
     // Build date filter
     let dateFilter = {};
     const today = new Date();
-    
+
     if (date !== 'all') {
       switch (date) {
         case 'today':
@@ -1301,7 +1341,7 @@ exports.getThaliOrders = async (req, res) => {
 
     // Build additional filters
     const additionalFilters = {};
-    
+
     if (status && status !== 'all') {
       additionalFilters.status = status;
     }
@@ -1328,7 +1368,7 @@ exports.getThaliOrders = async (req, res) => {
 
     // Execute the query to get orders
     const orders = await Order.find(finalQuery)
-      .populate('userId', 'name email phone') 
+      .populate('userId', 'name email phone')
       .sort(sortObj)
       .lean();
 
@@ -1343,21 +1383,21 @@ exports.getThaliOrders = async (req, res) => {
       });
 
       // Calculate thali-specific total
-      const thaliTotal = thaliItems.reduce((sum, item) => 
+      const thaliTotal = thaliItems.reduce((sum, item) =>
         sum + (item.price * item.quantity), 0
       );
 
       // Calculate countdown information for active orders
       let countdownInfo = null;
       let delayInfo = null;
-      
+
       if (['pending', 'confirmed', 'preparing', 'ready', 'out-for-delivery'].includes(order.status)) {
         if (order.preparationDeadline) {
           const now = new Date();
           const timeRemaining = new Date(order.preparationDeadline) - now;
           const minutesRemaining = Math.max(0, Math.ceil(timeRemaining / (1000 * 60)));
           const isOverdue = timeRemaining < 0;
-          
+
           countdownInfo = {
             preparationDeadline: order.preparationDeadline,
             timeRemaining: Math.max(0, timeRemaining),
@@ -1367,7 +1407,7 @@ exports.getThaliOrders = async (req, res) => {
             delayReason: order.delayReason,
             penaltyAmount: order.penaltyAmount
           };
-          
+
           delayInfo = {
             isDelayed: order.isDelayed,
             delayReason: order.delayReason,
@@ -1404,13 +1444,13 @@ exports.getThaliOrders = async (req, res) => {
         paymentStatus: order.paymentStatus,
         deliveryAddress: order.deliveryAddress,
         billingAddress: order.billingAddress,
-        
+
         // Subscription fields if applicable
         subscriptionId: order.subscriptionId,
         planType: order.planType,
         isSubscriptionOrder: order.isSubscriptionOrder || order.type === 'gkk',
         shift: order.deliverySlot,
-        
+
         // Timing fields
         preparationStartTime: order.preparationStartTime,
         preparationDeadline: order.preparationDeadline,
@@ -1420,11 +1460,11 @@ exports.getThaliOrders = async (req, res) => {
         delayReason: order.delayReason,
         penaltyAmount: order.penaltyAmount,
         handoverFlag: order.isDelayed ? 'delay' : null,
-        
+
         // Countdown and delay information
         countdownInfo,
         delayInfo,
-        
+
         // Additional fields
         itemCount: thaliItems.reduce((sum, item) => sum + item.quantity, 0),
         viewedBySellers: order.viewedBySellers || []
@@ -1484,7 +1524,7 @@ exports.getSellerOrderStats = async (req, res) => {
     // Build date filter
     let dateFilter = {};
     const today = new Date();
-    
+
     switch (period) {
       case 'today':
         const startOfDay = new Date(today);
@@ -1528,11 +1568,11 @@ exports.getSellerOrderStats = async (req, res) => {
             $reduce: {
               input: '$sellerItems',
               initialValue: 0,
-              in: { 
+              in: {
                 $add: [
-                  '$$value', 
+                  '$$value',
                   { $multiply: ['$$this.price', '$$this.quantity'] }
-                ] 
+                ]
               }
             }
           },
@@ -1601,9 +1641,9 @@ exports.getSellerOrderStats = async (req, res) => {
         ...result,
         statusBreakdown,
         typeBreakdown,
-        customizationRate: result.totalOrders > 0 ? 
+        customizationRate: result.totalOrders > 0 ?
           (result.customizedOrders / result.totalOrders * 100).toFixed(2) : 0,
-        addonRate: result.totalOrders > 0 ? 
+        addonRate: result.totalOrders > 0 ?
           (result.ordersWithAddons / result.totalOrders * 100).toFixed(2) : 0
       }
     });
@@ -1633,33 +1673,33 @@ exports.updateSellerPassword = async (req, res) => {
 
     // Validate input
     if (!currentPassword || !newPassword) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'Current password and new password are required' 
+        message: 'Current password and new password are required'
       });
     }
 
     // Verify current password
     const isMatch = await bcrypt.compare(currentPassword, seller.password);
     if (!isMatch) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'Current password is incorrect' 
+        message: 'Current password is incorrect'
       });
     }
 
     // Validate new password
     if (newPassword.length < 6) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'New password must be at least 6 characters long' 
+        message: 'New password must be at least 6 characters long'
       });
     }
 
     // Hash new password
     const salt = await bcrypt.genSalt(10);
     seller.password = await bcrypt.hash(newPassword, salt);
-    
+
     // Save the updated seller
     await seller.save();
 
@@ -1670,8 +1710,8 @@ exports.updateSellerPassword = async (req, res) => {
 
   } catch (error) {
     console.error('Error updating seller password:', error);
-    res.status(500).json({ 
-      success: false, 
+    res.status(500).json({
+      success: false,
       message: 'Server error',
       error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
@@ -1691,7 +1731,7 @@ exports.updateSellerPassword = async (req, res) => {
 exports.getSellerProfile = async (req, res) => {
   try {
     const sellerId = req.user._id;
-    
+
     // Find seller and exclude sensitive fields
     const seller = await User.findById(sellerId)
       .select('-password -__v -resetPasswordToken -resetPasswordExpire -otp -otpExpire')
@@ -1768,7 +1808,7 @@ exports.updateDeliverySettings = async (req, res) => {
     const sellerId = req.user._id;
 
     const validStatuses = [
-      'pending', 'confirmed', 'preparing', 'ready', 
+      'pending', 'confirmed', 'preparing', 'ready',
       'out-for-delivery', 'delivered', 'cancelled'
     ];
 
@@ -1788,7 +1828,7 @@ exports.updateDeliverySettings = async (req, res) => {
     }
 
     // Check if seller has items in this order
-    const hasSellerItems = order.items.some(item => 
+    const hasSellerItems = order.items.some(item =>
       item.seller && item.seller.toString() === sellerId.toString()
     );
 
@@ -1801,7 +1841,7 @@ exports.updateDeliverySettings = async (req, res) => {
 
     // Update order status
     order.status = status;
-    
+
     // Add to status history
     order.statusHistory.push({
       status,
@@ -1822,7 +1862,7 @@ exports.updateDeliverySettings = async (req, res) => {
       title: 'Order Status Updated',
       message: `Your order #${order.orderNumber} status has been updated to ${status}`,
       type: 'order',
-      data: { 
+      data: {
         orderId: order._id,
         status,
         orderNumber: order.orderNumber
@@ -1854,9 +1894,9 @@ exports.updateDeliverySettings = async (req, res) => {
  */
 exports.getMealPlans = async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 20, 
+    const {
+      page = 1,
+      limit = 20,
       status,
       tier,
       sortBy = 'createdAt',
@@ -1865,14 +1905,14 @@ exports.getMealPlans = async (req, res) => {
 
     const sellerId = req.user._id;
     const skip = (parseInt(page) - 1) * parseInt(limit);
-    
+
     // Build query
     let query = { createdBy: sellerId };
-    
+
     if (status && status !== 'all') {
       query.status = status;
     }
-    
+
     if (tier && tier !== 'all') {
       query.tier = tier;
     }
@@ -1918,7 +1958,7 @@ exports.getMealPlans = async (req, res) => {
  * Get seller analytics
  */
 exports.getAnalytics = async (req, res) => {
-  try { 
+  try {
     console.log("hellow motop")
     const { period = '7d', startDate, endDate } = req.query;
     const sellerId = req.user._id;
@@ -1965,19 +2005,19 @@ exports.getAnalytics = async (req, res) => {
     // Revenue and order trends
     const orderTrends = await Order.aggregate([
       { $unwind: '$items' },
-      { 
-        $match: { 
+      {
+        $match: {
           'items.seller': sellerId,
           createdAt: dateRange
-        } 
+        }
       },
       {
         $group: {
           _id: {
             $dateToString: { format: '%Y-%m-%d', date: '$createdAt' }
           },
-          revenue: { 
-            $sum: { $multiply: ['$items.price', '$items.quantity'] } 
+          revenue: {
+            $sum: { $multiply: ['$items.price', '$items.quantity'] }
           },
           orders: { $sum: 1 },
           customizedOrders: {
@@ -1991,19 +2031,19 @@ exports.getAnalytics = async (req, res) => {
     // Top selling products
     const topProducts = await Order.aggregate([
       { $unwind: '$items' },
-      { 
-        $match: { 
+      {
+        $match: {
           'items.seller': sellerId,
           createdAt: dateRange,
           status: { $in: ['delivered', 'confirmed'] }
-        } 
+        }
       },
       {
         $group: {
           _id: '$items.name',
           sales: { $sum: '$items.quantity' },
-          revenue: { 
-            $sum: { $multiply: ['$items.price', '$items.quantity'] } 
+          revenue: {
+            $sum: { $multiply: ['$items.price', '$items.quantity'] }
           }
         }
       },
@@ -2014,11 +2054,11 @@ exports.getAnalytics = async (req, res) => {
     // Order type breakdown
     const orderTypeBreakdown = await Order.aggregate([
       { $unwind: '$items' },
-      { 
-        $match: { 
+      {
+        $match: {
           'items.seller': sellerId,
           createdAt: dateRange
-        } 
+        }
       },
       {
         $group: {
@@ -2027,8 +2067,8 @@ exports.getAnalytics = async (req, res) => {
             isCustomized: '$isCustomized'
           },
           count: { $sum: 1 },
-          revenue: { 
-            $sum: { $multiply: ['$items.price', '$items.quantity'] } 
+          revenue: {
+            $sum: { $multiply: ['$items.price', '$items.quantity'] }
           }
         }
       }
@@ -2037,17 +2077,17 @@ exports.getAnalytics = async (req, res) => {
     // Calculate totals
     const totals = await Order.aggregate([
       { $unwind: '$items' },
-      { 
-        $match: { 
+      {
+        $match: {
           'items.seller': sellerId,
           createdAt: dateRange
-        } 
+        }
       },
       {
         $group: {
           _id: null,
-          totalRevenue: { 
-            $sum: { $multiply: ['$items.price', '$items.quantity'] } 
+          totalRevenue: {
+            $sum: { $multiply: ['$items.price', '$items.quantity'] }
           },
           totalOrders: { $sum: 1 },
           customizedOrders: {
@@ -2073,11 +2113,11 @@ exports.getAnalytics = async (req, res) => {
         },
         summary: {
           ...summary,
-          averageOrderValue: summary.totalOrders > 0 
-            ? Math.round(summary.totalRevenue / summary.totalOrders) 
+          averageOrderValue: summary.totalOrders > 0
+            ? Math.round(summary.totalRevenue / summary.totalOrders)
             : 0,
-          customizationRate: summary.totalOrders > 0 
-            ? Math.round((summary.customizedOrders / summary.totalOrders) * 100) 
+          customizationRate: summary.totalOrders > 0
+            ? Math.round((summary.customizedOrders / summary.totalOrders) * 100)
             : 0
         },
         orderTrends,
@@ -2101,22 +2141,22 @@ exports.getAnalytics = async (req, res) => {
  */
 exports.getNotifications = async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 20, 
+    const {
+      page = 1,
+      limit = 20,
       isRead,
       type
     } = req.query;
 
     const sellerId = req.user._id;
     const skip = (parseInt(page) - 1) * parseInt(limit);
-    
+
     let query = { userId: sellerId };
-    
+
     if (isRead !== undefined) {
       query.isRead = isRead === 'true';
     }
-    
+
     if (type && type !== 'all') {
       query.type = type;
     }
@@ -2128,9 +2168,9 @@ exports.getNotifications = async (req, res) => {
       .lean();
 
     const total = await Notification.countDocuments(query);
-    const unreadCount = await Notification.countDocuments({ 
-      userId: sellerId, 
-      isRead: false 
+    const unreadCount = await Notification.countDocuments({
+      userId: sellerId,
+      isRead: false
     });
 
     res.json({
@@ -2196,21 +2236,22 @@ exports.markNotificationRead = async (req, res) => {
   }
 };
 
-exports.getCategories = async (req,res)=> {
-try{
-   const categories = await Category.find().select('name _id')?.lean();
-   return res.status(200).json({
-  status:"ok",
-  message:"category received succesfully",
-  data:categories
- })
-}catch(error){
-  console.log(error);
-  res.status(500).json({status:false,
-    message:"An error occured at server side",
-    error:error.message
-  })
-}
+exports.getCategories = async (req, res) => {
+  try {
+    const categories = await Category.find().select('name _id')?.lean();
+    return res.status(200).json({
+      status: "ok",
+      message: "category received succesfully",
+      data: categories
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: false,
+      message: "An error occured at server side",
+      error: error.message
+    })
+  }
 
 }
 
@@ -2241,7 +2282,7 @@ exports.updateOrderStatus = async (req, res) => {
     const sellerId = req.user._id;
 
     const validStatuses = [
-      'pending', 'confirmed', 'preparing', 'ready', 
+      'pending', 'confirmed', 'preparing', 'ready',
       'out-for-delivery', 'delivered', 'cancelled'
     ];
 
@@ -2260,11 +2301,11 @@ exports.updateOrderStatus = async (req, res) => {
       });
     }
 
-    const THALI_NAMES = ['Special Dining Thali','Royal Dining Experience',"Everyman's Thali"]
+    const THALI_NAMES = ['Special Dining Thali', 'Royal Dining Experience', "Everyman's Thali"]
 
     // Check if seller has items in this order
-    const hasSellerItems = order.items.some(item => 
-      item.seller && item.seller.toString() === sellerId.toString() || (THALI_NAMES.includes(item.name)&&req.user.id=='68aac6dd973de34afcf19fc3')
+    const hasSellerItems = order.items.some(item =>
+      item.seller && item.seller.toString() === sellerId.toString() || (THALI_NAMES.includes(item.name) && req.user.id == '68aac6dd973de34afcf19fc3')
     );
 
     if (!hasSellerItems) {
@@ -2280,7 +2321,7 @@ exports.updateOrderStatus = async (req, res) => {
     } else {
       // Update order status normally
       order.status = status;
-      
+
       // Add to status history
       order.statusHistory.push({
         status,
@@ -2300,9 +2341,9 @@ exports.updateOrderStatus = async (req, res) => {
     await Notification.create({
       userId: order.userId,
       title: 'Order Status Updated',
-      message:`Your order #${order.orderNumber} status has been updated to ${status}`,
+      message: `Your order #${order.orderNumber} status has been updated to ${status}`,
       type: 'order',
-      data: { 
+      data: {
         orderId: order._id,
         status,
         orderNumber: order.orderNumber
@@ -2354,7 +2395,7 @@ exports.markOrderReady = async (req, res) => {
     }
 
     // Check if seller has items in this order
-    const hasSellerItems = order.items.some(item => 
+    const hasSellerItems = order.items.some(item =>
       item.seller && item.seller.toString() === sellerId.toString()
     );
 
@@ -2401,12 +2442,12 @@ exports.getDelayedOrders = async (req, res) => {
       isDelayed: true,
       status: { $nin: ['delivered', 'cancelled'] }
     })
-    .populate('userId', 'name email phone')
-    .populate('deliveryPartner', 'name phone')
-    .sort({ delayedAt: -1 })
-    .limit(limit * 1)
-    .skip((page - 1) * limit)
-    .lean();
+      .populate('userId', 'name email phone')
+      .populate('deliveryPartner', 'name phone')
+      .sort({ delayedAt: -1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .lean();
 
     const totalDelayed = await Order.countDocuments({
       'items.seller': sellerId,
@@ -2416,9 +2457,9 @@ exports.getDelayedOrders = async (req, res) => {
 
     // Enhance orders with delay info
     const enhancedOrders = delayedOrders.map(order => {
-      const delayMinutes = order.preparationDeadline ? 
+      const delayMinutes = order.preparationDeadline ?
         Math.floor((new Date() - new Date(order.preparationDeadline)) / (1000 * 60)) : 0;
-      
+
       return {
         ...order,
         delayInfo: {
@@ -2462,15 +2503,15 @@ exports.getSellerProducts = async (req, res) => {
 
     // Build query
     let query = { seller: sellerId };
-    
+
     if (search) {
       query.$text = { $search: search };
     }
-    
+
     if (category) {
       query.category = category;
     }
-    
+
     if (status === 'active') {
       query.isActive = true;
     } else if (status === 'inactive') {
@@ -2493,7 +2534,7 @@ exports.getSellerProducts = async (req, res) => {
       .skip((page - 1) * limit)
       .lean()
       .exec();
-      
+
     // Add storeStatus to each product
     products.forEach(product => {
       product.storeStatus = product.seller?.sellerProfile?.storeStatus || 'open';
@@ -2510,9 +2551,9 @@ exports.getSellerProducts = async (req, res) => {
     });
   } catch (error) {
     console.error('Get seller products error:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Failed to fetch products' 
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch products'
     });
   }
 };
@@ -2538,9 +2579,9 @@ exports.createProduct = async (req, res) => {
     });
   } catch (error) {
     console.error('Create product error:', error);
-    res.status(400).json({ 
-      success: false, 
-      message: error.message || 'Failed to create product' 
+    res.status(400).json({
+      success: false,
+      message: error.message || 'Failed to create product'
     });
   }
 };
@@ -2566,9 +2607,9 @@ exports.getProduct = async (req, res) => {
     });
   } catch (error) {
     console.error('Get product error:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Failed to fetch product' 
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch product'
     });
   }
 };
@@ -2596,9 +2637,9 @@ exports.updateProduct = async (req, res) => {
     });
   } catch (error) {
     console.error('Update product error:', error);
-    res.status(400).json({ 
-      success: false, 
-      message: error.message || 'Failed to update product' 
+    res.status(400).json({
+      success: false,
+      message: error.message || 'Failed to update product'
     });
   }
 };
@@ -2625,9 +2666,9 @@ exports.deleteProduct = async (req, res) => {
   }
   catch (error) {
     console.error('Delete product error:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Failed to delete product' 
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete product'
     });
   }
 };
@@ -2657,9 +2698,9 @@ exports.toggleProductStatus = async (req, res) => {
     });
   } catch (error) {
     console.error('Toggle product status error:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Failed to update product status' 
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update product status'
     });
   }
 };
@@ -2697,9 +2738,9 @@ exports.updateStock = async (req, res) => {
     });
   } catch (error) {
     console.error('Update stock error:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Failed to update stock' 
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update stock'
     });
   }
 };
@@ -2728,10 +2769,10 @@ exports.getLowStockProducts = async (req, res) => {
   }
 
   // Bulk update prices
- 
+
 
   // Update seller profile
-  
+
   // Update delivery settings
   // exports.updateDeliverySettings = async (req, res) => {
   //   try {
@@ -2739,105 +2780,105 @@ exports.getLowStockProducts = async (req, res) => {
   //     const { deliverySettings } = req.body;
 
   //     if (!deliverySettings) {
-    
-  
-  
+
+
+
   // Update product price controller
-  
+
   // Toggle shop shutdown status
 };
- exports.bulkUpdatePrices = async (req, res) => {
-    try {
-      const sellerId = req.user._id;
-      const { products } = req.body;
+exports.bulkUpdatePrices = async (req, res) => {
+  try {
+    const sellerId = req.user._id;
+    const { products } = req.body;
 
-      // Input validation
-      if (!products || !Array.isArray(products)) {
-        return res.status(400).json({
-          success: false,
-          message: 'Products array is required'
-        });
-      }
+    // Input validation
+    if (!products || !Array.isArray(products)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Products array is required'
+      });
+    }
 
-      // Validate each product in the array
-      const validProducts = products.filter(product =>
-        product.productId &&
-        typeof product.price === 'number' &&
-        product.price >= 0
-      );
+    // Validate each product in the array
+    const validProducts = products.filter(product =>
+      product.productId &&
+      typeof product.price === 'number' &&
+      product.price >= 0
+    );
 
-      if (validProducts.length === 0) {
-        return res.status(400).json({
-          success: false,
-          message: 'No valid products provided. Each product must have a valid productId and positive price.'
-        });
-      }
+    if (validProducts.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'No valid products provided. Each product must have a valid productId and positive price.'
+      });
+    }
 
-      // Prepare bulk operations
-      const bulkOps = validProducts.map(product => ({
-        updateOne: {
-          filter: { _id: product.productId, seller: sellerId },
-          update: {
-            $set: {
+    // Prepare bulk operations
+    const bulkOps = validProducts.map(product => ({
+      updateOne: {
+        filter: { _id: product.productId, seller: sellerId },
+        update: {
+          $set: {
+            price: product.price,
+            updatedAt: new Date()
+          },
+          $push: {
+            priceHistory: {
+              date: new Date(),
               price: product.price,
-              updatedAt: new Date()
-            },
-            $push: {
-              priceHistory: {
-                date: new Date(),
-                price: product.price,
-                updatedBy: sellerId
-              }
+              updatedBy: sellerId
             }
           }
         }
-      }));
-
-      // Execute bulk operation
-      const result = await Product.bulkWrite(bulkOps);
-
-      // Emit socket event if needed
-      if (req.io) {
-        req.io.emit('pricesUpdated', {
-          sellerId,
-          updatedCount: result.modifiedCount,
-          timestamp: new Date()
-        });
       }
+    }));
 
-      // Return success response
-      res.json({
-        success: true,
-        message: 'Prices updated successfully',
-        data: {
-          matchedCount: result.matchedCount,
-          modifiedCount: result.modifiedCount,
-          upsertedCount: result.upsertedCount
-        }
-      });
-    } catch (error) {
-      console.error('Bulk update prices error:', error);
-    
-      // Handle specific error types
-      if (error.name === 'CastError') {
-        return res.status(400).json({
-          success: false,
-          message: 'Invalid product ID format'
-        });
-      }
+    // Execute bulk operation
+    const result = await Product.bulkWrite(bulkOps);
 
-      // Default error response
-      res.status(500).json({
-        success: false,
-        message: 'Failed to update prices',
-        error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    // Emit socket event if needed
+    if (req.io) {
+      req.io.emit('pricesUpdated', {
+        sellerId,
+        updatedCount: result.modifiedCount,
+        timestamp: new Date()
       });
     }
-  };
+
+    // Return success response
+    res.json({
+      success: true,
+      message: 'Prices updated successfully',
+      data: {
+        matchedCount: result.matchedCount,
+        modifiedCount: result.modifiedCount,
+        upsertedCount: result.upsertedCount
+      }
+    });
+  } catch (error) {
+    console.error('Bulk update prices error:', error);
+
+    // Handle specific error types
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid product ID format'
+      });
+    }
+
+    // Default error response
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update prices',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+};
 // exports.updateSellerProfile = async (req, res) => {
 //   try {
 //     const updateData = req.body;
-  
+
 //     // Remove sensitive fields
 //     delete updateData.password;
 //     delete updateData.role;
@@ -2930,7 +2971,7 @@ exports.updatePricesForCategory = async (req, res) => {
 exports.toggleShopShutdown = async (req, res) => {
   try {
     const { isShutdown, reason } = req.body;
-  
+
     // Input validation
     if (typeof isShutdown !== 'boolean') {
       return res.status(400).json({
@@ -2984,7 +3025,7 @@ exports.toggleShopShutdown = async (req, res) => {
     });
   } catch (error) {
     console.error('Toggle shop shutdown error:', error);
-  
+
     // Handle specific error types
     if (error.name === 'ValidationError') {
       return res.status(400).json({
@@ -3027,9 +3068,9 @@ exports.getShopStatus = async (req, res) => {
     });
   } catch (error) {
     console.error('Get shop status error:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Failed to get shop status' 
+    res.status(500).json({
+      success: false,
+      message: 'Failed to get shop status'
     });
   }
 };
@@ -3193,7 +3234,7 @@ exports.updateProductPrice = async (req, res) => {
     });
   } catch (error) {
     console.error('Update price error:', error);
-  
+
     // Handle mongoose validation errors
     if (error.name === 'ValidationError') {
       return res.status(400).json({
@@ -3236,7 +3277,7 @@ exports.updateSellerProfile = async (req, res) => {
   try {
     const { name, storeName, phone, address, avatar } = req.body;
     const sellerId = req.user.id;
-    
+
     // Find the seller
     const seller = await User.findById(sellerId);
     if (!seller) {
@@ -3310,10 +3351,10 @@ exports.getOrderById = async (req, res) => {
         { 'items.seller': sellerObjectId }
       ]
     })
-    .populate('userId', 'name email phone')
-    .populate('items.product', 'name price')
-    .populate('restaurantId', 'name storeAddress')
-    .lean();
+      .populate('userId', 'name email phone')
+      .populate('items.product', 'name price')
+      .populate('restaurantId', 'name storeAddress')
+      .lean();
 
     if (!order) {
       return res.status(404).json({
@@ -3324,7 +3365,7 @@ exports.getOrderById = async (req, res) => {
 
     // Filter items to show only those belonging to this seller
     if (order.items) {
-      order.items = order.items.filter(item => 
+      order.items = order.items.filter(item =>
         item.seller && item.seller.toString() === sellerId.toString()
       );
     }
@@ -3381,10 +3422,10 @@ exports.generateOrderInvoice = async (req, res) => {
         { 'items.seller': sellerObjectId }
       ]
     })
-    .populate('userId', 'name email phone address')
-    .populate('items.product', 'name price')
-    .populate('restaurantId', 'name storeAddress phone email')
-    .lean();
+      .populate('userId', 'name email phone address')
+      .populate('items.product', 'name price')
+      .populate('restaurantId', 'name storeAddress phone email')
+      .lean();
 
     if (!order) {
       return res.status(404).json({
@@ -3398,7 +3439,7 @@ exports.generateOrderInvoice = async (req, res) => {
     let sellerTotal = 0;
 
     if (order.items) {
-      sellerItems = order.items.filter(item => 
+      sellerItems = order.items.filter(item =>
         item.seller && item.seller.toString() === sellerId.toString()
       );
       sellerTotal = sellerItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);

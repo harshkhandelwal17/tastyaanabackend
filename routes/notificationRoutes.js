@@ -10,7 +10,7 @@ const NOTIFICATION_ASSETS = {
   // Main logo and badge
   logo: 'https://res.cloudinary.com/dcha7gy9o/image/upload/v1758483675/tastyaana_avwqpb.png',
   defaultBadge: 'https://res.cloudinary.com/dcha7gy9o/image/upload/v1758484105/tastyaana-removebg-preview_f8nmn2.png',
-  
+
   // Icons for different notification types
   icons: {
     order: 'logo.png',
@@ -19,7 +19,7 @@ const NOTIFICATION_ASSETS = {
     cart: 'logo.png',
     general: 'https://res.cloudinary.com/dcha7gy9o/image/upload/v1758483675/tastyaana_avwqpb.png'
   },
-  
+
   // Badges for different notification types
   badges: {
     order: 'logo.png',
@@ -67,8 +67,8 @@ router.post('/subscribe', authenticate, async (req, res) => {
 
     // Validate subscription object
     if (!subscription.endpoint || !subscription.keys || !subscription.keys.p256dh || !subscription.keys.auth) {
-      return res.status(400).json({ 
-        message: 'Invalid subscription object. Missing required properties: endpoint, keys.p256dh, or keys.auth' 
+      return res.status(400).json({
+        message: 'Invalid subscription object. Missing required properties: endpoint, keys.p256dh, or keys.auth'
       });
     }
 
@@ -107,6 +107,61 @@ router.post('/unsubscribe', authenticate, async (req, res) => {
   } catch (error) {
     console.error('Error unsubscribing from notifications:', error);
     res.status(500).json({ message: 'Failed to unsubscribe from notifications' });
+  }
+});
+
+// --- NEW BLOCKS for USER INBOX ---
+
+// Get User's Notification History
+router.get('/user/history', authenticate, async (req, res) => {
+  try {
+    const notifications = await Notification.find({ userId: req.user._id })
+      .sort({ sentAt: -1 })
+      .limit(50);
+    res.json({ notifications });
+  } catch (error) {
+    console.error('Error fetching user notifications:', error);
+    res.status(500).json({ message: 'Failed to fetch notifications' });
+  }
+});
+
+// Mark Notification as Read
+router.patch('/:id/read', authenticate, async (req, res) => {
+  try {
+    const notification = await Notification.findOne({ _id: req.params.id, userId: req.user._id });
+    if (!notification) return res.status(404).json({ message: 'Notification not found' });
+
+    notification.clickedAt = new Date(); // Using clickedAt as "Read" indicator for now
+    await notification.save();
+    res.json({ message: 'Marked as read', notification });
+  } catch (error) {
+    console.error('Error marking notification read:', error);
+    res.status(500).json({ message: 'Failed to update notification' });
+  }
+});
+
+// Mark ALL as Read
+router.patch('/read-all', authenticate, async (req, res) => {
+  try {
+    await Notification.updateMany(
+      { userId: req.user._id, clickedAt: null },
+      { $set: { clickedAt: new Date() } }
+    );
+    res.json({ message: 'All marked as read' });
+  } catch (error) {
+    console.error('Error marking all read:', error);
+    res.status(500).json({ message: 'Failed to update notifications' });
+  }
+});
+
+// Delete Notification
+router.delete('/:id', authenticate, async (req, res) => {
+  try {
+    await Notification.findOneAndDelete({ _id: req.params.id, userId: req.user._id });
+    res.json({ message: 'Notification deleted' });
+  } catch (error) {
+    console.error('Error deleting notification:', error);
+    res.status(500).json({ message: 'Failed to delete notification' });
   }
 });
 
@@ -149,14 +204,14 @@ router.post('/broadcast', async (req, res) => {
 
     let users;
     if (targetSegment === 'all') {
-      users = await User.find({ 
-        notificationEnabled: true, 
-        pushSubscription: { $exists: true, $ne: null } 
+      users = await User.find({
+        notificationEnabled: true,
+        pushSubscription: { $exists: true, $ne: null }
       });
     } else {
       // Add logic for different user segments
-      users = await User.find({ 
-        notificationEnabled: true, 
+      users = await User.find({
+        notificationEnabled: true,
         pushSubscription: { $exists: true, $ne: null },
         // Add segment-specific criteria here
       });
@@ -187,8 +242,8 @@ router.post('/broadcast', async (req, res) => {
       targetSegment: targetSegment || 'all'
     });
 
-    res.json({ 
-      message: 'Broadcast completed', 
+    res.json({
+      message: 'Broadcast completed',
       results: {
         total: users.length,
         sent: results.filter(r => r.status === 'sent').length,
@@ -360,19 +415,19 @@ router.post('/send', authenticateAdmin, async (req, res) => {
     const { title, body, type, targetType, targetUsers, targetSegment, scheduled, scheduledTime, requireInteraction, actions, redirectUrl } = req.body;
 
     // Determine icon and badge based on notification type
-    const notificationType = type ;
-    const notificationIcon =  NOTIFICATION_ASSETS.icons.general;
-    const notificationBadge =  NOTIFICATION_ASSETS.defaultBadge;
+    const notificationType = type;
+    const notificationIcon = NOTIFICATION_ASSETS.icons.general;
+    const notificationBadge = NOTIFICATION_ASSETS.defaultBadge;
 
     const notification = {
       title,
       body,
       icon: notificationIcon,
       badge: notificationBadge,
-      type: notificationType||'general',
+      type: notificationType || 'general',
       requireInteraction: Boolean(requireInteraction),
       actions: Array.isArray(actions) ? actions : [],
-      data: { 
+      data: {
         type: notificationType,
         url: redirectUrl || '/',
         timestamp: new Date().toISOString()
@@ -385,29 +440,29 @@ router.post('/send', authenticateAdmin, async (req, res) => {
     }
 
     let users;
-   if (targetType === 'all') {
-  users = await User.find({ 
-    "preferences.notifications.push": true, // only push-enabled
-    pushSubscriptions: { $exists: true, $not: { $size: 0 } }
-  });
-} 
-else if (targetType === 'segment') {
-  // e.g., users with Hindi language and push enabled
-  users = await User.find({ 
-    "preferences.language": "hi",
-    "preferences.notifications.push": true,
-    pushSubscriptions: { $exists: true, $not: { $size: 0 } }
-  });
-} 
-else if (targetType === 'specific') {
-  users = await User.find({ 
-    _id: { $in: targetUsers },
-    "preferences.notifications.push": true,
-    pushSubscriptions: { $exists: true, $not: { $size: 0 } }
-  });
-}
+    if (targetType === 'all') {
+      users = await User.find({
+        "preferences.notifications.push": true, // only push-enabled
+        pushSubscriptions: { $exists: true, $not: { $size: 0 } }
+      });
+    }
+    else if (targetType === 'segment') {
+      // e.g., users with Hindi language and push enabled
+      users = await User.find({
+        "preferences.language": "hi",
+        "preferences.notifications.push": true,
+        pushSubscriptions: { $exists: true, $not: { $size: 0 } }
+      });
+    }
+    else if (targetType === 'specific') {
+      users = await User.find({
+        _id: { $in: targetUsers },
+        "preferences.notifications.push": true,
+        pushSubscriptions: { $exists: true, $not: { $size: 0 } }
+      });
+    }
 
-console.log("users are : ",users)
+    console.log("users are : ", users)
     const payload = JSON.stringify(notification);
     const results = [];
 
@@ -462,7 +517,7 @@ console.log("users are : ",users)
       targetSegment: targetSegment || 'all'
     });
 
-    res.json({ 
+    res.json({
       message: 'Notification sent successfully',
       results: {
         total: users.length,
@@ -481,8 +536,8 @@ router.get('/user/notification-settings', authenticate, async (req, res) => {
   try {
     const userId = req.user._id; // Get userId from authenticated user
     const user = await User.findById(userId);
-    
-    res.json({ 
+
+    res.json({
       settings: user.notificationSettings || {
         orderUpdates: true,
         promotions: true,
