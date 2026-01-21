@@ -893,6 +893,22 @@ class SocketService {
       timestamp: new Date()
     });
   }
+
+  // Emit wallet/T-Coins update to a specific user
+  emitWalletUpdate(userId, data) {
+    if (userId) {
+      this.io.to(`user-${userId}`).emit('wallet-update', data);
+      console.log(`💰 Wallet update sent to user ${userId}:`, data);
+    }
+  }
+
+  // Emit generic order update to user
+  emitUserOrderUpdate(userId, data) {
+    if (userId) {
+      this.io.to(`user-${userId}`).emit('order-update', data);
+      console.log(`📦 Order update sent to user ${userId}:`, data.status);
+    }
+  }
 }
 
 module.exports = SocketService;

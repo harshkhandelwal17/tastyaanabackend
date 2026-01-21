@@ -17,10 +17,10 @@ const logAdminActivity = async (adminId, action, details, req) => {
       ip: req.ip || req.connection.remoteAddress,
       userAgent: req.get('User-Agent')
     };
-    
+
     // You could save this to a dedicated AdminLog model/collection
     console.log('Admin Activity:', logEntry);
-    
+
     // For now, we'll just log to console. 
     // In production, you should save to database
   } catch (error) {
@@ -36,7 +36,7 @@ exports.getDashboardAnalytics = async (req, res) => {
   try {
     // Log admin activity
     await logAdminActivity(req.user.id, 'VIEW_DASHBOARD', 'Accessed dashboard analytics', req);
-    
+
     const today = moment().startOf('day');
     const thisMonth = moment().startOf('month');
     const lastMonth = moment().subtract(1, 'month').startOf('month');
@@ -73,43 +73,43 @@ exports.getDashboardAnalytics = async (req, res) => {
     ]);
 
     const revenueToday = await Order.aggregate([
-      { 
-        $match: { 
+      {
+        $match: {
           createdAt: { $gte: today.toDate() },
           status: { $in: ['confirmed', 'delivered'] }
-        } 
+        }
       },
       { $group: { _id: null, total: { $sum: '$totalAmount' } } }
     ]);
 
     const revenueThisMonth = await Order.aggregate([
-      { 
-        $match: { 
+      {
+        $match: {
           createdAt: { $gte: thisMonth.toDate() },
           status: { $in: ['confirmed', 'delivered'] }
-        } 
+        }
       },
       { $group: { _id: null, total: { $sum: '$totalAmount' } } }
     ]);
 
     // Delivery Analytics
-    const deliveriesCompleted = await DeliveryTracking.countDocuments({ 
-      deliveryStatus: 'delivered' 
+    const deliveriesCompleted = await DeliveryTracking.countDocuments({
+      deliveryStatus: 'delivered'
     });
-    const deliveriesPending = await DeliveryTracking.countDocuments({ 
-      deliveryStatus: 'pending' 
+    const deliveriesPending = await DeliveryTracking.countDocuments({
+      deliveryStatus: 'pending'
     });
 
     // Growth Analytics (Month over Month)
     const lastMonthUsers = await User.countDocuments({
-      createdAt: { 
+      createdAt: {
         $gte: lastMonth.toDate(),
         $lt: thisMonth.toDate()
       }
     });
 
     const lastMonthOrders = await Order.countDocuments({
-      createdAt: { 
+      createdAt: {
         $gte: lastMonth.toDate(),
         $lt: thisMonth.toDate()
       }
@@ -185,7 +185,7 @@ exports.getUsers = async (req, res) => {
   try {
     // Log admin activity
     await logAdminActivity(req.user.id, 'VIEW_USERS', `Accessed users list with filters: ${JSON.stringify(req.query)}`, req);
-    
+
     const {
       page = 1,
       limit = 20,
@@ -351,22 +351,22 @@ exports.getUserById = async (req, res) => {
   try {
     // Log admin activity
     await logAdminActivity(req.user.id, 'VIEW_USER_DETAIL', `Accessed user detail for ID: ${req.params.userId}`, req);
-    
+
     const { userId } = req.params;
-    
+
     const user = await User.findById(userId).select('-password');
-    
+
     if (!user) {
       return res.status(404).json({
         success: false,
         message: 'User not found'
       });
     }
-    
+
     // Get user statistics
     const subscriptionCount = await Subscription.countDocuments({ user: userId });
     const orderCount = await Order.countDocuments({ userId: userId });
-    
+
     // Calculate total spent
     const totalSpent = await Order.aggregate([
       { $match: { userId: user._id, status: { $in: ['confirmed', 'delivered'] } } },
@@ -404,22 +404,22 @@ exports.updateUser = async (req, res) => {
   try {
     // Log admin activity
     await logAdminActivity(req.user.id, 'UPDATE_USER', `Updated user ${req.params.userId}: ${JSON.stringify(req.body)}`, req);
-    
+
     const { userId } = req.params;
     const updateData = req.body;
-    
+
     // Remove sensitive fields that shouldn't be updated via this endpoint
     delete updateData.password;
     delete updateData._id;
     delete updateData.__v;
     delete updateData.createdAt;
-    
+
     const user = await User.findByIdAndUpdate(
-      userId, 
-      updateData, 
+      userId,
+      updateData,
       { new: true, runValidators: true }
     ).select('-password');
-    
+
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -451,16 +451,16 @@ exports.updateUserStatus = async (req, res) => {
   try {
     // Log admin activity
     await logAdminActivity(req.user.id, 'UPDATE_USER_STATUS', `Updated user ${req.params.userId} status to ${req.body.status}`, req);
-    
+
     const { userId } = req.params;
     const { status } = req.body;
-    
+
     const user = await User.findByIdAndUpdate(
-      userId, 
-      { status }, 
+      userId,
+      { status },
       { new: true, runValidators: true }
     ).select('-password');
-    
+
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -492,7 +492,7 @@ exports.getSubscriptions = async (req, res) => {
   try {
     // Log admin activity
     await logAdminActivity(req.user.id, 'VIEW_SUBSCRIPTIONS', `Accessed subscriptions list with filters: ${JSON.stringify(req.query)}`, req);
-    
+
     const {
       page = 1,
       limit = 50,
@@ -651,23 +651,23 @@ exports.getSubscriptionById = async (req, res) => {
   try {
     // Log admin activity
     await logAdminActivity(req.user.id, 'VIEW_SUBSCRIPTION_DETAIL', `Accessed subscription detail for ID: ${req.params.subscriptionId}`, req);
-    
+
     const { subscriptionId } = req.params;
-    
+
     const subscription = await Subscription.findById(subscriptionId)
       .populate('user', 'name email phone')
       .populate('mealPlan', 'name description price duration category');
-    
+
     if (!subscription) {
       return res.status(404).json({
         success: false,
         message: 'Subscription not found'
       });
     }
-    
+
     // Get delivery schedule/history
-    const deliveries = await DeliveryTracking.find({ 
-      subscriptionId: subscription._id 
+    const deliveries = await DeliveryTracking.find({
+      subscriptionId: subscription._id
     }).sort({ scheduledDate: 1 });
 
     res.json({
@@ -696,16 +696,16 @@ exports.updateSubscriptionStatus = async (req, res) => {
   try {
     // Log admin activity
     await logAdminActivity(req.user.id, 'UPDATE_SUBSCRIPTION_STATUS', `Updated subscription ${req.params.subscriptionId} status to ${req.body.status}`, req);
-    
+
     const { subscriptionId } = req.params;
     const { status } = req.body;
-    
+
     const subscription = await Subscription.findByIdAndUpdate(
-      subscriptionId, 
-      { status }, 
+      subscriptionId,
+      { status },
       { new: true, runValidators: true }
     ).populate('user', 'name email').populate('mealPlan', 'name');
-    
+
     if (!subscription) {
       return res.status(404).json({
         success: false,
@@ -737,7 +737,7 @@ exports.getOrders = async (req, res) => {
   try {
     // Log admin activity
     await logAdminActivity(req.user.id, 'VIEW_ORDERS', `Accessed orders list with filters: ${JSON.stringify(req.query)}`, req);
-    
+
     const {
       page = 1,
       limit = 20,
@@ -766,7 +766,7 @@ exports.getOrders = async (req, res) => {
       ];
     }
 
-    if (status!=="all") {
+    if (status !== "all") {
       query.status = status;
     }
 
@@ -787,7 +787,7 @@ exports.getOrders = async (req, res) => {
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .lean();
-// console.log("orders : ",orders,query);
+    // console.log("orders : ",orders,query);
     const totalOrders = await Order.countDocuments(query);
 
     res.json({
@@ -852,12 +852,12 @@ exports.getOrderById = async (req, res) => {
   try {
     // Log admin activity
     await logAdminActivity(req.user.id, 'VIEW_ORDER_DETAIL', `Accessed order detail for ID: ${req.params.orderId}`, req);
-    
+
     const { orderId } = req.params;
-    
+
     const order = await Order.findById(orderId)
       .populate('userId', 'name email phone');
-    
+
     if (!order) {
       return res.status(404).json({
         success: false,
@@ -888,28 +888,70 @@ exports.updateOrderStatus = async (req, res) => {
   try {
     // Log admin activity
     await logAdminActivity(req.user.id, 'UPDATE_ORDER_STATUS', `Updated order ${req.params.orderId} status to ${req.body.status}`, req);
-    
+
     const { orderId } = req.params;
     const { status } = req.body;
-    
+
     const updateData = { status };
-    
+
     // Add delivered timestamp if status is delivered
     if (status === 'delivered') {
       updateData.deliveredAt = new Date();
     }
-    
+
     const order = await Order.findByIdAndUpdate(
-      orderId, 
-      updateData, 
+      orderId,
+      updateData,
       { new: true, runValidators: true }
     ).populate('userId', 'name email');
-    
+
     if (!order) {
       return res.status(404).json({
         success: false,
         message: 'Order not found'
       });
+    }
+
+    // === T-COINS EARNING LOGIC ===
+    if (status === 'delivered' && (!order.coinsEarned || order.coinsEarned === 0)) {
+      const EARN_RATE = 0.1;
+      const coinsToEarn = Math.floor(order.totalAmount * EARN_RATE);
+
+      console.log(`[ADMIN-PANEL] Order Delivered. Total: ${order.totalAmount}, Coins to Earn: ${coinsToEarn}`);
+
+      if (coinsToEarn > 0) {
+        order.coinsEarned = coinsToEarn;
+
+        // Update user wallet
+        const customer = await User.findById(order.userId);
+        if (customer) {
+          console.log('[ADMIN-PANEL] Customer found:', customer._id);
+
+          // Initialize if missing
+          if (!customer.tCoins) {
+            console.log('[ADMIN-PANEL] Initializing tCoins for customer');
+            customer.tCoins = { balance: 0, history: [] };
+          }
+
+          customer.tCoins.balance += coinsToEarn;
+          customer.tCoins.history.push({
+            points: coinsToEarn,
+            action: 'earned',
+            reason: `Earned from Order #${order.orderNumber}`,
+            date: new Date()
+          });
+
+          // Force Mongoose to register the change
+          customer.markModified('tCoins');
+
+          await customer.save();
+          console.log(`🌟 [ADMIN-PANEL] T-Coins Saved! New Balance: ${customer.tCoins.balance}`);
+        } else {
+          console.log('[ADMIN-PANEL] Customer NOT found for ID:', order.userId);
+        }
+      }
+      // Save the updated order with coinsEarned
+      await order.save();
     }
 
     res.json({
@@ -936,15 +978,15 @@ exports.getMealPlanAnalytics = async (req, res) => {
   try {
     // Get all meal plans with subscription counts
     const mealPlans = await MealPlan.find().lean();
-    
+
     const mealPlanStats = await Promise.all(
       mealPlans.map(async (plan) => {
         const subscriptionCount = await Subscription.countDocuments({ mealPlan: plan._id });
-        const activeSubscriptions = await Subscription.countDocuments({ 
-          mealPlan: plan._id, 
-          status: 'active' 
+        const activeSubscriptions = await Subscription.countDocuments({
+          mealPlan: plan._id,
+          status: 'active'
         });
-        
+
         const revenue = await Subscription.aggregate([
           { $match: { mealPlan: plan._id } },
           { $group: { _id: null, total: { $sum: '$pricing.finalAmount' } } }
@@ -1010,10 +1052,10 @@ exports.getMealPlanAnalytics = async (req, res) => {
 exports.getAnalytics = async (req, res) => {
   try {
     const { period = '30days' } = req.query;
-    
+
     let dateFilter;
     const now = moment();
-    
+
     switch (period) {
       case '7days':
         dateFilter = { $gte: now.subtract(7, 'days').toDate() };

@@ -943,7 +943,7 @@ const userSchema = new mongoose.Schema({
     // Restored fields as per user request
     sellerType: {
       type: [String],
-      enum: ['food', 'tiffin', 'grocery', 'laundry', 'all'],
+      enum: ['food', 'tiffin', 'grocery', 'laundry', 'all', 'other'],
       default: ['food']
     },
     storeType: {

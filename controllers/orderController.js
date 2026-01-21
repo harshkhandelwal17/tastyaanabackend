@@ -1139,6 +1139,53 @@ const orderController = {
         });
       }
 
+      // === T-COIN EARNING LOGIC FOR DELIVERED ORDERS ===
+      if (status === 'delivered' && order.paymentStatus !== 'paid') {
+        // Auto-mark payment as paid if delivered (assuming COD/success)
+        order.paymentStatus = 'paid';
+        order.paidAt = new Date();
+      }
+
+      if (status === 'delivered' && (!order.coinsEarned || order.coinsEarned === 0)) {
+        const EARN_RATE = 0.1;
+        const coinsToEarn = Math.floor(order.totalAmount * EARN_RATE);
+
+        console.log(`[DEBUG] Order Delivered. Total: ${order.totalAmount}, Coins to Earn: ${coinsToEarn}`);
+
+        if (coinsToEarn > 0) {
+          order.coinsEarned = coinsToEarn;
+
+          // Update user wallet
+          const customer = await User.findById(order.userId);
+          if (customer) {
+            console.log('[DEBUG] Customer found:', customer._id);
+
+            // Initialize if missing
+            if (!customer.tCoins) {
+              console.log('[DEBUG] Initializing tCoins for customer');
+              customer.tCoins = { balance: 0, history: [] };
+            }
+
+            customer.tCoins.balance += coinsToEarn;
+            customer.tCoins.history.push({
+              points: coinsToEarn,
+              action: 'earned',
+              reason: `Earned from Order #${order.orderNumber}`,
+              date: new Date()
+            });
+
+            // Force Mongoose to register the change
+            customer.markModified('tCoins');
+
+            await customer.save();
+            console.log(`🌟 T-Coins Saved! New Balance: ${customer.tCoins.balance}`);
+          } else {
+            console.log('[DEBUG] Customer NOT found for ID:', order.userId);
+          }
+        }
+        await order.save(); // Save updated order with payment status and coins
+      }
+
       res.json({
         success: true,
         order
@@ -1446,6 +1493,49 @@ orderController.updatePaymentStatus = async (req, res) => {
     });
   }
 }
+
+// Update order status (Admin/Driver)
+orderController.updateOrderStatus = async (req, res) => {
+  try {
+    const { orderNumber } = req.params;
+    const { status, trackingNumber } = req.body;
+
+    const order = await Order.findOneAndUpdate(
+      { orderNumber },
+      {
+        status,
+        trackingNumber,
+        ...(status === 'delivered' && { deliveredAt: new Date() }),
+        updatedAt: new Date()
+      },
+      { new: true }
+    );
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Emit real-time update
+    const socketService = req.app.get('socketService');
+    if (socketService) {
+      socketService.emitUserOrderUpdate(order.userId, {
+        id: order._id, // IMPORTANT: Front-end needs this to update state
+        orderNumber: order.orderNumber,
+        status: order.status,
+        updatedAt: new Date()
+      });
+      console.log(`📡 Socket: Emitted order-update for ${order.orderNumber} to ${order.userId}`);
+    }
+
+    res.json({
+      message: 'Order status updated successfully',
+      order
+    });
+  } catch (error) {
+    console.error('Update status error:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // Auto-assign delivery partner to order based on item category
 const autoAssignDeliveryPartnerToOrder = async (orderId, items) => {
@@ -1907,6 +1997,16 @@ module.exports = orderController;
 
 //       if (!order) {
 //         return res.status(404).json({ message: 'Order not found' });
+//       }
+
+//       // Emit real-time update
+//       const socketService = req.app.get('socketService');
+//       if (socketService) {
+//         socketService.emitUserOrderUpdate(order.userId, {
+//           orderNumber: order.orderNumber,
+//           status: order.status,
+//           updatedAt: new Date()
+//         });
 //       }
 
 //       res.json({

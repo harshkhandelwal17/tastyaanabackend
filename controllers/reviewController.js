@@ -14,12 +14,19 @@ const mongoose = require('mongoose');
 exports.getProductReviews = async (req, res) => {
   try {
     const { page = 1, limit = 10, rating, sortBy = 'createdAt' } = req.query;
-    
-    const query = { 
+
+    if (!mongoose.isValidObjectId(req.params.productId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid Product ID'
+      });
+    }
+
+    const query = {
       product: new mongoose.Types.ObjectId(req.params.productId),
       isApproved: true
     };
-    
+
     if (rating) query.rating = parseInt(rating);
 
     const sortOptions = {};
@@ -69,12 +76,12 @@ exports.getProductReviews = async (req, res) => {
  */
 exports.getPlanReviews = async (req, res) => {
   try {
-    const reviews = await Review.find({ 
+    const reviews = await Review.find({
       mealPlan: req.params.planId,
-      isApproved: true 
+      isApproved: true
     })
-    .populate('user', 'name avatar')
-    .sort({ createdAt: -1 });
+      .populate('user', 'name avatar')
+      .sort({ createdAt: -1 });
 
     res.json({
       success: true,
@@ -126,12 +133,20 @@ exports.createReview = async (req, res) => {
     const { productId, mealPlanId, orderId, type, rating, title, comment } = req.body;
 
     // Verify purchase - allow reviews for confirmed, shipped, and delivered orders
-    console.log("user id is ",req.user._id);
-    const order = await Order.findOne({
-      _id: new mongoose.Types.ObjectId(orderId),
-      userId: req.user._id,
-      status: { $in: ['confirmed', 'preparing', 'ready', 'out-for-delivery', 'delivered', 'shipped'] }
+    console.log("user id is ", req.user._id);
 
+    // Validate orderId
+    if (!orderId || !mongoose.isValidObjectId(orderId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid Order ID'
+      });
+    }
+
+    const order = await Order.findOne({
+      _id: orderId,
+      userId: req.user._id, // verify it matches the user
+      status: { $in: ['confirmed', 'preparing', 'ready', 'out-for-delivery', 'delivered', 'shipped'] }
     });
 
     if (!order) {
@@ -196,25 +211,25 @@ exports.createReview = async (req, res) => {
     // Update product/plan rating
     const model = type === 'product' ? Product : MealPlan;
     const itemId = type === 'product' ? productId : mealPlanId;
-    
+
     // Get all reviews for this product/plan (including the new one)
-    const reviews = await Review.find({ 
+    const reviews = await Review.find({
       [type === 'product' ? 'product' : 'mealPlan']: itemId
     });
-    
+
     console.log(`Found ${reviews.length} reviews for ${type} ${itemId}`);
-    
+
     if (reviews.length > 0) {
       const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
-      
+
       console.log(`Updating ${type} ${itemId} with average rating: ${averageRating}, count: ${reviews.length}`);
-      
+
       const updateResult = await model.findByIdAndUpdate(itemId, {
         'ratings.average': averageRating,
         'ratings.count': reviews.length,
         'reviewCount': reviews.length
       }, { new: true });
-      
+
       console.log(`Updated ${type} result:`, updateResult);
     }
 
@@ -240,7 +255,7 @@ exports.createReview = async (req, res) => {
 exports.updateReview = async (req, res) => {
   try {
     const { rating, title, comment, imagesToDelete = [] } = req.body;
-    
+
     const review = await Review.findOne({
       _id: req.params.id,
       user: req.user._id
@@ -255,7 +270,7 @@ exports.updateReview = async (req, res) => {
 
     // Process images
     let currentImages = review.images || [];
-    
+
     // Remove images marked for deletion
     if (imagesToDelete.length > 0) {
       currentImages = currentImages.filter(
@@ -281,15 +296,15 @@ exports.updateReview = async (req, res) => {
     // Update product/plan rating after review update
     const model = review.type === 'product' ? Product : MealPlan;
     const itemId = review.product || review.mealPlan;
-    
+
     if (itemId) {
-      const reviews = await Review.find({ 
+      const reviews = await Review.find({
         [review.type === 'product' ? 'product' : 'mealPlan']: itemId
       });
-      
+
       if (reviews.length > 0) {
         const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
-        
+
         await model.findByIdAndUpdate(itemId, {
           'ratings.average': averageRating,
           'ratings.count': reviews.length,
@@ -333,15 +348,15 @@ exports.deleteReview = async (req, res) => {
     // Update product/plan rating
     const model = review.type === 'product' ? Product : MealPlan;
     const itemId = review.product || review.mealPlan;
-    
+
     if (itemId) {
-      const reviews = await Review.find({ 
+      const reviews = await Review.find({
         [review.type === 'product' ? 'product' : 'mealPlan']: itemId
       });
-      
+
       if (reviews.length > 0) {
         const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
-        
+
         await model.findByIdAndUpdate(itemId, {
           'ratings.average': averageRating,
           'ratings.count': reviews.length,

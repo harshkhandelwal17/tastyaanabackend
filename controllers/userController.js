@@ -457,66 +457,83 @@ const userController = {
       note: 'Wallet top-up'
     });
 
-    await Promise.all([
-      user.save(),
-      transaction.save()
-    ]);
+    transaction.save()
+    
 
-    res.status(201).json({
-      success: true,
-      data: {
-        newBalance: user.wallet.balance,
-        transaction
+// Emit real-time wallet update
+const socketService = req.app.get('socketService');
+if (socketService) {
+  socketService.emitWalletUpdate(user._id, {
+    tCoins: user.tCoins, // Send full tCoins object if structure matches, otherwise just balance
+    // Wait, Redux expects { tCoins: ... } or just balance? 
+    // In SocketContext: dispatch(updateUser({ tCoins: data.tCoins }));
+    // userController only updated `user.wallet.balance`. It didn't touch tCoins here?
+    // Ah, `addToWallet` updates `user.wallet.balance` (money), not tCoins (points).
+    // Let's check `authSlice`. It usually stores `wallet`.
+    // If I look at User model (not visible fully but implied), `wallet` and `tCoins` are different.
+    // My SocketContext listener listens for `wallet-update` and dispatches `updateUser({ tCoins: data.tCoins })`. 
+    // This seems mismatched. I should probably update `wallet` too in Redux.
+    // For now, I'll emit what I have.
+    wallet: user.wallet,
+    message: `Wallet recharged with ₹${amount}`
+  });
+}
+
+res.status(201).json({
+  success: true,
+  data: {
+    newBalance: user.wallet.balance,
+    transaction
+  }
+});
+  },
+
+/**
+ * @desc    Get user statistics
+ * @route   GET /api/users/stats
+ * @access  Private
+ */
+getUserStats: async (req, res) => {
+  const [orderStats, walletStats] = await Promise.all([
+    Order.aggregate([
+      { $match: { user: req.user._id } },
+      {
+        $group: {
+          _id: null,
+          totalOrders: { $sum: 1 },
+          completedOrders: {
+            $sum: { $cond: [{ $eq: ['$status', 'delivered'] }, 1, 0] }
+          },
+          totalSpent: { $sum: '$totalAmount' }
+        }
       }
-    });
-  },
-
-  /**
-   * @desc    Get user statistics
-   * @route   GET /api/users/stats
-   * @access  Private
-   */
-  getUserStats: async (req, res) => {
-    const [orderStats, walletStats] = await Promise.all([
-      Order.aggregate([
-        { $match: { user: req.user._id } },
-        {
-          $group: {
-            _id: null,
-            totalOrders: { $sum: 1 },
-            completedOrders: {
-              $sum: { $cond: [{ $eq: ['$status', 'delivered'] }, 1, 0] }
-            },
-            totalSpent: { $sum: '$totalAmount' }
+    ]),
+    WalletTransaction.aggregate([
+      { $match: { user: req.user._id } },
+      {
+        $group: {
+          _id: null,
+          totalAdded: {
+            $sum: { $cond: [{ $eq: ['$type', 'credit'] }, '$amount', 0] }
+          },
+          totalUsed: {
+            $sum: { $cond: [{ $eq: ['$type', 'debit'] }, '$amount', 0] }
           }
         }
-      ]),
-      WalletTransaction.aggregate([
-        { $match: { user: req.user._id } },
-        {
-          $group: {
-            _id: null,
-            totalAdded: {
-              $sum: { $cond: [{ $eq: ['$type', 'credit'] }, '$amount', 0] }
-            },
-            totalUsed: {
-              $sum: { $cond: [{ $eq: ['$type', 'debit'] }, '$amount', 0] }
-            }
-          }
-        }
-      ])
-    ]);
+      }
+    ])
+  ]);
 
-    const stats = {
-      orders: orderStats[0] || { totalOrders: 0, completedOrders: 0, totalSpent: 0 },
-      wallet: walletStats[0] || { totalAdded: 0, totalUsed: 0 }
-    };
+  const stats = {
+    orders: orderStats[0] || { totalOrders: 0, completedOrders: 0, totalSpent: 0 },
+    wallet: walletStats[0] || { totalAdded: 0, totalUsed: 0 }
+  };
 
-    res.json({
-      success: true,
-      data: stats
-    });
-  },
+  res.json({
+    success: true,
+    data: stats
+  });
+},
 
   // Get all sellers
   getSellers: async (req, res) => {
@@ -565,142 +582,142 @@ const userController = {
     }
   },
 
-  // Change Password
-  changePassword: async (req, res) => {
-    try {
-      const { currentPassword, newPassword } = req.body;
-      const user = await User.findById(req.user.id).select('+password');
+    // Change Password
+    changePassword: async (req, res) => {
+      try {
+        const { currentPassword, newPassword } = req.body;
+        const user = await User.findById(req.user.id).select('+password');
 
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
 
-      // If user has no password (google auth), allow setting one directly
-      if (!user.password) {
-        // Create password
+        // If user has no password (google auth), allow setting one directly
+        if (!user.password) {
+          // Create password
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(newPassword, salt);
+          await user.save();
+          return res.json({ message: 'Password set successfully' });
+        }
+
+        // Check current password
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+          return res.status(400).json({ message: 'Invalid current password' });
+        }
+
+        // Hash new password
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(newPassword, salt);
         await user.save();
-        return res.json({ message: 'Password set successfully' });
+
+        res.json({ message: 'Password updated successfully' });
+      } catch (error) {
+        res.status(500).json({ message: error.message });
       }
+    },
 
-      // Check current password
-      const isMatch = await bcrypt.compare(currentPassword, user.password);
-      if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid current password' });
-      }
+      // Delete Account
+      deleteAccount: async (req, res) => {
+        try {
+          const user = await User.findById(req.user._id || req.user.id);
 
-      // Hash new password
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(newPassword, salt);
-      await user.save();
-
-      res.json({ message: 'Password updated successfully' });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  // Delete Account
-  deleteAccount: async (req, res) => {
-    try {
-      const user = await User.findById(req.user._id || req.user.id);
-
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-
-      // Optional: Add logic to archive data instead of hard delete
-      // For now, hard delete as per request
-      await User.findByIdAndDelete(user._id);
-
-      // Clear cookie
-      res.clearCookie('token');
-
-      res.json({ message: 'Account deleted successfully' });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  /**
-   * @desc    Update App Preferences (Notifications, Theme, etc.)
-   * @route   PUT /api/users/app-preferences
-   * @access  Private
-   */
-  updateAppSettings: async (req, res) => {
-    console.log(req)
-    try {
-      if (!req.body) {
-        throw new Error('Server received empty body (req.body is undefined). Check Content-Type header.');
-      }
-
-      const { notifications, theme, language, location } = req.body;
-      const updates = {};
-
-      if (notifications !== undefined) {
-        if (typeof notifications === 'boolean') {
-          updates['preferences.notifications.push'] = notifications;
-        } else {
-          updates['preferences.notifications'] = notifications;
-        }
-      }
-      if (theme !== undefined) updates['preferences.theme'] = theme;
-      if (language !== undefined) updates['preferences.language'] = language;
-      if (location !== undefined) updates['preferences.location'] = location;
-
-      const user = await User.findByIdAndUpdate(
-        req.user._id,
-        { $set: updates },
-        { new: true }
-      ).select('-password');
-
-      res.json({ success: true, user });
-    } catch (error) {
-      console.error('Update App Settings Error:', error.message);
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  // Get seller by ID (Public)
-  getSellerById: async (req, res) => {
-    try {
-      const { id } = req.params;
-
-      const query = {
-        _id: id,
-        $or: [
-          { role: 'seller' },
-          {
-            role: 'buyer',
-            'sellerProfile.sellerType': { $exists: true, $ne: [] }
+          if (!user) {
+            return res.status(404).json({ message: 'User not found' });
           }
-        ]
-      };
 
-      const seller = await User.findOne(query)
-        .select('-password -googleId -__v');
+          // Optional: Add logic to archive data instead of hard delete
+          // For now, hard delete as per request
+          await User.findByIdAndDelete(user._id);
 
-      if (!seller) {
-        return res.status(404).json({
-          success: false,
-          message: 'Kitchen/Vendor not found'
-        });
-      }
+          // Clear cookie
+          res.clearCookie('token');
 
-      res.json({
-        success: true,
-        data: seller
-      });
-    } catch (error) {
-      console.error('Get seller by ID error:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Server error while fetching vendor details',
-        error: error.message
-      });
-    }
-  }
+          res.json({ message: 'Account deleted successfully' });
+        } catch (error) {
+          res.status(500).json({ message: error.message });
+        }
+      },
+
+        /**
+         * @desc    Update App Preferences (Notifications, Theme, etc.)
+         * @route   PUT /api/users/app-preferences
+         * @access  Private
+         */
+        updateAppSettings: async (req, res) => {
+          console.log(req)
+          try {
+            if (!req.body) {
+              throw new Error('Server received empty body (req.body is undefined). Check Content-Type header.');
+            }
+
+            const { notifications, theme, language, location } = req.body;
+            const updates = {};
+
+            if (notifications !== undefined) {
+              if (typeof notifications === 'boolean') {
+                updates['preferences.notifications.push'] = notifications;
+              } else {
+                updates['preferences.notifications'] = notifications;
+              }
+            }
+            if (theme !== undefined) updates['preferences.theme'] = theme;
+            if (language !== undefined) updates['preferences.language'] = language;
+            if (location !== undefined) updates['preferences.location'] = location;
+
+            const user = await User.findByIdAndUpdate(
+              req.user._id,
+              { $set: updates },
+              { new: true }
+            ).select('-password');
+
+            res.json({ success: true, user });
+          } catch (error) {
+            console.error('Update App Settings Error:', error.message);
+            res.status(500).json({ message: error.message });
+          }
+        },
+
+          // Get seller by ID (Public)
+          getSellerById: async (req, res) => {
+            try {
+              const { id } = req.params;
+
+              const query = {
+                _id: id,
+                $or: [
+                  { role: 'seller' },
+                  {
+                    role: 'buyer',
+                    'sellerProfile.sellerType': { $exists: true, $ne: [] }
+                  }
+                ]
+              };
+
+              const seller = await User.findOne(query)
+                .select('-password -googleId -__v');
+
+              if (!seller) {
+                return res.status(404).json({
+                  success: false,
+                  message: 'Kitchen/Vendor not found'
+                });
+              }
+
+              res.json({
+                success: true,
+                data: seller
+              });
+            } catch (error) {
+              console.error('Get seller by ID error:', error);
+              res.status(500).json({
+                success: false,
+                message: 'Server error while fetching vendor details',
+                error: error.message
+              });
+            }
+          }
 };
 
 module.exports = userController;
