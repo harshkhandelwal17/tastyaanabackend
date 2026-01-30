@@ -205,7 +205,7 @@
 //     const sellerId = req.user._id;
 
 //     const validStatuses = ['confirmed', 'preparing', 'ready_for_pickup', 'not_prepared'];
-    
+
 //     if (!validStatuses.includes(status)) {
 //       return res.status(400).json({
 //         success: false,
@@ -353,7 +353,7 @@
 //     const sellerId = req.user._id;
 
 //     const validStatuses = ['confirmed', 'preparing', 'ready_for_pickup', 'not_prepared'];
-    
+
 //     if (!validStatuses.includes(status)) {
 //       return res.status(400).json({
 //         success: false,
@@ -390,12 +390,12 @@
 //       order.preparationStartTime = new Date();
 //       order.preparationDeadline = new Date(Date.now() + 25 * 60 * 1000); // 25 minutes from now
 //     }
-    
+
 //     order.status = status;
 //     if (notes) {
 //       order.sellerNotes = notes;
 //     }
-    
+
 //     await order.save();
 
 //     res.json({
@@ -609,6 +609,7 @@
 const DailyOrder = require('../models/DailyOrder');
 const Order = require('../models/Order');
 const Subscription = require('../models/Subscription');
+const DailyMeal = require('../models/DailyMeal');
 const User = require('../models/User');
 const mongoose = require('mongoose');
 const moment = require('moment-timezone');
@@ -649,25 +650,25 @@ exports.getSellerDashboard = async (req, res) => {
 
     todayOrders.forEach(order => {
       const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      const hasSellerItems = (order.items || []).some(item => 
+      const hasSellerItems = (order.items || []).some(item =>
         item.seller && item.seller.toString() === sellerId.toString()
       );
-      
+
       if (isRestaurantOrder || hasSellerItems) {
         todayOrdersCount++;
-        
+
         if (order.status === 'delivered') {
           deliveredOrdersCount++;
         }
-        
+
         // Calculate revenue
         if (isRestaurantOrder) {
           todayRevenue += order.totalAmount || 0;
         } else {
-          const sellerItems = (order.items || []).filter(item => 
+          const sellerItems = (order.items || []).filter(item =>
             item.seller && item.seller.toString() === sellerId.toString()
           );
-          const sellerTotal = sellerItems.reduce((sum, item) => 
+          const sellerTotal = sellerItems.reduce((sum, item) =>
             sum + (item.price * item.quantity), 0
           );
           todayRevenue += sellerTotal;
@@ -714,10 +715,10 @@ exports.getSellerDashboard = async (req, res) => {
     let delayedOrdersCount = 0;
     delayedOrders.forEach(order => {
       const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      const hasSellerItems = (order.items || []).some(item => 
+      const hasSellerItems = (order.items || []).some(item =>
         item.seller && item.seller.toString() === sellerId.toString()
       );
-      
+
       if (isRestaurantOrder || hasSellerItems) {
         delayedOrdersCount++;
       }
@@ -755,13 +756,13 @@ exports.getSellerDashboard = async (req, res) => {
 
     liveOrders.forEach(order => {
       const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      const hasSellerItems = (order.items || []).some(item => 
+      const hasSellerItems = (order.items || []).some(item =>
         item.seller && item.seller.toString() === sellerId.toString()
       );
-      
+
       if (isRestaurantOrder || hasSellerItems) {
         liveOrdersCount++;
-        
+
         const countdownInfo = order.getCountdownInfo ? order.getCountdownInfo() : null;
         liveOrdersWithCountdown.push({
           id: order._id,
@@ -795,10 +796,10 @@ exports.getSellerDashboard = async (req, res) => {
     let totalPenaltyAmount = 0;
     penaltyOrders.forEach(order => {
       const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      const hasSellerItems = (order.items || []).some(item => 
+      const hasSellerItems = (order.items || []).some(item =>
         item.seller && item.seller.toString() === sellerId.toString()
       );
-      
+
       if (isRestaurantOrder || hasSellerItems) {
         totalPenaltyAmount += order.penaltyAmount || 0;
       }
@@ -821,7 +822,11 @@ exports.getSellerDashboard = async (req, res) => {
         count: liveOrdersCount,
         orders: liveOrdersWithCountdown
       },
-      currentShift: moment().tz('Asia/Kolkata').hour() < 14 ? 'morning' : 'evening'
+      currentShift: moment().tz('Asia/Kolkata').hour() < 14 ? 'morning' : 'evening',
+      menuStatus: {
+        today: !!(await DailyMeal.findOne({ restaurantId: sellerId, date: { $gte: today, $lt: tomorrow } })),
+        tomorrow: !!(await DailyMeal.findOne({ restaurantId: sellerId, date: { $gte: tomorrow, $lt: moment(tomorrow).add(1, 'day').toDate() } }))
+      }
     };
 
     res.json({
@@ -870,8 +875,8 @@ exports.getTodayTiffinList = async (req, res) => {
       shift: shift,
       orderType: 'subscription'
     }).populate([
-      { 
-        path: 'subscriptionId', 
+      {
+        path: 'subscriptionId',
         select: 'subscriptionId planType pricing deliveryTiming',
         populate: {
           path: 'mealPlan',
@@ -896,43 +901,43 @@ exports.getTodayTiffinList = async (req, res) => {
         const deliveryTime = moment().tz('Asia/Kolkata').hour(hours).minute(minutes).second(0);
         const cutoffMoment = deliveryTime.clone().subtract(20, 'minutes');
         cutoffTime = cutoffMoment.format('HH:mm');
-        console.log("cutoffTime is ",cutoffTime)
+        console.log("cutoffTime is ", cutoffTime)
       }
 
       // Get meal items based on shift from DailyMeal
       let itemsForToday = [];
-      
+
       const mappedPlan = {
-        "Royal Dining Experience":"RoyalDiningThali",
-        "Special Dining Thali":"SpecialDiningThali",
-        "Everyman's Thali":'EveryMensThali',
+        "Royal Dining Experience": "RoyalDiningThali",
+        "Special Dining Thali": "SpecialDiningThali",
+        "Everyman's Thali": 'EveryMensThali',
       }
 
       if (todaysDailyMeal && todaysDailyMeal.meals) {
         // Get the correct meal tier (default to 'basic' if not specified)
         const mealTier = mappedPlan[order?.subscriptionId?.mealPlan?.title]
-        console.log("order title",order)
+        console.log("order title", order)
         // Get lunch for morning shift, dinner for evening shift
         const mealType = shift === 'morning' ? 'lunch' : 'dinner';
         const mealItems = todaysDailyMeal.meals[mealTier]?.[mealType]?.items || [];
-        console.log("meal tier",mealTier)
-        console.log("itme for today meals",todaysDailyMeal.meals[mealTier])
+        console.log("meal tier", mealTier)
+        console.log("itme for today meals", todaysDailyMeal.meals[mealTier])
         itemsForToday = mealItems.map(item => ({
           name: item.name,
           description: item.description,
           quantity: item.quantity
         }));
       }
-   
+
       // Fallback to individual order's dailyMeal if no common daily meal
       if (itemsForToday.length === 0) {
         const orderDailyMeal = order[shift]?.dailyMealId;
         if (orderDailyMeal && orderDailyMeal.meals) {
-          const mealTier = order.planType === 'premium' ? 'premium' : 
-                          order.planType === 'low' ? 'low' : 'basic';
+          const mealTier = order.planType === 'premium' ? 'premium' :
+            order.planType === 'low' ? 'low' : 'basic';
           const mealType = shift === 'morning' ? 'lunch' : 'dinner';
           const mealItems = orderDailyMeal.meals[mealTier]?.[mealType]?.items || [];
-          
+
           itemsForToday = mealItems.map(item => ({
             name: item.name,
             description: item.description,
@@ -961,7 +966,7 @@ exports.getTodayTiffinList = async (req, res) => {
         handoverFlag: order.isDelayed ? 'delay' : null,
         deliveryParnter: order.deliveryPartner ? {
           name: order.deliveryPartner?.name || order.assignedDriver?.name,
-          phone: order.deliveryPartner?.phone||order.assignedDriver?.phone
+          phone: order.deliveryPartner?.phone || order.assignedDriver?.phone
         } : null,
         customerInfo: {
           name: order.userId?.name,
@@ -974,15 +979,15 @@ exports.getTodayTiffinList = async (req, res) => {
           penaltyAmount: order.penaltyAmount
         } : null,
         // Add sorting field for cutoff time
-        _cutoffTimestamp: shiftTiming && shiftTiming.time ? 
-          moment().tz('Asia/Kolkata').hour(Number(shiftTiming.time.split(':')[0])).minute(Number(shiftTiming.time.split(':')[1])).subtract(20, 'minutes').valueOf() 
+        _cutoffTimestamp: shiftTiming && shiftTiming.time ?
+          moment().tz('Asia/Kolkata').hour(Number(shiftTiming.time.split(':')[0])).minute(Number(shiftTiming.time.split(':')[1])).subtract(20, 'minutes').valueOf()
           : 0
       };
     });
 
     // Sort by cutoff time
     transformedOrders.sort((a, b) => a._cutoffTimestamp - b._cutoffTimestamp);
-    
+
     // Remove sorting field from response
     transformedOrders.forEach(order => delete order._cutoffTimestamp);
 
@@ -1016,7 +1021,7 @@ exports.updateTiffinStatus = async (req, res) => {
     const sellerId = req.user._id;
 
     const validStatuses = ['confirmed', 'preparing', 'ready_for_pickup', 'picked_up', 'delivered', 'not_prepared'];
-    
+
     if (!validStatuses.includes(status)) {
       return res.status(400).json({
         success: false,
@@ -1042,19 +1047,19 @@ exports.updateTiffinStatus = async (req, res) => {
     // Get delivery timing from subscription
     const deliveryTiming = order.subscriptionId?.deliveryTiming;
     const shiftTiming = deliveryTiming?.[order.shift];
-    
+
     if (shiftTiming && shiftTiming.enabled && shiftTiming.time) {
       // Parse delivery time (format: "HH:mm")
       const [hours, minutes] = shiftTiming.time.split(':').map(Number);
       const deliveryTime = moment().tz('Asia/Kolkata').hour(hours).minute(minutes).second(0);
       const cutoffTime = deliveryTime.clone().subtract(20, 'minutes'); // 20 minutes before delivery time
-      
+
       // Check seller delay when marking as ready_for_pickup
       if (status === 'ready_for_pickup') {
         if (now.isAfter(cutoffTime)) {
           // Seller is late - tiffin should have been ready 20 minutes before delivery time
           const delayMinutes = now.diff(cutoffTime, 'minutes');
-          
+
           if (!order.isDelayed) {
             order.isDelayed = true;
             order.delayedAt = now.toDate();
@@ -1063,7 +1068,7 @@ exports.updateTiffinStatus = async (req, res) => {
             // You can add penalty logic here if needed
             // order.penaltyAmount = calculateSellerPenalty(delayMinutes);
           }
-          
+
           delayInfo.sellerDelay = {
             delayMinutes,
             expectedReadyTime: cutoffTime.format('HH:mm'),
@@ -1071,16 +1076,16 @@ exports.updateTiffinStatus = async (req, res) => {
             deliveryTime: deliveryTime.format('HH:mm')
           };
         }
-        
+
         // Set ready time for driver delay calculation
         order.readyForPickupAt = now.toDate();
       }
-      
+
       // Check driver delay when marking as picked_up
       if (status === 'picked_up' && order.readyForPickupAt) {
         const readyTime = moment(order.readyForPickupAt).tz('Asia/Kolkata');
         const pickupDelayMinutes = now.diff(readyTime, 'minutes');
-        
+
         if (pickupDelayMinutes > 10) {
           // Driver is late - took more than 10 minutes to pick up
           if (!order.isDelayed || order.delayType === 'seller') {
@@ -1097,7 +1102,7 @@ exports.updateTiffinStatus = async (req, res) => {
             // You can add penalty logic here if needed
             // order.penaltyAmount += calculateDriverPenalty(pickupDelayMinutes);
           }
-          
+
           delayInfo.driverDelay = {
             delayMinutes: pickupDelayMinutes,
             readyTime: readyTime.format('HH:mm'),
@@ -1105,7 +1110,7 @@ exports.updateTiffinStatus = async (req, res) => {
             expectedPickupWindow: '10 minutes'
           };
         }
-        
+
         order.pickedUpAt = now.toDate();
       }
     }
@@ -1115,14 +1120,14 @@ exports.updateTiffinStatus = async (req, res) => {
     if (notes) {
       order.notes = notes;
     }
-    
+
     // Update status timestamps
     if (status === 'preparing') {
       order.preparingAt = now.toDate();
     } else if (status === 'delivered') {
       order.deliveredAt = now.toDate();
     }
-    
+
     await order.save();
 
     // If marked as ready_for_pickup, trigger driver notifications
@@ -1258,7 +1263,7 @@ exports.updateNormalOrderStatus = async (req, res) => {
     const sellerId = req.user._id;
 
     const validStatuses = ['confirmed', 'preparing', 'ready_for_pickup', 'not_prepared'];
-    
+
     if (!validStatuses.includes(status)) {
       return res.status(400).json({
         success: false,
@@ -1295,12 +1300,12 @@ exports.updateNormalOrderStatus = async (req, res) => {
       order.preparationStartTime = new Date();
       order.preparationDeadline = new Date(Date.now() + 25 * 60 * 1000); // 25 minutes from now
     }
-    
+
     order.status = status;
     if (notes) {
       order.sellerNotes = notes;
     }
-    
+
     await order.save();
 
     res.json({
@@ -1382,32 +1387,32 @@ exports.getNormalOrdersAnalytics = async (req, res) => {
 
     orders.forEach(order => {
       const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      const hasSellerItems = order.items && order.items.some(item => 
+      const hasSellerItems = order.items && order.items.some(item =>
         item.seller && item.seller.toString() === sellerId.toString()
       );
 
       if (isRestaurantOrder || hasSellerItems) {
         totalOrdersCount++;
-        
+
         // Calculate seller's revenue from this order
         let orderRevenue = 0;
         if (isRestaurantOrder) {
           orderRevenue = order.totalAmount || 0;
         } else if (hasSellerItems) {
-          const sellerItems = order.items.filter(item => 
+          const sellerItems = order.items.filter(item =>
             item.seller && item.seller.toString() === sellerId.toString()
           );
-          orderRevenue = sellerItems.reduce((sum, item) => 
+          orderRevenue = sellerItems.reduce((sum, item) =>
             sum + (item.price * item.quantity), 0
           );
         }
-        
+
         totalSalesAmount += orderRevenue;
-        
+
         // Group by time period for stats
         let groupKey;
         const orderDate = moment(order.createdAt).tz('Asia/Kolkata');
-        
+
         switch (period) {
           case 'daily':
             groupKey = orderDate.format('HH');
@@ -1417,7 +1422,7 @@ exports.getNormalOrdersAnalytics = async (req, res) => {
             groupKey = orderDate.format('YYYY-MM-DD');
             break;
         }
-        
+
         if (!statsMap.has(groupKey)) {
           statsMap.set(groupKey, {
             _id: groupKey,
@@ -1426,7 +1431,7 @@ exports.getNormalOrdersAnalytics = async (req, res) => {
             totalAmount: 0
           });
         }
-        
+
         const stat = statsMap.get(groupKey);
         stat.orderCount += 1;
         stat.totalSalesAmount += orderRevenue;
@@ -1480,10 +1485,10 @@ exports.getNormalOrdersAnalytics = async (req, res) => {
         orderPrice = order.totalAmount || 0;
       } else {
         // Filter items that belong to this seller
-        sellerItems = (order.items || []).filter(item => 
+        sellerItems = (order.items || []).filter(item =>
           item.seller && item.seller.toString() === sellerId.toString()
         );
-        orderPrice = sellerItems.reduce((sum, item) => 
+        orderPrice = sellerItems.reduce((sum, item) =>
           sum + (item.price * item.quantity), 0
         );
       }
@@ -1553,14 +1558,14 @@ exports.getSubscriptionAnalytics = async (req, res) => {
     let priceDiffer = 0;
     subscriptions.forEach(subscription => {
       totalSubscriptions++;
-      
+
       if (subscription.status === 'active') activeSubscriptions++;
       else if (subscription.status === 'paused') pausedSubscriptions++;
       else if (subscription.status === 'expired') expiredSubscriptions++;
-      
+
       const originalAmount = subscription.pricing?.totalAmount || 0;
       totalSubscriptionAmount += originalAmount;
-      
+
       // Check if subscription includes Sundays and adjust based on seller's Sunday availability
       let adjustedAmount = originalAmount;
       // console.log("original amount",originalAmount);
@@ -1573,23 +1578,23 @@ exports.getSubscriptionAnalytics = async (req, res) => {
       // 30 days = ~4.3 weeks, so ~26 weekdays
       // For 30 days: 26 weekdays * 2 shifts = 52 meals (both shifts), 26 meals (single shift)
       let expectedMealsWithoutSunday = 0;
-      if (shift === 'both'&&subscription.pricing.totalDays==30) {
+      if (shift === 'both' && subscription.pricing.totalDays == 30) {
         expectedMealsWithoutSunday = 52; // 26 weekdays * 2 shifts
-      } else if((shift==='morning'||shift==='evening')&&subscription.pricing.totalDays==30){
+      } else if ((shift === 'morning' || shift === 'evening') && subscription.pricing.totalDays == 30) {
         expectedMealsWithoutSunday = 26; // 26 weekdays * 1 shift
-      }else if (shift === 'both'&&subscription.pricing.totalDays==10){
+      } else if (shift === 'both' && subscription.pricing.totalDays == 10) {
         expectedMealsWithoutSunday = 18;
-      }else{
-       expectedMealsWithoutSunday = 9;
+      } else {
+        expectedMealsWithoutSunday = 9;
       }
-      
+
       // If totalMeals > expectedMealsWithoutSunday, then Sundays are included
       const sundaysIncluded = totalMeals >= expectedMealsWithoutSunday;
-      
+
       if (sundaysIncluded) {
         // Check seller's Sunday availability for this shift
         let canServeSunday = false;
-        
+
         if (shift === 'both') {
           canServeSunday = sundayAvailability.morning && sundayAvailability.evening;
         } else if (shift === 'morning') {
@@ -1597,34 +1602,34 @@ exports.getSubscriptionAnalytics = async (req, res) => {
         } else if (shift === 'evening') {
           canServeSunday = sundayAvailability.evening;
         }
-        
+
         if (!canServeSunday) {
           // Calculate the Sunday meals that can't be served
-          if(sundayAvailability.morning || sundayAvailability.evening){
-              const sundayMeals = totalMeals - expectedMealsWithoutSunday;
-              const pricePerMeal = (originalAmount - totalMeals*priceDiffer) / totalMeals;
-              const sundayAmount = (sundayMeals/2) * pricePerMeal;
-              adjustedAmount =( originalAmount - totalMeals*priceDiffer ) - sundayAmount;
+          if (sundayAvailability.morning || sundayAvailability.evening) {
+            const sundayMeals = totalMeals - expectedMealsWithoutSunday;
+            const pricePerMeal = (originalAmount - totalMeals * priceDiffer) / totalMeals;
+            const sundayAmount = (sundayMeals / 2) * pricePerMeal;
+            adjustedAmount = (originalAmount - totalMeals * priceDiffer) - sundayAmount;
           }
 
-         // else if(sundayAvailability.morning&&sundAvailability.evening){
-         //       const sundayMeals = totalMeals - expectedMealsWithoutSunday;
-         //      const pricePerMeal = (originalAmount - totalMeals*priceDiffer) / totalMeals;
-         //      const sundayAmount = sundayMeals * pricePerMeal;
-         //      adjustedAmount = ( originalAmount - totalMeals*priceDiffer ) - sundayAmount;
-         // }
-              
-         else{
-          const sundayMeals = totalMeals - expectedMealsWithoutSunday;
-          const pricePerMeal = (originalAmount - totalMeals*priceDiffer) / totalMeals;
-          const sundayAmount = sundayMeals * pricePerMeal;
-        
-          // Adjust the amount by removing Sunday meals that can't be served
-          adjustedAmount = ( originalAmount - totalMeals*priceDiffer ) - sundayAmount;
-         }
+          // else if(sundayAvailability.morning&&sundAvailability.evening){
+          //       const sundayMeals = totalMeals - expectedMealsWithoutSunday;
+          //      const pricePerMeal = (originalAmount - totalMeals*priceDiffer) / totalMeals;
+          //      const sundayAmount = sundayMeals * pricePerMeal;
+          //      adjustedAmount = ( originalAmount - totalMeals*priceDiffer ) - sundayAmount;
+          // }
+
+          else {
+            const sundayMeals = totalMeals - expectedMealsWithoutSunday;
+            const pricePerMeal = (originalAmount - totalMeals * priceDiffer) / totalMeals;
+            const sundayAmount = sundayMeals * pricePerMeal;
+
+            // Adjust the amount by removing Sunday meals that can't be served
+            adjustedAmount = (originalAmount - totalMeals * priceDiffer) - sundayAmount;
+          }
         }
       }
-      
+
       adjustedSubscriptionAmount += adjustedAmount;
     });
 
@@ -1674,30 +1679,30 @@ exports.getSubscriptionAnalytics = async (req, res) => {
 exports.getSellerSubscriptions = async (req, res) => {
   try {
     const sellerId = req.user._id;
-    
+
     // Get all subscriptions for this seller using direct sellerId field
     const subscriptions = await Subscription.find({
       sellerId: sellerId,
       status: 'active'
     })
-    .populate('mealPlan', 'title') // Still populate mealPlan for title
-    .select({
-      _id: 1,
-      subscriptionId: 1,
-      planType: 1,
-      status: 1,
-      shift: 1,
-      mealCounts: 1,
-      deliverySettings: 1,
-      startDate: 1,
-      endDate: 1,
-      createdAt: 1,
-      pricing: 1
-    })
-    .sort({ createdAt: -1 })
-    .lean();
-  
-  //  console.log("subscriptions",subscriptions[2].mealPlanDetails)
+      .populate('mealPlan', 'title') // Still populate mealPlan for title
+      .select({
+        _id: 1,
+        subscriptionId: 1,
+        planType: 1,
+        status: 1,
+        shift: 1,
+        mealCounts: 1,
+        deliverySettings: 1,
+        startDate: 1,
+        endDate: 1,
+        createdAt: 1,
+        pricing: 1
+      })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    //  console.log("subscriptions",subscriptions[2].mealPlanDetails)
     // Transform data to match frontend expectations
     const formattedSubscriptions = subscriptions.map(sub => ({
       _id: sub._id,
@@ -1748,20 +1753,20 @@ exports.getTiffinHistory = async (req, res) => {
   try {
     const sellerId = req.user._id;
     const { limit = 50, page = 1, shift, status, startDate, endDate } = req.query;
-    
+
     const skip = (parseInt(page) - 1) * parseInt(limit);
-    
+
     // Build query
     let query = { vendorId: sellerId };
-    
+
     if (shift && shift !== 'all') {
       query.shift = shift;
     }
-    
+
     if (status && status !== 'all') {
       query.status = status;
     }
-    
+
     // Date range filtering
     if (startDate || endDate) {
       query.date = {};
@@ -1775,7 +1780,7 @@ exports.getTiffinHistory = async (req, res) => {
         query.date.$lte = endOfDay;
       }
     }
-    
+
     // Get tiffin history from DailyOrder
     const tiffinHistory = await DailyOrder.find(query)
       .populate({
@@ -1815,17 +1820,17 @@ exports.getTiffinHistory = async (req, res) => {
     const formattedHistory = tiffinHistory.map(item => {
       // Get base price from meal plan or subscription
       const basePrice = item.subscriptionId?.pricing?.basePricePerMeal || 0;
-      
+
       // Get items from meal plan or daily order
       let items = [];
-      
+
       // First try to get items from meal plan
       if (item.mealPlan?.items && item.mealPlan.items.length > 0) {
         items = item.mealPlan.items;
       } else {
         // Build items from morning and evening meals
         const mealItems = [];
-        
+
         if (item.morning) {
           if (item.morning.dailyMealId) {
             // If daily meal is populated, use its items
@@ -1840,7 +1845,7 @@ exports.getTiffinHistory = async (req, res) => {
           } else {
             mealItems.push(`Morning: ${item.morning.mealType || 'Default'}`);
           }
-          
+
           // Add extra items if any
           if (item.morning.customization?.extraItems) {
             item.morning.customization.extraItems.forEach(extra => {
@@ -1848,7 +1853,7 @@ exports.getTiffinHistory = async (req, res) => {
             });
           }
         }
-        
+
         if (item.evening) {
           if (item.evening.dailyMealId) {
             // If daily meal is populated, use its items
@@ -1863,7 +1868,7 @@ exports.getTiffinHistory = async (req, res) => {
           } else {
             mealItems.push(`Evening: ${item.evening.mealType || 'Default'}`);
           }
-          
+
           // Add extra items if any
           if (item.evening.customization?.extraItems) {
             item.evening.customization.extraItems.forEach(extra => {
@@ -1871,7 +1876,7 @@ exports.getTiffinHistory = async (req, res) => {
             });
           }
         }
-        
+
         items = mealItems;
       }
 

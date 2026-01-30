@@ -118,16 +118,21 @@ const addMoneyToWallet = async (req, res) => {
 // ============================================
 // 3. Verify Wallet Top-up Payment
 // ============================================
+// ============================================
+// 3. Verify Wallet Top-up Payment
+// ============================================
 const verifyWalletTopup = async (req, res) => {
   try {
     const {
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
-      transactionId
+      transactionId,
+      recordId // Support recordId from frontend generic component
     } = req.body;
 
     const userId = req.user.id;
+    const finalTransactionId = transactionId || recordId;
 
     // Verify payment signature
     const crypto = require('crypto');
@@ -143,44 +148,80 @@ const verifyWalletTopup = async (req, res) => {
       });
     }
 
-    // Find the pending transaction
-    const walletTransaction = await WalletTransaction.findOne({
-      transactionId: transactionId,
-      user: userId,
-      status: 'pending',
-      referenceId: razorpay_order_id
-    });
-
-    if (!walletTransaction) {
-      return res.status(404).json({
-        success: false,
-        message: 'Transaction not found'
-      });
-    }
-
-    // Get payment details from Razorpay
+    // Get payment details from Razorpay First to get metadata
     const payment = await razorpay.payments.fetch(razorpay_payment_id);
     const paidAmount = payment.amount / 100; // Convert from paise
 
-    if (paidAmount !== walletTransaction.amount) {
+    // ATOMIC UPDATE: Find PENDING transaction and mark COMPLETED in one go.
+    // This prevents race conditions where two requests check status simultaneously.
+    const walletTransaction = await WalletTransaction.findOneAndUpdate(
+      {
+        transactionId: finalTransactionId,
+        user: userId,
+        status: 'pending',
+        referenceId: razorpay_order_id
+      },
+      {
+        $set: {
+          status: 'completed',
+          'metadata.razorpayPaymentId': razorpay_payment_id,
+          'metadata.paymentDetails': {
+            method: payment.method,
+            bank: payment.bank,
+            cardId: payment.card_id,
+            status: payment.status
+          }
+        }
+      },
+      { new: true }
+    );
+
+    if (!walletTransaction) {
+      // Check if it was ALREADY completed (Idempotency)
+      const existingTransaction = await WalletTransaction.findOne({
+        transactionId: finalTransactionId,
+        user: userId,
+        status: 'completed'
+      });
+
+      if (existingTransaction) {
+        // Return success but DO NOT increment balance again
+        const user = await User.findById(userId).select('wallet');
+        return res.status(200).json({
+          success: true,
+          message: 'Wallet top-up already verified',
+          data: {
+            transactionId: existingTransaction.transactionId,
+            amount: existingTransaction.amount,
+            newBalance: user.wallet.balance,
+            payment: {
+              razorpayPaymentId: razorpay_payment_id,
+              method: payment.method
+            }
+          }
+        });
+      }
+
+      return res.status(404).json({
+        success: false,
+        message: 'Transaction not found or already processed'
+      });
+    }
+
+    // Verify amount match (Security Check)
+    if (Math.abs(paidAmount - walletTransaction.amount) > 0.01) {
+      // Rollback if amount mismatch (Very rare, requires hacking)
+      walletTransaction.status = 'failed';
+      walletTransaction.metadata.failureReason = 'Amount mismatch';
+      await walletTransaction.save();
+
       return res.status(400).json({
         success: false,
         message: 'Payment amount mismatch'
       });
     }
 
-    // Update transaction status
-    walletTransaction.status = 'completed';
-    walletTransaction.metadata.razorpayPaymentId = razorpay_payment_id;
-    walletTransaction.metadata.paymentDetails = {
-      method: payment.method,
-      bank: payment.bank,
-      cardId: payment.card_id,
-      status: payment.status
-    };
-
-    await walletTransaction.save();
-
+    // Only reach here if we successfully transitioned from PENDING -> COMPLETED
     // Update user's balance and last top-up time
     await User.findByIdAndUpdate(userId, {
       $inc: { 'wallet.balance': walletTransaction.amount },

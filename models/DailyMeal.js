@@ -74,6 +74,29 @@ const dailyMealSchema = new mongoose.Schema({
       }
     }
   },
+  // Dynamic Menu Support
+  planMenus: [{
+    mealPlan: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'MealPlan'
+    },
+    lunch: {
+      items: [{
+        name: String,
+        description: String,
+        quantity: String
+      }],
+      isAvailable: { type: Boolean, default: true }
+    },
+    dinner: {
+      items: [{
+        name: String,
+        description: String,
+        quantity: String
+      }],
+      isAvailable: { type: Boolean, default: true }
+    }
+  }],
   sundaySpecial: {
     isSpecialDay: {
       type: Boolean,

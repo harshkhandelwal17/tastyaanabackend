@@ -60,6 +60,10 @@ const sellergadgetsRoutes = require('./routes/sellerGadgetsRoutes');
 const zoneRoutes = require('./routes/zoneRoutes');
 const supportRoutes = require('./routes/supportRoutes');
 const groupOrderRoutes = require('./routes/groupOrderRoutes');
+
+const vehicleRoutes = require('./routes/vehiclerentalroutes/vehicleRoutes');
+const sellerVehicleRoutes = require('./routes/vehiclerentalroutes/sellerVehicleRoutes');
+const sellerBookingRoutes = require('./routes/vehiclerentalroutes/sellerBooking');
 const app = express();
 // Middleware
 // Middleware
@@ -223,6 +227,10 @@ app.use('/api/admin/subscriptions', adminSubscriptionRoutes);
 
 // Laundry service routes
 app.use('/api/laundry', laundryRoutes);
+
+app.use('/api/vehicles', vehicleRoutes);
+app.use('/api/seller/vehicles', sellerVehicleRoutes);
+app.use('/api/seller/bookings', sellerBookingRoutes);
 // Initialize cron jobs
 require('./corn/jobs');
 

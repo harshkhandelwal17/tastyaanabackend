@@ -233,32 +233,32 @@ const createSubscription = async (req, res) => {
       preferences,
       couponCode,
       couponId,
-      discount
+      discount,
+      packaging
     } = req.body;
 
     const userId = req.user.id;
 
 
-    // **CRITICAL FIX**: Check for existing active subscription BEFORE creating new subscription
-    // This prevents the duplicate key error during payment processing
-    const existingActiveSubscription = await Subscription.findOne({
-      user: userId,
-      status: 'active'
-    });
+    // Check for existing active subscription - COMMENTED OUT TO ALLOW MULTIPLE SUBSCRIPTIONS
+    // const existingActiveSubscription = await Subscription.findOne({
+    //   user: userId,
+    //   status: 'active'
+    // });
 
-    if (existingActiveSubscription) {
-      return res.status(409).json({
-        success: false,
-        message: 'You already have an active subscription. Please cancel your current subscription before creating a new one.',
-        code: 'DUPLICATE_ACTIVE_SUBSCRIPTION',
-        existingSubscription: {
-          id: existingActiveSubscription.subscriptionId,
-          mealPlan: existingActiveSubscription.mealPlan,
-          startDate: existingActiveSubscription.startDate,
-          status: existingActiveSubscription.status
-        }
-      });
-    }
+    // if (existingActiveSubscription) {
+    //   return res.status(409).json({
+    //     success: false,
+    //     message: 'You already have an active subscription. Please cancel your current subscription before creating a new one.',
+    //     code: 'DUPLICATE_ACTIVE_SUBSCRIPTION',
+    //     existingSubscription: {
+    //       id: existingActiveSubscription.subscriptionId,
+    //       mealPlan: existingActiveSubscription.mealPlan,
+    //       startDate: existingActiveSubscription.startDate,
+    //       status: existingActiveSubscription.status
+    //     }
+    //   });
+    // }
 
     // Validate required fields
     if (!mealPlanId) {
@@ -644,6 +644,13 @@ const createSubscription = async (req, res) => {
         isDefault: false
       },
 
+      packaging: packaging || {
+        name: 'Standard Packaging',
+        price: 0,
+        type: 'free',
+        isRefundable: false
+      },
+
       metadata: req.body.metadata || {
         createdVia: "web",
         deviceInfo: "Unknown",
@@ -908,13 +915,14 @@ const processSubscriptionPayment = async (req, res) => {
     // **CRITICAL FIX**: Check for existing active subscription BEFORE processing payment
     // This prevents the duplicate key error that occurs when trying to activate a subscription
     // when the user already has an active subscription
-    const existingActiveSubscription = await Subscription.findOne({
-      user: userId,
-      status: 'active',
-      _id: { $ne: subscriptionId } // Exclude the current subscription being processed
-    });
+    // Check for existing active subscription - COMMENTED OUT TO ALLOW MULTIPLE SUBSCRIPTIONS
+    // const existingActiveSubscription = await Subscription.findOne({
+    //   user: userId,
+    //   status: 'active',
+    //   _id: { $ne: subscriptionId } // Exclude the current subscription being processed
+    // });
 
-    if (existingActiveSubscription) {
+    if (false) { // existingActiveSubscription check disabled
       console.log(`❌ User ${userId} already has an active subscription: ${existingActiveSubscription.subscriptionId}`);
 
       // Instead of failing completely, we could offer options:
@@ -1057,6 +1065,9 @@ const processSubscriptionPayment = async (req, res) => {
       console.log('No coupon usage to record for this subscription');
     }
 
+    // PREPAID MODEL: Do NOT credit wallet. The payment is for the subscription itself.
+    // Logic removed to prevent "double dipping" or wallet dependency.
+    /* 
     // Create wallet transaction for subscription payment credit (if using wallet system)
     try {
       const WalletTransaction = require('../models/WalletTransaction');
@@ -1066,33 +1077,11 @@ const processSubscriptionPayment = async (req, res) => {
         type: 'credit',
         status: 'completed',
         method: 'razorpay',
-        referenceId: razorpay_payment_id,
-        note: `Subscription payment credited - ${subscription.subscriptionId}`,
-        metadata: {
-          subscriptionId: subscription._id,
-          razorpayOrderId: razorpay_order_id,
-          razorpayPaymentId: razorpay_payment_id,
-          subscriptionType: 'prepaid_wallet_credit',
-          duration: subscription.duration,
-          totalMeals: subscription.mealCounts.totalMeals,
-          paymentMethod: payment.method,
-          cardType: payment.card?.type,
-          bank: payment.bank
-        }
+        // ...
       });
-
       await walletTransaction.save();
-
-      // Update subscription with wallet transaction reference
-      await Subscription.findByIdAndUpdate(
-        subscriptionId,
-        { $set: { walletTransaction: walletTransaction._id } },
-        { runValidators: false }
-      );
-    } catch (walletError) {
-      console.warn('Wallet transaction creation failed (non-blocking):', walletError);
-      // Continue without wallet transaction if it fails
-    }
+    } catch (walletError) { ... } 
+    */
 
     // Update user subscription status
     await User.findByIdAndUpdate(userId, {
@@ -1393,10 +1382,14 @@ const processDailyDeductions = async () => {
     console.log(`🍽️ Processing ${mealType} meal deductions for ${today.toDateString()}`);
 
     // Find active subscriptions
+    // Find active subscriptions (Date-based OR Remaining Meals based)
     const subscriptions = await Subscription.find({
       status: 'active',
       startDate: { $lte: today },
-      endDate: { $gte: today }
+      $or: [
+        { endDate: { $gte: today } },
+        { 'mealCounts.mealsRemaining': { $gt: 0 } }
+      ]
     }).populate('user').populate({
       path: 'mealPlan',
       populate: {
@@ -1467,8 +1460,9 @@ const processDailyDeductions = async () => {
         }
 
         // Calculate total deduction amount for this meal
-        // Only base meal amount is deducted from wallet
-        const walletDeductionAmount = baseMealAmountPerMeal + addOnsAmount;
+        // PREPAID MODEL: Base meal is already paid. 
+        // Only deduct if there are EXTRA charges not covered by subscription (which are handled by instantPaymentAmount)
+        const walletDeductionAmount = 0; // baseMealAmountPerMeal + addOnsAmount; (DISABLED FOR PREPAID)
 
         // Additional amount that needs instant payment
         if (instantPaymentAmount > 0) {
@@ -1499,7 +1493,8 @@ const processDailyDeductions = async () => {
 
         // Check wallet balance
         const user = await User.findById(subscription.user._id).session(session);
-        if (user.wallet.balance < walletDeductionAmount) {
+        // PREPAID SKIP: Only check for instant payments if any
+        if (false && user.wallet.balance < walletDeductionAmount) {
 
 
           // Create failed deduction record
@@ -1924,11 +1919,13 @@ const getUserTodayMeal = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    // Find user's active subscription
+    // Find ALL active subscriptions for the user
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const activeSubscription = await Subscription.findOne({
+    console.log(`Debug TodayMeal: User ${userId}, Today: ${today.toISOString()}`);
+
+    const activeSubscriptions = await Subscription.find({
       user: userId,
       status: 'active',
       startDate: { $lte: today },
@@ -1936,35 +1933,52 @@ const getUserTodayMeal = async (req, res) => {
     }).populate('mealPlan', 'tier title')
       .populate('sellerId', 'name businessName email phone');
 
-    if (!activeSubscription) {
+    console.log(`Debug TodayMeal: Found ${activeSubscriptions.length} active subs`);
+    activeSubscriptions.forEach(s => console.log(`Sub: ${s._id}, Start: ${s.startDate}, End: ${s.endDate}`));
+
+    if (!activeSubscriptions || activeSubscriptions.length === 0) {
       return res.status(200).json({
         success: true,
         data: {
           hasMeal: false,
+          meals: [], // Return empty array for consistency
           message: 'No active subscription found'
         }
       });
     }
 
-    // Get today's meal using the new method
-    const todayMeal = await activeSubscription.getTodayMeal();
-
-    // Add subscription details to the response
-    const response = {
-      hasMeal: todayMeal.isAvailable,
-      meal: todayMeal,
-      subscription: {
-        id: activeSubscription._id,
-        planTitle: activeSubscription.mealPlan?.title,
-        tier: todayMeal.tier,
-        shift: todayMeal.shift,
-        seller: {
-          id: activeSubscription.sellerId?._id,
-          name: activeSubscription.sellerId?.name || activeSubscription.sellerId?.businessName,
-          businessName: activeSubscription.sellerId?.businessName,
-          phone: activeSubscription.sellerId?.phone
-        }
+    // Get today's meal for EACH subscription
+    const mealPromises = activeSubscriptions.map(async (sub) => {
+      try {
+        const todayMeal = await sub.getTodayMeal();
+        console.log(`Debug TodayMeal Result for ${sub._id}: Available=${todayMeal.isAvailable}`);
+        return {
+          hasMeal: todayMeal.isAvailable,
+          meal: todayMeal,
+          subscription: {
+            id: sub._id,
+            planTitle: sub.mealPlan?.title,
+            tier: todayMeal.tier,
+            shift: todayMeal.shift,
+            seller: {
+              id: sub.sellerId?._id,
+              name: sub.sellerId?.name || sub.sellerId?.businessName,
+              businessName: sub.sellerId?.businessName,
+              phone: sub.sellerId?.phone
+            }
+          }
+        };
+      } catch (err) {
+        console.error(`Error getting meal for sub ${sub._id}:`, err);
+        return { hasMeal: false, meal: null, subscription: { id: sub._id } };
       }
+    });
+
+    const mealsResult = await Promise.all(mealPromises);
+
+    const response = {
+      hasMeal: mealsResult.some(m => m.hasMeal), // True if at least one sub has a meal today
+      meals: mealsResult // Array of all meal statuses
     };
 
     res.status(200).json({
@@ -3091,11 +3105,14 @@ const skipMeal = async (req, res) => {
         });
       }
 
-      // Calculate refund amounts
-      const totalDays = moment(subscription.endDate).diff(moment(subscription.startDate), 'days') + 1;
-      const dailyDeduction = subscription.pricing.finalAmount / totalDays;
-      const refundPerMeal = Math.round(dailyDeduction * 100) / 100;
-      const totalRefund = refundPerMeal * totalNewSkips;
+      // Calculate extension (New Prepaid Logic)
+      // Instead of refund, we add the skipped meals back to the 'remaining' pool.
+      // The cron job will continue to deliver until mealsRemaining hits 0.
+      subscription.mealCounts.mealsRemaining = (subscription.mealCounts.mealsRemaining || 0) + totalNewSkips;
+
+      const EXTENSION_MODE = true; // Flag for clarity
+      const totalRefund = 0; // No wallet refund
+      const refundPerMeal = 0;
 
       // Process all skips
       subscription.skippedMeals = subscription.skippedMeals || [];
@@ -3115,44 +3132,9 @@ const skipMeal = async (req, res) => {
         skipRecords.push(skipRecord);
       }
 
-      // Add refund to user's wallet if applicable
-      if (totalRefund > 0) {
-        const user = await User.findById(userId);
-        if (!user) {
-          return res.status(404).json({
-            success: false,
-            message: 'User not found',
-            code: 'USER_NOT_FOUND'
-          });
-        }
-
-        // Add to wallet
-        user.wallet.balance = (user.wallet.balance || 0) + totalRefund;
-
-        // Create wallet transaction
-        const walletTransaction = new WalletTransaction({
-          user: userId,
-          amount: totalRefund,
-          type: 'credit',
-          status: 'completed',
-          method: 'refund',
-          referenceId: `skip_${subscription._id}_${Date.now()}`,
-          note: `Refund for ${totalNewSkips} skipped meals`,
-          metadata: {
-            subscriptionId: subscription._id,
-            skipDates: validatedSkips.map(s => ({
-              date: s.date,
-              shift: s.shift
-            })),
-            totalSkips: totalNewSkips,
-            refundPerMeal: refundPerMeal,
-            reason: reason || 'User requested'
-          }
-        });
-
-        await walletTransaction.save();
-        await user.save();
-      }
+      // PREPAID MODEL: No wallet refund. Just save the subscription with increased mealsRemaining.
+      // PREPAID MODEL: No wallet refund. Just save the subscription with increased mealsRemaining.
+      // await user.save(); // User save not strictly needed if we didn't touch wallet, but keeping for safety if logic changes
 
       await subscription.save();
 
@@ -3164,8 +3146,8 @@ const skipMeal = async (req, res) => {
 
         await createNotification({
           userId,
-          title: 'Meals Skipped',
-          message: `Successfully skipped ${dateRangeText}. Refund: ₹${totalRefund}`,
+          title: 'Meals Skipped & Extended',
+          message: `Successfully skipped ${dateRangeText}. Your plan has been extended by ${totalNewSkips} meals.`,
           type: 'subscription',
           data: {
             subscriptionId: subscription._id,
@@ -3325,6 +3307,41 @@ const customizeMeal = async (req, res) => {
         success: false,
         message: `You don't have ${mealShift} meals in your subscription plan`
       });
+    }
+
+    // --- FIX: TIME RESTRICTION (Validation) ---
+    // If customizing for TODAY, check cut-off times
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Check if customizationDate is same as today
+    if (customizationDate.getTime() === today.getTime()) {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+      const currentTime = currentHour * 60 + currentMinute;
+
+      // Time Cut-offs (Same as Skip Logic)
+      const MORNING_CUTOFF = 11 * 60 + 59; // 11:59 AM
+      const EVENING_CUTOFF = 19 * 60;      // 7:00 PM
+
+      if (mealShift === 'morning') {
+        if (currentTime >= MORNING_CUTOFF) {
+          return res.status(400).json({
+            success: false,
+            message: 'Morning meals cannot be swapped/customized after 11:59 AM for today.',
+            code: 'TIME_RESTRICTION_VIOLATED'
+          });
+        }
+      } else if (mealShift === 'evening') {
+        if (currentTime >= EVENING_CUTOFF) {
+          return res.status(400).json({
+            success: false,
+            message: 'Evening meals cannot be swapped/customized after 7:00 PM for today.',
+            code: 'TIME_RESTRICTION_VIOLATED'
+          });
+        }
+      }
     }
 
     // Get or create DailyOrder for the specified date

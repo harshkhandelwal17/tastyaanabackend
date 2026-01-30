@@ -28,118 +28,98 @@ exports.getDashboard = async (req, res) => {
 
     console.log('Dashboard date range:', { today, tomorrow, sellerId });
 
-    // Today's orders metrics - properly count distinct normal orders (type: 'addon'), not items
-    const todayOrders = await Order.find({
-      $and: [
+    // Aggregation pipeline to calculate stats efficiently
+    const calculateStats = async (matchCriteria) => {
+      return Order.aggregate([
         {
-          $or: [
-            { restaurantId: sellerId },
-            { 'items.seller': sellerId }
-          ]
+          $match: {
+            ...matchCriteria,
+            $and: [
+              {
+                $or: [
+                  { restaurantId: new mongoose.Types.ObjectId(sellerId) },
+                  { 'items.seller': new mongoose.Types.ObjectId(sellerId) }
+                ]
+              },
+              {
+                $or: [
+                  { type: 'addon' },
+                  { type: { $exists: false } },
+                  { type: null }
+                ]
+              }
+            ]
+          }
         },
         {
-          $or: [
-            { type: 'addon' }, // Normal addon orders
-            { type: { $exists: false } }, // Legacy orders without type field
-            { type: null } // Orders with null type
-          ]
+          $project: {
+            userId: 1,
+            isCustomized: 1,
+            isRestaurantOrder: { $eq: ['$restaurantId', new mongoose.Types.ObjectId(sellerId)] },
+            revenue: {
+              $cond: {
+                if: { $eq: ['$restaurantId', new mongoose.Types.ObjectId(sellerId)] },
+                then: { $ifNull: ['$totalAmount', 0] },
+                else: {
+                  $sum: {
+                    $map: {
+                      input: {
+                        $filter: {
+                          input: { $ifNull: ['$items', []] },
+                          as: 'item',
+                          cond: { $eq: ['$$item.seller', new mongoose.Types.ObjectId(sellerId)] }
+                        }
+                      },
+                      as: 'item',
+                      in: { $multiply: [{ $ifNull: ['$$item.price', 0] }, { $ifNull: ['$$item.quantity', 0] }] }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalOrders: { $sum: 1 },
+            totalRevenue: { $sum: '$revenue' },
+            customizedOrders: { $sum: { $cond: ['$isCustomized', 1, 0] } },
+            uniqueUsers: { $addToSet: '$userId' }
+          }
         }
-      ],
-      createdAt: { $gte: today, $lt: tomorrow }
-    }).lean();
-
-    // Calculate today's stats properly
-    let todayOrdersCount = 0;
-    let todayRevenue = 0;
-    let customizedOrdersCount = 0;
-
-    todayOrders.forEach(order => {
-      // Check if this order belongs to this seller
-      const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      const hasSellerItems = order.items && order.items.some(item =>
-        item.seller && item.seller.toString() === sellerId.toString()
-      );
-
-      if (isRestaurantOrder || hasSellerItems) {
-        todayOrdersCount++;
-
-        if (order.isCustomized) {
-          customizedOrdersCount++;
-        }
-
-        // Calculate revenue for this seller
-        if (isRestaurantOrder) {
-          // If seller owns the restaurant, get full order amount
-          todayRevenue += order.totalAmount || 0;
-        } else if (hasSellerItems) {
-          // If multi-vendor order, calculate seller's portion
-          const sellerItems = order.items.filter(item =>
-            item.seller && item.seller.toString() === sellerId.toString()
-          );
-          const sellerAmount = sellerItems.reduce((sum, item) =>
-            sum + (item.price * item.quantity), 0
-          );
-          todayRevenue += sellerAmount;
-        }
-      }
-    });
-
-    const todayStats = {
-      totalOrders: todayOrdersCount,
-      totalRevenue: todayRevenue,
-      customizedOrders: customizedOrdersCount
+      ]);
     };
 
-    // Lifetime normal orders metrics - properly count distinct orders (type: 'addon'), not items
-    const lifetimeOrders = await Order.find({
-      $and: [
-        {
-          $or: [
-            { restaurantId: sellerId },
-            { 'items.seller': sellerId }
-          ]
-        },
-        {
-          $or: [
-            { type: 'addon' }, // Normal addon orders
-            { type: { $exists: false } }, // Legacy orders without type field
-            { type: null } // Orders with null type
-          ]
-        }
-      ]
-    }).lean();
-
-    // Calculate lifetime stats properly
-    let lifetimeOrdersCount = 0;
-    let lifetimeRevenue = 0;
-
-    lifetimeOrders.forEach(order => {
-      const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-
-      if (isRestaurantOrder) {
-        // If restaurantId matches, count the order and add total amount
-        lifetimeOrdersCount++;
-        lifetimeRevenue += order.totalAmount || 0;
-      } else {
-        // Check if order has items from this seller
-        const sellerItems = (order.items || []).filter(item =>
-          item.seller && item.seller.toString() === sellerId.toString()
-        );
-
-        if (sellerItems.length > 0) {
-          lifetimeOrdersCount++;
-          // Add seller-specific revenue
-          const sellerTotal = sellerItems.reduce((sum, item) =>
-            sum + (item.price * item.quantity), 0
-          );
-          lifetimeRevenue += sellerTotal;
-        }
-      }
+    // calculate today's stats
+    const todayStatsResult = await calculateStats({
+      createdAt: { $gte: today, $lt: tomorrow }
     });
 
+    const todayAgg = todayStatsResult[0] || {
+      totalOrders: 0,
+      totalRevenue: 0,
+      customizedOrders: 0,
+      uniqueUsers: []
+    };
+
+    const todayStats = {
+      totalOrders: todayAgg.totalOrders,
+      totalRevenue: todayAgg.totalRevenue,
+      customizedOrders: todayAgg.customizedOrders
+    };
+
+    // Calculate lifetime stats
+    const lifetimeStatsResult = await calculateStats({});
+
+    const lifetimeAgg = lifetimeStatsResult[0] || {
+      totalOrders: 0,
+      totalRevenue: 0
+    };
+
     const lifetime = {
-      totalOrders: lifetimeOrdersCount,
-      totalRevenue: lifetimeRevenue
+      totalOrders: lifetimeAgg.totalOrders,
+      totalRevenue: lifetimeAgg.totalRevenue
     };
 
     // Product statistics
@@ -328,19 +308,6 @@ exports.getDashboard = async (req, res) => {
       }
     });
 
-    // Calculate unique customers count (proxy for visits)
-    const uniqueCustomers = new Set();
-    todayOrders.forEach(order => {
-      // Check if this order belongs to this seller
-      const isRestaurantOrder = order.restaurantId && order.restaurantId.toString() === sellerId.toString();
-      const hasSellerItems = order.items && order.items.some(item =>
-        item.seller && item.seller.toString() === sellerId.toString()
-      );
-      if ((isRestaurantOrder || hasSellerItems) && order.userId) {
-        uniqueCustomers.add(order.userId.toString());
-      }
-    });
-
     res.json({
       success: true,
       data: {
@@ -354,7 +321,7 @@ exports.getDashboard = async (req, res) => {
           nonCustomizedOrders: todayStats.totalOrders - todayStats.customizedOrders,
           customRequests: todayCustomRequests,
           pendingBids: pendingBids,
-          visits: uniqueCustomers.size // Real unique customers
+          visits: todayAgg.uniqueUsers.length // Real unique customers from aggregation
         },
         liveOrders: {
           count: liveOrdersCount,

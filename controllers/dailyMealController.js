@@ -25,6 +25,7 @@ exports.addTodaysMeal = async (req, res) => {
 
     const {
       meals,
+      planMenus,
       sundaySpecial,
       images,
       nutritionalInfo,
@@ -35,10 +36,10 @@ exports.addTodaysMeal = async (req, res) => {
     } = req.body;
     const restaurantId = req.user?.id || req.user?._id
     // Validate required fields
-    if (!meals || !restaurantId) {
+    if ((!meals && (!planMenus || planMenus.length === 0)) || !restaurantId) {
       return res.status(400).json({
         success: false,
-        message: 'Restaurant ID and meals are required'
+        message: 'Restaurant ID and either meals or planMenus are required'
       });
     }
 
@@ -47,6 +48,7 @@ exports.addTodaysMeal = async (req, res) => {
       restaurantId,
       date: today,
       meals,
+      planMenus: planMenus || [],
       sundaySpecial: sundaySpecial || {
         isSpecialDay: false,
         specialItems: [],
@@ -131,7 +133,9 @@ exports.updateDailyMeal = async (req, res) => {
       id,
       { $set: updateData },
       { new: true, runValidators: true }
-    ).populate('restaurantId', 'name email');
+    )
+      .populate('restaurantId', 'name email')
+      .populate('planMenus.mealPlan', 'title tier pricing description');
 
     res.json({
       success: true,
@@ -161,9 +165,9 @@ exports.getTodaysMeal = async (req, res) => {
     console.log('Looking for meal on:', today);
 
     const meal = await DailyMeal.findOne({
-      date: today
       // status: 'active'
-    }).populate('meals', 'name description');
+    })
+      .populate('planMenus.mealPlan', 'title tier pricing description');
 
     console.log("Today's meal found:", meal);
 
@@ -236,7 +240,9 @@ exports.getDailyMealByDate = async (req, res) => {
   const meal = await DailyMeal.findOne({
     date: date,
     status: 'active'
-  }).populate('mealPlan', 'name description');
+  })
+    .populate('mealPlan', 'name description')
+    .populate('planMenus.mealPlan', 'title tier pricing description');
 
   if (!meal) {
     throw new NotFoundError('No meal found for this date');
@@ -349,6 +355,7 @@ exports.addTomorrowsMeal = async (req, res) => {
 
     const {
       meals,
+      planMenus,
       sundaySpecial,
       images,
       nutritionalInfo,
@@ -359,10 +366,10 @@ exports.addTomorrowsMeal = async (req, res) => {
     } = req.body;
     const restaurantId = req.user._id;
     // Validate required fields
-    if (!meals || !restaurantId) {
+    if ((!meals && (!planMenus || planMenus.length === 0)) || !restaurantId) {
       return res.status(400).json({
         success: false,
-        message: 'Restaurant ID and meals are required'
+        message: 'Restaurant ID and either meals or planMenus are required'
       });
     }
 
@@ -371,6 +378,7 @@ exports.addTomorrowsMeal = async (req, res) => {
       restaurantId,
       date: tomorrow,
       meals,
+      planMenus: planMenus || [],
       sundaySpecial: sundaySpecial || {
         isSpecialDay: false,
         specialItems: [],
@@ -430,9 +438,9 @@ exports.getTomorrowsMeal = async (req, res) => {
     console.log('Looking for meal on:', tomorrow);
 
     const meal = await DailyMeal.findOne({
-      date: tomorrow
       // status: 'active'
-    }).populate('meals', 'name description');
+    })
+      .populate('planMenus.mealPlan', 'title tier pricing description');
 
     console.log("Tomorrow's meal found:", meal);
 
