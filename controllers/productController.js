@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const Category = require('../models/Category');
+const User = require('../models/User');
 const mongoose = require('mongoose');
 // const Category = require('../models/Category');
 const { uploadToCloudinary } = require('../utils/cloudinary');
@@ -8,9 +9,40 @@ const productController = {
   // Grocery specific endpoints
   getGroceryProducts: async (req, res) => {
     try {
-      const { category, minPrice, maxPrice, sortBy, sortOrder, search, page = 1, limit = 10 } = req.query;
+      const { category, minPrice, maxPrice, sortBy, sortOrder, search, page = 1, limit = 10, lat, lng } = req.query;
       // Base query - only enforce active status
       const query = { isActive: true };
+
+      // Location Filter
+      if (lat && lng) {
+        const nearbySellers = await User.find({
+          role: 'seller',
+          location: {
+            $near: {
+              $geometry: {
+                type: "Point",
+                coordinates: [parseFloat(lng), parseFloat(lat)]
+              },
+              $maxDistance: 5000 // 15km radius
+            }
+          }
+        }).select('_id');
+
+        const sellerIds = nearbySellers.map(s => s._id);
+
+        if (sellerIds.length === 0) {
+          return res.json({
+            success: true,
+            count: 0,
+            total: 0,
+            page: Number(page),
+            pages: 0,
+            products: []
+          });
+        }
+
+        query.seller = { $in: sellerIds };
+      }
 
       // Apply filters
       if (category) {
@@ -238,13 +270,48 @@ const productController = {
         maxPrice,
         rating,
         featured,
-        search,
         sortBy = 'createdAt',
-        sortOrder = 'desc'
+        sortOrder = 'desc',
+        lat,
+        lng
       } = req.query;
 
       const skip = (page - 1) * limit;
       const query = { isActive: true };
+
+      // Location Filter: If lat/lng provided, restrict to nearby sellers
+      if (lat && lng) {
+        // Find sellers within 15km
+        const nearbySellers = await User.find({
+          role: 'seller',
+          location: {
+            $near: {
+              $geometry: {
+                type: "Point",
+                coordinates: [parseFloat(lng), parseFloat(lat)]
+              },
+              $maxDistance: 5000 // 15km radius
+            }
+          }
+        }).select('_id');
+
+        const sellerIds = nearbySellers.map(s => s._id);
+
+        // If no sellers found nearby, return empty
+        if (sellerIds.length === 0) {
+          return res.json({
+            products: [],
+            pagination: {
+              page: parseInt(page),
+              limit: parseInt(limit),
+              total: 0,
+              pages: 0
+            }
+          });
+        }
+
+        query.seller = { $in: sellerIds };
+      }
 
       // Apply filters
       if (req.query.seller || req.query.vendor) {
@@ -567,7 +634,7 @@ const productController = {
   // Synonyms Dictionary for "Related Words" features
   searchProducts: async (req, res) => {
     try {
-      const { search, category, page = 1, limit = 12 } = req.query;
+      const { search, category, page = 1, limit = 12, lat, lng } = req.query;
       const skip = (page - 1) * parseInt(limit);
 
       if (!search) {
@@ -639,6 +706,31 @@ const productController = {
           { tags: { $in: searchTerms.map(t => new RegExp(t, 'i')) } }
         ]
       };
+
+      // Location Filter
+      if (lat && lng) {
+        const nearbySellers = await User.find({
+          role: 'seller',
+          location: {
+            $near: {
+              $geometry: {
+                type: "Point",
+                coordinates: [parseFloat(lng), parseFloat(lat)]
+              },
+              $maxDistance: 5000 // 15km radius
+            }
+          }
+        }).select('_id');
+
+        const sellerIds = nearbySellers.map(s => s._id);
+
+        if (sellerIds.length > 0) {
+          matchStage.seller = { $in: sellerIds };
+        } else {
+          // Force empty result if no sellers nearby
+          matchStage.seller = { $in: [] };
+        }
+      }
 
       // Apply Category Filter if present
       if (category) {

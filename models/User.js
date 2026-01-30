@@ -1279,7 +1279,25 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
       }
+    },
+    bookings: {
+      type: Number,
+      default: 0
     }
+  },
+
+  // ===== Geo-Location (New for Filtering) =====
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number], // [longitude, latitude]
+      default: [0, 0]
+    },
+    address: String // Formatted address string
   },
 
   // ===== Preferences =====
@@ -1320,6 +1338,7 @@ userSchema.index({ role: 1 }); // Added widely used index
 userSchema.index({ phone: 1 }); // Added index
 userSchema.index({ 'sellerProfile.storeStatus': 1, role: 1 });
 userSchema.index({ 'sellerProfile.deliveryAreas': 1 });
+userSchema.index({ location: '2dsphere' }); // Geospatial Index
 
 // ===== Pre-save Hooks =====
 userSchema.pre('save', async function (next) {

@@ -44,6 +44,81 @@ const homepageController = {
   // Get homepage data - all data in one endpoint
   getHomepageData: async (req, res) => {
     try {
+      const { lat, lng } = req.query;
+      let nearbySellerIds = [];
+      let isServiceable = true; // Default to true if no location provided (backend safe default)
+      let availableServices = ['food', 'tiffin', 'rental', 'grocery']; // Default all
+
+      // 1. LOCATION & SERVICEABILITY CHECK
+      if (lat && lng) {
+        // Find sellers within 5km
+        const nearbySellers = await User.find({
+          role: 'seller',
+          location: {
+            $near: {
+              $geometry: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
+              $maxDistance: 5000 // 5km
+            }
+          }
+        }).select('_id');
+
+        nearbySellerIds = nearbySellers.map(u => u._id);
+
+        // Determine global serviceability
+        if (nearbySellerIds.length === 0) {
+          isServiceable = false;
+          availableServices = [];
+        } else {
+          // Check specific service availability in parallel
+          const [hasFood, hasTiffin, hasRental] = await Promise.all([
+            Product.exists({ seller: { $in: nearbySellerIds }, isActive: true }),
+            MealPlan.exists({ seller: { $in: nearbySellerIds }, status: 'active' }),
+            // Vehicle usually uses 'sellerId' not 'seller'
+            // Also check Vehicle by location directly if sellers aren't mapped 1:1, but sticking to sellerId for consistency
+            require('../models/Vehicle').exists({ sellerId: { $in: nearbySellerIds }, status: 'active' })
+          ]);
+
+          availableServices = [];
+          if (hasFood) availableServices.push('food', 'grocery'); // Assuming grocery is subset of Product for now
+          if (hasTiffin) availableServices.push('tiffin', 'ghar-ka-khana');
+          if (hasRental) availableServices.push('rental');
+
+          // If sellers exist but no active products/plans, it's effectively unserviceable
+          if (availableServices.length === 0) {
+            isServiceable = false;
+          }
+        }
+      }
+
+      // 2. FETCH DATA (Conditioned on Loc)
+      // If unserviceable, we can return empty data immediately to save resources
+      if (!isServiceable && lat && lng) {
+        return res.json({
+          success: true,
+          data: {
+            featuredProducts: [],
+            mealPlans: [],
+            categories: [],
+            todaysMeal: null,
+            stats: await homepageController.calculateStats(),
+            testimonials: await homepageController.getTestimonials(),
+            serviceability: {
+              isServiceable: false,
+              availableServices: [],
+              message: "We are coming soon to your area!"
+            }
+          }
+        });
+      }
+
+      const productQuery = { featured: true, isActive: true };
+      const mealPlanQuery = { status: 'active' };
+
+      if (lat && lng && nearbySellerIds.length > 0) {
+        productQuery.seller = { $in: nearbySellerIds };
+        mealPlanQuery.seller = { $in: nearbySellerIds };
+      }
+
       const [
         featuredProducts,
         mealPlans,
@@ -53,19 +128,16 @@ const homepageController = {
         testimonials
       ] = await Promise.all([
         // Featured Products
-        Product.find({
-          featured: true,
-          isActive: true
-        })
+        Product.find(productQuery)
           .populate('category', 'name slug')
           .sort({ createdAt: -1 })
+          .limit(10) // Optimization: limit
           .lean(),
 
         // Meal Plans
-        MealPlan.find({
-          status: 'active'
-        })
+        MealPlan.find(mealPlanQuery)
           .sort({ tier: 1, createdAt: -1 })
+          .limit(6)
           .lean(),
 
         // Categories - Return all active categories
@@ -75,7 +147,7 @@ const homepageController = {
           .sort({ sortOrder: 1, name: 1 })
           .lean(),
 
-        // Today's Meal
+        // Today's Meal (Simpler check for now)
         DailyMeal.findOne({
           date: new Date().toISOString().split('T')[0],
           isActive: true
@@ -96,7 +168,12 @@ const homepageController = {
           categories,
           todaysMeal,
           stats,
-          testimonials
+          testimonials,
+          serviceability: {
+            isServiceable,
+            availableServices,
+            message: isServiceable ? "Service available" : "Coming soon"
+          }
         }
       });
     } catch (error) {
@@ -112,12 +189,42 @@ const homepageController = {
   // Get featured products
   getFeaturedProducts: async (req, res) => {
     try {
-      const { limit = 8 } = req.query;
+      const { limit = 8, lat, lng } = req.query;
 
-      const products = await Product.find({
+      const query = {
         featured: true,
         isActive: true
-      })
+      };
+
+      // Location Filter
+      if (lat && lng) {
+        const nearbySellers = await User.find({
+          role: 'seller',
+          location: {
+            $near: {
+              $geometry: {
+                type: "Point",
+                coordinates: [parseFloat(lng), parseFloat(lat)]
+              },
+              $maxDistance: 5000 // 5km radius
+            }
+          }
+        }).select('_id');
+
+        const sellerIds = nearbySellers.map(s => s._id);
+
+        // If no sellers found nearby, return empty
+        if (sellerIds.length === 0) {
+          return res.json({
+            success: true,
+            data: []
+          });
+        }
+
+        query.seller = { $in: sellerIds };
+      }
+
+      const products = await Product.find(query)
         .populate('category', 'name slug')
         .sort({ createdAt: -1 })
         .limit(parseInt(limit))
@@ -452,9 +559,10 @@ const homepageController = {
     }
   },
   // Get stores/sellers for homepage
+  // Get stores/sellers for homepage
   getStores: async (req, res) => {
     try {
-      const { limit = 20, page = 1, type } = req.query;
+      const { limit = 20, page = 1, type, lat, lng } = req.query; // Add lat, lng support
       const skip = (parseInt(page) - 1) * parseInt(limit);
 
       const query = {
@@ -468,13 +576,31 @@ const homepageController = {
         query['sellerProfile.sellerType'] = { $regex: new RegExp(type, 'i') };
       }
 
+      // Geospatial Query if lat/lng provided
+      if (lat && lng) {
+        query.location = {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: [parseFloat(lng), parseFloat(lat)]
+            },
+            $maxDistance: 5000 // 15km radius (adjustable)
+          }
+        };
+      }
+
       // 1. Get all active sellers with their profiles
-      const sellers = await User.find(query)
-        .select('name email avatar sellerProfile rating addresses priceRange')
-        .sort({ 'sellerProfile.ratings.average': -1, createdAt: -1 })
+      let sellersQuery = User.find(query)
+        .select('name email avatar sellerProfile rating addresses priceRange location') // added location to selection
         .skip(skip)
-        .limit(parseInt(limit))
-        .lean();
+        .limit(parseInt(limit));
+
+      // If NO location is provided, we MUST sort by rating/newest manually
+      if (!lat || !lng) {
+        sellersQuery = sellersQuery.sort({ 'sellerProfile.ratings.average': -1, createdAt: -1 });
+      }
+
+      const sellers = await sellersQuery.lean();
 
       // 2. Optimization: Get ALL products for these sellers in ONE query
       const sellerIds = sellers.map(s => s._id);
@@ -597,6 +723,46 @@ const homepageController = {
   // Get categories with seller count
   getCategoriesWithSellers: async (req, res) => {
     try {
+      const { lat, lng } = req.query;
+
+      // --- SERVICEABILITY CHECK (Global) ---
+      let isServiceable = true;
+      let availableServices = ['food', 'tiffin', 'rental', 'grocery'];
+      let nearbySellerIds = [];
+
+      if (lat && lng) {
+        // Find sellers within 5km
+        const nearbySellers = await User.find({
+          role: 'seller',
+          location: {
+            $near: {
+              $geometry: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
+              $maxDistance: 5000 // 5km
+            }
+          }
+        }).select('_id');
+
+        nearbySellerIds = nearbySellers.map(u => u._id);
+
+        if (nearbySellerIds.length === 0) {
+          isServiceable = false;
+          availableServices = [];
+        } else {
+          const [hasFood, hasTiffin, hasRental] = await Promise.all([
+            Product.exists({ seller: { $in: nearbySellerIds }, isActive: true }),
+            MealPlan.exists({ seller: { $in: nearbySellerIds }, status: 'active' }),
+            require('../models/Vehicle').exists({ sellerId: { $in: nearbySellerIds }, status: 'active' })
+          ]);
+
+          availableServices = [];
+          if (hasFood) availableServices.push('food', 'grocery');
+          if (hasTiffin) availableServices.push('tiffin', 'ghar-ka-khana');
+          if (hasRental) availableServices.push('rental');
+
+          if (availableServices.length === 0) isServiceable = false;
+        }
+      }
+
       const categories = await Category.find({ isActive: true })
         .sort({ sortOrder: 1, name: 1 })
         .lean();
@@ -634,7 +800,14 @@ const homepageController = {
 
       res.json({
         success: true,
-        data: categoriesWithDetails
+        data: categoriesWithDetails,
+        serviceability: {
+          isServiceable,
+          availableServices,
+          message: isServiceable ? "Service available" : "Coming soon",
+          // Debug info for frontend if needed
+          checkedLocation: { lat, lng }
+        }
       });
     } catch (error) {
       console.error('Error fetching categories with sellers:', error);
@@ -649,10 +822,35 @@ const homepageController = {
   // Get Quick Actions - Popular products/categories for quick access
   getQuickActions: async (req, res) => {
     try {
+      const { lat, lng } = req.query;
+      const query = { isActive: true };
+
+      // Location Filter
+      if (lat && lng) {
+        const nearbySellers = await User.find({
+          role: 'seller',
+          location: {
+            $near: {
+              $geometry: {
+                type: "Point",
+                coordinates: [parseFloat(lng), parseFloat(lat)]
+              },
+              $maxDistance: 5000 // 5km radius
+            }
+          }
+        }).select('_id');
+        const sellerIds = nearbySellers.map(s => s._id);
+        if (sellerIds.length > 0) {
+          query.seller = { $in: sellerIds };
+        } else {
+          // No sellers nearby, return empty logical data but maybe keep defaults? 
+          // Better to return empty specific products but we can keep defaults later
+          query.seller = { $in: [] };
+        }
+      }
+
       // Get popular products by sales/view count
-      const popularProducts = await Product.find({
-        isActive: true
-      })
+      const popularProducts = await Product.find(query)
         .select('title name images category')
         .populate('category', 'name slug')
         .sort({ salesCount: -1, views: -1 })
@@ -737,6 +935,8 @@ const homepageController = {
   // Get Curated/Spotlight collections
   getCuratedCollections: async (req, res) => {
     try {
+      const { lat, lng } = req.query;
+
       // Get active promotions that can be used for curated collections
       const activePromotions = await Promotion.find({
         isActive: true,
@@ -748,11 +948,35 @@ const homepageController = {
         .limit(5)
         .lean();
 
-      // Get featured products grouped by categories for curated collections
-      const featuredProducts = await Product.find({
+      const query = {
         featured: true,
         isActive: true
-      })
+      };
+
+      // Location Filter
+      if (lat && lng) {
+        const nearbySellers = await User.find({
+          role: 'seller',
+          location: {
+            $near: {
+              $geometry: {
+                type: "Point",
+                coordinates: [parseFloat(lng), parseFloat(lat)]
+              },
+              $maxDistance: 5000 // 5km radius
+            }
+          }
+        }).select('_id');
+        const sellerIds = nearbySellers.map(s => s._id);
+        if (sellerIds.length > 0) {
+          query.seller = { $in: sellerIds };
+        } else {
+          query.seller = { $in: [] };
+        }
+      }
+
+      // Get featured products grouped by categories for curated collections
+      const featuredProducts = await Product.find(query)
         .populate('category', 'name slug')
         .sort({ salesCount: -1, ratings: -1 })
         .limit(50)
@@ -1133,7 +1357,7 @@ const homepageController = {
   // IMPORTANT: Returns same sellers as getVendorStories for consistency
   getFoodRestaurants: async (req, res) => {
     try {
-      const { limit = 20, page = 1, type, vegOnly, sortBy } = req.query;
+      const { limit = 20, page = 1, type, vegOnly, sortBy, lat, lng } = req.query;
 
 
       // 1. Simplified Query (Bina kisi complex filter ke pehle check karo)
@@ -1145,10 +1369,23 @@ const homepageController = {
         'sellerProfile.sellerType': { $in: ['food', 'Food'] } // Case insensitive check
       };
 
+      // Location Filter
+      if (lat && lng) {
+        query.location = {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: [parseFloat(lng), parseFloat(lat)]
+            },
+            $maxDistance: 5000 // 15km radius
+          }
+        };
+      }
+
 
       // 2. Sirf Sellers Fetch karo
       const sellers = await User.find(query)
-        .select('name email avatar sellerProfile rating foodPreferences')
+        .select('name email avatar sellerProfile rating foodPreferences location') // Added location
         .lean();
 
       if (sellers.length === 0) {

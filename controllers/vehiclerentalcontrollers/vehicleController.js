@@ -24,7 +24,9 @@ const getVehicles = async (req, res) => {
       limit = 100,
       sortBy = 'createdAt',
       sortOrder = 'desc',
-      search
+      search,
+      lat,
+      lng
     } = req.query;
 
     // Build filter object
@@ -38,6 +40,19 @@ const getVehicles = async (req, res) => {
     if (sellerId) filter.sellerId = sellerId;
     if (fuelType) filter.fuelType = fuelType;
     if (brand) filter.companyName = new RegExp(brand, 'i');
+
+    // Location filtering
+    if (lat && lng) {
+      filter.locationGeo = {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [parseFloat(lng), parseFloat(lat)]
+          },
+          $maxDistance: 20000 // 20km radius for vehicles
+        }
+      };
+    }
 
     // Price range filtering
     if (minPrice || maxPrice) {
@@ -751,15 +766,37 @@ const updateSellerFleetStats = async (sellerId) => {
 // Get vehicle shops with their details and vehicle counts
 const getVehicleShops = async (req, res) => {
   try {
-    const { zoneCode } = req.query;
+    const { zoneCode, lat, lng } = req.query;
 
     // Build filter for vehicles
     let vehicleFilter = { status: 'active' };
     if (zoneCode) vehicleFilter.zoneCode = zoneCode;
 
-    // Get shops with their vehicle counts and details
-    const shops = await Vehicle.aggregate([
-      { $match: vehicleFilter },
+    // Construct pipeline
+    const pipeline = [];
+
+    // 1. Geo-spatial filtering if location provided
+    if (lat && lng) {
+      const geoQuery = { status: 'active' };
+      if (zoneCode) geoQuery.zoneCode = zoneCode;
+
+      pipeline.push({
+        $geoNear: {
+          near: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
+          distanceField: "dist.calculated",
+          maxDistance: 20000, // 20km radius
+          query: geoQuery,
+          includeLocs: "dist.location",
+          spherical: true
+        }
+      });
+    } else {
+      // Standard match if no location
+      pipeline.push({ $match: vehicleFilter });
+    }
+
+    // 2. Group by Seller
+    pipeline.push(
       {
         $group: {
           _id: '$sellerId',
@@ -814,7 +851,9 @@ const getVehicleShops = async (req, res) => {
         }
       },
       { $sort: { vehicleCount: -1, rating: -1 } }
-    ]);
+    );
+
+    const shops = await Vehicle.aggregate(pipeline);
 
     res.json({
       success: true,
