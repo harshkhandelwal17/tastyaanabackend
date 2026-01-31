@@ -45,45 +45,90 @@ const homepageController = {
   getHomepageData: async (req, res) => {
     try {
       const { lat, lng } = req.query;
+
+      // FORCE NO CACHE (Debugging)
+      res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+      res.set('Pragma', 'no-cache');
+      res.set('Expires', '0');
+
       let nearbySellerIds = [];
       let isServiceable = true; // Default to true if no location provided (backend safe default)
       let availableServices = ['food', 'tiffin', 'rental', 'grocery']; // Default all
 
       // 1. LOCATION & SERVICEABILITY CHECK
+      // 1. LOCATION & SERVICEABILITY CHECK
       if (lat && lng) {
-        // Find sellers within 5km
-        const nearbySellers = await User.find({
+        const userLoc = { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] };
+
+        console.log("📍 [Homepage Debug] SANITY CHECK START");
+        console.log("📍 [Homepage Debug] UserLoc constructed:", JSON.stringify(userLoc));
+
+        // Sanity Check 1: Count total sellers in DB
+        const totalSellers = await User.countDocuments({ role: 'seller' });
+        console.log(`📍 [Homepage Debug] Total Sellers in DB: ${totalSellers}`);
+
+        // Sanity Check 2: Try finding ONE known seller (from debug output)
+        const demoSeller = await User.findOne({ _id: '6977a48aef8105e537f53c36' });
+        console.log(`📍 [Homepage Debug] Demo Seller Found: ${!!demoSeller}`);
+
+        // Query 1: Nearby FOOD/TIFFIN Sellers (Strict 5km Limit)
+        const nearbyFoodSellers = await User.find({
           role: 'seller',
           location: {
             $near: {
-              $geometry: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
-              $maxDistance: 5000 // 5km
+              $geometry: userLoc,
+              $maxDistance: 5000 // 5km for Food/Tiffin
             }
           }
         }).select('_id');
+        const foodSellerIds = nearbyFoodSellers.map(u => u._id);
 
-        nearbySellerIds = nearbySellers.map(u => u._id);
+        // Query 2: Nearby RENTAL/GROCERY Sellers (Expanded 100km Limit - City Wide)
+        const nearbyRentalSellers = await User.find({
+          role: 'seller',
+          location: {
+            $near: {
+              $geometry: userLoc,
+              $maxDistance: 100000 // 100km (City-Wide Service for Rentals)
+            }
+          }
+        }).select('_id');
+        const rentalSellerIds = nearbyRentalSellers.map(u => u._id);
+
+        console.log(`📍 [Homepage Debug] Lat: ${lat}, Lng: ${lng}`);
+        console.log(`📍 [Homepage Debug] Food Sellers: ${foodSellerIds.length}`);
+        console.log(`📍 [Homepage Debug] Rental Sellers: ${rentalSellerIds.length}`);
 
         // Determine global serviceability
-        if (nearbySellerIds.length === 0) {
+        if (rentalSellerIds.length === 0) {
+          console.log("📍 [Homepage Debug] No rental sellers found. Serviceable: FALSE");
           isServiceable = false;
           availableServices = [];
         } else {
-          // Check specific service availability in parallel
-          const [hasFood, hasTiffin, hasRental] = await Promise.all([
-            Product.exists({ seller: { $in: nearbySellerIds }, isActive: true }),
-            MealPlan.exists({ seller: { $in: nearbySellerIds }, status: 'active' }),
-            // Vehicle usually uses 'sellerId' not 'seller'
-            // Also check Vehicle by location directly if sellers aren't mapped 1:1, but sticking to sellerId for consistency
-            require('../models/Vehicle').exists({ sellerId: { $in: nearbySellerIds }, status: 'active' })
+          // Check availability based on respective radii
+          const [hasFood, hasTiffin, hasGrocery] = await Promise.all([
+            // Food within 5km?
+            Product.exists({ seller: { $in: foodSellerIds }, isActive: true, category: { $ne: 'grocery' } }),
+            // Tiffin within 5km?
+            MealPlan.exists({ seller: { $in: foodSellerIds }, status: 'active' }),
+            // Grocery within 5km? (Aligned with Food for now)
+            Product.exists({ seller: { $in: foodSellerIds }, isActive: true, category: 'grocery' })
           ]);
 
+          const hasRental = rentalSellerIds.length > 0; // Relaxed check: Unlock if ANY seller is in 100km
+
+          console.log(`📍 [Homepage Debug] Flags - Food: ${!!hasFood}, Rental: ${hasRental}`);
+
           availableServices = [];
-          if (hasFood) availableServices.push('food', 'grocery'); // Assuming grocery is subset of Product for now
+
+          if (hasFood) availableServices.push('food');
+          if (hasGrocery) availableServices.push('grocery');
           if (hasTiffin) availableServices.push('tiffin', 'ghar-ka-khana');
           if (hasRental) availableServices.push('rental');
 
-          // If sellers exist but no active products/plans, it's effectively unserviceable
+          console.log(`📍 [Homepage Debug] Available Services: ${availableServices.join(', ')}`);
+
+          // If no services available
           if (availableServices.length === 0) {
             isServiceable = false;
           }
@@ -172,7 +217,13 @@ const homepageController = {
           serviceability: {
             isServiceable,
             availableServices,
-            message: isServiceable ? "Service available" : "Coming soon"
+            message: isServiceable ? "Service available" : "Coming soon",
+            debugInfo: {
+              foodCount: foodSellerIds.length,
+              rentalCount: rentalSellerIds.length,
+              latReceived: lat,
+              lngReceived: lng
+            }
           }
         }
       });
@@ -562,58 +613,144 @@ const homepageController = {
   // Get stores/sellers for homepage
   getStores: async (req, res) => {
     try {
-      const { limit = 20, page = 1, type, lat, lng } = req.query; // Add lat, lng support
+      const { limit = 20, page = 1, type, lat, lng } = req.query;
+      console.log("getStores Query Params:", { limit, page, type, lat, lng });
       const skip = (parseInt(page) - 1) * parseInt(limit);
 
-      const query = {
-        role: 'seller',
-        isActive: true,
-        isBlocked: false
-      };
+      const pipeline = [];
 
-      if (type) {
-        // Case-insensitive check for sellerType
-        query['sellerProfile.sellerType'] = { $regex: new RegExp(type, 'i') };
-      }
-
-      // Geospatial Query if lat/lng provided
+      // 1. Geo / Match Stage
+      // 1. Geo / Match Stage
       if (lat && lng) {
-        query.location = {
-          $near: {
-            $geometry: {
-              type: "Point",
-              coordinates: [parseFloat(lng), parseFloat(lat)]
-            },
-            $maxDistance: 5000 // 15km radius (adjustable)
+        pipeline.push({
+          $geoNear: {
+            near: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
+            distanceField: "distance",
+            maxDistance: 100000, // 100km City-Wide (filtered later)
+            query: { role: 'seller', isActive: true, isBlocked: false },
+            spherical: true
           }
-        };
+        });
+      } else {
+        pipeline.push({ $match: { role: 'seller', isActive: true, isBlocked: false } });
       }
 
-      // 1. Get all active sellers with their profiles
-      let sellersQuery = User.find(query)
-        .select('name email avatar sellerProfile rating addresses priceRange location') // added location to selection
-        .skip(skip)
-        .limit(parseInt(limit));
-
-      // If NO location is provided, we MUST sort by rating/newest manually
-      if (!lat || !lng) {
-        sellersQuery = sellersQuery.sort({ 'sellerProfile.ratings.average': -1, createdAt: -1 });
+      // 2. Filter Type (Frontend Filter)
+      if (type) {
+        pipeline.push({ $match: { 'sellerProfile.sellerType': { $regex: new RegExp(type, 'i') } } });
       }
 
-      const sellers = await sellersQuery.lean();
+      // 3. Filter Closed Stores
+      pipeline.push({ $match: { 'sellerProfile.storeStatus': { $ne: 'closed' } } });
 
-      // 2. Optimization: Get ALL products for these sellers in ONE query
+      // 4. Lookups for Inventory (Products & Vehicles)
+      pipeline.push({
+        $lookup: {
+          from: 'products',
+          let: { sellerId: '$_id' },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$seller', '$$sellerId'] }, isActive: true } },
+            { $limit: 1 },
+            { $project: { _id: 1 } }
+          ],
+          as: 'hasProducts'
+        }
+      });
+
+      pipeline.push({
+        $lookup: {
+          from: 'vehicles',
+          let: { sellerId: '$_id' },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$sellerId', '$$sellerId'] }, status: 'active' } },
+            { $limit: 1 },
+            { $project: { _id: 1 } }
+          ],
+          as: 'hasVehicles'
+        }
+      });
+
+      // 5. MASTER FILTER: Effectiveness & Serviceability
+      // Logic:
+      // A. Store must NOT be empty (Must have Products OR Vehicles)
+      // B. Serviceability Radius:
+      //    - If has Vehicles -> Allow up to 100km
+      //    - If ONLY Products -> Strict 5km limit
+      if (lat && lng) {
+        pipeline.push({
+          $match: {
+            $expr: {
+              $and: [
+                // A. Not Empty
+                { $or: [{ $gt: [{ $size: "$hasProducts" }, 0] }, { $gt: [{ $size: "$hasVehicles" }, 0] }] },
+                // B. Radius Logic
+                {
+                  $or: [
+                    { $lte: ["$distance", 5000] }, // Everyone allowed within 5km
+                    { $gt: [{ $size: "$hasVehicles" }, 0] } // Vehicles allowed up to 100km (geoNear limit)
+                  ]
+                }
+              ]
+            }
+          }
+        });
+      } else {
+        // No location? Just check not empty
+        pipeline.push({
+          $match: {
+            $expr: {
+              $or: [{ $gt: [{ $size: "$hasProducts" }, 0] }, { $gt: [{ $size: "$hasVehicles" }, 0] }]
+            }
+          }
+        });
+      }
+
+      // 6. Facet for Total Count & Data Pagination
+      let sortStage = { 'sellerProfile.ratings.average': -1, createdAt: -1 };
+      if (lat && lng) {
+        sortStage = { distance: 1 };
+      }
+
+      pipeline.push({
+        $facet: {
+          metadata: [{ $count: "total" }],
+          data: [
+            { $sort: sortStage },
+            { $skip: skip },
+            { $limit: parseInt(limit) },
+            {
+              $project: {
+                name: 1, email: 1, avatar: 1, sellerProfile: 1,
+                rating: 1, addresses: 1, priceRange: 1, location: 1, createdAt: 1
+              }
+            }
+          ]
+        }
+      });
+
+      const aggregationResult = await User.aggregate(pipeline);
+      const sellers = aggregationResult[0].data || [];
+      const total = aggregationResult[0].metadata[0] ? aggregationResult[0].metadata[0].total : 0;
+
+      // DEBUG: Log returned sellers types
+      if (type) {
+        console.log(`[getStores] Filtered by '${type}'. Found ${sellers.length} sellers.`);
+        console.log(sellers.map(s => `${s.name} (${s.sellerProfile?.sellerType})`).join(', '));
+      }
+
+      // 6. Optimization: Get DETAILED products for the fetched sellers
       const sellerIds = sellers.map(s => s._id);
+
       const allProducts = await Product.find({
         seller: { $in: sellerIds },
         isActive: true
       })
         .select('seller category name title images salesCount views discount discountPrice nutritionInfo isOrganic link')
         .populate('category', 'name slug image icon')
-        .sort({ salesCount: -1, views: -1 }) // Sort all globally to ensure we pick best ones later
+        .sort({ salesCount: -1, views: -1 })
         .lean();
 
-      // 3. Group products by seller ID directly in memory
+      // 7. Group products
       const productsBySeller = {};
       allProducts.forEach(product => {
         const sId = product.seller.toString();
@@ -623,15 +760,13 @@ const homepageController = {
         productsBySeller[sId].push(product);
       });
 
-      // 4. Map sellers to their details using the grouped products
+      // 8. Map to Detailed Store Objects
       const storesWithDetails = sellers.map((seller) => {
-        // Get products for this seller from map
         const products = productsBySeller[seller._id.toString()] || [];
 
-        // Get unique categories
+        // Unique Categories
         const categories = [];
         const categoryMap = new Map();
-
         products.forEach(product => {
           if (product.category && !categoryMap.has(product.category._id.toString())) {
             categoryMap.set(product.category._id.toString(), product.category);
@@ -645,32 +780,22 @@ const homepageController = {
           }
         });
 
-        // Get primary product image for cover
+        // Cover Image Logic
         let coverImage = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80';
-
         if (products.length > 0) {
-          // Products are already sorted by sales/popularity in the main query
           const productWithImage = products.find(p => p.images && p.images.length > 0 && p.images[0].url);
-
-          if (productWithImage) {
-            coverImage = productWithImage.images[0].url;
-          }
+          if (productWithImage) coverImage = productWithImage.images[0].url;
         }
 
-        const deliveryTime = '25 min';
-
-        // Determine store type based on categories or sellerType
         let storeType = 'Store';
         if (categories.length > 0) {
           storeType = categories[0].name;
-        } else if (seller.sellerProfile?.sellerType && seller.sellerProfile.sellerType.length > 0) {
-          const sellerType = seller.sellerProfile.sellerType[0];
-          storeType = sellerType.charAt(0).toUpperCase() + sellerType.slice(1);
+        } else if (seller.sellerProfile?.sellerType?.length > 0) {
+          const st = seller.sellerProfile.sellerType[0];
+          storeType = st.charAt(0).toUpperCase() + st.slice(1);
         }
 
-        // Get offer/badge if any
         const hasOffer = products.some(p => p.discount > 0 || p.discountPrice);
-        const offer = hasOffer ? 'Best Seller' : '';
 
         return {
           id: seller._id,
@@ -679,9 +804,9 @@ const homepageController = {
           rating: (seller.sellerProfile?.ratings?.average || seller.rating || 4.5).toFixed(1),
           cover: coverImage,
           type: storeType,
-          time: deliveryTime,
-          offer: offer,
-          categories: categories,
+          time: '25 min',
+          offer: hasOffer ? 'Best Seller' : '',
+          categories,
           productCount: products.length,
           isVerified: seller.sellerProfile?.isVerified || false,
           storeStatus: seller.sellerProfile?.storeStatus || 'open',
@@ -691,18 +816,9 @@ const homepageController = {
         };
       });
 
-      // Show all stores (Option 2 from original code)
-      const activeStores = storesWithDetails;
-
-      const total = await User.countDocuments({
-        role: 'seller',
-        isActive: true,
-        isBlocked: false
-      });
-
       res.json({
         success: true,
-        data: activeStores,
+        data: storesWithDetails,
         pagination: {
           page: parseInt(page),
           limit: parseInt(limit),
@@ -726,40 +842,72 @@ const homepageController = {
       const { lat, lng } = req.query;
 
       // --- SERVICEABILITY CHECK (Global) ---
+      // FORCE NO CACHE (Debugging)
+      res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+      res.set('Pragma', 'no-cache');
+      res.set('Expires', '0');
+
+      // --- SERVICEABILITY CHECK (Global) ---
       let isServiceable = true;
       let availableServices = ['food', 'tiffin', 'rental', 'grocery'];
-      let nearbySellerIds = [];
+
+      // Debug data placeholders
+      let foodSellerIdsCount = 0;
+      let rentalSellerIdsCount = 0;
 
       if (lat && lng) {
-        // Find sellers within 5km
-        const nearbySellers = await User.find({
+        const userLoc = { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] };
+
+        // Query 1: Nearby FOOD/TIFFIN Sellers (Strict 5km Limit)
+        const nearbyFoodSellers = await User.find({
           role: 'seller',
           location: {
             $near: {
-              $geometry: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
-              $maxDistance: 5000 // 5km
+              $geometry: userLoc,
+              $maxDistance: 5000 // 5km for Food/Tiffin
             }
           }
         }).select('_id');
+        const foodSellerIds = nearbyFoodSellers.map(u => u._id);
+        foodSellerIdsCount = foodSellerIds.length;
 
-        nearbySellerIds = nearbySellers.map(u => u._id);
+        // Query 2: Nearby RENTAL/GROCERY Sellers (Expanded 100km Limit - City Wide)
+        const nearbyRentalSellers = await User.find({
+          role: 'seller',
+          location: {
+            $near: {
+              $geometry: userLoc,
+              $maxDistance: 100000 // 100km (City-Wide Service for Rentals)
+            }
+          }
+        }).select('_id');
+        const rentalSellerIds = nearbyRentalSellers.map(u => u._id);
+        rentalSellerIdsCount = rentalSellerIds.length;
 
-        if (nearbySellerIds.length === 0) {
+        if (rentalSellerIds.length === 0) {
           isServiceable = false;
           availableServices = [];
         } else {
-          const [hasFood, hasTiffin, hasRental] = await Promise.all([
-            Product.exists({ seller: { $in: nearbySellerIds }, isActive: true }),
-            MealPlan.exists({ seller: { $in: nearbySellerIds }, status: 'active' }),
-            require('../models/Vehicle').exists({ sellerId: { $in: nearbySellerIds }, status: 'active' })
+          // Check availability based on respective radii
+          const [hasProducts, hasTiffin] = await Promise.all([
+            // ANY Product within 5km? (Food or Grocery)
+            Product.exists({ seller: { $in: foodSellerIds }, isActive: true }),
+            // Tiffin within 5km?
+            MealPlan.exists({ seller: { $in: foodSellerIds }, status: 'active' })
           ]);
 
+          const hasRental = rentalSellerIds.length > 0; // Relaxed check: Unlock if ANY seller is in 100km
+
           availableServices = [];
-          if (hasFood) availableServices.push('food', 'grocery');
+
+          if (hasProducts) availableServices.push('food', 'grocery');
           if (hasTiffin) availableServices.push('tiffin', 'ghar-ka-khana');
           if (hasRental) availableServices.push('rental');
 
-          if (availableServices.length === 0) isServiceable = false;
+          // If no services available
+          if (availableServices.length === 0) {
+            isServiceable = false;
+          }
         }
       }
 
@@ -806,7 +954,12 @@ const homepageController = {
           availableServices,
           message: isServiceable ? "Service available" : "Coming soon",
           // Debug info for frontend if needed
-          checkedLocation: { lat, lng }
+          debugInfo: {
+            foodCount: foodSellerIdsCount,
+            rentalCount: rentalSellerIdsCount,
+            latReceived: lat,
+            lngReceived: lng
+          }
         }
       });
     } catch (error) {

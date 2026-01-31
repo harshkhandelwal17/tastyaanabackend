@@ -259,7 +259,69 @@ const productController = {
     }
   },
 
-  // Get all products with filtering
+  getTiffinProducts: async (req, res) => {
+    try {
+      const { page = 1, limit = 100, lat, lng } = req.query;
+
+      // 1. Find all Sellers who have 'tiffin' in their sellerType
+      // Using regex for flexibility (tiffin, Tiffin, etc.)
+      const tiffinSellers = await User.find({
+        role: 'seller',
+        'sellerProfile.sellerType': { $in: [/tiffin/i] },
+        isActive: true,
+        isBlocked: false
+      }).select('_id');
+      const sellerIds = tiffinSellers.map(s => s._id);
+
+      // 2. Geo-filtering (Optional: Intersect with nearby sellers if lat/lng provided)
+      let finalSellerIds = sellerIds;
+      if (lat && lng) {
+        // This is a rough filter. For strict geo-queries, we'd do the Geo query first.
+        // For now, let's trust the Seller Selection logic, or we can add Geo here.
+        const nearbyIds = await User.find({
+          role: 'seller',
+          location: {
+            $near: {
+              $geometry: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
+              $maxDistance: 15000 // 15km
+            }
+          }
+        }).select('_id');
+        const nearbyIdStrings = nearbyIds.map(n => n._id.toString());
+        finalSellerIds = sellerIds.filter(id => nearbyIdStrings.includes(id.toString()));
+      }
+      // 3. Find Products from these sellers
+      const products = await Product.find({
+        seller: { $in: finalSellerIds },
+        isActive: true
+      })
+        .populate('category', 'name slug')
+        .populate('seller', 'name sellerProfile')
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(parseInt(limit));
+      // 4. Count for pagination
+      const total = await Product.countDocuments({
+        seller: { $in: finalSellerIds },
+        isActive: true
+      });
+
+      res.json({
+        success: true,
+        products,
+        pagination: {
+          page: parseInt(page),
+          limit: parseInt(limit),
+          total,
+          pages: Math.ceil(total / limit)
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching tiffin products:", error);
+      res.status(500).json({ success: false, message: error.message });
+    }
+  },
+
   getAllProducts: async (req, res) => {
     try {
       const {
@@ -273,7 +335,9 @@ const productController = {
         sortBy = 'createdAt',
         sortOrder = 'desc',
         lat,
-        lng
+        lng,
+        search,
+        type
       } = req.query;
 
       const skip = (page - 1) * limit;
@@ -373,6 +437,26 @@ const productController = {
           { description: { $regex: search, $options: 'i' } },
           { tags: { $in: [new RegExp(search, 'i')] } }
         ];
+      }
+
+      // Filter by Seller Type (e.g. 'tiffin', 'food') using aggregation lookups or pre-filtering seller IDs
+      // Since 'type' is on the Seller (User), not the Product, we need to find filtered sellers first.
+      if (req.query.type) {
+        const typeRegex = new RegExp(req.query.type, 'i');
+        const typedSellers = await User.find({
+          'sellerProfile.sellerType': { $in: [typeRegex] },
+          role: 'seller'
+        }).select('_id');
+        const typedSellerIds = typedSellers.map(u => u._id);
+
+        if (query.seller && query.seller.$in) {
+          // Intersect if we already have a location-based seller list
+          const existingIds = query.seller.$in.map(id => id.toString());
+          const intersected = typedSellerIds.filter(id => existingIds.includes(id.toString()));
+          query.seller = { $in: intersected };
+        } else {
+          query.seller = { $in: typedSellerIds };
+        }
       }
 
       // Price filter (check within weightOptions)

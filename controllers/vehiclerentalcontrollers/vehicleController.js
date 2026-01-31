@@ -41,17 +41,51 @@ const getVehicles = async (req, res) => {
     if (fuelType) filter.fuelType = fuelType;
     if (brand) filter.companyName = new RegExp(brand, 'i');
 
-    // Location filtering
+    // Location filtering (FIX: Use Seller Location as Primary Source)
     if (lat && lng) {
-      filter.locationGeo = {
-        $near: {
-          $geometry: {
-            type: "Point",
-            coordinates: [parseFloat(lng), parseFloat(lat)]
-          },
-          $maxDistance: 20000 // 20km radius for vehicles
+      // 1. Find Sellers within 100km
+      const nearbySellers = await User.find({
+        role: { $in: ['seller', 'vendor'] },
+        location: {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: [parseFloat(lng), parseFloat(lat)]
+            },
+            $maxDistance: 100000 // 100km radius
+          }
         }
-      };
+      }).select('_id');
+
+      const nearbySellerIds = nearbySellers.map(u => u._id);
+
+      // 2. Filter Vehicles belonging to these sellers
+      // This bypasses the need for 'locationGeo' on individual vehicles
+      if (nearbySellerIds.length > 0) {
+        if (filter.sellerId) {
+          // If sellerId was already filtered, ensure it's also in nearby list
+          // check if specific seller is in range
+          const isNearby = nearbySellerIds.some(id => id.toString() === filter.sellerId.toString());
+          if (!isNearby) {
+            return res.json({ success: true, data: [], pagination: { totalItems: 0 } });
+          }
+        } else {
+          filter.sellerId = { $in: nearbySellerIds };
+        }
+      } else {
+        // No sellers nearby -> No vehicles
+        return res.json({
+          success: true,
+          data: [],
+          pagination: {
+            currentPage: parseInt(page),
+            totalPages: 0,
+            totalItems: 0,
+            hasNext: false,
+            hasPrev: false
+          }
+        });
+      }
     }
 
     // Price range filtering
@@ -775,21 +809,33 @@ const getVehicleShops = async (req, res) => {
     // Construct pipeline
     const pipeline = [];
 
-    // 1. Geo-spatial filtering if location provided
+    // 1. Geo-spatial filtering (FIX: Use Seller Location)
     if (lat && lng) {
-      const geoQuery = { status: 'active' };
-      if (zoneCode) geoQuery.zoneCode = zoneCode;
+      // Find Sellers within 100km
+      const nearbySellers = await User.find({
+        role: { $in: ['seller', 'vendor'] },
+        location: {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: [parseFloat(lng), parseFloat(lat)]
+            },
+            $maxDistance: 100000 // 100km radius
+          }
+        }
+      }).select('_id');
 
+      const nearbySellerIds = nearbySellers.map(u => u._id);
+
+      // Filter vehicles by these sellers
+      // Note: We cannot use $geoNear in pipeline anymore because we are not querying geo on Vehicle
       pipeline.push({
-        $geoNear: {
-          near: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
-          distanceField: "dist.calculated",
-          maxDistance: 20000, // 20km radius
-          query: geoQuery,
-          includeLocs: "dist.location",
-          spherical: true
+        $match: {
+          ...vehicleFilter,
+          sellerId: { $in: nearbySellerIds }
         }
       });
+
     } else {
       // Standard match if no location
       pipeline.push({ $match: vehicleFilter });
