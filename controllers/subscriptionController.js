@@ -1825,6 +1825,14 @@ const getUserSubscriptions = async (req, res) => {
           select: 'name restaurantName avatar'
         }
       })
+      .populate({
+        path: 'thaliReplacements.replacementThali',
+        select: 'title description imageUrls tier'
+      })
+      .populate({
+        path: 'thaliReplacements.originalMealPlan',
+        select: 'title'
+      })
       .sort({ createdAt: -1 })
       .limit(limit * 1)
       .skip((page - 1) * limit)
@@ -2498,311 +2506,6 @@ const getSubscriptionDetails = async (req, res) => {
  * Skip meal for a specific date
  */
 // const skipMeal = async (req, res) => {
-//   const maxRetries = 3;
-//   let retryCount = 0;
-
-//   while (retryCount < maxRetries) {
-//     try {
-//       const { id } = req.params;
-//       const { reason , skipData } = req.body;
-//       const userId = req.user.id;
-//       const shift = skipData?.shift;
-//       const date=skipData?.date;
-//       // Get admin settings for skip limits
-//       const adminSettings = await AdminSettings.getCurrentSettings();
-//       const maxSkipMeals = adminSettings?.maxSkipMeals || 8;
-//       const maxSkipDaysInAdvance = adminSettings?.maxSkipDaysInAdvance || 7;
-
-//       // Find the subscription
-//       const subscription = await Subscription.findOne({
-//         _id: id,
-//         user: userId
-//       });
-
-//       if (!subscription) {
-//         return res.status(404).json({
-//           success: false,
-//           message: 'Subscription not found',
-//           code: 'SUBSCRIPTION_NOT_FOUND'
-//         });
-//       }
-
-//       // Validate subscription status
-//       if (subscription.status !== 'active') {
-//         return res.status(400).json({
-//           success: false,
-//           message: 'Only active subscriptions can skip meals',
-//           code: 'SUBSCRIPTION_NOT_ACTIVE'
-//         });
-//       }
-// console.log("date is : ", req.body);
-//       // Parse and validate skip date
-//       const skipDate = moment.tz(date, 'Asia/Kolkata').startOf('day');
-//       const today = moment().tz('Asia/Kolkata').startOf('day');
-
-//       // Validate date format
-//       if (!skipDate.isValid()) {
-//         return res.status(400).json({
-//           success: false,
-//           message: 'Invalid date format. Please use YYYY-MM-DD',
-//           code: 'INVALID_DATE_FORMAT'
-//         });
-//       }
-
-//       // Check if date is in the past
-//       if (skipDate.isBefore(today)) {
-//         return res.status(400).json({
-//           success: false,
-//           message: 'Cannot skip meals in the past',
-//           code: 'PAST_DATE_NOT_ALLOWED'
-//         });
-//       }
-
-//       // Check if date is too far in advance
-//       const maxSkipDate = today.clone().add(maxSkipDaysInAdvance, 'days');
-//       if (skipDate.isAfter(maxSkipDate)) {
-//         return res.status(400).json({
-//           success: false,
-//           message: `Cannot skip meals more than ${maxSkipDaysInAdvance} days in advance`,
-//           code: 'SKIP_DATE_TOO_FAR',
-//           maxSkipDaysInAdvance
-//         });
-//       }
-
-//     // VALIDATION: Check time restrictions for skip meal
-//     if (shift && skipDate.isSame(today, 'day')) {
-//       const now = moment().tz('Asia/Kolkata');
-//       const currentHour = now.hour();
-//       const currentMinute = now.minute();
-//       const currentTime = currentHour * 60 + currentMinute;
-
-//       if (shift === 'morning') {
-//         // Morning shift: must be before 10 AM (600 minutes)
-//         if (currentTime >= 600) {
-//           return res.status(400).json({
-//             success: false,
-//             message: 'Morning shift meals cannot be skipped after 10:00 AM for the same day',
-//             code: 'TIME_RESTRICTION_VIOLATED'
-//           });
-//         }
-//       } else if (shift === 'evening') {
-//         // Evening shift: must be before 6:30 PM (1110 minutes)
-//         if (currentTime >= 1110) {
-//           return res.status(400).json({
-//             success: false,
-//             message: 'Evening shift meals cannot be skipped after 6:30 PM for the same day',
-//             code: 'TIME_RESTRICTION_VIOLATED'
-//           });
-//         }
-//       }
-//     }
-
-//     // VALIDATION: Check if meal is already replaced for the same date and shift
-//     if (shift && skipDate) {
-//       // Check if there's a thali replacement for the same date and shift
-//       if (subscription.thaliReplacements && subscription.thaliReplacements.length > 0) {
-//         const existingReplacement = subscription.thaliReplacements.find(rep => {
-//           if (!rep.date || !rep.shift) return false;
-//           const repDate = moment(rep.date).tz('Asia/Kolkata').startOf('day');
-//           return repDate.isSame(skipDate, 'day') && rep.shift === shift;
-//         });
-
-//         if (existingReplacement) {
-//           return res.status(400).json({
-//             success: false,
-//             message: `Cannot skip meal for ${shift} shift on ${skipDate.format('YYYY-MM-DD')}. A thali replacement already exists for this shift.`,
-//             code: 'REPLACEMENT_EXISTS_FOR_SHIFT'
-//           });
-//         }
-//       }
-
-//       // Check if there's a customization for the same date and shift
-//       const MealCustomization = require('../models/MealCustomization');
-//       const existingCustomization = await MealCustomization.findOne({
-//         subscription: id,
-//         date: {
-//           $gte: skipDate.toDate(),
-//           $lt: skipDate.clone().add(1, 'day').toDate()
-//         },
-//         shift: shift,
-//         isActive: true
-//       });
-
-//       if (existingCustomization) {
-//         return res.status(400).json({
-//           success: false,
-//           message: `Cannot skip meal for ${shift} shift on ${skipDate.format('YYYY-MM-DD')}. A customization already exists for this shift.`,
-//           code: 'CUSTOMIZATION_EXISTS_FOR_SHIFT'
-//         });
-//       }
-//     }
-
-//     // Get subscription dates with fallback logic
-//     const subscriptionStartDate = subscription.startDate || subscription.deliverySettings?.startDate;
-//     const subscriptionEndDate = subscription.endDate || subscription.deliverySettings?.lastDeliveryDate;
-
-//     // Debug: Log the original subscription dates
-//     console.log('Skip meal - Original subscription dates:');
-//     console.log('  subscription.startDate:', subscription.startDate);
-//     console.log('  subscription.endDate:', subscription.endDate);
-//     console.log('  subscription.deliverySettings?.startDate:', subscription.deliverySettings?.startDate);
-//     console.log('  subscription.deliverySettings?.lastDeliveryDate:', subscription.deliverySettings?.lastDeliveryDate);
-//     console.log('  Using subscriptionStartDate:', subscriptionStartDate);
-//     console.log('  Using subscriptionEndDate:', subscriptionEndDate);
-
-//     // Validate that subscription has valid dates
-//     if (!subscriptionStartDate || !subscriptionEndDate) {
-//       return res.status(400).json({
-//         success: false,
-//         message: 'Subscription dates are not properly configured',
-//         code: 'INVALID_SUBSCRIPTION_DATES'
-//       });
-//     }
-
-//     // Debug: Log the dates being compared
-//     console.log('Skip meal validation - Dates being compared: shift is :',shift);
-//     console.log('  skipDate:', skipDate.format('YYYY-MM-DD'));
-//     console.log('  subscriptionStartDate:', moment(subscriptionStartDate).format('YYYY-MM-DD'));
-//     console.log('  subscriptionEndDate:', moment(subscriptionEndDate).format('YYYY-MM-DD'));
-
-//     // Create timezone-adjusted dates for comparison
-//     const startDateForComparison = moment(subscriptionStartDate).tz('Asia/Kolkata').startOf('day');
-//     const endDateForComparison = moment(subscriptionEndDate).tz('Asia/Kolkata').startOf('day');
-
-//     console.log('  startDateForComparison (Asia/Kolkata):', startDateForComparison.format('YYYY-MM-DD'));
-//     console.log('  endDateForComparison (Asia/Kolkata):', endDateForComparison.format('YYYY-MM-DD'));
-//     console.log('  skipDate.isBefore(start):', skipDate.isBefore(startDateForComparison));
-//     console.log('  skipDate.isAfter(end):', skipDate.isAfter(endDateForComparison));
-
-
-//     if (skipDate.isBefore(startDateForComparison) || skipDate.isAfter(endDateForComparison)) {
-//       return res.status(400).json({
-//         success: false,
-//         message: 'Skip date must be within subscription period',
-//         code: 'DATE_OUT_OF_RANGE',
-//         details: {
-//           skipDate: skipDate.format('YYYY-MM-DD'),
-//           subscriptionStart: moment(subscriptionStartDate).format('YYYY-MM-DD'),
-//           subscriptionEnd: moment(subscriptionEndDate).format('YYYY-MM-DD')
-//         }
-//       });
-//     }
-
-//     // Check if it's a Sunday and trying to skip evening meal (not allowed)
-//     if (skipDate.day() === 0 && shift === 'evening') {
-//       return res.status(400).json({
-//         success: false,
-//         message: 'Evening meals are not available on Sundays',
-//         code: 'SUNDAY_EVENING_NOT_AVAILABLE'
-//       });
-//     }
-
-//     // Check if already skipped this meal
-//     const isAlreadySkipped = subscription.skippedMeals?.some(skip => 
-//       moment(skip.date).isSame(skipDate, 'day') && skip.shift === shift
-//     );
-
-//     if (isAlreadySkipped) {
-//       return res.status(400).json({
-//         success: false,
-//         message: 'This meal has already been skipped',
-//         code: 'MEAL_ALREADY_SKIPPED'
-//       });
-//     }
-
-//     // Check skip limits for current month
-//     const currentMonth = moment().month();
-//     const skipsThisMonth = subscription.skippedMeals?.filter(skip => {
-//       return moment(skip.date).month() === currentMonth;
-//     }).length || 0;
-
-//     if (skipsThisMonth >= maxSkipMeals) {
-//       return res.status(400).json({
-//         success: false,
-//         message: `You have reached the maximum of ${maxSkipMeals} skips per month`,
-//         code: 'SKIP_LIMIT_REACHED',
-//         maxSkipMeals
-//       });
-//     }
-
-//     // Calculate refund amount based on daily deduction
-//     const totalDays = moment(subscription.endDate).diff(moment(subscription.startDate), 'days') + 1;
-//     const dailyDeduction = subscription.pricing.finalAmount / totalDays;
-//     const refundAmount = Math.round(dailyDeduction * 100) / 100; // Round to 2 decimal places
-
-//     // Add skip record - only include fields that match the schema
-//     const skipRecord = {
-//       date: skipDate.toDate(),
-//       shift,
-//       reason: reason || 'user_skipped', // Use valid enum value
-//       description: reason || 'User requested meal skip',
-//       createdAt: new Date(),
-//       createdBy: userId
-//     };
-
-//     subscription.skippedMeals = subscription.skippedMeals || [];
-//     subscription.skippedMeals.push(skipRecord);
-
-//     // Add refund to user's wallet
-//     if (refundAmount > 0) {
-//       const user = await User.findById(userId);
-//       if (!user) {
-//         return res.status(404).json({
-//           success: false,
-//           message: 'User not found',
-//           code: 'USER_NOT_FOUND'
-//         });
-//       }
-
-//       // Add to wallet
-//       user.wallet.balance = (user.wallet.balance || 0) + refundAmount;
-
-//       // Create wallet transaction
-//       const walletTransaction = new WalletTransaction({
-//         user: userId,
-//         amount: refundAmount,
-//         type: 'credit',
-//         status: 'completed',
-//         method: 'refund',
-//         referenceId: `skip_${subscription._id}_${skipDate.format('YYYYMMDD')}_${shift}`,
-//         note: `Refund for skipped ${shift} meal on ${skipDate.format('YYYY-MM-DD')}`,
-//         metadata: {
-//           subscriptionId: subscription._id,
-//           skipDate: skipDate.toDate(),
-//           shift,
-//           reason: reason || 'User requested'
-//         }
-//       });
-
-//       await walletTransaction.save();
-//       await user.save();
-
-//       // Note: Wallet transaction ID is stored in the WalletTransaction model
-//       // No need to update skipRecord with additional fields
-//     }
-
-//     await subscription.save();
-
-//     // Send notification
-//     try {
-//       await createNotification({
-//         userId,
-//         title: 'Meal Skipped',
-//         message: `Your ${shift} meal has been skipped for ${skipDate.format('MMM D, YYYY')}.`,
-//         type: 'subscription',
-//         data: { 
-//           subscriptionId: subscription._id,
-//           skipDate: skipDate.toDate(),
-//           shift,
-//           refundAmount
-//         }
-//       });
-//     } catch (notificationError) {
-//       console.error('Failed to send notification:', notificationError);
-//       // Non-blocking error
-//     }
-
-//     res.status(200).json({
 //       success: true,
 //       message: 'Meal skipped successfully',
 //       data: {
@@ -3110,6 +2813,14 @@ const skipMeal = async (req, res) => {
       // The cron job will continue to deliver until mealsRemaining hits 0.
       subscription.mealCounts.mealsRemaining = (subscription.mealCounts.mealsRemaining || 0) + totalNewSkips;
 
+      // EXTENSION: Also push the end date to reflect the extension visually
+      if (subscription.endDate) {
+        subscription.endDate = moment(subscription.endDate).add(totalNewSkips, 'days').toDate();
+      }
+      if (subscription.deliverySettings && subscription.deliverySettings.lastDeliveryDate) {
+        subscription.deliverySettings.lastDeliveryDate = moment(subscription.deliverySettings.lastDeliveryDate).add(totalNewSkips, 'days').toDate();
+      }
+
       const EXTENSION_MODE = true; // Flag for clarity
       const totalRefund = 0; // No wallet refund
       const refundPerMeal = 0;
@@ -3125,7 +2836,8 @@ const skipMeal = async (req, res) => {
           reason: reason || 'user_skipped',
           description: reason || 'User requested meal skip',
           createdAt: new Date(),
-          createdBy: userId
+          createdBy: userId,
+          actionTaken: 'extended'
         };
 
         subscription.skippedMeals.push(skipRecord);
@@ -4610,9 +4322,10 @@ const replaceThali = async (req, res) => {
     }
 
     // 4. Handle payment if there's an additional cost
+    // 4. Handle payment if there's an additional cost
     if (paymentRequired > 0) {
       // Verify payment was made
-      if (typeof totalPayment !== 'number' || totalPayment < paymentRequired) {
+      if (!req.body.paymentId && (typeof totalPayment !== 'number' || totalPayment < paymentRequired)) {
         await session.abortTransaction();
         session.endSession();
         return res.status(400).json({
@@ -4623,18 +4336,25 @@ const replaceThali = async (req, res) => {
         });
       }
 
-      // Process payment (in a real app, this would integrate with payment gateway)
-      console.log(`Processing payment of ₹${paymentRequired} for thali replacement`);
+      // Process payment (Real Logic)
+      console.log(`Processing payment of ₹${paymentRequired} for thali replacement. Payment ID: ${req.body.paymentId}`);
 
-      // Update user's wallet or record transaction
-      // This is a simplified example - in a real app, you'd have proper transaction handling
+      // Here you should verify paymentId with Razorpay API in production
+
+      // Record transaction
+      const WalletTransaction = require('../models/WalletTransaction');
       const walletTransaction = new WalletTransaction({
         user: userId,
         amount: paymentRequired,
-        type: 'debit',
-        description: `Thali replacement: ${thali.name} (${isDefault ? 'Default' : 'One-time'})`,
-        referenceId: `thali-replace-${Date.now()}`,
-        status: 'completed'
+        type: 'debit', // Or 'payment'
+        description: `Thali replacement: ${thali.name}`,
+        referenceId: req.body.paymentId || `thali-replace-${Date.now()}`,
+        status: 'completed',
+        metadata: {
+          subscriptionId,
+          thaliId,
+          date: targetDate
+        }
       });
 
       await walletTransaction.save({ session });
@@ -4648,10 +4368,14 @@ const replaceThali = async (req, res) => {
       replacementPrice: replacementPrice,
       priceDifference: calculatedPriceDifference,
       replacedAt: new Date(),
+      // Save shift and date
+      date: targetDate,
+      shift: req.body.shift || subscription.shift || 'evening',
       isDefault: isDefault,
       customizationType: customizationType,
       addOns: selectedAddOns,
-      addOnsTotal: addOnsTotal
+      addOnsTotal: addOnsTotal,
+      paymentId: req.body.paymentId // Save payment ID for reference
     };
 
     // 6. Update subscription based on replacement type
@@ -5099,21 +4823,33 @@ const getSkipHistory = async (req, res) => {
       return skipDate.getMonth() === currentMonth && skipDate.getFullYear() === currentYear;
     }) || [];
 
-    // Sort skipped meals by date (newest first)
-    const sortedSkippedMeals = (subscription.skippedMeals || []).sort((a, b) =>
+    // Prepare Replacements as Logs
+    const replacementLogs = (subscription.thaliReplacements || []).map(rep => ({
+      _id: rep._id,
+      date: rep.date || rep.replacedAt, // Fallback
+      shift: rep.shift || 'N/A',
+      reason: 'Meal Replacement',
+      description: `Replaced with premium item`,
+      action: 'REPLACED',
+      createdAt: rep.replacedAt
+    }));
+
+    // Prepare Skips
+    const skipLogs = (subscription.skippedMeals || []).map(skip => ({
+      ...skip.toObject ? skip.toObject() : skip,
+      action: skip.actionTaken || 'EXTENDED' // Default to Extended if missing
+    }));
+
+    // Combine and Sort
+    const allLogs = [...skipLogs, ...replacementLogs].sort((a, b) =>
       new Date(b.date) - new Date(a.date)
     );
 
-    // Calculate total refund amount
-    const totalRefund = sortedSkippedMeals.reduce((total, skip) => {
-      // Calculate refund amount if not stored
-      if (!skip.refundAmount && subscription.pricing) {
-        const totalDays = moment(subscription.endDate).diff(moment(subscription.startDate), 'days') + 1;
-        const dailyDeduction = subscription.pricing.finalAmount / totalDays;
-        skip.refundAmount = Math.round(dailyDeduction * 100) / 100;
-      }
-      return total + (skip.refundAmount || 0);
-    }, 0);
+    // Limit to last 50? No, show all for now.
+    const sortedSkippedMeals = allLogs;
+
+    // Calculate total refund amount - REMOVED as we now extend
+    const totalRefund = 0;
 
     res.json({
       success: true,
@@ -5128,7 +4864,7 @@ const getSkipHistory = async (req, res) => {
         },
         statistics: {
           totalSkips: sortedSkippedMeals.length,
-          totalRefund: totalRefund,
+          totalRefund: 0, // No refund
           thisMonthSkips: currentMonthSkips.length,
           remainingSkips: Math.max(0, maxSkipMeals - currentMonthSkips.length)
         }

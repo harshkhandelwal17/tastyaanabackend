@@ -5,7 +5,7 @@ const ExtraItem = require('../models/ExtraItem');
 const { validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 const Razorpay = require('razorpay');
-const ReplaceableItems =require('../models/replaceableItems');
+const ReplaceableItems = require('../models/replaceableItems');
 // Initialize Razorpay
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -56,7 +56,7 @@ const validateCustomizationPaymentState = (customization) => {
 const findConflictingCustomizations = async (subscriptionId, date, shift, excludeCustomizationId = null) => {
   const targetDate = new Date(date);
   targetDate.setHours(0, 0, 0, 0);
-  
+
   const query = {
     subscription: subscriptionId,
     date: {
@@ -102,7 +102,7 @@ exports.createCustomization = async (req, res) => {
       extraItems,
       notes
     } = req.body;
-    
+
     console.log("🔍 createCustomization - Request body:", JSON.stringify(req.body, null, 2));
     console.log("🔍 createCustomization - Extracted values:", {
       subscriptionId,
@@ -114,7 +114,7 @@ exports.createCustomization = async (req, res) => {
       dates,
       datesType: typeof dates
     });
-    console.log("dates forthe suctomization is : ",dates,"date is : ",date)
+    console.log("dates forthe suctomization is : ", dates, "date is : ", date)
     // Verify subscription exists and belongs to user
     const subscription = await Subscription.findOne({
       _id: subscriptionId,
@@ -123,9 +123,9 @@ exports.createCustomization = async (req, res) => {
 
     if (!subscription) {
       console.log('Subscription not found')
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        message: 'Subscription not found' 
+        message: 'Subscription not found'
       });
     }
 
@@ -162,7 +162,7 @@ exports.createCustomization = async (req, res) => {
     // VALIDATION 4: Check if customization shift matches subscription's allowed shifts
     if (shift) {
       let allowedShifts = [];
-      
+
       if (subscription.shift) {
         // Handle subscription shift values
         if (subscription.shift === 'both') {
@@ -185,7 +185,7 @@ exports.createCustomization = async (req, res) => {
         // Fallback to mealPlan shifts or default both
         allowedShifts = subscription.mealPlan?.shifts || ['morning', 'evening'];
       }
-      
+
       if (!allowedShifts.includes(shift)) {
         return res.status(400).json({
           success: false,
@@ -200,7 +200,7 @@ exports.createCustomization = async (req, res) => {
     // VALIDATION 5: Check if dates array contains valid shifts for subscription
     if (dates && dates.length > 0) {
       let allowedShifts = [];
-      
+
       if (subscription.shift) {
         // Handle subscription shift values
         if (subscription.shift === 'both') {
@@ -221,11 +221,11 @@ exports.createCustomization = async (req, res) => {
       } else {
         allowedShifts = subscription.mealPlan?.shifts || ['morning', 'evening'];
       }
-      
-      const invalidDates = dates.filter(dateObj => 
+
+      const invalidDates = dates.filter(dateObj =>
         dateObj.shift && !allowedShifts.includes(dateObj.shift)
       );
-      
+
       if (invalidDates.length > 0) {
         return res.status(400).json({
           success: false,
@@ -241,7 +241,7 @@ exports.createCustomization = async (req, res) => {
     if (replacementMeal && date && shift) {
       const targetDate = new Date(date);
       targetDate.setHours(0, 0, 0, 0); // Set to start of day for comparison
-      
+
       // Check existing customizations for the same date and shift with the SAME replacement meal
       const existingCustomization = await MealCustomization.findOne({
         subscription: subscriptionId,
@@ -258,9 +258,9 @@ exports.createCustomization = async (req, res) => {
       if (existingCustomization) {
         // Check if the existing customization has a valid payment state
         const existingValidation = validateCustomizationPaymentState(existingCustomization);
-        
+
         console.log(`🔍 Found existing customization ${existingCustomization._id} with payment state:`, existingValidation);
-        
+
         // RELAXED VALIDATION: Only block if the existing customization has COMPLETED payment
         // Allow multiple pending customizations regardless of amount
         if (existingCustomization.paymentStatus === 'completed') {
@@ -288,7 +288,7 @@ exports.createCustomization = async (req, res) => {
           const repDate = new Date(rep.date);
           repDate.setHours(0, 0, 0, 0);
           return (
-            repDate.getTime() === targetDate.getTime() && 
+            repDate.getTime() === targetDate.getTime() &&
             rep.shift === shift &&
             rep.replacementThali.toString() === replacementMeal.toString()
           );
@@ -376,7 +376,7 @@ exports.createCustomization = async (req, res) => {
       const maxAdvanceDays = 7;
       const maxDate = new Date(today);
       maxDate.setDate(maxDate.getDate() + maxAdvanceDays);
-      
+
       if (targetDate.getTime() > maxDate.getTime()) {
         return res.status(400).json({
           success: false,
@@ -391,7 +391,7 @@ exports.createCustomization = async (req, res) => {
     if (date && shift) {
       const targetDate = new Date(date);
       targetDate.setHours(0, 0, 0, 0);
-      
+
       // Check if there's a skipped meal for the same date and shift
       if (subscription.skippedMeals && subscription.skippedMeals.length > 0) {
         const existingSkip = subscription.skippedMeals.find(skip => {
@@ -417,7 +417,7 @@ exports.createCustomization = async (req, res) => {
       if (replacementMealDoc) {
         const basePrice = subscription.pricing?.basePricePerMeal || 75;
         const replacementPrice = replacementMealDoc.price || 0;
-        
+
         // If replacement is significantly cheaper, warn user (unless explicitly confirmed)
         const priceDifference = basePrice - replacementPrice;
         if (priceDifference > 20 && !req.body.confirmPriceDifference) {
@@ -445,11 +445,12 @@ exports.createCustomization = async (req, res) => {
     const targetDate = new Date(date);
     const subscriptionStart = new Date(subscription.startDate);
     const subscriptionEnd = new Date(subscription.endDate);
-    
-    if (targetDate < subscriptionStart || targetDate > subscriptionEnd) {
+
+    // FIXED: Allow customization after end date as long as subscription is active (meal count based)
+    if (targetDate < subscriptionStart) {
       return res.status(400).json({
         success: false,
-        message: `Customization date must be within your subscription period (${subscriptionStart.toDateString()} to ${subscriptionEnd.toDateString()})`,
+        message: `Customization date must be after your subscription start date (${subscriptionStart.toDateString()})`,
         code: 'DATE_OUTSIDE_SUBSCRIPTION_PERIOD'
       });
     }
@@ -467,7 +468,7 @@ exports.createCustomization = async (req, res) => {
     if (subscription.deliveryPreferences) {
       const deliveryDays = subscription.deliveryPreferences.deliveryDays || [];
       const targetDay = targetDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
-      
+
       // Only validate if specific delivery days are configured
       if (deliveryDays.length > 0 && !deliveryDays.includes(targetDay)) {
         const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -554,7 +555,7 @@ exports.createCustomization = async (req, res) => {
     // Calculate pricing
     const basePrice = subscription.pricing?.basePricePerMeal || 75;
     const addonPrice = addons?.reduce((sum, addon) => sum + (addon.price * (addon.quantity || 1)), 0) || 0;
-    
+
     // Calculate extra items price by fetching from database
     let extraItemPrice = 0;
     if (extraItems && extraItems.length > 0) {
@@ -565,25 +566,25 @@ exports.createCustomization = async (req, res) => {
         }
       }
     }
-    
+
     // Calculate replacement price if replacing thali
     let replacementPrice = 0;
     let totalPayablePrice = 0;
-    
+
     if (replacementMeal) {
       // First check if the MealPlan exists at all
       console.log('Looking for MealPlan with ID:', replacementMeal.toString());
-      
+
       // Get replacement meal price from the database or request
       const replacementMealDoc = await ReplaceableItems.findById(replacementMeal).lean();
       console.log('MealPlan found:', !!replacementMealDoc);
-      
+
       if (!replacementMealDoc) {
         console.log('MealPlan not found, checking all MealPlans...');
         const allMealPlans = await MealPlan.find({}).select('_id title pricing').lean();
         console.log('Available MealPlans:', allMealPlans.map(mp => ({ id: mp._id.toString(), title: mp.title, hasPricing: !!mp.pricing })));
       }
-      
+
       // Extract price from pricing array (use first pricing tier or find matching one)
       let replacementMealPrice = 0;
       if (replacementMealDoc?.price && replacementMealDoc.price > 0) {
@@ -593,7 +594,7 @@ exports.createCustomization = async (req, res) => {
       } else if (replacementMealDoc) {
         console.log('MealPlan found but no pricing array:', replacementMealDoc);
       }
-      
+
       // Debug logging
       console.log('Pricing Debug: ', {
         basePrice,
@@ -604,15 +605,15 @@ exports.createCustomization = async (req, res) => {
         replacementMeal: replacementMeal.toString(),
         replacementMealDoc: replacementMealDoc
       });
-      
+
       // Calculate replacement price difference (replacementMealPrice - basePrice)
       // If replacement is cheaper, customer gets credit (negative value)
       // If replacement is more expensive, customer pays difference (positive value)
       replacementPrice = replacementMealPrice - basePrice;
-      
+
       // Total payable is addons + extra items + replacement price difference
       totalPayablePrice = addonPrice + extraItemPrice + replacementPrice;
-      
+
       console.log('Final Calculation:', {
         replacementPrice,
         totalPayablePrice,
@@ -634,17 +635,17 @@ exports.createCustomization = async (req, res) => {
       if (targetDate.getTime() === today.getTime()) {
         // Check for existing pending customizations for the same date and shift
         const existingCustomizations = await findConflictingCustomizations(
-          subscriptionId, 
-          targetDate, 
+          subscriptionId,
+          targetDate,
           shift
         );
 
         if (existingCustomizations && existingCustomizations.length > 0) {
           for (const existingCustomization of existingCustomizations) {
             const validation = validateCustomizationPaymentState(existingCustomization);
-            
+
             console.log(`🔍 Payment validation for existing customization ${existingCustomization._id}:`, validation);
-            
+
             // RESTRICT: If existing customization has invalid payment state
             if (!validation.isValid) {
               console.log(`❌ Blocking new customization due to invalid existing payment state`);
@@ -660,7 +661,7 @@ exports.createCustomization = async (req, res) => {
                 }
               });
             }
-            
+
             // ALLOW: If existing customization has valid payment state
             console.log(`✅ Existing pending customization found with valid payment state. Allowing new customization.`);
           }
@@ -692,6 +693,15 @@ exports.createCustomization = async (req, res) => {
 
         console.log(`✅ New customization has valid payment state, proceeding...`);
       }
+    }
+
+    // VALIDATION ONLY CHECK
+    if (req.body.validateOnly) {
+      return res.status(200).json({
+        success: true,
+        message: 'Validation successful',
+        validationPassed: true
+      });
     }
 
     // Create customization
@@ -729,14 +739,14 @@ exports.createCustomization = async (req, res) => {
     // Debug: Log the date being passed
     const dateToPass = date || dates?.[0]?.date;
     const shiftToPass = shift || dates?.[0]?.shift;
-    
+
     console.log('Debug - Date being passed to addCustomization:', {
       date: dateToPass,
       dateType: typeof dateToPass,
       shift: shiftToPass,
       shiftType: typeof shiftToPass
     });
-    
+
     // Validate date format
     if (dateToPass) {
       const parsedDate = new Date(dateToPass);
@@ -745,7 +755,7 @@ exports.createCustomization = async (req, res) => {
       }
       console.log('Debug - Parsed date:', parsedDate);
     }
-    
+
     // Add to subscription's customization tracking (this should NOT trigger save)
     try {
       await subscription.addCustomization({
@@ -765,7 +775,7 @@ exports.createCustomization = async (req, res) => {
       try {
         // Get the replacement meal details for better tracking
         const replacementMealDoc = await ReplaceableItems.findById(replacementMeal).lean();
-        
+
         // Create replacement details object
         const replacementDetails = {
           originalMealPlan: subscription.defaultMeal,
@@ -800,11 +810,11 @@ exports.createCustomization = async (req, res) => {
           },
           { new: true, runValidators: false, strict: false } // Skip validation and allow non-schema fields
         );
-        
+
         if (!updateResult) {
           throw new Error('Failed to update subscription with thali replacement');
         }
-        
+
         console.log('✅ Thali replacement added to subscription:', {
           subscriptionId: subscription._id,
           replacementDetails,
@@ -822,7 +832,7 @@ exports.createCustomization = async (req, res) => {
     });
   } catch (err) {
     console.error('❌ Error in createCustomization:', err);
-    
+
     // Add specific debugging for validation errors
     if (err.name === 'ValidationError') {
       console.error('🔍 Validation Error Details:', {
@@ -831,10 +841,10 @@ exports.createCustomization = async (req, res) => {
         fullError: err
       });
     }
-    
-    res.status(500).json({ 
+
+    res.status(500).json({
       success: false,
-      error: 'Server error' 
+      error: 'Server error'
     });
   }
 };
@@ -847,7 +857,7 @@ exports.createCustomization = async (req, res) => {
 exports.createCustomizationPayment = async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     // Find customization
     const customization = await MealCustomization.findOne({
       _id: id,
@@ -1010,7 +1020,7 @@ exports.verifyCustomizationPayment = async (req, res) => {
 exports.getSubscriptionCustomizations = async (req, res) => {
   try {
     const { subscriptionId } = req.params;
-    
+
     const customizations = await MealCustomization.find({
       subscription: subscriptionId,
       user: req.user.id,
@@ -1042,9 +1052,9 @@ exports.getCalendarCustomizations = async (req, res) => {
     const { startDate, endDate } = req.query;
 
     if (!startDate || !endDate) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        error: 'Start date and end date are required' 
+        error: 'Start date and end date are required'
       });
     }
 
@@ -1071,16 +1081,16 @@ exports.getCalendarCustomizations = async (req, res) => {
       $or: [
         // One-time customizations in date range
         {
-          date: { 
-            $gte: new Date(startDate), 
-            $lte: new Date(endDate) 
+          date: {
+            $gte: new Date(startDate),
+            $lte: new Date(endDate)
           }
         },
         // Date-range customizations that overlap with the requested range
         {
-          'dates.date': { 
-            $gte: new Date(startDate), 
-            $lte: new Date(endDate) 
+          'dates.date': {
+            $gte: new Date(startDate),
+            $lte: new Date(endDate)
           }
         },
         // Permanent customizations that are active during the range
@@ -1097,13 +1107,13 @@ exports.getCalendarCustomizations = async (req, res) => {
         }
       ]
     })
-    .populate('baseMeal replacementMeal', 'name description price image')
-    .populate('subscription', 'name')
-    .sort({ date: 1, 'dates.date': 1 });
+      .populate('baseMeal replacementMeal', 'name description price image')
+      .populate('subscription', 'name')
+      .sort({ date: 1, 'dates.date': 1 });
 
     // Format for fullCalendar
     const events = [];
-    
+
     customizations.forEach(customization => {
       if (customization.date) {
         // One-time customization
@@ -1136,15 +1146,15 @@ exports.getCalendarCustomizations = async (req, res) => {
       } else if (customization.type === 'permanent') {
         // Permanent customizations - create events for each day in the range
         const start = new Date(Math.max(
-          new Date(startDate), 
+          new Date(startDate),
           customization.startsAt ? new Date(customization.startsAt) : new Date(0)
         ));
-        
+
         const end = new Date(Math.min(
           new Date(endDate),
           customization.endsAt ? new Date(customization.endsAt) : new Date(8640000000000000)
         ));
-        
+
         // Add events for each day in range
         for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
           events.push({
@@ -1170,9 +1180,9 @@ exports.getCalendarCustomizations = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      error: 'Server error' 
+      error: 'Server error'
     });
   }
 };
@@ -1265,7 +1275,7 @@ exports.updateCustomization = async (req, res) => {
     if (customization.date && customization.shift) {
       const targetDate = new Date(customization.date);
       targetDate.setHours(0, 0, 0, 0);
-      
+
       // Get the subscription to check skipped meals
       const subscription = await Subscription.findById(customization.subscription);
       if (subscription && subscription.skippedMeals && subscription.skippedMeals.length > 0) {
@@ -1289,7 +1299,7 @@ exports.updateCustomization = async (req, res) => {
     // Handle status update
     if (status && ['confirmed', 'rejected', 'cancelled'].includes(status)) {
       customization.status = status;
-      
+
       if (status === 'rejected' && reasonForRejection) {
         customization.reasonForRejection = reasonForRejection;
       }
@@ -1303,11 +1313,11 @@ exports.updateCustomization = async (req, res) => {
       const extraItemPrice = (customization.extraItems || []).reduce(
         (sum, item) => sum + (item.price * (item.quantity || 1)), 0
       );
-      
+
       customization.addonPrice = addonPrice;
       customization.extraItemPrice = extraItemPrice;
       customization.totalPrice = customization.basePrice + addonPrice + extraItemPrice;
-      
+
       // Update total payable price as well
       customization.totalpayablePrice = customization.totalPrice + (customization.replacementPrice || 0);
     }
@@ -1323,7 +1333,7 @@ exports.updateCustomization = async (req, res) => {
       if (targetDate.getTime() === today.getTime()) {
         // Validate current customization's payment state after potential updates
         const currentValidation = validateCustomizationPaymentState(customization);
-        
+
         if (!currentValidation.isValid) {
           return res.status(400).json({
             success: false,
@@ -1345,7 +1355,7 @@ exports.updateCustomization = async (req, res) => {
         if (conflictingCustomizations && conflictingCustomizations.length > 0) {
           for (const conflicting of conflictingCustomizations) {
             const conflictingValidation = validateCustomizationPaymentState(conflicting);
-            
+
             // RESTRICT: If other customization has invalid payment state
             if (!conflictingValidation.isValid) {
               return res.status(400).json({
@@ -1420,7 +1430,7 @@ exports.updateCustomization = async (req, res) => {
               },
               { new: true, runValidators: false } // Skip validation to avoid issues with existing checkpoints
             );
-            
+
             console.log('✅ Thali replacement updated in subscription:', {
               subscriptionId: subscription._id,
               replacementDetails,
@@ -1442,9 +1452,9 @@ exports.updateCustomization = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      error: 'Server error' 
+      error: 'Server error'
     });
   }
 };
@@ -1489,9 +1499,9 @@ exports.deleteCustomization = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      error: 'Server error' 
+      error: 'Server error'
     });
   }
 };
@@ -1504,21 +1514,21 @@ exports.deleteCustomization = async (req, res) => {
 exports.getUserCustomizationHistory = async (req, res) => {
   try {
     const { page = 1, limit = 10, status, paymentStatus } = req.query;
-    
+
     // Build query
     const query = {
       user: req.user.id,
       isActive: true
     };
-    
+
     if (status) {
       query.status = status;
     }
-    
+
     if (paymentStatus) {
       query.paymentStatus = paymentStatus;
     }
-    
+
     // Get customizations with populated data
     const customizations = await MealCustomization.find(query)
       .populate('baseMeal', 'name description price image')
@@ -1530,10 +1540,10 @@ exports.getUserCustomizationHistory = async (req, res) => {
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .lean();
-    
+
     // Get total count
     const total = await MealCustomization.countDocuments(query);
-    
+
     // Format response with detailed replacement information
     const formattedCustomizations = customizations.map(customization => ({
       id: customization._id,
@@ -1542,7 +1552,7 @@ exports.getUserCustomizationHistory = async (req, res) => {
       date: customization.date,
       shift: customization.shift,
       dates: customization.dates,
-      
+
       // Meal replacement details
       originalMeal: {
         id: customization.baseMeal?._id,
@@ -1556,7 +1566,7 @@ exports.getUserCustomizationHistory = async (req, res) => {
         price: customization.replacementMeal.price,
         image: customization.replacementMeal.image
       } : null,
-      
+
       // Pricing breakdown
       pricing: {
         basePrice: customization.basePrice,
@@ -1565,14 +1575,14 @@ exports.getUserCustomizationHistory = async (req, res) => {
         extraItemPrice: customization.extraItemPrice,
         totalPrice: customization.totalPrice,
         totalPayablePrice: customization.totalpayablePrice,
-        priceDifference: customization.replacementMeal ? 
+        priceDifference: customization.replacementMeal ?
           (customization.replacementMeal.price - customization.basePrice) : 0
       },
-      
+
       // Add-ons and extras
       addons: customization.addons,
       extraItems: customization.extraItems,
-      
+
       // Payment information
       payment: {
         status: customization.paymentStatus,
@@ -1580,7 +1590,7 @@ exports.getUserCustomizationHistory = async (req, res) => {
         razorpayPaymentId: customization.razorpayPaymentId,
         amountPaid: customization.paymentStatus === 'paid' ? customization.totalpayablePrice : 0
       },
-      
+
       // Status and metadata
       status: customization.status,
       subscription: customization.subscription,
@@ -1589,7 +1599,7 @@ exports.getUserCustomizationHistory = async (req, res) => {
       createdAt: customization.createdAt,
       updatedAt: customization.updatedAt
     }));
-    
+
     res.json({
       success: true,
       data: {
@@ -1603,7 +1613,7 @@ exports.getUserCustomizationHistory = async (req, res) => {
         }
       }
     });
-    
+
   } catch (error) {
     console.error('Error fetching customization history:', error);
     res.status(500).json({
@@ -1622,7 +1632,7 @@ exports.getUserCustomizationHistory = async (req, res) => {
 exports.syncThaliReplacements = async (req, res) => {
   try {
     const { subscriptionId } = req.body;
-    
+
     if (!subscriptionId) {
       return res.status(400).json({
         success: false,
@@ -1704,8 +1714,8 @@ exports.syncThaliReplacements = async (req, res) => {
     if (syncedCount > 0) {
       await Subscription.findOneAndUpdate(
         { _id: subscription._id },
-        { 
-          $set: { 
+        {
+          $set: {
             thaliReplacements: subscription.thaliReplacements,
             ...(subscription.thaliReplacement && { thaliReplacement: subscription.thaliReplacement })
           }
@@ -1751,7 +1761,7 @@ exports.checkInvalidPaymentStates = async (req, res) => {
     // If subscriptionId is provided, filter by it
     if (subscriptionId) {
       query.subscription = subscriptionId;
-      
+
       // Verify subscription belongs to user
       const subscription = await Subscription.findOne({
         _id: subscriptionId,
@@ -1779,7 +1789,7 @@ exports.checkInvalidPaymentStates = async (req, res) => {
 
     for (const customization of pendingCustomizations) {
       const validation = validateCustomizationPaymentState(customization);
-      
+
       if (!validation.isValid) {
         invalidStates.push({
           customizationId: customization._id,
@@ -1838,7 +1848,7 @@ exports.cleanupInvalidPaymentStates = async (req, res) => {
     // If subscriptionId is provided, filter by it
     if (subscriptionId) {
       query.subscription = subscriptionId;
-      
+
       // Verify subscription belongs to user
       const subscription = await Subscription.findOne({
         _id: subscriptionId,
@@ -1866,7 +1876,7 @@ exports.cleanupInvalidPaymentStates = async (req, res) => {
 
     for (const customization of pendingCustomizations) {
       const validation = validateCustomizationPaymentState(customization);
-      
+
       if (!validation.isValid) {
         invalidCustomizations.push({
           customizationId: customization._id,
@@ -1883,7 +1893,7 @@ exports.cleanupInvalidPaymentStates = async (req, res) => {
         if (!dryRun && validation.payableAmount <= 0) {
           await MealCustomization.findByIdAndUpdate(
             customization._id,
-            { 
+            {
               paymentStatus: 'completed',
               paymentCompletedAt: new Date(),
               notes: `${customization.notes || ''} [Auto-resolved: Zero-amount customization payment status updated]`.trim()
@@ -1911,8 +1921,8 @@ exports.cleanupInvalidPaymentStates = async (req, res) => {
         },
         invalidCustomizations,
         actions: dryRun ? [] : actions,
-        message: dryRun 
-          ? 'Dry run completed. Set dryRun: false to perform actual cleanup.' 
+        message: dryRun
+          ? 'Dry run completed. Set dryRun: false to perform actual cleanup.'
           : `Cleanup completed. ${actions.length} customizations updated.`
       }
     });

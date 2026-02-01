@@ -34,6 +34,21 @@ router.post('/create-order', authenticate, [
 ], createRazorpayOrder);
 
 /**
+ * @route   POST /api/payments/create-simple-order
+ * @desc    Create simple Razorpay order (for top-ups/extras)
+ * @access  Private
+ */
+router.post('/create-simple-order', authenticate, [
+  body('amount')
+    .isFloat({ min: 1 })
+    .withMessage('Amount must be positive'),
+  body('currency')
+    .optional()
+    .isIn(['INR'])
+    .withMessage('Currency must be INR')
+], createPaymentOrder);
+
+/**
  * @route   POST /api/payments/verify
  * @desc    Verify payment signature
  * @access  Private

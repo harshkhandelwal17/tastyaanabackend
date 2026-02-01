@@ -1,7 +1,7 @@
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const Order = require('../models/Order');
-const User = require('../models/User'); 
+const User = require('../models/User');
 const Cart = require('../models/Cart');
 const Subscription = require('../models/Subscription');
 const Coupon = require('../models/Coupon');
@@ -20,11 +20,11 @@ const razorpay = new Razorpay({
 
 const createRazorpayOrder = async (req, res) => {
   try {
-    const {  
-      amount, 
-      currency = 'INR', 
-      orderData,  
-      customerDetails, 
+    const {
+      amount,
+      currency = 'INR',
+      orderData,
+      customerDetails,
       subscriptionData,
     } = req.body;
     // console.log("data coming into the create rozarpayorder : ", req.body);   
@@ -84,15 +84,15 @@ const createRazorpayOrder = async (req, res) => {
           }
         });
       }
-      
+
       // FIXED: Don't create a new subscription - find the existing one that was already created
       // The subscription should have been created by the createSubscription API call from ConfirmOrderPage.jsx
-      
+
       // Extract subscription details - handle nested structure
       const subDetails = subscriptionData.subscriptionDetails || subscriptionData;
       const pricing = subscriptionData.subscriptionDetails.pricing;
       const deliveryTiming = subDetails.originalOrderData.deliveryTiming || subscriptionData.deliveryTiming;
-      
+
       // Validate subscription data
       if (!subDetails.mealPlanId || !pricing || !deliveryTiming) {
         console.log('❌ Validation failed:', {
@@ -126,17 +126,17 @@ const createRazorpayOrder = async (req, res) => {
       }
 
       console.log('✅ Found existing subscription:', existingSubscription.subscriptionId);
-      
+
       // Use the existing subscription instead of creating a new one
       savedRecord = existingSubscription;
       orderNumber = existingSubscription.subscriptionNumber;
-      
+
       // FIXED: Don't create new subscription - just use the existing one
       console.log('✅ Using existing subscription for payment:', savedRecord.subscriptionId);
     } else {
       console.log('📦 Processing regular order');
       recordType = 'order';
-      
+
       // Validate order data for regular orders
       if (!orderData || !orderData.items) {
         return res.status(400).json({
@@ -151,7 +151,7 @@ const createRazorpayOrder = async (req, res) => {
 
       // Process items
       const processedItems = orderData.items.map(item => {
-    
+
         const processedItem = {
           name: item.name,
           quantity: item.quantity || 1,
@@ -162,7 +162,7 @@ const createRazorpayOrder = async (req, res) => {
           originalPrice: item.originalPrice || item.price || 0,
           discount: item.discount || 0,
           image: item.image || null,
-          seller:new mongoose.Types.ObjectId(item.seller),
+          seller: new mongoose.Types.ObjectId(item.seller),
           isCollegeBranded: item.isCollegeBranded || false,
           ...(item.collegeName && { collegeName: item.collegeName }) // Include college name if present
         };
@@ -195,7 +195,7 @@ const createRazorpayOrder = async (req, res) => {
           pincode: customerDetails.shippingAddress?.pincode || '',
           country: customerDetails.shippingAddress?.country || 'India',
           instructions: orderData.specialInstructions || '',
-          coordinates:customerDetails.coordinates
+          coordinates: customerDetails.coordinates
         },
         deliveryDate: orderData.deliveryDate || new Date(Date.now() + 24 * 60 * 60 * 1000),
         deliverySlot: orderData.deliverySlot || 'anytime',
@@ -209,7 +209,7 @@ const createRazorpayOrder = async (req, res) => {
         specialInstructions: orderData.specialInstructions || '',
         isAutoOrder: orderData.isAutoOrder || false,
         isCustomized: orderData.isCustomized || false,
-        userContactNo:customerDetails.phone,
+        userContactNo: customerDetails.phone,
         billingAddress: {
           name: customerDetails.name,
           phone: customerDetails.phone,
@@ -225,18 +225,18 @@ const createRazorpayOrder = async (req, res) => {
           note: 'Order created and awaiting payment'
         }]
       });
-    
+
       savedRecord = await newOrder.save();
-      
+
       // Record coupon usage if coupon was applied
       if (orderData.couponCode && orderData.couponId) {
         try {
           console.log(`Recording coupon usage: ${orderData.couponCode} for user ${userId} on order ${savedRecord.orderNumber}`);
-          
+
           const couponUsage = new CouponUsage({
             couponId: orderData.couponId,
             userId: userId,
-            usageType:'order',
+            usageType: 'order',
             orderId: savedRecord._id,
             discountAmount: orderData.discount || 0,
             orderTotal: orderData.subtotal || amount,
@@ -254,12 +254,12 @@ const createRazorpayOrder = async (req, res) => {
           console.log(`✅ Coupon ${orderData.couponCode} usage recorded successfully for order ${savedRecord.orderNumber} with discount ₹${orderData.discount || 0}`);
         } catch (couponError) {
           console.error('❌ Error recording coupon usage:', couponError);
-          
+
           // Check if it's a duplicate key error (user already used this coupon)
           if (couponError.code === 11000) {
             console.log(`⚠️ User ${userId} has already used coupon ${orderData.couponCode}`);
           }
-          
+
           // Don't fail order creation if coupon tracking fails
         }
       } else {
@@ -335,15 +335,15 @@ const createRazorpayOrder = async (req, res) => {
 // Helper function to generate unique order number
 const generateUniqueOrderNumber = async (type) => {
   const prefix = type === 'gkk' ? 'GKK' : 'ORD';
-  
+
   // Use findOneAndUpdate with atomic increment
   const counter = await Order.findOneAndUpdate(
     { _id: 'order_counter' }, // Virtual document for counter
     { $inc: { count: 1 } },
-    { 
-      new: true, 
+    {
+      new: true,
       upsert: true,
-      setDefaultsOnInsert: true 
+      setDefaultsOnInsert: true
     }
   ).catch(() => {
     // Fallback to timestamp-based unique number
@@ -351,7 +351,7 @@ const generateUniqueOrderNumber = async (type) => {
     const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
     return { count: parseInt(timestamp + random) };
   });
-  
+
   const orderCount = counter.count || await Order.countDocuments() + 1;
   return `${prefix}${String(orderCount).padStart(6, '0')}`;
 };
@@ -385,6 +385,19 @@ const handlePaymentSuccess = async (req, res) => {
       });
     }
 
+    // CUSTOMIZATION: Simple Verification
+    if (type === 'customization') {
+      return res.status(200).json({
+        success: true,
+        message: 'Customization Payment Verified',
+        data: {
+          razorpay_payment_id,
+          razorpay_order_id,
+          razorpay_signature
+        }
+      });
+    }
+
     // Get payment details from Razorpay
     let payment;
     try {
@@ -410,7 +423,7 @@ const handlePaymentSuccess = async (req, res) => {
     // FIXED: If type is not provided, try to find record by transactionId
     if (!record && razorpay_order_id) {
       console.log('🔍 Type not provided, searching by transactionId...');
-      
+
       // Try to find subscription first
       record = await Subscription.findOne({ transactionId: razorpay_order_id });
       if (record) {
@@ -448,7 +461,7 @@ const handlePaymentSuccess = async (req, res) => {
         }
       });
     }
-    
+
     // Update record with payment details
     record.paymentStatus = 'paid';
     record.transactionId = razorpay_payment_id;
@@ -503,7 +516,7 @@ const handlePaymentSuccess = async (req, res) => {
       try {
         // Credit the full amount to user's wallet for subscription
         const creditAmount = record.pricing.finalAmount;
-        
+
         const walletTransaction = {
           amount: creditAmount,
           type: 'credit',
@@ -515,7 +528,7 @@ const handlePaymentSuccess = async (req, res) => {
 
         await User.findByIdAndUpdate(record.userId, {
           $push: { 'wallet.transactions': walletTransaction },
-          $inc: { 
+          $inc: {
             'wallet.balance': creditAmount,
             loyaltyPoints: Math.floor(creditAmount / 10)
           }
@@ -602,7 +615,7 @@ const verifyPaymentSignature = (razorpayOrderId, razorpayPaymentId, razorpaySign
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(body.toString())
       .digest("hex");
-    
+
     return expectedSignature === razorpaySignature;
   } catch (error) {
     console.error('❌ Error verifying payment signature:', error);
@@ -677,7 +690,7 @@ const getPaymentStatus = async (req, res) => {
   try {
     const { recordId } = req.params;
     const { type } = req.query;
-    
+
     let record;
     let recordType;
 
@@ -730,7 +743,7 @@ const createPaymentOrder = async (req, res) => {
   try {
     const { amount, currency = 'INR', orderId } = req.body;
     const userId = req.user.id;
-    
+
     // Validate Razorpay instance
     if (!razorpay || !razorpay.orders) {
       return res.status(500).json({
@@ -738,7 +751,7 @@ const createPaymentOrder = async (req, res) => {
         message: 'Payment service not available'
       });
     }
-    
+
     // Validate amount
     if (!amount || amount < 1) {
       return res.status(400).json({
@@ -746,22 +759,22 @@ const createPaymentOrder = async (req, res) => {
         message: 'Invalid amount. Amount must be at least 1 INR'
       });
     }
-    
+
     console.log("📝 Creating payment order:", userId, amount);
-    
+
     // Create Razorpay order
     const razorpayOrder = await razorpay.orders.create({
       amount: Math.round(amount * 100), // Convert to paise
       currency: currency,
-      receipt:`receipt_${Date.now()}`,
+      receipt: `receipt_${Date.now()}`,
       notes: {
         userId: userId,
         orderId: orderId
       }
     });
-    
+
     console.log("✅ Razorpay order created:", razorpayOrder);
-    
+
     res.json({
       success: true,
       data: {
@@ -795,11 +808,11 @@ const verifyPayment = async (req, res) => {
       type
     } = req.body;
 
-    console.log('🔍 Verifying payment:', { 
-      razorpay_order_id, 
-      razorpay_payment_id, 
-      recordId, 
-      type 
+    console.log('🔍 Verifying payment:', {
+      razorpay_order_id,
+      razorpay_payment_id,
+      recordId,
+      type
     });
 
     // Validate required fields
@@ -828,7 +841,19 @@ const verifyPayment = async (req, res) => {
     }
 
     console.log('✅ Payment signature verified successfully');
-   
+
+    // CUSTOMIZATION: Simple Verification
+    if (type === 'customization') {
+      return res.status(200).json({
+        success: true,
+        message: 'Customization Payment Verified',
+        data: {
+          razorpay_payment_id,
+          razorpay_order_id,
+          razorpay_signature
+        }
+      });
+    }
 
     let updatedRecord;
     let recordType;
@@ -838,7 +863,7 @@ const verifyPayment = async (req, res) => {
     if (type === 'subscription') {
       updatedRecord = await Subscription.findById(recordId);
       recordType = 'subscription';
-      
+
       if (!updatedRecord) {
         return res.status(404).json({
           success: false,
@@ -863,7 +888,7 @@ const verifyPayment = async (req, res) => {
 
       await updatedRecord.save();
       console.log('✅ Subscription updated successfully:', updatedRecord);
-      
+
       // Send subscription confirmation email to customer and admin
       try {
         //blocked
@@ -879,7 +904,7 @@ const verifyPayment = async (req, res) => {
       // Handle regular order payments
       updatedRecord = await Order.findById(recordId);
       recordType = 'order';
-      
+
       if (!updatedRecord) {
         return res.status(404).json({
           success: false,
@@ -905,10 +930,10 @@ const verifyPayment = async (req, res) => {
 
       await updatedRecord.save();
       console.log('✅ Order updated successfully:', updatedRecord.orderNumber);
-          await sendOrderConfirmation(req.user.email, updatedRecord);
-          await sendOrderConfirmation("order@tastyaana.com", updatedRecord);
+      await sendOrderConfirmation(req.user.email, updatedRecord);
+      await sendOrderConfirmation("order@tastyaana.com", updatedRecord);
     }
-      
+
     // Send success response
     res.status(200).json({
       success: true,
@@ -997,22 +1022,22 @@ const getPaymentHistory = async (req, res) => {
       userId: userId,
       paymentStatus: { $in: ['paid', 'refunded'] }
     })
-    .sort({ createdAt: -1 })
-    .limit(limit * 1)
-    .skip((page - 1) * limit)
-    .populate('items.product', 'name images')
-    .lean();
+      .sort({ createdAt: -1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .populate('items.product', 'name images')
+      .lean();
 
     // Get subscriptions
     const subscriptions = await Subscription.find({
       userId: userId,
       paymentStatus: { $in: ['paid', 'completed'] }
     })
-    .sort({ createdAt: -1 })
-    .limit(limit * 1)
-    .skip((page - 1) * limit)
-    .populate('mealPlan', 'name description')
-    .lean();
+      .sort({ createdAt: -1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .populate('mealPlan', 'name description')
+      .lean();
 
     const totalOrders = await Order.countDocuments({
       userId: userId,
@@ -1056,14 +1081,14 @@ const getPaymentHistory = async (req, res) => {
 const refundPayment = async (req, res) => {
   try {
     const { recordId, refundAmount, reason, type } = req.body;
-    
+
     if (!razorpay || !razorpay.payments) {
       return res.status(500).json({
         success: false,
         message: 'Refund service not available'
       });
     }
-    
+
     let record;
     let recordType;
 
@@ -1096,7 +1121,7 @@ const refundPayment = async (req, res) => {
 
     // Create refund
     const refund = await razorpay.payments.refund(
-      record.paymentDetails?.razorpayPaymentId || record.transactionId, 
+      record.paymentDetails?.razorpayPaymentId || record.transactionId,
       {
         amount: Math.round(refundAmount * 100), // Convert to paise
         notes: {
@@ -1231,12 +1256,12 @@ const handleRazorpayWebhook = async (req, res) => {
   try {
     const webhookSignature = req.headers['x-razorpay-signature'];
     const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
-    
+
     if (!webhookSecret) {
       console.error('❌ Webhook secret not configured');
       return res.status(500).json({ error: 'Webhook not configured' });
     }
-    
+
     // Verify webhook signature
     const expectedSignature = crypto
       .createHmac('sha256', webhookSecret)
@@ -1255,15 +1280,15 @@ const handleRazorpayWebhook = async (req, res) => {
       case 'payment.captured':
         await handlePaymentCaptured(payload.payment.entity);
         break;
-      
+
       case 'payment.failed':
         await handlePaymentFailedWebhook(payload.payment.entity);
         break;
-      
+
       case 'refund.processed':
         await handleRefundProcessed(payload.refund.entity);
         break;
-      
+
       default:
         console.log(`ℹ️ Unhandled webhook event: ${event}`);
     }
@@ -1282,16 +1307,16 @@ const handleRazorpayWebhook = async (req, res) => {
 const handlePaymentCaptured = async (payment) => {
   try {
     console.log('💰 Processing payment captured webhook:', payment.order_id);
-    
+
     // Try to find subscription first
     let record = await Subscription.findOne({ transactionId: payment.order_id });
     let recordType = 'subscription';
-    
+
     if (!record) {
       record = await Order.findOne({ transactionId: payment.order_id });
       recordType = 'order';
     }
-    
+
     if (record && record.paymentStatus === 'pending') {
       record.paymentStatus = 'paid';
       record.status = recordType === 'subscription' ? 'active' : 'confirmed';
@@ -1312,16 +1337,16 @@ const handlePaymentCaptured = async (payment) => {
 const handlePaymentFailedWebhook = async (payment) => {
   try {
     console.log('⚠️ Processing payment failed webhook:', payment.order_id);
-    
+
     // Try to find subscription first
     let record = await Subscription.findOne({ transactionId: payment.order_id });
     let recordType = 'subscription';
-    
+
     if (!record) {
       record = await Order.findOne({ transactionId: payment.order_id });
       recordType = 'order';
     }
-    
+
     if (record && record.paymentStatus === 'pending') {
       record.paymentStatus = 'failed';
       record.status = 'cancelled';
@@ -1343,24 +1368,24 @@ const handlePaymentFailedWebhook = async (payment) => {
 const handleRefundProcessed = async (refund) => {
   try {
     console.log('💸 Processing refund webhook:', refund.payment_id);
-    
+
     // Try to find subscription first
-    let record = await Subscription.findOne({ 
+    let record = await Subscription.findOne({
       $or: [
         { 'paymentDetails.razorpayPaymentId': refund.payment_id },
         { transactionId: refund.payment_id }
       ]
     });
-    
+
     if (!record) {
-      record = await Order.findOne({ 
+      record = await Order.findOne({
         $or: [
           { 'paymentDetails.razorpayPaymentId': refund.payment_id },
           { transactionId: refund.payment_id }
         ]
       });
     }
-    
+
     if (record) {
       record.paymentStatus = 'refunded';
       record.refundAmount = refund.amount / 100;
@@ -1369,7 +1394,7 @@ const handleRefundProcessed = async (refund) => {
         timestamp: new Date(),
         note: `Refund processed: ₹${refund.amount / 100} via webhook`
       });
-      
+
       // Update refund record if exists
       if (record.refunds && record.refunds.length > 0) {
         const refundRecord = record.refunds.find(r => r.refundId === refund.id);
@@ -1378,7 +1403,7 @@ const handleRefundProcessed = async (refund) => {
           refundRecord.processedAt = new Date();
         }
       }
-      
+
       await record.save();
       console.log('✅ Refund status updated via webhook');
     }
@@ -1395,14 +1420,14 @@ const handleRefundProcessed = async (refund) => {
 const getRecordByRazorpayId = async (req, res) => {
   try {
     const { razorpayOrderId } = req.params;
-    
+
     // Try to find subscription first
     let record = await Subscription.findOne({ transactionId: razorpayOrderId })
       .populate('userId', 'name email phone')
       .select('subscriptionNumber status paymentStatus pricing paymentDetails startDate');
-    
+
     let recordType = 'subscription';
-    
+
     if (!record) {
       record = await Order.findOne({ transactionId: razorpayOrderId })
         .populate('userId', 'name email phone')
@@ -1437,22 +1462,22 @@ const cancelPendingPayment = async (req, res) => {
   try {
     const { recordId, type } = req.body;
     const userId = req.user.id;
-    
+
     let record;
     let recordType;
 
     if (type === 'subscription') {
-      record = await Subscription.findOne({ 
-        _id: recordId, 
+      record = await Subscription.findOne({
+        _id: recordId,
         userId: userId,
-        paymentStatus: 'pending' 
+        paymentStatus: 'pending'
       });
       recordType = 'subscription';
     } else {
-      record = await Order.findOne({ 
-        _id: recordId, 
+      record = await Order.findOne({
+        _id: recordId,
         userId: userId,
-        paymentStatus: 'pending' 
+        paymentStatus: 'pending'
       });
       recordType = 'order';
     }
@@ -1496,29 +1521,29 @@ const retryFailedPayment = async (req, res) => {
   try {
     const { recordId, type } = req.body;
     const userId = req.user.id;
-    
+
     if (!razorpay || !razorpay.orders) {
       return res.status(500).json({
         success: false,
         message: 'Payment service not available'
       });
     }
-    
+
     let record;
     let recordType;
 
     if (type === 'subscription') {
-      record = await Subscription.findOne({ 
-        _id: recordId, 
+      record = await Subscription.findOne({
+        _id: recordId,
         userId: userId,
-        paymentStatus: 'failed' 
+        paymentStatus: 'failed'
       });
       recordType = 'subscription';
     } else {
-      record = await Order.findOne({ 
-        _id: recordId, 
+      record = await Order.findOne({
+        _id: recordId,
         userId: userId,
-        paymentStatus: 'failed' 
+        paymentStatus: 'failed'
       });
       recordType = 'order';
     }
@@ -1583,7 +1608,7 @@ const retryFailedPayment = async (req, res) => {
 const getPaymentAnalytics = async (req, res) => {
   try {
     const { startDate, endDate } = req.query;
-    
+
     const matchCondition = {
       createdAt: {
         $gte: new Date(startDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)),
@@ -1683,9 +1708,9 @@ const getPaymentAnalytics = async (req, res) => {
 const validateRazorpayConfig = async (req, res) => {
   try {
     const isConfigured = !!(
-      process.env.RAZORPAY_KEY_ID && 
-      process.env.RAZORPAY_KEY_SECRET && 
-      razorpay && 
+      process.env.RAZORPAY_KEY_ID &&
+      process.env.RAZORPAY_KEY_SECRET &&
+      razorpay &&
       razorpay.orders
     );
 
@@ -1719,23 +1744,23 @@ module.exports = {
   refundPayment,
   processRefund,
   handleRazorpayWebhook,
-  
+
   // Webhook handlers
   handlePaymentCaptured,
   handlePaymentFailedWebhook,
   handleRefundProcessed,
   handlePaymentFailed,
-  
+
   // Additional utility functions
   getRecordByRazorpayId, // Renamed from getOrderByRazorpayId
   cancelPendingPayment,
   retryFailedPayment,
   getPaymentAnalytics,
   validateRazorpayConfig,
-  
+
   // Utility functions
   verifyPaymentSignature,
-  
+
   // Razorpay instance (for testing)
   razorpay: process.env.NODE_ENV === 'development' ? razorpay : undefined
 };

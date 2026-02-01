@@ -637,13 +637,26 @@ const homepageController = {
 
       // 2. Filter Type (Frontend Filter)
       if (type) {
-        pipeline.push({ $match: { 'sellerProfile.sellerType': { $regex: new RegExp(type, 'i') } } });
+        // DEBUG: Log before filtering
+        console.log("Filtering by type:", type);
+
+        // Use partial match instead of strict start/end to be safe
+        const typeRegex = new RegExp(type, 'i');
+
+        pipeline.push({
+          $match: {
+            'sellerProfile.sellerType': {
+              // Match if ANY element in the array matches the regex
+              $elemMatch: { $regex: typeRegex }
+            }
+          }
+        });
       }
 
       // 3. Filter Closed Stores
       pipeline.push({ $match: { 'sellerProfile.storeStatus': { $ne: 'closed' } } });
 
-      // 4. Lookups for Inventory (Products & Vehicles)
+      // 4. Lookups for Inventory (Products & Vehicles & MealPlans)
       pipeline.push({
         $lookup: {
           from: 'products',
@@ -654,6 +667,19 @@ const homepageController = {
             { $project: { _id: 1 } }
           ],
           as: 'hasProducts'
+        }
+      });
+
+      pipeline.push({
+        $lookup: {
+          from: 'mealplans',
+          let: { sellerId: '$_id' },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$seller', '$$sellerId'] }, status: 'active' } },
+            { $limit: 1 },
+            { $project: { _id: 1 } }
+          ],
+          as: 'hasMealPlans'
         }
       });
 
@@ -672,22 +698,28 @@ const homepageController = {
 
       // 5. MASTER FILTER: Effectiveness & Serviceability
       // Logic:
-      // A. Store must NOT be empty (Must have Products OR Vehicles)
+      // A. Store must NOT be empty (Must have Products OR Vehicles OR MealPlans)
       // B. Serviceability Radius:
       //    - If has Vehicles -> Allow up to 100km
-      //    - If ONLY Products -> Strict 5km limit
+      //    - If ONLY Products/MealPlans -> Strict 5km limit
       if (lat && lng) {
         pipeline.push({
           $match: {
             $expr: {
               $and: [
                 // A. Not Empty
-                { $or: [{ $gt: [{ $size: "$hasProducts" }, 0] }, { $gt: [{ $size: "$hasVehicles" }, 0] }] },
+                {
+                  $or: [
+                    { $gt: [{ $size: "$hasProducts" }, 0] },
+                    { $gt: [{ $size: "$hasVehicles" }, 0] },
+                    { $gt: [{ $size: "$hasMealPlans" }, 0] }
+                  ]
+                },
                 // B. Radius Logic
                 {
                   $or: [
                     { $lte: ["$distance", 5000] }, // Everyone allowed within 5km
-                    { $gt: [{ $size: "$hasVehicles" }, 0] } // Vehicles allowed up to 100km (geoNear limit)
+                    { $gt: [{ $size: "$hasVehicles" }, 0] } // Vehicles allowed up to 100km
                   ]
                 }
               ]
@@ -699,7 +731,11 @@ const homepageController = {
         pipeline.push({
           $match: {
             $expr: {
-              $or: [{ $gt: [{ $size: "$hasProducts" }, 0] }, { $gt: [{ $size: "$hasVehicles" }, 0] }]
+              $or: [
+                { $gt: [{ $size: "$hasProducts" }, 0] },
+                { $gt: [{ $size: "$hasVehicles" }, 0] },
+                { $gt: [{ $size: "$hasMealPlans" }, 0] }
+              ]
             }
           }
         });
