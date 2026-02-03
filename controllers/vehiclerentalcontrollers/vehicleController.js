@@ -2,6 +2,7 @@ const Vehicle = require('../../models/Vehicle');
 const VehicleBooking = require('../../models/VehicleBooking');
 const User = require('../../models/User');
 const mongoose = require('mongoose');
+const { getNearbySellers } = require('../../utils/geoHelper');
 
 // ===== VEHICLE MANAGEMENT =====
 
@@ -41,35 +42,22 @@ const getVehicles = async (req, res) => {
     if (fuelType) filter.fuelType = fuelType;
     if (brand) filter.companyName = new RegExp(brand, 'i');
 
-    // Location filtering (FIX: Use Seller Location as Primary Source)
+    // Location filtering (Unified Logic)
     if (lat && lng) {
-      // 1. Find Sellers within 100km
-      const nearbySellers = await User.find({
-        role: { $in: ['seller', 'vendor'] },
-        location: {
-          $near: {
-            $geometry: {
-              type: "Point",
-              coordinates: [parseFloat(lng), parseFloat(lat)]
-            },
-            $maxDistance: 100000 // 100km radius
-          }
-        }
-      }).select('_id');
-
+      // 1. Find Sellers using unified helper
+      const nearbySellers = await getNearbySellers(lat, lng);
       const nearbySellerIds = nearbySellers.map(u => u._id);
 
       // 2. Filter Vehicles belonging to these sellers
-      // This bypasses the need for 'locationGeo' on individual vehicles
       if (nearbySellerIds.length > 0) {
         if (filter.sellerId) {
           // If sellerId was already filtered, ensure it's also in nearby list
-          // check if specific seller is in range
           const isNearby = nearbySellerIds.some(id => id.toString() === filter.sellerId.toString());
           if (!isNearby) {
             return res.json({ success: true, data: [], pagination: { totalItems: 0 } });
           }
         } else {
+          // Filter for all nearby sellers
           filter.sellerId = { $in: nearbySellerIds };
         }
       } else {
@@ -809,23 +797,13 @@ const getVehicleShops = async (req, res) => {
     // Construct pipeline
     const pipeline = [];
 
-    // 1. Geo-spatial filtering (FIX: Use Seller Location)
+    // 1. Geo-spatial filtering (Unified: Use Seller Location)
     if (lat && lng) {
-      // Find Sellers within 100km
-      const nearbySellers = await User.find({
-        role: { $in: ['seller', 'vendor'] },
-        location: {
-          $near: {
-            $geometry: {
-              type: "Point",
-              coordinates: [parseFloat(lng), parseFloat(lat)]
-            },
-            $maxDistance: 100000 // 100km radius
-          }
-        }
-      }).select('_id');
-
+      // Find Sellers using unified helper
+      const nearbySellers = await getNearbySellers(lat, lng);
       const nearbySellerIds = nearbySellers.map(u => u._id);
+
+
 
       // Filter vehicles by these sellers
       // Note: We cannot use $geoNear in pipeline anymore because we are not querying geo on Vehicle
@@ -919,12 +897,26 @@ const getVehicleShops = async (req, res) => {
 // Get vehicle types with counts and details
 const getVehicleTypes = async (req, res) => {
   try {
-    const { zoneCode, shopId } = req.query;
+    const { zoneCode, shopId, lat, lng } = req.query;
 
     // Build filter
     let filter = { status: 'active' };
     if (zoneCode) filter.zoneCode = zoneCode;
     if (shopId) filter.sellerId = shopId;
+
+    // Location Filter
+    if (lat && lng) {
+      const nearbySellers = await getNearbySellers(lat, lng);
+      const nearbySellerIds = nearbySellers.map(s => s._id);
+
+      if (filter.sellerId) {
+        // Verify specific shop is in range
+        const isNearby = nearbySellerIds.some(id => id.toString() === filter.sellerId.toString());
+        if (!isNearby) return res.json({ success: true, data: [] });
+      } else {
+        filter.sellerId = { $in: nearbySellerIds };
+      }
+    }
 
     const vehicleTypes = await Vehicle.aggregate([
       { $match: filter },
