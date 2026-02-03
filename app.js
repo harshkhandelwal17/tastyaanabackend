@@ -9,9 +9,6 @@ const path = require('path');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const connect = require('./config/database');
-
-
-
 // Import all route files
 const reviewRouter = require("./routes/reviewRout");
 const auth = require("./routes/auth");
@@ -90,7 +87,7 @@ app.use((req, res, next) => {
           console.error('Manual Parse Error:', e);
         }
       } else {
-        req.body = {}; // Empty body
+        req.body = {}; 
       }
       next();
     });

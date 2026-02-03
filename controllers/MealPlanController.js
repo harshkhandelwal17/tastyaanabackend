@@ -43,27 +43,22 @@ exports.getAllMealPlans = async (req, res) => {
       ];
     }
 
-    // 5. Location Filtering (Strict 5km for Tiffins)
+    // 5. Location Filtering (Unified Logic)
     const { lat, lng } = req.query;
     if (lat && lng) {
-      const nearbySellers = await User.find({
-        role: { $in: ['seller', 'vendor'] }, // Ensure we look for sellers
-        location: {
-          $near: {
-            $geometry: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
-            $maxDistance: 5000 // 5km Radius
-          }
-        }
-      }).select('_id');
+      const getNearbySellers = require('../utils/geoHelper').getNearbySellers;
+      const nearbySellers = await getNearbySellers(lat, lng);
+      // Note: getNearbySellers returns generic sellers. 
+      // Tiffin sellers are a subset, but the filter.seller query below will 
+      // primarily operate on the IDs returned.
 
       const nearbySellerIds = nearbySellers.map(u => u._id);
 
       // Merge with existing seller filter if exists
       if (filter.$or) {
         // Complex case: if we already have an OR for search, we need to AND it with location
-        // But for simplicity, let's just add seller ID check to the main filter (AND logic)
+        // We add it to the top-level AND
         filter.seller = { $in: nearbySellerIds };
-        // Note: If user searched for a specific seller who is far away, this will return empty (Correct restriction)
       } else {
         filter.seller = { $in: nearbySellerIds };
       }

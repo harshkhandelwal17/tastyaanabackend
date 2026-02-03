@@ -4,6 +4,7 @@ const User = require('../models/User');
 const mongoose = require('mongoose');
 // const Category = require('../models/Category');
 const { uploadToCloudinary } = require('../utils/cloudinary');
+const { getNearbySellers } = require('../utils/geoHelper');
 
 const productController = {
   // Grocery specific endpoints
@@ -15,20 +16,8 @@ const productController = {
 
       // Location Filter
       if (lat && lng) {
-        const nearbySellers = await User.find({
-          role: 'seller',
-          location: {
-            $near: {
-              $geometry: {
-                type: "Point",
-                coordinates: [parseFloat(lng), parseFloat(lat)]
-              },
-              $maxDistance: 5000 // 15km radius
-            }
-          }
-        }).select('_id');
-
-        const sellerIds = nearbySellers.map(s => s._id);
+        const validSellers = await getNearbySellers(lat, lng);
+        const sellerIds = validSellers.map(s => s._id);
 
         if (sellerIds.length === 0) {
           return res.json({
@@ -273,21 +262,13 @@ const productController = {
       }).select('_id');
       const sellerIds = tiffinSellers.map(s => s._id);
 
-      // 2. Geo-filtering (Optional: Intersect with nearby sellers if lat/lng provided)
+      // 2. Geo-filtering (Unified)
+      // 2. Geo-filtering (Unified)
       let finalSellerIds = sellerIds;
       if (lat && lng) {
-        // This is a rough filter. For strict geo-queries, we'd do the Geo query first.
-        // For now, let's trust the Seller Selection logic, or we can add Geo here.
-        const nearbyIds = await User.find({
-          role: 'seller',
-          location: {
-            $near: {
-              $geometry: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
-              $maxDistance: 15000 // 15km
-            }
-          }
-        }).select('_id');
-        const nearbyIdStrings = nearbyIds.map(n => n._id.toString());
+        const nearbySellers = await getNearbySellers(lat, lng);
+        const nearbyIdStrings = nearbySellers.map(s => s._id.toString());
+
         finalSellerIds = sellerIds.filter(id => nearbyIdStrings.includes(id.toString()));
       }
       // 3. Find Products from these sellers
@@ -343,22 +324,9 @@ const productController = {
       const skip = (page - 1) * limit;
       const query = { isActive: true };
 
-      // Location Filter: If lat/lng provided, restrict to nearby sellers
+      // Location Filter: If lat/lng provided, restrict to nearby sellers (Unified Logic)
       if (lat && lng) {
-        // Find sellers within 15km
-        const nearbySellers = await User.find({
-          role: 'seller',
-          location: {
-            $near: {
-              $geometry: {
-                type: "Point",
-                coordinates: [parseFloat(lng), parseFloat(lat)]
-              },
-              $maxDistance: 5000 // 15km radius
-            }
-          }
-        }).select('_id');
-
+        const nearbySellers = await getNearbySellers(lat, lng);
         const sellerIds = nearbySellers.map(s => s._id);
 
         // If no sellers found nearby, return empty
@@ -435,7 +403,10 @@ const productController = {
         query.$or = [
           { name: { $regex: search, $options: 'i' } },
           { description: { $regex: search, $options: 'i' } },
-          { tags: { $in: [new RegExp(search, 'i')] } }
+          { tags: { $in: [new RegExp(search, 'i')] } },
+          { 'seoData.metaTitle': { $regex: search, $options: 'i' } },
+          { 'seoData.metaDescription': { $regex: search, $options: 'i' } },
+          { 'seoData.keywords': { $in: [new RegExp(search, 'i')] } }
         ];
       }
 
@@ -665,8 +636,16 @@ const productController = {
         }
       }
 
-      // Check if we should populate seller data
-      const shouldPopulateSeller = req.query.populate === 'seller';
+      // Location Filter with Dynamic Radius
+      if (lat && lng) {
+        const validSellers = await getNearbySellers(lat, lng);
+        const sellerIds = validSellers.map(s => s._id);
+
+        if (sellerIds.length === 0) {
+          return res.json({ products: [] });
+        }
+        query.seller = { $in: sellerIds };
+      }
 
       let productsQuery = Product.find(query)
         .populate('category', 'name slug');
@@ -787,7 +766,10 @@ const productController = {
           { name: { $regex: searchRegex } },
           { title: { $regex: searchRegex } }, // Cover both name/title
           { description: { $regex: searchRegex } },
-          { tags: { $in: searchTerms.map(t => new RegExp(t, 'i')) } }
+          { tags: { $in: searchTerms.map(t => new RegExp(t, 'i')) } },
+          { 'seoData.metaTitle': { $regex: searchRegex } },
+          { 'seoData.metaDescription': { $regex: searchRegex } },
+          { 'seoData.keywords': { $in: searchTerms.map(t => new RegExp(t, 'i')) } }
         ]
       };
 
@@ -801,7 +783,7 @@ const productController = {
                 type: "Point",
                 coordinates: [parseFloat(lng), parseFloat(lat)]
               },
-              $maxDistance: 5000 // 15km radius
+              $maxDistance: 15000 // 15km radius
             }
           }
         }).select('_id');

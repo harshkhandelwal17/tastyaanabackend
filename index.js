@@ -9,6 +9,54 @@ require('dotenv').config();
 // const connect = require('./config/database');
 // // Routes
 // const authRoutes = require('./routes/auth');
+// --- DEBUG ROUTE (Temporary) ---
+// const User = require('./models/User');
+// app.get('/api/debug/radius', async (req, res) => {
+//   try {
+//     const { lat, lng } = req.query;
+//     if (!lat || !lng) return res.json({ error: "Provide lat & lng" });
+
+//     const sellers = await User.find({ role: 'seller' }).select('name sellerProfile.deliverySettings.deliveryRadius location');
+
+//     // Haversine Helper
+//     const getDist = (lat1, lon1, lat2, lon2) => {
+//       const R = 6371e3; 
+//       const φ1 = lat1 * Math.PI/180, φ2 = lat2 * Math.PI/180;
+//       const Δφ = (lat2-lat1)*Math.PI/180, Δλ = (lon2-lon1)*Math.PI/180;
+//       const a = Math.sin(Δφ/2)**2 + Math.cos(φ1)*Math.cos(φ2)*Math.sin(Δλ/2)**2;
+//       return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+//     };
+
+//     const results = sellers.map(s => {
+//       const sLat = s.location?.coordinates?.[1];
+//       const sLng = s.location?.coordinates?.[0];
+//       const radius = s.sellerProfile?.deliverySettings?.deliveryRadius || 15000;
+
+//       let dist = -1;
+//       if (sLat && sLng) dist = getDist(parseFloat(lat), parseFloat(lng), sLat, sLng);
+
+//       return {
+//         id: s._id,
+//         name: s.name,
+//         radius: radius,
+//         distance: Math.round(dist),
+//         visible: dist <= radius,
+//         coords: [sLat, sLng]
+//       };
+//     }).sort((a,b) => a.distance - b.distance);
+
+//     res.json({
+//       query: { lat, lng },
+//       visibleCount: results.filter(r => r.visible).length,
+//       details: results
+//     });
+
+//   } catch (e) {
+//     res.status(500).json({ error: e.message });
+//   }
+// });
+
+// // Serve static assets in productionutes = require('./routes/productroute');
 // const productRoutes = require('./routes/productroute');
 // const orderRoutes = require('./routes/orderRoute');
 // const {  adminRouter } = require('./routes/reviewRoute');

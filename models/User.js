@@ -980,7 +980,8 @@ const userSchema = new mongoose.Schema({
       minOrderValue: { type: Number, default: 100 },
       deliveryCharges: { type: Number, default: 20 },
       deliveryAreas: [String], // Pincodes
-      freeDeliveryAbove: Number
+      freeDeliveryAbove: Number,
+      deliveryRadius: { type: Number, default: 15000 }
     },
     ratings: {
       average: { type: Number, default: 0 },
