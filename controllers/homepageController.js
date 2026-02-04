@@ -890,6 +890,7 @@ const homepageController = {
 
         // Store valid IDs for use in category counts
         req.validNearbySellerIds = validSellerIds;
+        req.validNearbySellers = validSellers;
       }
 
       const categories = await Category.find({ isActive: true })
@@ -899,27 +900,57 @@ const homepageController = {
       const categoriesWithDetails = await Promise.all(
         categories.map(async (category) => {
 
-          const productQuery = {
-            category: category._id,
-            isActive: true
-          };
 
-          // If we have location filter, strict filter products by those sellers
-          if (req.validNearbySellerIds) {
-            productQuery.seller = { $in: req.validNearbySellerIds };
+          let sellerCount = 0;
+          let productCount = 0;
+
+          // SPECIAL HANDLING: Rental/Vehicle & Laundry (Non-Product based)
+          const isRental = ['rental', 'vehicle', 'bike-rental'].includes(category.slug.toLowerCase());
+          const isLaundry = ['laundry', 'dry-cleaning'].includes(category.slug.toLowerCase());
+
+          if (isRental || isLaundry) {
+            // For these services, valid sellers ARE the "products" (i.e. stores)
+            if (req.validNearbySellers) {
+              const typeKeyword = isRental ? 'rental' : 'laundry';
+              const validTypeSellers = req.validNearbySellers.filter(s =>
+                s.sellerProfile?.sellerType?.some(t => t.toLowerCase().includes(typeKeyword))
+              );
+              sellerCount = validTypeSellers.length;
+              productCount = sellerCount * 5; // Fake product count to show "available"
+            } else {
+              // If no location, query globally (fallback)
+              const typeKeyword = isRental ? 'rental' : 'laundry';
+              const count = await User.countDocuments({
+                role: 'seller',
+                'sellerProfile.storeStatus': { $ne: 'closed' },
+                'sellerProfile.sellerType': { $in: [new RegExp(typeKeyword, 'i')] }
+              });
+              sellerCount = count;
+              productCount = count * 5;
+            }
           }
+          // STANDARD HANDLING: Food, Grocery, Tiffin (Product based)
+          else {
+            const productQuery = {
+              category: category._id,
+              isActive: true
+            };
 
-          // Get products in this category (Filtered)
-          const products = await Product.find(productQuery)
-            .select('seller')
-            .lean();
+            // If we have location filter, strict filter products by those sellers
+            if (req.validNearbySellerIds) {
+              productQuery.seller = { $in: req.validNearbySellerIds };
+            }
 
-          // Get unique sellers
-          const sellerIds = [...new Set(products.map(p => p.seller?.toString()).filter(Boolean))];
-          const sellerCount = sellerIds.length;
+            // Get products in this category (Filtered)
+            const products = await Product.find(productQuery)
+              .select('seller')
+              .lean();
 
-          // Get product count
-          const productCount = products.length;
+            // Get unique sellers
+            const sellerIds = [...new Set(products.map(p => p.seller?.toString()).filter(Boolean))];
+            sellerCount = sellerIds.length;
+            productCount = products.length;
+          }
 
           return {
             id: category._id,
