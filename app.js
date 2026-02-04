@@ -124,7 +124,7 @@ const allowedOrigins = [
   "http://127.0.0.1:5500",
   'https://tastyaanafrontendapp.vercel.app',
   'https://tastyaanafrontendappppp.vercel.app',
-
+   'https://tastyaanav2.vercel.app',
   process.env.CLIENT_URL,
 ];
 
