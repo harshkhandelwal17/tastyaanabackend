@@ -1,0 +1,7446 @@
+[{
+  "_id": {
+    "$oid": "6910e2208006595740687691"
+  },
+  "subscriptionId": "SUB_71RPHVFNE",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68b17fb23f18383fe34a3cf4"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-08-22T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 10,
+    "mealsSkipped": 0,
+    "mealsRemaining": 20,
+    "regularMealsDelivered": 5,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "evening",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 20,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "17:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:30"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 70,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 2100,
+    "planPrice": 2100,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 2100,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "mahalaxmi niwaas",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-11-05T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-12-04T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T05:22:44.941Z"
+  },
+  "__v": 8,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-09-03T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T14:54:20.621Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T14:54:21.100Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T14:54:21.100Z"
+      },
+      "_id": {
+        "$oid": "6911fc9dd571969b6a14d205"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:38:43.525Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:38:43.976Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:38:43.976Z"
+      },
+      "_id": {
+        "$oid": "691390c335c03bd61980f161"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:40:52.207Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:40:52.629Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:40:52.629Z"
+      },
+      "_id": {
+        "$oid": "6913914435c03bd61980ff86"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T15:40:39.132Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T15:40:40.996Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T15:40:40.996Z"
+      },
+      "_id": {
+        "$oid": "6915fbf835c03bd619839567"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T15:31:18.101Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T15:31:20.152Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T15:31:20.152Z"
+      },
+      "_id": {
+        "$oid": "69174b4835c03bd61985b8db"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "6910d943800659574068768e"
+  },
+  "todayMeal": {
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Dal Rice",
+        "description": "Premium lentil curry with basmati rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb5"
+        }
+      },
+      {
+        "name": "Aalu beans",
+        "description": "premium kopte",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb6"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Fresh wheat bread",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb7"
+        }
+      },
+      {
+        "name": "Salad",
+        "description": "Fresh mixed salad",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb8"
+        }
+      },
+      {
+        "name": "Channa masala",
+        "description": "",
+        "quantity": "1 bow",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb9"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-11-15T05:22:44.923Z"
+    },
+    "mealType": "lunch",
+    "date": {
+      "$date": "2025-11-10T14:54:21.100Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  }
+},
+{
+  "_id": {
+    "$oid": "6910e2208006595740687692"
+  },
+  "subscriptionId": "SUB_71RPHVFNF",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68aec4581eff400ca707c4de"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-11-05T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 10,
+    "mealsSkipped": 0,
+    "mealsRemaining": 20,
+    "regularMealsDelivered": 5,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "evening",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 20,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "17:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:30"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 70,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 2100,
+    "planPrice": 2100,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 2100,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "mahalaxmi niwaas",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 25,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-11-05T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-12-04T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T05:22:44.941Z"
+  },
+  "__v": 8,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-09-03T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T14:54:24.014Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T14:54:24.514Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T14:54:24.514Z"
+      },
+      "_id": {
+        "$oid": "6911fca0d571969b6a14d2de"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:38:46.779Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:38:47.308Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:38:47.308Z"
+      },
+      "_id": {
+        "$oid": "691390c735c03bd61980f27e"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:40:54.660Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:40:55.154Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:40:55.154Z"
+      },
+      "_id": {
+        "$oid": "6913914735c03bd6198100ab"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T15:40:31.310Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T15:40:33.241Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T15:40:33.241Z"
+      },
+      "_id": {
+        "$oid": "6915fbf135c03bd619839130"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T15:31:16.026Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T15:31:18.077Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T15:31:18.077Z"
+      },
+      "_id": {
+        "$oid": "69174b4635c03bd61985b760"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "6910d943800659574068768e"
+  },
+  "todayMeal": {
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Dal Rice",
+        "description": "Premium lentil curry with basmati rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb5"
+        }
+      },
+      {
+        "name": "Aalu beans",
+        "description": "premium kopte",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb6"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Fresh wheat bread",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb7"
+        }
+      },
+      {
+        "name": "Salad",
+        "description": "Fresh mixed salad",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb8"
+        }
+      },
+      {
+        "name": "Channa masala",
+        "description": "",
+        "quantity": "1 bow",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb9"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-11-15T05:22:44.923Z"
+    },
+    "mealType": "lunch",
+    "date": {
+      "$date": "2025-11-10T14:54:24.513Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  }
+},
+{
+  "_id": {
+    "$oid": "6910e2208006595740687693"
+  },
+  "subscriptionId": "SUB_71RPHVFNG",
+  "startShift": "morning",
+  "user": {
+    "$oid": "69103c608beac2fba8cf44a5"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-11-05T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 10,
+    "mealsSkipped": 0,
+    "mealsRemaining": 20,
+    "regularMealsDelivered": 4,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "evening",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 20,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "17:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 70,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 2100,
+    "planPrice": 2100,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 2100,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "near bomby hospital",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 24,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-11-05T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-12-04T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T05:22:44.941Z"
+  },
+  "__v": 7,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-09-03T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T14:53:42.829Z"
+      },
+      "deliveredBy": {
+        "$oid": "689f8f1af5789fc0c43e3eb8"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T14:53:43.351Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T14:53:43.351Z"
+      },
+      "_id": {
+        "$oid": "6911fc77249b8308af0b78de"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:38:49.863Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:38:50.271Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:38:50.271Z"
+      },
+      "_id": {
+        "$oid": "691390ca35c03bd61980f39c"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:40:55.715Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:40:56.107Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:40:56.107Z"
+      },
+      "_id": {
+        "$oid": "6913914835c03bd6198101d1"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T15:25:32.165Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T15:25:32.747Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T15:25:32.747Z"
+      },
+      "_id": {
+        "$oid": "691749ec35c03bd61985ad3a"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "6910d943800659574068768e"
+  },
+  "todayMeal": {
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Dal Rice",
+        "description": "Premium lentil curry with basmati rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb5"
+        }
+      },
+      {
+        "name": "Aalu beans",
+        "description": "premium kopte",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb6"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Fresh wheat bread",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb7"
+        }
+      },
+      {
+        "name": "Salad",
+        "description": "Fresh mixed salad",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb8"
+        }
+      },
+      {
+        "name": "Channa masala",
+        "description": "",
+        "quantity": "1 bow",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb9"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-11-15T05:22:44.923Z"
+    },
+    "mealType": "lunch",
+    "date": {
+      "$date": "2025-11-10T14:53:43.351Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  }
+},
+{
+  "_id": {
+    "$oid": "6910e2208006595740687694"
+  },
+  "subscriptionId": "SUB_71RPHVFNH",
+  "startShift": "morning",
+  "user": {
+    "$oid": "690efb728beac2fba8cdae60"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-11-05T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 10,
+    "mealsSkipped": 0,
+    "mealsRemaining": 20,
+    "regularMealsDelivered": 4,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "evening",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 20,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "17:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 70,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 2100,
+    "planPrice": 2100,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 2100,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "near bombay hospital",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-11-05T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-12-04T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T05:22:44.941Z"
+  },
+  "__v": 7,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-09-03T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T14:54:37.688Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T14:54:38.185Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T14:54:38.185Z"
+      },
+      "_id": {
+        "$oid": "6911fcaed571969b6a14d3b8"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:38:51.569Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:38:52.004Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:38:52.004Z"
+      },
+      "_id": {
+        "$oid": "691390cc35c03bd61980f5cc"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:40:56.743Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:40:57.157Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:40:57.157Z"
+      },
+      "_id": {
+        "$oid": "6913914935c03bd6198102f8"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T15:25:34.941Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T15:25:35.435Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T15:25:35.435Z"
+      },
+      "_id": {
+        "$oid": "691749ef35c03bd61985aeaf"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "6910d943800659574068768e"
+  },
+  "todayMeal": {
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Dal Rice",
+        "description": "Premium lentil curry with basmati rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb5"
+        }
+      },
+      {
+        "name": "Aalu beans",
+        "description": "premium kopte",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb6"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Fresh wheat bread",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb7"
+        }
+      },
+      {
+        "name": "Salad",
+        "description": "Fresh mixed salad",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb8"
+        }
+      },
+      {
+        "name": "Channa masala",
+        "description": "",
+        "quantity": "1 bow",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb9"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-11-15T05:22:44.923Z"
+    },
+    "mealType": "lunch",
+    "date": {
+      "$date": "2025-11-10T14:54:38.185Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  }
+},
+{
+  "_id": {
+    "$oid": "6910e2208006595740687695"
+  },
+  "subscriptionId": "SUB_71RPHVFNI",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68adefc98367cdfca9e35e50"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-10-12T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 46,
+    "mealsSkipped": 0,
+    "mealsRemaining": 14,
+    "regularMealsDelivered": 10,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 2,
+  "thalisDelivered": 0,
+  "remainingMeals": 14,
+  "isActive": false,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "17:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:30"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 70,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 4200,
+    "planPrice": 4200,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 4200,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "expired",
+  "skipSettings": {
+    "maxSkipsPerMonth": 24,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-10-12T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-11T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T08:48:35.857Z"
+  },
+  "__v": 13,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-10T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T12:49:08.811Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T12:49:09.391Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T12:49:09.391Z"
+      },
+      "_id": {
+        "$oid": "6911df45d571969b6a1488c2"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T14:54:45.957Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T14:54:46.451Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T14:54:46.451Z"
+      },
+      "_id": {
+        "$oid": "6911fcb6d571969b6a14d4a4"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T08:41:36.057Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T08:41:36.359Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T08:41:36.359Z"
+      },
+      "_id": {
+        "$oid": "6912f6c035c03bd6198055d2"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:38:14.115Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:38:14.547Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:38:14.547Z"
+      },
+      "_id": {
+        "$oid": "691390a635c03bd61980ea01"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:41:03.711Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:41:04.140Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:41:04.140Z"
+      },
+      "_id": {
+        "$oid": "6913915035c03bd619810796"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-12T15:30:09.774Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-12T15:30:11.513Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-12T15:30:11.513Z"
+      },
+      "_id": {
+        "$oid": "6914a80335c03bd61982b1a0"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T12:22:24.136Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T12:22:25.939Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T12:22:25.939Z"
+      },
+      "_id": {
+        "$oid": "6915cd8135c03bd619834f99"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T15:40:12.558Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T15:40:14.359Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T15:40:14.359Z"
+      },
+      "_id": {
+        "$oid": "6915fbde35c03bd619838ba2"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T12:14:57.785Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T12:14:59.775Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T12:14:59.775Z"
+      },
+      "_id": {
+        "$oid": "69171d4335c03bd6198588ec"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-15T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-15T08:48:35.942Z"
+      },
+      "deliveredBy": {
+        "$oid": "6871357dc6ea432299002517"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-15T08:48:35.853Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-15T08:48:35.853Z"
+      },
+      "_id": {
+        "$oid": "69183e6335c03bd619868edb"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "6910d943800659574068768e"
+  },
+  "todayMeal": {
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Dal Rice",
+        "description": "Premium lentil curry with basmati rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "6911ddbbd571969b6a147e88"
+        }
+      },
+      {
+        "name": "Chana masala",
+        "description": "Rich paneer carry ",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6911ddbbd571969b6a147e89"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Fresh wheat bread",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "6911ddbbd571969b6a147e8a"
+        }
+      },
+      {
+        "name": "Salad",
+        "description": "Fresh mixed salad",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6911ddbbd571969b6a147e8b"
+        }
+      },
+      {
+        "name": "Bhindi masala",
+        "description": "Rich panel",
+        "quantity": "1 bow",
+        "_id": {
+          "$oid": "6911ddbbd571969b6a147e8c"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-11-10T12:42:35.781Z"
+    },
+    "mealType": "lunch",
+    "date": {
+      "$date": "2025-11-10T12:49:09.390Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  }
+},
+{
+  "_id": {
+    "$oid": "6910e2208006595740687696"
+  },
+  "subscriptionId": "SUB_71RPHVFNJ",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68ab378297f8a31ea39960fb"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-10-12T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 17,
+    "mealsSkipped": 0,
+    "mealsRemaining": 43,
+    "regularMealsDelivered": 10,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 2,
+  "thalisDelivered": 0,
+  "remainingMeals": 43,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "13:30"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:30"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 70,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 4200,
+    "planPrice": 4200,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 4200,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "friendzo near usalwala",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 53,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-11-06T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-12-05T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T07:53:25.311Z"
+  },
+  "__v": 13,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-14T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T05:17:24.561Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T05:17:24.880Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T05:17:24.880Z"
+      },
+      "_id": {
+        "$oid": "69117564d571969b6a13eff6"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T08:21:50.609Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T08:21:50.918Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T08:21:50.918Z"
+      },
+      "_id": {
+        "$oid": "6912f21e35c03bd61980461a"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:35:17.556Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:35:18.055Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:35:18.055Z"
+      },
+      "_id": {
+        "$oid": "69138ff635c03bd61980dfb1"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:38:53.819Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:38:54.214Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:38:54.214Z"
+      },
+      "_id": {
+        "$oid": "691390ce35c03bd61980f6ee"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:40:57.967Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:40:58.364Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:40:58.364Z"
+      },
+      "_id": {
+        "$oid": "6913914a35c03bd619810422"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T07:33:57.690Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T07:33:59.367Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T07:33:59.367Z"
+      },
+      "_id": {
+        "$oid": "691589e735c03bd6198342ae"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T15:40:33.857Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T15:40:35.791Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T15:40:35.791Z"
+      },
+      "_id": {
+        "$oid": "6915fbf335c03bd619839297"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T12:15:07.799Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T12:15:09.799Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T12:15:09.799Z"
+      },
+      "_id": {
+        "$oid": "69171d4d35c03bd619858d4d"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T15:31:11.240Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T15:31:13.333Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T15:31:13.333Z"
+      },
+      "_id": {
+        "$oid": "69174b4135c03bd61985b5e6"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-15T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-15T07:53:25.430Z"
+      },
+      "deliveredBy": {
+        "$oid": "6871357dc6ea432299002517"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-15T07:53:25.304Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-15T07:53:25.304Z"
+      },
+      "_id": {
+        "$oid": "6918317535c03bd619865817"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "6910d943800659574068768e"
+  },
+  "todayMeal": {
+    "date": {
+      "$date": "2025-11-10T05:17:24.880Z"
+    },
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Dal Rice",
+        "description": "Premium lentil curry with basmati rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb5"
+        }
+      },
+      {
+        "name": "Aalu beans",
+        "description": "premium kopte",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb6"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Fresh wheat bread",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb7"
+        }
+      },
+      {
+        "name": "Salad",
+        "description": "Fresh mixed salad",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb8"
+        }
+      },
+      {
+        "name": "Channa masala",
+        "description": "",
+        "quantity": "1 bow",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb9"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-11-15T05:22:44.923Z"
+    },
+    "mealType": "lunch",
+    "shift": "morning",
+    "tier": "basic"
+  }
+},
+{
+  "_id": {
+    "$oid": "6910e2208006595740687697"
+  },
+  "subscriptionId": "SUB_10PACBHAK",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68c67ec64d84aae25d6a100a"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-11-06T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 18,
+    "mealsSkipped": 0,
+    "mealsRemaining": 12,
+    "regularMealsDelivered": 5,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "evening",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 12,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "13:10"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:30"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 55,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 1650,
+    "planPrice": 1650,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 1650,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-29T09:11:03.657Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-29T09:11:03.657Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "...",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 17,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-29T09:11:03.654Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-10-30T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-29T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-10-30T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68b16ea261d2057c24b46c5e",
+  "razorpayPaymentId": "pay_RB61C03kozZBIf",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-29T09:11:03.659Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T08:47:11.461Z"
+  },
+  "__v": 5,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-10-25T18:30:00.000Z"
+  },
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "todayMeal": {
+    "items": [
+      {
+        "name": "Dal",
+        "description": "Dal",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918123f35c03bd619860ffe"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "6918123f35c03bd619860fff"
+        }
+      },
+      {
+        "name": "Masala Aalu",
+        "description": "Bharwa Baingan",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6918123f35c03bd619861000"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Roti",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "6918123f35c03bd619861001"
+        }
+      },
+      {
+        "name": "salad",
+        "description": "salad",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6918123f35c03bd619861002"
+        }
+      }
+    ],
+    "mealType": "both",
+    "date": {
+      "$date": "2025-11-13T00:00:00.000Z"
+    },
+    "isAvailable": true,
+    "lastUpdated": {
+      "$date": "2025-11-15T05:40:15.891Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T16:18:18.487Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T16:18:19.421Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T16:18:19.421Z"
+      },
+      "_id": {
+        "$oid": "6912104b35c03bd6197eb885"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:38:35.281Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:38:35.736Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:38:35.736Z"
+      },
+      "_id": {
+        "$oid": "691390bb35c03bd61980ef40"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:40:51.112Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:40:51.546Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:40:51.546Z"
+      },
+      "_id": {
+        "$oid": "6913914335c03bd61980fe62"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T15:40:42.832Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T15:40:44.748Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T15:40:44.748Z"
+      },
+      "_id": {
+        "$oid": "6915fbfc35c03bd6198396ce"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-15T08:47:11.497Z"
+      },
+      "deliveredBy": {
+        "$oid": "6871357dc6ea432299002517"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-15T08:47:11.456Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-15T08:47:11.456Z"
+      },
+      "_id": {
+        "$oid": "69183e0f35c03bd61986853b"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6910e2208006595740687699"
+  },
+  "subscriptionId": "SUB_71RPHVFNM",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68c7c7ce4d84aae25d6a26d5"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-11-05T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 20,
+    "mealsDelivered": 16,
+    "mealsSkipped": 0,
+    "mealsRemaining": 4,
+    "regularMealsDelivered": 9,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 10,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 4,
+  "isActive": false,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "13:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:30"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 60,
+    "totalDays": 10,
+    "mealsPerDay": 2,
+    "totalMeals": 20,
+    "totalThali": 20,
+    "totalAmount": 1200,
+    "planPrice": 1200,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 1200,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [
+    {
+      "$oid": "69130aff35c03bd619806b76"
+    }
+  ],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "expired",
+  "skipSettings": {
+    "maxSkipsPerMonth": 13,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-11-05T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-14T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shifts": [
+        "morning"
+      ],
+      "customizationId": "69130aff35c03bd619806b76",
+      "_id": {
+        "$oid": "69130aff35c03bd619806b7b"
+      }
+    }
+  ],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [
+    {
+      "date": {
+        "$date": "2025-11-12T18:30:00.000Z"
+      },
+      "shift": "morning",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-11-11T10:09:17.748Z"
+      },
+      "createdBy": {
+        "$oid": "68c7c7ce4d84aae25d6a26d5"
+      },
+      "_id": {
+        "$oid": "69130b4d35c03bd619806c60"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T18:30:00.000Z"
+      },
+      "shift": "morning",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-11-11T10:09:17.750Z"
+      },
+      "createdBy": {
+        "$oid": "68c7c7ce4d84aae25d6a26d5"
+      },
+      "_id": {
+        "$oid": "69130b4d35c03bd619806c61"
+      }
+    }
+  ],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T08:48:40.813Z"
+  },
+  "__v": 14,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-11T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T12:49:15.880Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T12:49:16.363Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T12:49:16.363Z"
+      },
+      "_id": {
+        "$oid": "6911df4cd571969b6a14899c"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T16:18:30.342Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T16:18:30.816Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T16:18:30.816Z"
+      },
+      "_id": {
+        "$oid": "6912105635c03bd6197eb980"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T07:54:15.307Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T07:54:15.764Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T07:54:15.764Z"
+      },
+      "_id": {
+        "$oid": "6912eba735c03bd619802644"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:40:59.958Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:41:00.401Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:41:00.401Z"
+      },
+      "_id": {
+        "$oid": "6913914c35c03bd61981054f"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-12T15:30:26.562Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-12T15:30:28.042Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-12T15:30:28.042Z"
+      },
+      "_id": {
+        "$oid": "6914a81435c03bd61982b700"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T15:40:36.554Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T15:40:38.334Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T15:40:38.334Z"
+      },
+      "_id": {
+        "$oid": "6915fbf635c03bd619839401"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T12:15:00.392Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T12:15:02.510Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T12:15:02.510Z"
+      },
+      "_id": {
+        "$oid": "69171d4635c03bd619858a60"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-15T08:47:35.330Z"
+      },
+      "deliveredBy": {
+        "$oid": "6871357dc6ea432299002517"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-15T08:47:35.266Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-15T08:47:35.266Z"
+      },
+      "_id": {
+        "$oid": "69183e2735c03bd6198686eb"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-15T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-15T08:48:40.914Z"
+      },
+      "deliveredBy": {
+        "$oid": "6871357dc6ea432299002517"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-15T08:48:40.804Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-15T08:48:40.804Z"
+      },
+      "_id": {
+        "$oid": "69183e6835c03bd61986908f"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "todayMeal": {
+    "items": [
+      {
+        "name": "Dal",
+        "description": "Dal",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6916bd4e35c03bd6198532a6"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "6916bd4e35c03bd6198532a7"
+        }
+      },
+      {
+        "name": "Aalu paj",
+        "description": "Bharwa Baingan",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6916bd4e35c03bd6198532a8"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Roti",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "6916bd4e35c03bd6198532a9"
+        }
+      },
+      {
+        "name": "salad",
+        "description": "salad",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6916bd4e35c03bd6198532aa"
+        }
+      }
+    ],
+    "mealType": "both",
+    "date": {
+      "$date": "2025-11-13T00:00:00.000Z"
+    },
+    "isAvailable": true,
+    "lastUpdated": {
+      "$date": "2025-11-14T05:25:34.648Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  }
+},
+{
+  "_id": {
+    "$oid": "6910e220800659574068769a"
+  },
+  "subscriptionId": "SUB_10PACBHAN",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68d0f47956fa123bc624e1c8"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-11-06T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 10,
+    "mealsSkipped": 0,
+    "mealsRemaining": 19,
+    "regularMealsDelivered": 5,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "morning",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 20,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "13:30"
+    },
+    "evening": {
+      "enabled": false,
+      "time": "23:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 55,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 1650,
+    "planPrice": 1650,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 1650,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "68b16ea761d2057c24b46c67"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-29T09:11:03.657Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-29T09:11:03.657Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "1162,Rajiv Awas Vihar ,Scheme No 114, Part I, Vijay Nagar, Indore",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 25,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-29T09:11:03.654Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-11-03T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-12-02T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-10-30T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68b16ea261d2057c24b46c5e",
+  "razorpayPaymentId": "pay_RB61C03kozZBIf",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-29T09:11:03.659Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T06:02:21.034Z"
+  },
+  "__v": 5,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-14T18:30:00.000Z"
+  },
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "todayMeal": {
+    "items": [
+      {
+        "name": "Dal",
+        "description": "Dal",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918123f35c03bd619860ffe"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "6918123f35c03bd619860fff"
+        }
+      },
+      {
+        "name": "Masala Aalu",
+        "description": "Bharwa Baingan",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6918123f35c03bd619861000"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Roti",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "6918123f35c03bd619861001"
+        }
+      },
+      {
+        "name": "salad",
+        "description": "salad",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6918123f35c03bd619861002"
+        }
+      }
+    ],
+    "mealType": "both",
+    "date": {
+      "$date": "2025-11-13T00:00:00.000Z"
+    },
+    "isAvailable": true,
+    "lastUpdated": {
+      "$date": "2025-11-15T05:40:15.891Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T07:31:22.009Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T07:31:22.587Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T07:31:22.587Z"
+      },
+      "_id": {
+        "$oid": "691194cad571969b6a142efd"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T07:34:17.513Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T07:34:18.942Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T07:34:18.942Z"
+      },
+      "_id": {
+        "$oid": "6912e6fa35c03bd61980014e"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:35:14.720Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:35:15.188Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:35:15.188Z"
+      },
+      "_id": {
+        "$oid": "69138ff335c03bd61980de9a"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T07:57:14.008Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T07:57:15.710Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T07:57:15.710Z"
+      },
+      "_id": {
+        "$oid": "69158f5b35c03bd619834542"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T12:14:54.590Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T12:14:56.601Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T12:14:56.601Z"
+      },
+      "_id": {
+        "$oid": "69171d4035c03bd61985877b"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6910e220800659574068769b"
+  },
+  "subscriptionId": "SUB_71RPHVFNO",
+  "startShift": "morning",
+  "user": {
+    "$oid": "69037bcf8beac2fba8ccb16b"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-10-31T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 11,
+    "mealsSkipped": 0,
+    "mealsRemaining": 18,
+    "regularMealsDelivered": 5,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "morning",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 19,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "13:30"
+    },
+    "evening": {
+      "enabled": false,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 55,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 1650,
+    "planPrice": 1650,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 1650,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 24,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-10-31T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-29T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T06:02:21.053Z"
+  },
+  "__v": 8,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-14T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T07:31:38.246Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T07:31:38.872Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T07:31:38.872Z"
+      },
+      "_id": {
+        "$oid": "691194dad571969b6a142fd1"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T07:26:31.118Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T07:26:31.363Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T07:26:31.363Z"
+      },
+      "_id": {
+        "$oid": "6912e52735c03bd6197ff248"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:37:54.005Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:37:54.556Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:37:54.556Z"
+      },
+      "_id": {
+        "$oid": "6913909235c03bd61980e4bf"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T07:57:18.620Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T07:57:20.309Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T07:57:20.309Z"
+      },
+      "_id": {
+        "$oid": "69158f6035c03bd619834698"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T12:15:33.508Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T12:15:35.515Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T12:15:35.515Z"
+      },
+      "_id": {
+        "$oid": "69171d6735c03bd619858ec3"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "todayMeal": {
+    "items": [
+      {
+        "name": "Dal",
+        "description": "Dal",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918123f35c03bd619860ffe"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "6918123f35c03bd619860fff"
+        }
+      },
+      {
+        "name": "Masala Aalu",
+        "description": "Bharwa Baingan",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6918123f35c03bd619861000"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Roti",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "6918123f35c03bd619861001"
+        }
+      },
+      {
+        "name": "salad",
+        "description": "salad",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6918123f35c03bd619861002"
+        }
+      }
+    ],
+    "mealType": "both",
+    "date": {
+      "$date": "2025-11-13T00:00:00.000Z"
+    },
+    "isAvailable": true,
+    "lastUpdated": {
+      "$date": "2025-11-15T05:40:15.891Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  }
+},
+{
+  "_id": {
+    "$oid": "6910e220800659574068769c"
+  },
+  "subscriptionId": "SUB_71RPHVFNP",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68e483f0e82ebae5d72ae977"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-08-22T00:00:00.000Z"
+    },
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "deliveryDays": [],
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    },
+    "startShift": "morning"
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 43,
+    "mealsSkipped": 0,
+    "mealsRemaining": 17,
+    "regularMealsDelivered": 9,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 17,
+  "isActive": false,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "17:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:30"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 70,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 1950,
+    "planPrice": 1950,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 1950,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "expired",
+  "skipSettings": {
+    "maxSkipsPerMonth": 26,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-10-06T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-05T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "__v": 12,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T21:01:02.492Z"
+      },
+      "deliveredBy": {
+        "$oid": "689f8f1af5789fc0c43e3eb8"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T21:01:04.858Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T21:01:04.858Z"
+      },
+      "_id": {
+        "$oid": "6913a41035c03bd619816221"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-12T04:50:22.308Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-12T04:50:22.751Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-12T04:50:22.751Z"
+      },
+      "_id": {
+        "$oid": "6914120e35c03bd61981dc6a"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-12T04:50:53.931Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-12T04:50:54.383Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-12T04:50:54.383Z"
+      },
+      "_id": {
+        "$oid": "6914122e35c03bd61981deac"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T07:33:47.150Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T07:33:48.814Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T07:33:48.814Z"
+      },
+      "_id": {
+        "$oid": "691589dc35c03bd619834158"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T15:40:19.174Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T15:40:20.999Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T15:40:20.999Z"
+      },
+      "_id": {
+        "$oid": "6915fbe535c03bd619838cfb"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T17:00:12.786Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T17:00:13.214Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T17:00:13.214Z"
+      },
+      "_id": {
+        "$oid": "69160e9d35c03bd61983bd6a"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T12:15:36.324Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T12:15:38.341Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T12:15:38.341Z"
+      },
+      "_id": {
+        "$oid": "69171d6a35c03bd61985902f"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T15:01:43.502Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T15:01:45.539Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T15:01:45.539Z"
+      },
+      "_id": {
+        "$oid": "6917445935c03bd61985aa69"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-15T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-15T07:53:29.622Z"
+      },
+      "deliveredBy": {
+        "$oid": "6871357dc6ea432299002517"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-15T07:53:29.532Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-15T07:53:29.532Z"
+      },
+      "_id": {
+        "$oid": "6918317935c03bd6198659bc"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "6910d943800659574068768e"
+  },
+  "todayMeal": {
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Dal Rice",
+        "description": "Premium lentil curry with basmati rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "6911ddbbd571969b6a147e88"
+        }
+      },
+      {
+        "name": "Chana masala",
+        "description": "Rich paneer carry ",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6911ddbbd571969b6a147e89"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Fresh wheat bread",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "6911ddbbd571969b6a147e8a"
+        }
+      },
+      {
+        "name": "Salad",
+        "description": "Fresh mixed salad",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6911ddbbd571969b6a147e8b"
+        }
+      },
+      {
+        "name": "Bhindi masala",
+        "description": "Rich panel",
+        "quantity": "1 bow",
+        "_id": {
+          "$oid": "6911ddbbd571969b6a147e8c"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-11-10T12:42:35.781Z"
+    },
+    "mealType": "lunch",
+    "date": {
+      "$date": "2025-11-11T21:01:04.858Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T07:53:29.536Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6910e220800659574068769d"
+  },
+  "subscriptionId": "SUB_71RPHVFNQ",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68e4845be82ebae5d72ae999"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-10-06T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 32,
+    "mealsSkipped": 0,
+    "mealsRemaining": 28,
+    "regularMealsDelivered": 6,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 28,
+  "isActive": false,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "12:30"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:30"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 65,
+    "totalDays": 60,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 1950,
+    "planPrice": 1950,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 1950,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 34,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-10-06T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-05T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "__v": 9,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T07:26:58.167Z"
+      },
+      "deliveredBy": {
+        "$oid": "689f8f1af5789fc0c43e3eb8"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T07:26:58.313Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T07:26:58.313Z"
+      },
+      "_id": {
+        "$oid": "691193c2d571969b6a1429bb"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T07:24:36.847Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T07:24:37.132Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T07:24:37.132Z"
+      },
+      "_id": {
+        "$oid": "6912e4b535c03bd6197feb44"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:38:29.590Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:38:29.979Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:38:29.979Z"
+      },
+      "_id": {
+        "$oid": "691390b535c03bd61980ee26"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:41:04.818Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:41:05.208Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:41:05.208Z"
+      },
+      "_id": {
+        "$oid": "6913915135c03bd6198108c1"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T07:33:43.735Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T07:33:45.426Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T07:33:45.426Z"
+      },
+      "_id": {
+        "$oid": "691589d935c03bd61983400d"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T15:40:10.261Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T15:40:12.114Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T15:40:12.114Z"
+      },
+      "_id": {
+        "$oid": "6915fbdc35c03bd619838a40"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "todayMeal": {
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Rice",
+        "description": "Basmati rice with saffron",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918125235c03bd619861103"
+        }
+      },
+      {
+        "name": "Daal",
+        "description": "Creamy black lentils",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918125235c03bd619861104"
+        }
+      },
+      {
+        "name": "Butter Roti",
+        "description": "Leavened bread with butter",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "6918125235c03bd619861105"
+        }
+      },
+      {
+        "name": "Gulab jamun",
+        "description": "Yogurt with vegetables",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918125235c03bd619861106"
+        }
+      },
+      {
+        "name": "Masala Aalu",
+        "description": "",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6918125235c03bd619861107"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-11-15T05:40:34.541Z"
+    },
+    "mealType": "dinner",
+    "date": {
+      "$date": "2025-11-10T07:26:58.313Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T05:40:34.564Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6910eca280065957406876a1"
+  },
+  "subscriptionId": "SUB_71RPHVFNL",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68cbcd914d84aae25d6a9042"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-08-22T00:00:00.000Z"
+    },
+    "startShift": "evening",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 26,
+    "mealsSkipped": 0,
+    "mealsRemaining": 4,
+    "regularMealsDelivered": 4,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "evening",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 4,
+  "isActive": false,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "17:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:30"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 65,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 1950,
+    "planPrice": 1950,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 1950,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "hello world",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-10-05T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-04T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [],
+  "thaliReplacements": [],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T05:40:34.564Z"
+  },
+  "__v": 7,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-09-03T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-10T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-10T16:18:36.904Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-10T16:18:37.373Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-10T16:18:37.373Z"
+      },
+      "_id": {
+        "$oid": "6912105d35c03bd6197eba7b"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T19:41:07.973Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T19:41:08.359Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T19:41:08.359Z"
+      },
+      "_id": {
+        "$oid": "6913915435c03bd6198109ec"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-12T15:30:24.477Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-12T15:30:26.166Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-12T15:30:26.166Z"
+      },
+      "_id": {
+        "$oid": "6914a81235c03bd61982b5a6"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T14:43:05.191Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T14:43:07.010Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T14:43:07.010Z"
+      },
+      "_id": {
+        "$oid": "6915ee7b35c03bd619838096"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "todayMeal": {
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Rice",
+        "description": "Basmati rice with saffron",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918125235c03bd619861103"
+        }
+      },
+      {
+        "name": "Daal",
+        "description": "Creamy black lentils",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918125235c03bd619861104"
+        }
+      },
+      {
+        "name": "Butter Roti",
+        "description": "Leavened bread with butter",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "6918125235c03bd619861105"
+        }
+      },
+      {
+        "name": "Gulab jamun",
+        "description": "Yogurt with vegetables",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918125235c03bd619861106"
+        }
+      },
+      {
+        "name": "Masala Aalu",
+        "description": "",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6918125235c03bd619861107"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-11-15T05:40:34.541Z"
+    },
+    "mealType": "dinner",
+    "date": {
+      "$date": "2025-11-10T16:18:37.373Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  }
+},
+{
+  "_id": {
+    "$oid": "69117e53d375b62f60ec9619"
+  },
+  "subscriptionId": "SUB_71RPHVFNZ",
+  "startShift": "morning",
+  "user": {
+    "$oid": "68717ebc7395056035d1718d"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-08-22T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday"
+      },
+      {
+        "day": "tuesday"
+      },
+      {
+        "day": "wednesday"
+      },
+      {
+        "day": "thursday"
+      },
+      {
+        "day": "friday"
+      },
+      {
+        "day": "saturday"
+      },
+      {
+        "day": "sunday"
+      }
+    ],
+    "addressSettings": {
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home",
+      "useDefaultForAll": true
+    },
+    "savedAddresses": {
+      "home": {
+        "isDefault": true,
+        "name": "Home"
+      },
+      "office": {
+        "isDefault": false,
+        "name": "Office"
+      }
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 11,
+    "mealsSkipped": 0,
+    "mealsRemaining": 18,
+    "regularMealsDelivered": 6,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "30days_1",
+  "duration": 30,
+  "shift": "both",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 19,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "17:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "20:30"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 70,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 2100,
+    "planPrice": 2100,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "finalAmount": 2100,
+    "discount": 0,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1b"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "mealPlan": null,
+    "extraItems": [],
+    "addons": []
+  },
+  "customizations": [
+    {
+      "$oid": "691183b1d571969b6a141d7a"
+    },
+    {
+      "$oid": "6912cfae35c03bd6197fcbc4"
+    }
+  ],
+  "customizationPreferences": [],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    },
+    "evening": {
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-08-22T11:20:50.959Z"
+      }
+    }
+  },
+  "deliveryAddress": {
+    "street": "mahalaxmi niwaas",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "",
+    "coordinates": {
+      "lat": 0,
+      "lng": 0
+    },
+    "instructions": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-08-22T11:20:50.954Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "startDate": {
+    "$date": "2025-11-05T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-12-04T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-08T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "razorpaySubscriptionId": "68a8528e23f8e41e067ece05",
+  "razorpayPaymentId": "pay_R8MUO13Ru8YcTb",
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "customizedDays": [
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shifts": [
+        "morning"
+      ],
+      "customizationId": "6912cfae35c03bd6197fcbc4",
+      "_id": {
+        "$oid": "691183b1d571969b6a141d7f"
+      }
+    }
+  ],
+  "thaliReplacements": [
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "originalMealPlan": {
+        "$oid": "68780cd7aa254fd54f5a5d1b"
+      },
+      "replacementThali": {
+        "$oid": "688fb870bea1c163a6eda1a2"
+      },
+      "priceDifference": -10,
+      "replacedAt": {
+        "$date": "2025-11-10T06:18:25.243Z"
+      },
+      "isDefault": false,
+      "_id": {
+        "$oid": "691183b1d571969b6a141d8c"
+      },
+      "paymentStatus": "not_required"
+    }
+  ],
+  "dailyDeductions": [],
+  "pausedDates": [],
+  "skippedMeals": [
+    {
+      "date": {
+        "$date": "2025-11-09T18:30:00.000Z"
+      },
+      "shift": "evening",
+      "isSunday": false,
+      "reason": "user_skipped",
+      "description": "User requested meal skip",
+      "creditIssued": false,
+      "creditAmount": 0,
+      "createdAt": {
+        "$date": "2025-11-10T06:18:47.906Z"
+      },
+      "createdBy": {
+        "$oid": "68717ebc7395056035d1718d"
+      },
+      "_id": {
+        "$oid": "691183c7d571969b6a141e07"
+      }
+    }
+  ],
+  "mealCustomizations": [],
+  "createdAt": {
+    "$date": "2025-08-22T11:20:50.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T06:02:21.060Z"
+  },
+  "__v": 13,
+  "autoRenewal": {
+    "enabled": false,
+    "renewalType": "same_duration"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-14T18:30:00.000Z"
+  },
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-11T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-11T07:32:57.270Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-11T07:32:57.564Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-11T07:32:57.564Z"
+      },
+      "_id": {
+        "$oid": "6912e6a935c03bd6197ffdcb"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-12T15:30:18.540Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-12T15:30:20.388Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-12T15:30:20.388Z"
+      },
+      "_id": {
+        "$oid": "6914a80c35c03bd61982b440"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T07:57:22.119Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T07:57:23.793Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T07:57:23.793Z"
+      },
+      "_id": {
+        "$oid": "69158f6335c03bd6198347f1"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T15:40:25.317Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T15:40:27.136Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T15:40:27.136Z"
+      },
+      "_id": {
+        "$oid": "6915fbeb35c03bd619838fbb"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T12:15:38.759Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T12:15:40.833Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T12:15:40.833Z"
+      },
+      "_id": {
+        "$oid": "69171d6c35c03bd6198591a4"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T15:31:06.436Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T15:31:08.632Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T15:31:08.632Z"
+      },
+      "_id": {
+        "$oid": "69174b3c35c03bd61985b457"
+      }
+    }
+  ],
+  "sellerId": {
+    "$oid": "6910d943800659574068768e"
+  },
+  "todayMeal": {
+    "isAvailable": true,
+    "items": [
+      {
+        "name": "Dal Rice",
+        "description": "Premium lentil curry with basmati rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb5"
+        }
+      },
+      {
+        "name": "Aalu beans",
+        "description": "premium kopte",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb6"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Fresh wheat bread",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb7"
+        }
+      },
+      {
+        "name": "Salad",
+        "description": "Fresh mixed salad",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb8"
+        }
+      },
+      {
+        "name": "Channa masala",
+        "description": "",
+        "quantity": "1 bow",
+        "_id": {
+          "$oid": "69180e2435c03bd619860cb9"
+        }
+      }
+    ],
+    "lastUpdated": {
+      "$date": "2025-11-15T05:22:44.923Z"
+    },
+    "mealType": "lunch",
+    "date": {
+      "$date": "2025-11-10T06:18:25.177Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  }
+},
+{
+  "_id": {
+    "$oid": "69144a4c35c03bd6198275ab"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "6912e10835c03bd6197fdfd2"
+  },
+  "mealPlan": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "todayMeal": {
+    "items": [
+      {
+        "name": "Rice",
+        "description": "Basmati rice with saffron",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918125235c03bd619861103"
+        }
+      },
+      {
+        "name": "Daal",
+        "description": "Creamy black lentils",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918125235c03bd619861104"
+        }
+      },
+      {
+        "name": "Butter Roti",
+        "description": "Leavened bread with butter",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "6918125235c03bd619861105"
+        }
+      },
+      {
+        "name": "Gulab jamun",
+        "description": "Yogurt with vegetables",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918125235c03bd619861106"
+        }
+      },
+      {
+        "name": "Masala Aalu",
+        "description": "",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6918125235c03bd619861107"
+        }
+      }
+    ],
+    "mealType": "dinner",
+    "date": {
+      "$date": "2025-11-13T00:00:00.000Z"
+    },
+    "isAvailable": true,
+    "lastUpdated": {
+      "$date": "2025-11-15T05:40:34.541Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-11-12T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275ac"
+        }
+      },
+      {
+        "day": "tuesday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275ad"
+        }
+      },
+      {
+        "day": "wednesday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275ae"
+        }
+      },
+      {
+        "day": "thursday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275af"
+        }
+      },
+      {
+        "day": "friday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275b0"
+        }
+      },
+      {
+        "day": "saturday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275b1"
+        }
+      },
+      {
+        "day": "sunday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275b2"
+        }
+      }
+    ],
+    "savedAddresses": {
+      "home": {
+        "name": "Home",
+        "isDefault": true
+      },
+      "office": {
+        "name": "Office",
+        "isDefault": false
+      }
+    },
+    "addressSettings": {
+      "useDefaultForAll": true,
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home"
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 10,
+    "mealsDelivered": 4,
+    "mealsSkipped": 0,
+    "mealsRemaining": 6,
+    "regularMealsDelivered": 4,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "10days_3",
+  "duration": 10,
+  "shift": "morning",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 6,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "08:00"
+    },
+    "evening": {
+      "enabled": false,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 70,
+    "totalDays": 10,
+    "mealsPerDay": 1,
+    "totalMeals": 10,
+    "totalThali": 10,
+    "totalAmount": 700,
+    "planPrice": 700,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": null,
+    "couponId": null,
+    "discount": 0,
+    "finalAmount": 700,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68780cd7aa254fd54f5a5d1d"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "69144a4c35c03bd6198275b3"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-11-12T08:50:14.434Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-11-12T08:50:14.434Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-11-12T08:50:14.434Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-11-12T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-11-21T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-12T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1762937420464_25899EE8644D",
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T07:57:24.505Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T07:57:26.206Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T07:57:26.206Z"
+      },
+      "_id": {
+        "$oid": "69158f6635c03bd619834959"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T18:36:21.485Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T18:36:22.741Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T18:36:22.741Z"
+      },
+      "_id": {
+        "$oid": "6916252635c03bd61984143d"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T15:31:42.808Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T15:31:44.920Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T15:31:44.920Z"
+      },
+      "_id": {
+        "$oid": "69174b6035c03bd61985ba56"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-15T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-15T08:48:26.150Z"
+      },
+      "deliveredBy": {
+        "$oid": "6871357dc6ea432299002517"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-15T08:48:26.053Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-15T08:48:26.053Z"
+      },
+      "_id": {
+        "$oid": "69183e5a35c03bd619868b7d"
+      }
+    }
+  ],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-11-12T08:50:20.471Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T08:48:26.059Z"
+  },
+  "__v": 4,
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-14T18:30:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69144da110453c37929efc95"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "691412b635c03bd61981dfef"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-11-12T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275ac"
+        }
+      },
+      {
+        "day": "tuesday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275ad"
+        }
+      },
+      {
+        "day": "wednesday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275ae"
+        }
+      },
+      {
+        "day": "thursday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275af"
+        }
+      },
+      {
+        "day": "friday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275b0"
+        }
+      },
+      {
+        "day": "saturday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275b1"
+        }
+      },
+      {
+        "day": "sunday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275b2"
+        }
+      }
+    ],
+    "savedAddresses": {
+      "home": {
+        "name": "Home",
+        "isDefault": true
+      },
+      "office": {
+        "name": "Office",
+        "isDefault": false
+      }
+    },
+    "addressSettings": {
+      "useDefaultForAll": true,
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home"
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 60,
+    "mealsDelivered": 4,
+    "mealsSkipped": 0,
+    "mealsRemaining": 56,
+    "regularMealsDelivered": 4,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "10days_3",
+  "duration": 30,
+  "shift": "morning",
+  "thaliCount": 2,
+  "thalisDelivered": 0,
+  "remainingMeals": 56,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": true,
+      "time": "08:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 55,
+    "totalDays": 30,
+    "mealsPerDay": 2,
+    "totalMeals": 60,
+    "totalThali": 60,
+    "totalAmount": 3300,
+    "planPrice": 3300,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": null,
+    "couponId": null,
+    "discount": 0,
+    "finalAmount": 3300,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "69144a4c35c03bd6198275b3"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-11-12T08:50:14.434Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-11-12T08:50:14.434Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-11-12T08:50:14.434Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-11-12T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-12-11T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-12T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1762937420464_25899EE8644E",
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T07:57:31.502Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T07:57:33.191Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T07:57:33.191Z"
+      },
+      "_id": {
+        "$oid": "69158f6d35c03bd619834ab0"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T18:36:34.923Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T18:36:35.681Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T18:36:35.681Z"
+      },
+      "_id": {
+        "$oid": "6916253335c03bd6198415b2"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T12:15:41.648Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T12:15:43.707Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T12:15:43.707Z"
+      },
+      "_id": {
+        "$oid": "69171d6f35c03bd619859328"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-15T00:00:00.000Z"
+      },
+      "shift": "morning",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-15T08:48:28.064Z"
+      },
+      "deliveredBy": {
+        "$oid": "6871357dc6ea432299002517"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-15T08:48:27.932Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-15T08:48:27.932Z"
+      },
+      "_id": {
+        "$oid": "69183e5b35c03bd619868d29"
+      }
+    }
+  ],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-11-12T08:50:20.471Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-15T08:48:27.937Z"
+  },
+  "__v": 4,
+  "sellerId": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "todayMeal": {
+    "items": [
+      {
+        "name": "Dal",
+        "description": "Dal",
+        "quantity": "1 bowl",
+        "_id": {
+          "$oid": "6918123f35c03bd619860ffe"
+        }
+      },
+      {
+        "name": "Rice",
+        "description": "Rice",
+        "quantity": "1 plate",
+        "_id": {
+          "$oid": "6918123f35c03bd619860fff"
+        }
+      },
+      {
+        "name": "Masala Aalu",
+        "description": "Bharwa Baingan",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6918123f35c03bd619861000"
+        }
+      },
+      {
+        "name": "Roti",
+        "description": "Roti",
+        "quantity": "5 pieces",
+        "_id": {
+          "$oid": "6918123f35c03bd619861001"
+        }
+      },
+      {
+        "name": "salad",
+        "description": "salad",
+        "quantity": "1 serving",
+        "_id": {
+          "$oid": "6918123f35c03bd619861002"
+        }
+      }
+    ],
+    "mealType": "both",
+    "date": {
+      "$date": "2025-11-13T00:00:00.000Z"
+    },
+    "isAvailable": true,
+    "lastUpdated": {
+      "$date": "2025-11-15T05:40:15.891Z"
+    },
+    "shift": "morning",
+    "tier": "basic"
+  },
+  "lastOrderDate": {
+    "$date": "2025-11-14T18:30:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69144e9a10453c37929efc97"
+  },
+  "startShift": "morning",
+  "user": {
+    "$oid": "6911900fd571969b6a142127"
+  },
+  "mealPlan": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "todayMeal": {
+    "mealType": "lunch",
+    "isAvailable": false,
+    "tier": "basic",
+    "shift": "morning",
+    "items": [],
+    "date": {
+      "$date": "2025-11-12T08:50:20.465Z"
+    },
+    "lastUpdated": {
+      "$date": "2025-11-12T08:50:20.465Z"
+    }
+  },
+  "deliverySettings": {
+    "startDate": {
+      "$date": "2025-11-12T00:00:00.000Z"
+    },
+    "startShift": "morning",
+    "deliveryDays": [
+      {
+        "day": "monday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275ac"
+        }
+      },
+      {
+        "day": "tuesday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275ad"
+        }
+      },
+      {
+        "day": "wednesday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275ae"
+        }
+      },
+      {
+        "day": "thursday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275af"
+        }
+      },
+      {
+        "day": "friday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275b0"
+        }
+      },
+      {
+        "day": "saturday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275b1"
+        }
+      },
+      {
+        "day": "sunday",
+        "isActive": true,
+        "morningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "08:00"
+        },
+        "eveningShift": {
+          "address": {
+            "type": "home"
+          },
+          "enabled": false,
+          "deliveryTime": "19:00"
+        },
+        "_id": {
+          "$oid": "69144a4c35c03bd6198275b2"
+        }
+      }
+    ],
+    "savedAddresses": {
+      "home": {
+        "name": "Home",
+        "isDefault": true
+      },
+      "office": {
+        "name": "Office",
+        "isDefault": false
+      }
+    },
+    "addressSettings": {
+      "useDefaultForAll": true,
+      "allowDifferentAddresses": false,
+      "defaultAddressType": "home"
+    }
+  },
+  "mealCounts": {
+    "totalMeals": 30,
+    "mealsDelivered": 3,
+    "mealsSkipped": 0,
+    "mealsRemaining": 27,
+    "regularMealsDelivered": 3,
+    "sundayMealsDelivered": 0
+  },
+  "planType": "10days_3",
+  "duration": 30,
+  "shift": "evening",
+  "thaliCount": 1,
+  "thalisDelivered": 0,
+  "remainingMeals": 27,
+  "isActive": true,
+  "deliveryTiming": {
+    "morning": {
+      "enabled": false,
+      "time": "08:00"
+    },
+    "evening": {
+      "enabled": true,
+      "time": "19:00"
+    }
+  },
+  "pricing": {
+    "basePricePerMeal": 55,
+    "totalDays": 30,
+    "mealsPerDay": 1,
+    "totalMeals": 30,
+    "totalThali": 30,
+    "totalAmount": 1650,
+    "planPrice": 1650,
+    "addOnsPrice": 0,
+    "customizationPrice": 0,
+    "couponCode": null,
+    "couponId": null,
+    "discount": 0,
+    "finalAmount": 1650,
+    "sellerBasePrice": 0
+  },
+  "selectedAddOns": [],
+  "defaultMeal": {
+    "$oid": "68a9b16f0e6adf8dbfbea0b8"
+  },
+  "customizationHistory": [],
+  "permanentCustomization": {
+    "isActive": false,
+    "addons": [],
+    "extraItems": []
+  },
+  "customizations": [],
+  "customizationPreferences": [
+    {
+      "dietaryPreference": "vegetarian",
+      "customOptions": [],
+      "spiceLevel": "medium",
+      "noOnion": false,
+      "noGarlic": false,
+      "_id": {
+        "$oid": "69144a4c35c03bd6198275b3"
+      }
+    }
+  ],
+  "dietaryPreference": "vegetarian",
+  "defaultMealPreferences": {
+    "morning": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "morning",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-11-12T08:50:14.434Z"
+      }
+    },
+    "evening": {
+      "spiceLevel": "medium",
+      "dietaryPreference": "vegetarian",
+      "preferences": {
+        "noOnion": false,
+        "noGarlic": false
+      },
+      "customizations": [],
+      "quantity": 1,
+      "timing": "evening",
+      "isCustomized": false,
+      "lastUpdated": {
+        "$date": "2025-11-12T08:50:14.434Z"
+      }
+    }
+  },
+  "customizedDays": [],
+  "deliveryAddress": {
+    "street": "",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": ""
+  },
+  "status": "active",
+  "skipSettings": {
+    "maxSkipsPerMonth": 8,
+    "skipsUsedThisMonth": 0,
+    "lastSkipReset": {
+      "$date": "2025-11-12T08:50:14.434Z"
+    }
+  },
+  "thaliReplacement": {
+    "priceDifference": 0,
+    "isDefault": false
+  },
+  "thaliReplacements": [],
+  "startDate": {
+    "$date": "2025-11-12T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-12-11T00:00:00.000Z"
+  },
+  "nextDeliveryDate": {
+    "$date": "2025-11-12T00:00:00.000Z"
+  },
+  "paymentStatus": "completed",
+  "dailyDeductions": [],
+  "skippedMeals": [],
+  "mealCustomizations": [],
+  "autoRenewal": {
+    "enabled": true,
+    "renewalType": "same_duration"
+  },
+  "metadata": {
+    "createdVia": "web",
+    "deviceInfo": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36",
+    "promoCode": "",
+    "discountApplied": 0
+  },
+  "subscriptionId": "SUB_1762937420464_25899EE8644F",
+  "deliveryTracking": [
+    {
+      "date": {
+        "$date": "2025-11-12T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-12T15:30:14.558Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-12T15:30:16.200Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-12T15:30:16.200Z"
+      },
+      "_id": {
+        "$oid": "6914a80835c03bd61982b2eb"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-13T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-13T15:40:21.662Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-13T15:40:23.464Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-13T15:40:23.464Z"
+      },
+      "_id": {
+        "$oid": "6915fbe735c03bd619838e56"
+      }
+    },
+    {
+      "date": {
+        "$date": "2025-11-14T00:00:00.000Z"
+      },
+      "shift": "evening",
+      "status": "delivered",
+      "isActive": true,
+      "deliveredAt": {
+        "$date": "2025-11-14T15:31:04.624Z"
+      },
+      "deliveredBy": {
+        "$oid": "687891a23720c89a340e79c4"
+      },
+      "notes": "",
+      "thaliCount": 1,
+      "customizations": [],
+      "createdAt": {
+        "$date": "2025-11-14T15:31:06.694Z"
+      },
+      "updatedAt": {
+        "$date": "2025-11-14T15:31:06.694Z"
+      },
+      "_id": {
+        "$oid": "69174b3a35c03bd61985b2db"
+      }
+    }
+  ],
+  "pausedDates": [],
+  "createdAt": {
+    "$date": "2025-11-12T08:50:20.471Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-14T15:31:06.701Z"
+  },
+  "__v": 3
+}]

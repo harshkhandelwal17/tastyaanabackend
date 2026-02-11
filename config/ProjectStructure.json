@@ -1,0 +1,93 @@
+ecommerce-platform/
+├── backend/
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── sellerController.js
+│   │   ├── adminController.js
+│   │   ├── superAdminController.js
+│   │   ├── advancedAnalyticsController.js
+│   │   └── uploadController.js
+│   ├── middleware/
+│   │   ├── auth.js
+│   │   ├── errorHandler.js
+│   │   ├── validation.js
+│   │   ├── rateLimiting.js
+│   │   ├── superAdminAuth.js
+│   │   ├── superAdminSecurity.js
+│   │   └── apiMetrics.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Product.js
+│   │   ├── Order.js
+│   │   ├── Analytics.js
+│   │   ├── SystemSettings.js
+│   │   ├── AuditLog.js
+│   │   ├── FeatureFlag.js
+│   │   ├── ABTest.js
+│   │   ├── SystemBackup.js
+│   │   └── Broadcast.js
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── seller.js
+│   │   ├── admin.js
+│   │   ├── superadmin.js
+│   │   ├── analytics.js
+│   │   └── upload.js
+│   ├── utils/
+│   │   ├── analytics.js
+│   │   ├── mlAnalytics.js
+│   │   ├── businessMetrics.js
+│   │   ├── notifications.js
+│   │   ├── email.js
+│   │   ├── socket.js
+│   │   ├── auditLogger.js
+│   │   ├── backupManager.js
+│   │   ├── broadcastManager.js
+│   │   ├── systemHealth.js
+│   │   ├── featureFlag.js
+│   │   └── monitoring.js
+│   ├── cron/
+│   │   ├── jobs.js
+│   │   └── systemMaintenance.js
+│   ├── scripts/
+│   │   ├── seedData.js
+│   │   ├── createSuperAdmin.js
+│   │   ├── backup.js
+│   │   └── restore.js
+│   ├── uploads/
+│   ├── logs/
+│   ├── backups/
+│   ├── server.js
+│   ├── package.json
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   └── .env
+├── frontend/
+│   ├── src/
+│   │   ├── store/
+│   │   │   ├── index.js
+│   │   │   ├── api/
+│   │   │   │   ├── baseApi.js
+│   │   │   │   ├── authApi.js
+│   │   │   │   ├── sellerApi.js
+│   │   │   │   └── superAdminApi.js
+│   │   │   └── slices/
+│   │   │       ├── authSlice.js
+│   │   │       ├── notificationSlice.js
+│   │   │       └── uiSlice.js
+│   │   ├── components/
+│   │   │   ├── SellerPanel/
+│   │   │   ├── SuperAdminPanel/
+│   │   │   ├── shared/
+│   │   │   └── ui/
+│   │   ├── pages/
+│   │   ├── hooks/
+│   │   ├── utils/
+│   │   └── App.js
+│   ├── package.json
+│   └── tailwind.config.js
+├── docs/
+│   ├── api/
+│   ├── deployment/
+│   └── user-guides/
+└── README.md

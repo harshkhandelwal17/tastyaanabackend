@@ -1,0 +1,3471 @@
+[{
+  "_id": {
+    "$oid": "68c7bebd9c7819ec13b2f90c"
+  },
+  "code": "SAVE20",
+  "description": "10% off on your order",
+  "discountType": "percentage",
+  "discountValue": 10,
+  "maxDiscount": 20,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 200,
+  "maxUsage": 1000,
+  "usedCount": 1,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 50,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Summer Sale 2024",
+    "description": "Summer discount campaign",
+    "tags": [
+      "summer",
+      "sale",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:37.386Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-18T09:27:15.321Z"
+  },
+  "__v": 0,
+  "lastUsedAt": {
+    "$date": "2025-09-18T09:27:15.318Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68c7bebd9c7819ec13b2f910"
+  },
+  "code": "WELCOME15",
+  "description": "15% off for new users",
+  "discountType": "percentage",
+  "discountValue": 15,
+  "maxDiscount": 20,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 10,
+  "maxUsage": 500,
+  "usedCount": 13,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-11-14T07:22:36.194Z"
+  },
+  "applicableProducts": [
+    {
+      "$oid": "688fc9f0bea1c163a6eda1b4"
+    }
+  ],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userSegments": [
+        "new_users"
+      ],
+      "userBehavior": {
+        "maxOrderCount": 0,
+        "minOrderCount": 0,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 60,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "New User Welcome",
+    "description": "Welcome offer for new customers",
+    "tags": [
+      "welcome",
+      "new-users",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:37.466Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-21T11:26:31.382Z"
+  },
+  "__v": 0,
+  "lastUsedAt": {
+    "$date": "2025-09-21T11:26:31.381Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68c7bebd9c7819ec13b2f914"
+  },
+  "code": "VIP25",
+  "description": "25% off for VIP customers",
+  "discountType": "percentage",
+  "discountValue": 10,
+  "maxDiscount": 200,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 500,
+  "maxUsage": 100,
+  "usedCount": 0,
+  "maxUsagePerUser": 2,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-12-14T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userSegments": [
+        "vip_customers",
+        "high_value_customers"
+      ],
+      "userBehavior": {
+        "minOrderCount": 10,
+        "minTotalSpent": 5000,
+        "maxOrderCount": null,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 80,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "VIP Exclusive",
+    "description": "Exclusive offer for VIP customers",
+    "tags": [
+      "vip",
+      "exclusive",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:37.537Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:37.537Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebd9c7819ec13b2f917"
+  },
+  "code": "FLAT50",
+  "description": "Flat ₹50 off on your order",
+  "discountType": "fixed",
+  "discountValue": 50,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 200,
+  "maxUsage": 1000,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 40,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Flat Discount Campaign",
+    "description": "Fixed amount discount campaign",
+    "tags": [
+      "flat",
+      "fixed",
+      "discount"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:37.603Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:37.603Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebd9c7819ec13b2f91b"
+  },
+  "code": "FIRST100",
+  "description": "₹100 off on first order",
+  "discountType": "fixed",
+  "discountValue": 100,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 300,
+  "maxUsage": 500,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-30T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "maxOrderCount": 0,
+        "minOrderCount": 0,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 70,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "First Order Bonus",
+    "description": "Special discount for first-time customers",
+    "tags": [
+      "first-order",
+      "bonus",
+      "fixed"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:37.673Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:37.673Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebd9c7819ec13b2f91f"
+  },
+  "code": "FREESHIP",
+  "description": "Free delivery on your order",
+  "discountType": "free_shipping",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 200,
+  "maxUsage": 2000,
+  "usedCount": 0,
+  "maxUsagePerUser": 3,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-11-14T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 30,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Free Shipping Campaign",
+    "description": "Free delivery promotion",
+    "tags": [
+      "free-shipping",
+      "delivery",
+      "promotion"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:37.741Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:37.741Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebd9c7819ec13b2f923"
+  },
+  "code": "SHIPFREE500",
+  "description": "Free delivery on orders above ₹500",
+  "discountType": "free_shipping",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 500,
+  "maxUsage": 1000,
+  "usedCount": 0,
+  "maxUsagePerUser": 2,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-30T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "orderTargeting": {
+      "minOrderValue": 500,
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "maxOrderValue": null
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": true,
+  "priority": 35,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "High Value Free Shipping",
+    "description": "Free shipping for high-value orders",
+    "tags": [
+      "free-shipping",
+      "high-value",
+      "delivery"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:37.808Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:37.808Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebd9c7819ec13b2f926"
+  },
+  "code": "BOGO100",
+  "description": "Buy 1 Get 1 Free",
+  "discountType": "buy_one_get_one",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 100,
+  "maxUsage": 500,
+  "usedCount": 0,
+  "maxUsagePerUser": 2,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 60,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "BOGO Campaign",
+    "description": "Buy One Get One Free promotion",
+    "tags": [
+      "bogo",
+      "free",
+      "promotion"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:37.876Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:37.876Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebd9c7819ec13b2f929"
+  },
+  "code": "BOGO50",
+  "description": "Buy 1 Get 1 at 50% off",
+  "discountType": "buy_one_get_one",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 50
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 150,
+  "maxUsage": 300,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-10T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 55,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "BOGO 50% Campaign",
+    "description": "Buy One Get One at 50% off",
+    "tags": [
+      "bogo",
+      "50-percent",
+      "promotion"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:37.944Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:37.944Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebe9c7819ec13b2f92c"
+  },
+  "code": "BUY3GET2",
+  "description": "Buy 3 Get 2 Free",
+  "discountType": "buy_x_get_y",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "buyXGetYConfig": {
+      "buyQuantity": 3,
+      "getQuantity": 2,
+      "getDiscount": 100
+    },
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 300,
+  "maxUsage": 200,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-05T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 65,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Buy 3 Get 2 Campaign",
+    "description": "Buy 3 Get 2 Free promotion",
+    "tags": [
+      "bulk",
+      "free",
+      "promotion"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:38.010Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:38.010Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebe9c7819ec13b2f92f"
+  },
+  "code": "BUY2GET1",
+  "description": "Buy 2 Get 1 at 30% off",
+  "discountType": "buy_x_get_y",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 30
+    },
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 200,
+  "maxUsage": 400,
+  "usedCount": 0,
+  "maxUsagePerUser": 2,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-20T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 50,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Buy 2 Get 1 Campaign",
+    "description": "Buy 2 Get 1 at 30% off",
+    "tags": [
+      "bulk",
+      "30-percent",
+      "promotion"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:38.073Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:38.073Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebe9c7819ec13b2f932"
+  },
+  "code": "CASHBACK25",
+  "description": "₹25 cashback to wallet",
+  "discountType": "cashback",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "cashbackConfig": {
+      "cashbackAmount": 25,
+      "cashbackType": "wallet"
+    },
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 250,
+  "maxUsage": 1000,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-25T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 45,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Cashback Campaign",
+    "description": "Cashback to wallet promotion",
+    "tags": [
+      "cashback",
+      "wallet",
+      "promotion"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:38.137Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:38.137Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebe9c7819ec13b2f935"
+  },
+  "code": "CASHBACK50",
+  "description": "₹50 cashback to wallet",
+  "discountType": "cashback",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "cashbackConfig": {
+      "cashbackAmount": 50,
+      "cashbackType": "wallet"
+    },
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 500,
+  "maxUsage": 500,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minTotalSpent": 1000,
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 55,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "High Value Cashback",
+    "description": "Cashback for high-value customers",
+    "tags": [
+      "cashback",
+      "wallet",
+      "high-value"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:38.200Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:38.200Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebe9c7819ec13b2f938"
+  },
+  "code": "POINTS2X",
+  "description": "2x loyalty points on this order",
+  "discountType": "points_multiplier",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "pointsConfig": {
+      "multiplier": 2,
+      "maxPoints": 100
+    },
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    }
+  },
+  "minOrderAmount": 200,
+  "maxUsage": 1000,
+  "usedCount": 0,
+  "maxUsagePerUser": 3,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-11-14T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 25,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Points Multiplier Campaign",
+    "description": "Double loyalty points promotion",
+    "tags": [
+      "points",
+      "loyalty",
+      "multiplier"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:38.269Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:38.269Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebe9c7819ec13b2f93b"
+  },
+  "code": "POINTS3X",
+  "description": "3x loyalty points on this order",
+  "discountType": "points_multiplier",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "pointsConfig": {
+      "multiplier": 3,
+      "maxPoints": 200
+    },
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    }
+  },
+  "minOrderAmount": 400,
+  "maxUsage": 500,
+  "usedCount": 0,
+  "maxUsagePerUser": 2,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-30T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userSegments": [
+        "vip_customers"
+      ],
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 40,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "VIP Points Multiplier",
+    "description": "Triple loyalty points for VIP customers",
+    "tags": [
+      "points",
+      "loyalty",
+      "vip",
+      "multiplier"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:38.337Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:38.337Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebe9c7819ec13b2f93e"
+  },
+  "code": "DELHI20",
+  "description": "20% off for Delhi customers",
+  "discountType": "percentage",
+  "discountValue": 20,
+  "maxDiscount": 100,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 200,
+  "maxUsage": 1000,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "geographicTargeting": {
+      "applicableCities": [
+        "Delhi",
+        "New Delhi"
+      ],
+      "applicableStates": [
+        "Delhi"
+      ],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 50,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Delhi Special",
+    "description": "Special offer for Delhi customers",
+    "tags": [
+      "delhi",
+      "geographic",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:38.404Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:38.404Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebe9c7819ec13b2f941"
+  },
+  "code": "MUMBAI15",
+  "description": "15% off for Mumbai customers",
+  "discountType": "percentage",
+  "discountValue": 15,
+  "maxDiscount": 75,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 300,
+  "maxUsage": 800,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-20T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "geographicTargeting": {
+      "applicableCities": [
+        "Mumbai"
+      ],
+      "applicableStates": [
+        "Maharashtra"
+      ],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 45,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Mumbai Special",
+    "description": "Special offer for Mumbai customers",
+    "tags": [
+      "mumbai",
+      "geographic",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:38.472Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:38.472Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebe9c7819ec13b2f944"
+  },
+  "code": "MORNING15",
+  "description": "15% off on morning orders",
+  "discountType": "percentage",
+  "discountValue": 15,
+  "maxDiscount": 50,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 150,
+  "maxUsage": 1000,
+  "usedCount": 0,
+  "maxUsagePerUser": 2,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-11-14T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "timeTargeting": {
+      "applicableDays": [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday"
+      ],
+      "applicableTimeSlots": [
+        {
+          "start": "09:00",
+          "end": "12:00",
+          "_id": {
+            "$oid": "68c7bebe9c7819ec13b2f945"
+          }
+        }
+      ],
+      "applicableSeasons": []
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 35,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Morning Special",
+    "description": "Special discount for morning orders",
+    "tags": [
+      "morning",
+      "time-based",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:38.552Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:38.552Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bebf9c7819ec13b2f948"
+  },
+  "code": "WEEKEND20",
+  "description": "20% off on weekends",
+  "discountType": "percentage",
+  "discountValue": 20,
+  "maxDiscount": 100,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 200,
+  "maxUsage": 500,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-30T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "timeTargeting": {
+      "applicableDays": [
+        "saturday",
+        "sunday"
+      ],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 40,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Weekend Special",
+    "description": "Special discount for weekend orders",
+    "tags": [
+      "weekend",
+      "time-based",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:39.135Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:39.135Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bec09c7819ec13b2f94b"
+  },
+  "code": "GKK10",
+  "description": "10% off on GKK orders",
+  "discountType": "percentage",
+  "discountValue": 10,
+  "maxDiscount": 50,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 100,
+  "maxUsage": 1000,
+  "usedCount": 0,
+  "maxUsagePerUser": 3,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "orderTargeting": {
+      "applicableOrderTypes": [
+        "gkk"
+      ],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": true,
+  "priority": 30,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "GKK Special",
+    "description": "Special discount for GKK orders",
+    "tags": [
+      "gkk",
+      "order-type",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:40.151Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:40.151Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bec09c7819ec13b2f94e"
+  },
+  "code": "SUBSCRIPTION25",
+  "description": "25% off on subscription orders",
+  "discountType": "percentage",
+  "discountValue": 25,
+  "maxDiscount": 200,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 500,
+  "maxUsage": 200,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-11-14T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "orderTargeting": {
+      "applicableOrderTypes": [
+        "subscription"
+      ],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": true,
+  "priority": 70,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Subscription Special",
+    "description": "Special discount for subscription orders",
+    "tags": [
+      "subscription",
+      "order-type",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:40.216Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:40.216Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bec09c7819ec13b2f951"
+  },
+  "code": "UPI20",
+  "description": "20% off on UPI payments",
+  "discountType": "percentage",
+  "discountValue": 20,
+  "maxDiscount": 100,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 200,
+  "maxUsage": 1000,
+  "usedCount": 0,
+  "maxUsagePerUser": 2,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "orderTargeting": {
+      "applicablePaymentMethods": [
+        "upi"
+      ],
+      "applicableOrderTypes": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": true,
+  "priority": 45,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "UPI Special",
+    "description": "Special discount for UPI payments",
+    "tags": [
+      "upi",
+      "payment-method",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:40.283Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:40.283Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bec09c7819ec13b2f954"
+  },
+  "code": "WALLET15",
+  "description": "15% off on wallet payments",
+  "discountType": "percentage",
+  "discountValue": 15,
+  "maxDiscount": 75,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 150,
+  "maxUsage": 800,
+  "usedCount": 0,
+  "maxUsagePerUser": 2,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-25T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "orderTargeting": {
+      "applicablePaymentMethods": [
+        "wallet"
+      ],
+      "applicableOrderTypes": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": true,
+  "priority": 40,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Wallet Special",
+    "description": "Special discount for wallet payments",
+    "tags": [
+      "wallet",
+      "payment-method",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:40.352Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:40.352Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bec09c7819ec13b2f957"
+  },
+  "code": "FOOD20",
+  "description": "20% off on food items",
+  "discountType": "percentage",
+  "discountValue": 20,
+  "maxDiscount": 100,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 200,
+  "maxUsage": 1000,
+  "usedCount": 0,
+  "maxUsagePerUser": 2,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [
+    {
+      "$oid": "507f1f77bcf86cd799439012"
+    }
+  ],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 50,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Food Special",
+    "description": "Special discount for food items",
+    "tags": [
+      "food",
+      "category",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:40.416Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:40.416Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bec09c7819ec13b2f95a"
+  },
+  "code": "GROCERY15",
+  "description": "15% off on grocery items",
+  "discountType": "percentage",
+  "discountValue": 15,
+  "maxDiscount": 75,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 300,
+  "maxUsage": 800,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-30T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [
+    {
+      "$oid": "507f1f77bcf86cd799439013"
+    }
+  ],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 45,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Grocery Special",
+    "description": "Special discount for grocery items",
+    "tags": [
+      "grocery",
+      "category",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:40.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:40.482Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bec09c7819ec13b2f95d"
+  },
+  "code": "STACK10",
+  "description": "10% off (can be stacked with other coupons)",
+  "discountType": "percentage",
+  "discountValue": 10,
+  "maxDiscount": 50,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 100,
+  "maxUsage": 1000,
+  "usedCount": 0,
+  "maxUsagePerUser": 3,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 20,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Stackable Coupon",
+    "description": "Coupon that can be stacked with others",
+    "tags": [
+      "stackable",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:40.546Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:40.546Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bec09c7819ec13b2f960"
+  },
+  "code": "STACK5",
+  "description": "5% off (can be stacked with other coupons)",
+  "discountType": "percentage",
+  "discountValue": 5,
+  "maxDiscount": 25,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 100,
+  "maxUsage": 1000,
+  "usedCount": 0,
+  "maxUsagePerUser": 5,
+  "startDate": {
+    "$date": "2025-09-15T07:22:36.194Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:22:36.194Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 10,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Stackable Small Coupon",
+    "description": "Small stackable coupon",
+    "tags": [
+      "stackable",
+      "small",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:22:40.610Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:22:40.610Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bfd3137992efb3f94695"
+  },
+  "code": "MEALPLAN20",
+  "description": "20% off on all meal plan subscriptions",
+  "discountType": "percentage",
+  "discountValue": 20,
+  "maxDiscount": 200,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 500,
+  "maxUsage": 500,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:26:56.957Z"
+  },
+  "endDate": {
+    "$date": "2025-12-14T07:26:56.957Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "orderTargeting": {
+      "applicableOrderTypes": [
+        "subscription"
+      ],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": true,
+  "priority": 70,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Meal Plan Launch",
+    "description": "Special discount for meal plan subscriptions",
+    "tags": [
+      "meal-plan",
+      "subscription",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:27:15.253Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:27:15.253Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bfd3137992efb3f94698"
+  },
+  "code": "FIRSTMEAL30",
+  "description": "30% off on your first meal plan subscription",
+  "discountType": "percentage",
+  "discountValue": 30,
+  "maxDiscount": 300,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 300,
+  "maxUsage": 300,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:26:56.957Z"
+  },
+  "endDate": {
+    "$date": "2025-11-14T07:26:56.957Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "maxOrderCount": 0,
+        "minOrderCount": 0,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [
+        "subscription"
+      ],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": true,
+  "priority": 80,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "First Meal Plan",
+    "description": "Welcome discount for new meal plan users",
+    "tags": [
+      "meal-plan",
+      "new-user",
+      "welcome"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:27:15.351Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:27:15.351Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bfd3137992efb3f9469b"
+  },
+  "code": "MONTHLY100",
+  "description": "₹100 off on monthly meal plans",
+  "discountType": "fixed",
+  "discountValue": 100,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 800,
+  "maxUsage": 200,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:26:56.957Z"
+  },
+  "endDate": {
+    "$date": "2025-10-30T07:26:56.957Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "orderTargeting": {
+      "applicableOrderTypes": [
+        "subscription"
+      ],
+      "minOrderValue": 800,
+      "applicablePaymentMethods": [],
+      "maxOrderValue": null
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": true,
+  "priority": 60,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Monthly Meal Plans",
+    "description": "Fixed discount for monthly subscriptions",
+    "tags": [
+      "meal-plan",
+      "monthly",
+      "fixed"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:27:15.418Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:27:15.418Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bfd3137992efb3f9469e"
+  },
+  "code": "THALI50",
+  "description": "₹50 off on thali subscriptions",
+  "discountType": "fixed",
+  "discountValue": 50,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 200,
+  "maxUsage": 400,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:26:56.957Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:26:56.957Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "userTargeting": {
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      },
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": []
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableSeasons": [],
+      "applicableTimeSlots": []
+    },
+    "orderTargeting": {
+      "applicableOrderTypes": [],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    }
+  },
+  "isActive": true,
+  "priority": 50,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Thali Special",
+    "description": "Discount on thali subscriptions",
+    "tags": [
+      "meal-plan",
+      "thali",
+      "fixed"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:27:15.484Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:27:15.484Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bfd3137992efb3f946a1"
+  },
+  "code": "WEEKLY10",
+  "description": "10% off on weekly meal plans",
+  "discountType": "percentage",
+  "discountValue": 10,
+  "maxDiscount": 150,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 200,
+  "maxUsage": 300,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T00:00:00.000Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "orderTargeting": {
+      "applicableOrderTypes": [
+        "subscription"
+      ],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": false,
+  "priority": 65,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Weekly Plans",
+    "description": "Special discount for weekly meal plans",
+    "tags": [
+      "meal-plan",
+      "weekly",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:27:15.548Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-19T07:15:24.382Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bfd3137992efb3f946a4"
+  },
+  "code": "DAILY15",
+  "description": "15% off on daily meal plans",
+  "discountType": "percentage",
+  "discountValue": 15,
+  "maxDiscount": 100,
+  "specialDiscount": {
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 100,
+  "maxUsage": 500,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:26:56.957Z"
+  },
+  "endDate": {
+    "$date": "2025-10-15T07:26:56.957Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "orderTargeting": {
+      "applicableOrderTypes": [
+        "subscription"
+      ],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": true,
+  "priority": 55,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Daily Plans",
+    "description": "Discount for daily meal plans",
+    "tags": [
+      "meal-plan",
+      "daily",
+      "percentage"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:27:15.612Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:27:15.612Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bfd3137992efb3f946a7"
+  },
+  "code": "MEALBOGO",
+  "description": "Buy 1 month get 1 week free",
+  "discountType": "buy_x_get_y",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "buyXGetYConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 25
+    },
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "cashbackConfig": {
+      "cashbackType": "wallet"
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 1000,
+  "maxUsage": 100,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:26:56.957Z"
+  },
+  "endDate": {
+    "$date": "2025-11-14T07:26:56.957Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "orderTargeting": {
+      "applicableOrderTypes": [
+        "subscription"
+      ],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": true,
+  "priority": 75,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "BOGO Meal Plans",
+    "description": "Buy one get one offer for meal plans",
+    "tags": [
+      "meal-plan",
+      "bogo",
+      "special"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:27:15.678Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:27:15.678Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68c7bfd3137992efb3f946aa"
+  },
+  "code": "MEALCASHBACK",
+  "description": "₹200 cashback on meal plan subscriptions",
+  "discountType": "cashback",
+  "discountValue": 0,
+  "maxDiscount": null,
+  "specialDiscount": {
+    "cashbackConfig": {
+      "cashbackAmount": 200,
+      "cashbackType": "wallet"
+    },
+    "bogoConfig": {
+      "buyQuantity": 1,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "buyXGetYConfig": {
+      "buyQuantity": 2,
+      "getQuantity": 1,
+      "getDiscount": 100
+    },
+    "pointsConfig": {
+      "multiplier": 1,
+      "maxPoints": null
+    }
+  },
+  "minOrderAmount": 1000,
+  "maxUsage": 150,
+  "usedCount": 0,
+  "maxUsagePerUser": 1,
+  "startDate": {
+    "$date": "2025-09-15T07:26:56.957Z"
+  },
+  "endDate": {
+    "$date": "2025-10-30T07:26:56.957Z"
+  },
+  "applicableProducts": [],
+  "applicableCategories": [],
+  "targeting": {
+    "orderTargeting": {
+      "applicableOrderTypes": [
+        "subscription"
+      ],
+      "applicablePaymentMethods": [],
+      "minOrderValue": 0,
+      "maxOrderValue": null
+    },
+    "userTargeting": {
+      "applicableUsers": [],
+      "excludeUsers": [],
+      "userSegments": [],
+      "userBehavior": {
+        "minOrderCount": 0,
+        "maxOrderCount": null,
+        "minTotalSpent": 0,
+        "maxTotalSpent": null,
+        "lastOrderDays": null
+      }
+    },
+    "geographicTargeting": {
+      "applicableCities": [],
+      "applicableStates": [],
+      "applicablePincodes": [],
+      "excludeCities": [],
+      "excludeStates": [],
+      "excludePincodes": []
+    },
+    "timeTargeting": {
+      "applicableDays": [],
+      "applicableTimeSlots": [],
+      "applicableSeasons": []
+    }
+  },
+  "isActive": true,
+  "priority": 60,
+  "canStackWith": [],
+  "cannotStackWith": [],
+  "campaign": {
+    "name": "Meal Plan Cashback",
+    "description": "Cashback offer for meal plan subscriptions",
+    "tags": [
+      "meal-plan",
+      "cashback",
+      "wallet"
+    ]
+  },
+  "createdBy": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-09-15T07:27:15.743Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-15T07:27:15.743Z"
+  },
+  "__v": 0
+}]

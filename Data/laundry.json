@@ -1,0 +1,64 @@
+[
+  {
+    "_id": "60d5f1b3e7b3c9a4b4f4b3a1",
+    "name": "QuickClean Laundry",
+    "slug": "quickclean-laundry",
+    "description": "Fast and reliable laundry service.",
+    "logo": "🧺",
+    "contact": {
+      "phone": "1234567890",
+      "email": "contact@quickclean.com"
+    },
+    "address": {
+      "street": "123 Main St",
+      "area": "Downtown",
+      "city": "Anytown",
+      "state": "CA",
+      "zip": "12345"
+    },
+    "serviceAreas": ["Downtown", "Uptown"],
+    "serviceTypes": ["quick", "scheduled"],
+    "servicesOffered": ["wash-fold", "dry-clean"],
+    "pricingV2": [
+      {
+        "item": "60d5f1b3e7b3c9a4b4f4b3a2",
+        "category": "top-wear",
+        "quickPrice": 15,
+        "scheduledPrice": 10
+      },
+      {
+        "item": "60d5f1b3e7b3c9a4b4f4b3a3",
+        "category": "bottom-wear",
+        "quickPrice": 20,
+        "scheduledPrice": 15
+      }
+    ],
+    "additionalCharges": {
+      "deliveryFee": 5,
+      "expressSurcharge": 10
+    },
+    "turnaround": {
+      "quick": {
+        "minHours": 2,
+        "maxHours": 4
+      },
+      "scheduled": {
+        "minHours": 24,
+        "maxHours": 48
+      }
+    },
+    "operatingHours": {
+      "monday": "9am-7pm",
+      "tuesday": "9am-7pm",
+      "wednesday": "9am-7pm",
+      "thursday": "9am-7pm",
+      "friday": "9am-7pm",
+      "saturday": "10am-5pm",
+      "sunday": "closed"
+    },
+    "subscriptionPlans": [],
+    "reviews": [],
+    "rating": 4.5,
+    "status": "active"
+  }
+]

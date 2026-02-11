@@ -1,0 +1,2391 @@
+[
+{
+  "title": "Britannia Bourbon The Original Cream Biscuit",
+  "name": "Britannia Bourbon The Original Cream Biscuit",
+  "slug": "britannia-bourbon-biscuit",
+  "description": "Britannia Bourbon The Original is a delicious chocolate-flavored cream biscuit with a rich choco layer sandwiched between crunchy biscuits and topped with sugar crystals. A perfect indulgent treat for chocolate lovers.",
+  "shortDescription": "Chocolate cream sandwich biscuits with sugar topping",
+  "price": 30,
+  "originalPrice": 30,
+  "discountPrice": 0,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504012/Britannia_Bourbon_The_Original_Cream_Biscuit_b2f50n.png",
+      "alt": "Britannia Bourbon The Original Cream Biscuit"
+    }
+  ],
+  "category": { "$oid": "6882f90c5b1ba9254864dfe9"
+   },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "bourbon",
+    "biscuits",
+    "britannia",
+    "chocolate cream",
+    "snack",
+    "sweet biscuit"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "50 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+     {
+      "weight": "100 g",
+      "price": 25,
+      "originalPrice": 25,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Parle KrackJack Sweet & Salty Biscuit",
+  "name": "Parle KrackJack Sweet & Salty Biscuit",
+  "slug": "parle-krackjack-biscuit",
+  "description": "Parle KrackJack Biscuits offer the perfect balance of sweetness and saltiness in every crispy bite. Ideal as a light snack with tea or coffee, these biscuits are a delightful mix of flavor and crunch loved by all ages.",
+  "shortDescription": "Light, crispy biscuits with a sweet and salty taste",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504038/Parle_KrackJack_Sweet_Salty_Biscuit_ltg7mp.png",
+      "alt": "Parle KrackJack Biscuit"
+    }
+  ],
+  "category": { "$oid": "6882f90c5b1ba9254864dfe9"
+   },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "krackjack",
+    "parle",
+    "sweet and salty",
+    "biscuits",
+    "snack",
+    "crispy"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "28.35 g",
+      "price": 5,
+      "originalPrice": 5,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+     {
+      "weight": "56 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Britannia Jim Jam Cream Biscuit",
+  "name": "Britannia Jim Jam Cream Biscuit",
+  "slug": "britannia-jim-jam-biscuit",
+  "description": "Britannia Jim Jam Cream Biscuits are crunchy sandwich cookies filled with smooth vanilla cream and topped with a sweet jam drop and sugar crystals. A perfect combination of creamy, fruity, and crunchy delight.",
+  "shortDescription": "Vanilla cream biscuits topped with jam and sugar crystals",
+  "price": 25,
+  "originalPrice": 25,
+  "discountPrice": 25,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504013/Britannia_Jim_Jam_Cream_Biscuit_zuvsrp.png",
+      "alt": "Britannia Jim Jam Biscuit"
+    }
+  ],
+  "category": { "$oid": "6882f90c5b1ba9254864dfe9"
+   },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "jim jam",
+    "britannia",
+    "cream biscuits",
+    "jam biscuits",
+    "sweet snack",
+    "biscuits"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "50 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Parle Hide & Seek Chocolate Chip Biscuit",
+  "name": "Parle Hide & Seek Chocolate Chip Biscuit",
+  "slug": "parle-hide-and-seek-biscuit",
+  "description": "Parle Hide & Seek is India’s first chocolate chip cookie, made with premium cocoa and choco chips that melt in your mouth. These crunchy biscuits are perfect for chocolate lovers and make an ideal tea-time snack.",
+  "shortDescription": "Crunchy chocolate chip cookies with a rich cocoa flavor",
+  "price": 35,
+  "originalPrice": 35,
+  "discountPrice": 35,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504037/Parle_Hide_Seek_Chocolate_Chip_Biscuit_md2ifk.png",
+      "alt": "Parle Hide & Seek Chocolate Chip Biscuit"
+    }
+  ],
+  "category": { "$oid": "6882f90c5b1ba9254864dfe9"
+   },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "hide and seek",
+    "parle",
+    "chocolate biscuits",
+    "cookies",
+    "snack",
+    "sweet"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "50 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "100 g",
+      "price": 20,
+      "originalPrice": 20,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Oreo Chocolate Cream Biscuit",
+  "name": "Oreo Chocolate Cream Biscuit",
+  "slug": "oreo-chocolate-cream-biscuit",
+  "description": "Oreo Chocolate Cream Biscuits are crunchy cocoa cookies with a rich and smooth chocolate cream filling. Made with high-quality ingredients, they are perfect for sharing with friends, dipping in milk, or enjoying as a dessert treat.",
+  "shortDescription": "Crunchy cocoa biscuits filled with creamy chocolate",
+  "price": 30,
+  "originalPrice": 30,
+  "discountPrice": 30,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504039/oreo_chocolate_cream_biscuit_price_hqhrhh.png",
+      "alt": "Oreo Chocolate Cream Biscuit"
+    }
+  ],
+  "category": { "$oid": "6882f90c5b1ba9254864dfe9"
+   },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "oreo",
+    "chocolate biscuit",
+    "cream biscuit",
+    "cookies",
+    "snack",
+    "sweet"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "50 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+    {
+      "weight": "100 g",
+      "price": 20,
+      "originalPrice": 20,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Sunfeast Dark Fantasy Choco Fills Biscuit",
+  "name": "Sunfeast Dark Fantasy Choco Fills Biscuit",
+  "slug": "dark-fantasy-choco-fills-biscuit",
+  "description": "Sunfeast Dark Fantasy Choco Fills are indulgent cookies with a crisp outer shell and a molten choco-filled center. Each bite gives you the perfect combination of crunch and smooth chocolate, making it a heavenly dessert experience.",
+  "shortDescription": "Crispy cookies with rich molten chocolate filling",
+  "price": 35,
+  "originalPrice": 35,
+  "discountPrice": 35,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504947/lllllllllllllllllllllllllll_fm1l9q.jpg",
+      "alt": "Sunfeast Dark Fantasy Choco Fills Biscuit"
+    }
+  ],
+  "category": { "$oid": "6882f90c5b1ba9254864dfe9"
+   },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "dark fantasy",
+    "sunfeast",
+    "choco fills",
+    "cookies",
+    "chocolate",
+    "dessert"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "25 g",
+      "price": 20,
+      "originalPrice": 20,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Sunfeast Bounce Biscuits - Elaichi Creme Cookies",
+  "name": "Sunfeast Bounce Biscuits - Elaichi Creme Cookies",
+  "slug": "sunfeast-bounce-biscuits-elaichi-creme-cookies",
+  "description": "Sunfeast Bounce Elaichi Creme Biscuits are crunchy, golden cookies filled with a deliciously aromatic elaichi (cardamom) cream. Perfect for tea-time or snacking on the go, they combine the goodness of baked biscuits with the sweet, spicy flavor of elaichi.",
+  "shortDescription": "Crunchy biscuits filled with rich elaichi flavored cream",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504055/Sunfeast_Bounce_Biscuits_-_Elaichi_Creme_Cookies_yibjaa.png",
+      "alt": "Sunfeast Bounce Biscuits - Elaichi Creme Cookies"
+    }
+  ],
+  "category": { "$oid": "6882f90c5b1ba9254864dfe9"
+   },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "sunfeast",
+    "bounce",
+    "elaichi biscuits",
+    "cream biscuits",
+    "cookies",
+    "sweet snacks"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "30 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+,{
+  "title": "Sunfeast Choco Creme Biscuits 31 g",
+  "name": "Sunfeast Choco Creme Biscuits 31 g",
+  "slug": "sunfeast-choco-creme-biscuits",
+  "description": "Sunfeast Choco Creme Biscuits are deliciously crisp chocolate cookies filled with smooth, rich choco creme. The perfect indulgent snack for chocolate lovers, great with tea, coffee, or as an on-the-go treat.",
+  "shortDescription": "Crispy chocolate biscuits filled with rich choco creme",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504053/Sunfeast_Choco_Creme_Biscuits_31_g_mxc0bp.png",
+      "alt": "Sunfeast Choco Creme Biscuits"
+    }
+  ],
+  "category": { "$oid": "6882f90c5b1ba9254864dfe9"
+   },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "sunfeast",
+    "choco creme",
+    "biscuits",
+    "cookies",
+    "snack",
+    "chocolate"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "31 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},{
+  "title": "Sunfeast Bounce Cream Tangy Orange 31 g",
+  "name": "Sunfeast Bounce Cream Tangy Orange 31 g",
+  "slug": "sunfeast-bounce-cream-tangy-orange",
+  "description": "Sunfeast Bounce Cream Tangy Orange Biscuits are crisp golden cookies filled with a zesty and sweet orange-flavored cream. The delightful mix of crunch and tangy orange flavor makes it a favorite for kids and adults alike.",
+  "shortDescription": "Crunchy biscuits filled with tangy orange cream",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504053/Sunfeast_Bounce_Cream_Tangy_OrangeSunfeast_Bounce_Cream_Tangy_Orange_z4bw7q.png",
+      "alt": "Sunfeast Bounce Cream Tangy Orange 31 g"
+    }
+  ],
+  "category": { "$oid": "6882f90c5b1ba9254864dfe9"
+   },
+  "subcategory": "Snacks & Biscuits",
+  "tags": [
+    "sunfeast",
+    "bounce",
+    "orange cream biscuits",
+    "cookies",
+    "sweet snacks",
+    "tangy flavor"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "31 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Fanta Orange Soft Drink",
+  "name": "Fanta Orange Soft Drink",
+  "slug": "fanta-orange-soft-drink",
+  "description": "Fanta Orange is a refreshing, bubbly soft drink with a tangy orange flavor that instantly energizes you. Perfect for parties, picnics, and meals, Fanta adds a splash of fun and flavor to every moment.",
+  "shortDescription": "Refreshing orange-flavored carbonated soft drink",
+  "price": 40,
+  "originalPrice": 40,
+  "discountPrice": 40,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504014/Fanata_zmyzls.png",
+      "alt": "Fanta Orange Soft Drink"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+  },
+  "subcategory": "Cold Drinks",
+  "tags": [
+    "fanta",
+    "soft drink",
+    "orange soda",
+    "carbonated drink",
+    "refreshing"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "250 ml",
+      "price": 20,
+      "originalPrice": 20,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    },{
+      "weight": "750 ml",
+      "price": 40,
+      "originalPrice": 40,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bottle",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+,
+{
+  "title": "Thumbs Up Soft Drink",
+  "name": "Thumbs Up Soft Drink",
+  "slug": "thumbs-up-soft-drink",
+  "description": "Thumbs Up is India’s bold cola with a strong taste and intense fizz. Its robust flavor and energizing carbonation make it the ultimate cold drink for thrill seekers and refreshment lovers.",
+  "shortDescription": "Bold and strong cola drink with intense fizz",
+  "price": 40,
+  "originalPrice": 40,
+  "discountPrice": 40,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812818/Thums_Up_Soft_Drink_j6wiyt.png",
+      "alt": "Thumbs Up Soft Drink"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+  },
+  "subcategory": "Cold Drinks",
+  "tags": [
+    "thumbs up",
+    "cola",
+    "soft drink",
+    "carbonated",
+    "refreshing"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+        "weight": "250 ml bottle",
+        "price": 20,
+        "originalPrice": 20,
+        "discount": 0,
+        "stock": 60,
+        "unitType": "bottle"
+      },
+    {
+        "weight": "750 ml bottle",
+        "price": 40,
+        "originalPrice": 40,
+        "discount": 0,
+        "stock": 60,
+        "unitType": "bottle"
+      },
+      {
+        "weight": "1.25 liter bottle",
+        "price": 70,
+        "originalPrice": 70,
+        "dicount": 0,
+        "stock": 60,
+        "unitType": "liter"
+      }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bottle",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+,
+{
+  "title": "Sprite Lemon-Lime Soft Drink",
+  "name": "Sprite Lemon-Lime Soft Drink",
+  "slug": "sprite-lemon-lime-soft-drink",
+  "description": "Sprite Lemon-Lime Soft Drink offers a crisp, refreshing, and clear taste with a perfect blend of lemon and lime flavors. It’s the ultimate drink for instant freshness and cooling relief.",
+  "shortDescription": "Refreshing lemon-lime flavored soft drink",
+  "price": 40,
+  "originalPrice": 40,
+  "discountPrice": 40,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812812/Sprite_Lime_Flavoured_Soft_Drink_zbztst.png",
+      "alt": "Sprite Lemon-Lime Soft Drink"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+  },
+  "subcategory": "Cold Drinks",
+  "tags": [
+    "sprite",
+    "lemon drink",
+    "soft drink",
+    "carbonated",
+    "refreshing"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "250 ml",
+      "price": 20,
+      "originalPrice": 20,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    },
+    
+    {
+      "weight": "750 ml",
+      "price": 40,
+      "originalPrice": 40,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bottle",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+,
+{
+  "title": "Coca-Cola Soft Drink",
+  "name": "Coca-Cola Soft Drink",
+  "slug": "coca-cola-soft-drink",
+  "description": "Coca-Cola is the world’s most loved soft drink with its signature refreshing taste and fizz. Perfect for all occasions — from family dinners to parties — Coke adds happiness and energy to every sip.",
+  "shortDescription": "Classic cola soft drink with refreshing taste",
+  "price": 40,
+  "originalPrice": 40,
+  "discountPrice": 40,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1761812775/Coca-Cola_Soft_Drink_lfao8n.png",
+      "alt": "Coca-Cola Soft Drink"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+  },
+  "subcategory": "Cold Drinks",
+  "tags": [
+    "coca cola",
+    "soft drink",
+    "cola",
+    "carbonated drink",
+    "refreshing"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "600 ml",
+      "price": 40,
+      "originalPrice": 40,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bottle",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+,{
+  "title": "Nimbooz by 7UP",
+  "name": "Nimbooz by 7UP",
+  "slug": "nimbooz-by-7up",
+  "description": "Nimbooz by 7UP brings the authentic Indian nimbu pani taste with a refreshing twist. Made from real lemon juice and natural flavors, it keeps you hydrated and refreshed during hot days.",
+  "shortDescription": "Refreshing lemon-based drink with real lemon juice",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504036/Nimbooz_by_7UP_uox5wf.png",
+      "alt": "Nimbooz by 7UP"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+  },
+  "subcategory": "Cold Drinks",
+  "tags": [
+    "nimbooz",
+    "lemon drink",
+    "7up",
+    "refreshing drink",
+    "juice drink"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "250 ml",
+      "price": 20,
+      "originalPrice": 20,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bottle",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+,
+{
+  "title": "Appy Fizz Sparkling Apple Drink",
+  "name": "Appy Fizz Sparkling Apple Drink",
+  "slug": "appy-fizz-sparkling-apple-drink",
+  "description": "Appy Fizz is India’s favorite sparkling apple drink, offering a refreshing fizzy twist with a crisp apple flavor. Perfectly balanced in sweetness and bubbles, it’s the perfect drink to cool down any time.",
+  "shortDescription": "Fizzy apple drink with crisp and refreshing taste",
+  "price": 25,
+  "originalPrice": 25,
+  "discountPrice": 25,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762534740/appy_fizz_oh7sfo.png",
+      "alt": "Appy Fizz Sparkling Apple Drink"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+  },
+  "subcategory": "Cold Drinks",
+  "tags": [
+    "appy fizz",
+    "apple drink",
+    "sparkling drink",
+    "fizzy",
+    "refreshing"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "100 ml",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    },{
+      "weight": "250 ml",
+      "price": 20,
+      "originalPrice": 20,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bottle",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+,
+{
+  "title": "Frooti Mango Drink",
+  "name": "Frooti Mango Drink",
+  "slug": "frooti-mango-drink",
+  "description": "Frooti Mango Drink is India’s favorite mango beverage, made with real mango pulp. Its rich flavor and refreshing taste make it the perfect thirst quencher for kids and adults alike.",
+  "shortDescription": "Refreshing mango drink made from real mango pulp",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504036/Frooti_l16kfz.png",
+      "alt": "Frooti Mango Drink"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+  },
+  "subcategory": "Cold Drinks",
+  "tags": [
+    "frooti",
+    "mango drink",
+    "juice",
+    "fruit beverage",
+    "refreshing"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+       {
+      "weight": "200 ml",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    },
+    {
+      "weight": "300 ml",
+      "price": 20,
+      "originalPrice": 20,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bottle",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+,
+{
+  "title": "Maaza Mango Drink",
+  "name": "Maaza Mango Drink",
+  "slug": "maaza-mango-drink",
+  "description": "Maaza Mango Drink is made from the finest Alphonso mangoes, offering a thick, smooth, and naturally sweet flavor. Loved across India, it’s the ultimate mango indulgence available year-round.",
+  "shortDescription": "Delicious mango drink made with Alphonso mangoes",
+  "price": 40,
+  "originalPrice": 40,
+  "discountPrice": 40,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504036/Maaza_Mango_Drink_qaxizl.png",
+      "alt": "Maaza Mango Drink"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+    
+  },
+  "subcategory": "Cold Drinks",
+  "tags": [
+    "maaza",
+    "mango drink",
+    "juice",
+    "fruit beverage",
+    "refreshing"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "200 ml",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    },
+    {
+      "weight": "300 ml",
+      "price": 20,
+      "originalPrice": 20,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bottle",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Uncle Chips Potato Chips",
+  "name": "Uncle Chips Potato Chips",
+  "slug": "uncle-chips-potato-chips",
+  "description": "Uncle Chips are crispy, golden potato chips seasoned with a perfect mix of salt and spices. A classic Indian favorite, they make for a light, crunchy snack that’s perfect anytime, anywhere.",
+  "shortDescription": "Classic salted crispy potato chips",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504054/Uncle_sr4qsb.png",
+      "alt": "Uncle Chips Potato Chips"
+    }
+  ],
+      "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Chips & Namkeen",
+  "tags": [
+    "uncle chips",
+    "potato chips",
+    "crispy snack",
+    "salted chips",
+    "snacks"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "30 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Kurkure Masala Munch",
+  "name": "Kurkure Masala Munch",
+  "slug": "kurkure-masala-munch",
+  "description": "Kurkure Masala Munch is a crunchy, spicy snack made with corn, rice, and gram flour. Bursting with tangy masala flavors, it’s the perfect companion for tea-time or anytime snacking.",
+  "shortDescription": "Crunchy and spicy masala snack sticks",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504036/Kurkure_Masala_Munch_fxxmeg.png",
+      "alt": "Kurkure Masala Munch"
+    }
+  ],
+      "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Chips & Namkeen",
+  "tags": [
+    "kurkure",
+    "masala munch",
+    "namkeen",
+    "spicy snack",
+    "crunchy"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "30 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    },
+    {
+      "weight": "50 g",
+      "price": 20,
+      "originalPrice": 20,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Balaji Cream & Onion Chips",
+  "name": "Balaji Cream & Onion Chips",
+  "slug": "balaji-cream-and-onion-chips",
+  "description": "Balaji Cream & Onion Chips are made from thinly sliced potatoes seasoned with rich cream and tangy onion flavor. The perfect blend of creamy and savory taste for all snack lovers.",
+  "shortDescription": "Creamy and tangy onion-flavored potato chips",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504010/Balaji_Cream_Onion_Chips_oimcwb.png",
+      "alt": "Balaji Cream & Onion Chips"
+    }
+  ],
+  "category": {
+   
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Chips & Namkeen",
+  "tags": [
+    "balaji",
+    "cream and onion",
+    "potato chips",
+    "snacks",
+    "crispy"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "30 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Akash Ratlami Sev",
+  "name": "Akash Ratlami Sev",
+  "slug": "akash-ratlami-sev",
+  "description": "Akash Ratlami Sev is a spicy, crunchy Indian snack made with gram flour and authentic Ratlami masala. Famous for its strong flavor and crispy texture, it’s a perfect tea-time namkeen.",
+  "shortDescription": "Spicy gram flour sev with authentic Ratlami flavor",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504011/Akash_Ratlami_Sev_hf1k8t.png",
+      "alt": "Akash Ratlami Sev"
+    }
+  ],
+  "category": {
+    
+      "$oid": "6882f90c5b1ba9254864dfe9"
+  },
+  "subcategory": "Namkeen",
+  "tags": [
+    "akash",
+    "ratlami sev",
+    "namkeen",
+    "spicy snack",
+    "sev"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "100 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Balaji Ratlami Sev",
+  "name": "Balaji Ratlami Sev",
+  "slug": "balaji-ratlami-sev",
+  "description": "Balaji Ratlami Sev is a crunchy, spicy namkeen made with gram flour and a special blend of Ratlami spices. A traditional Indian snack that adds zest to your tea time.",
+  "shortDescription": "Crispy and spicy Ratlami sev made from besan",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504012/Balaji_Ratlami_Sev_g4uiv0.png",
+      "alt": "Balaji Ratlami Sev"
+    }
+  ],
+      "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Namkeen",
+  "tags": [
+    "balaji",
+    "ratlami sev",
+    "namkeen",
+    "spicy sev",
+    "snacks"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "100 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Balaji Aloo Sev",
+  "name": "Balaji Aloo Sev",
+  "slug": "balaji-aloo-sev",
+  "description": "Balaji Aloo Sev is a delicious potato-based namkeen made with crunchy fried potato sticks and mild spices. A perfect tea-time snack or a tasty topping for chaats and poha.",
+  "shortDescription": "Crunchy potato sev with mild spices",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504011/Balaji_Aloo_Sev_lxdpjg.png",
+      "alt": "Balaji Aloo Sev"
+    }
+  ],
+      "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Namkeen",
+  "tags": [
+    "balaji",
+    "aloo sev",
+    "potato snack",
+    "namkeen",
+    "sev"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "100 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Balaji Moong Dal",
+  "name": "Balaji Moong Dal",
+  "slug": "balaji-moong-dal",
+  "description": "Balaji Moong Dal is a light, crispy, and protein-rich namkeen made from roasted and salted moong dal. Perfect for guilt-free snacking and tea-time munching.",
+  "shortDescription": "Crispy roasted and salted moong dal snack",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504016/Balaji_Moong_Dal_nokou0.png",
+      "alt": "Balaji Moong Dal"
+    }
+  ],
+      "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Namkeen",
+  "tags": [
+    "balaji",
+    "moong dal",
+    "namkeen",
+    "healthy snack",
+    "roasted dal"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "70 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Soya Sticks Namkeen",
+  "name": "Soya Sticks Namkeen",
+  "slug": "soya-sticks-namkeen",
+  "description": "Soya Sticks are crunchy, protein-rich namkeen made from soya flour and light spices. They’re a tasty and healthy snacking option for anytime munching.",
+  "shortDescription": "Protein-rich crunchy soya sticks snack",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504053/Soya_Sticks_Namkeen_apyhzd.png",
+      "alt": "Soya Sticks Namkeen"
+    }
+  ],
+      "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Namkeen",
+  "tags": [
+    "soya sticks",
+    "namkeen",
+    "protein snack",
+    "crunchy",
+    "snacks"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "70 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Sev Murmura Mixture",
+  "name": "Sev Murmura Mixture",
+  "slug": "sev-murmura-mixture",
+  "description": "Sev Murmura Mixture is a light, crispy blend of puffed rice, sev, and spices. It’s a perfect balance of crunch and flavor, ideal for quick snacking or with tea.",
+  "shortDescription": "Crunchy mixture of puffed rice and sev with mild spices",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504055/Sev_Murmura_Mixture_d8x4pt.png",
+      "alt": "Sev Murmura Mixture"
+    }
+  ],
+      "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Namkeen",
+  "tags": [
+    "sev murmura",
+    "namkeen",
+    "mixture",
+    "puffed rice",
+    "snack"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "100 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": true,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Clinic Plus Strong & Long Shampoo (1₹ Sachets Pack of 10)",
+  "name": "Clinic Plus Strong & Long Shampoo (1₹ Sachets Pack of 10)",
+  "slug": "clinic-plus-shampoo-sachets",
+  "description": "Clinic Plus Strong & Long Shampoo is enriched with milk protein formula that nourishes hair from root to tip, making it strong and healthy. This convenient pack of 10 sachets is perfect for daily use and travel.",
+  "shortDescription": "Nourishing shampoo sachets for strong, healthy hair",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504013/Clinic_Plus_Strong_Long_Shampoo_1_Sachets_Pack_of_10_svqfng.png",
+      "alt": "Clinic Plus Shampoo Sachets"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Hair Care",
+  "tags": [
+    "clinic plus",
+    "shampoo",
+    "sachets",
+    "hair care",
+    "strong hair",
+    "milk protein"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "10 x 6 ml",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+,
+{
+  "title": "Dove Intense Repair Shampoo (1₹ Sachets Pack of 10)",
+  "name": "Dove Intense Repair Shampoo (1₹ Sachets Pack of 10)",
+  "slug": "dove-shampoo-sachets",
+  "description": "Dove Intense Repair Shampoo nourishes dry and damaged hair, leaving it smooth, soft, and healthy. This pack of 10 handy sachets is perfect for regular use or travel convenience.",
+  "shortDescription": "Repairing shampoo sachets for soft and shiny hair",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504015/Dove_Intense_Repair_Shampoo_uz0pil.png",
+      "alt": "Dove Shampoo Sachets"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Hair Care",
+  "tags": [
+    "dove",
+    "shampoo",
+    "intense repair",
+    "hair care",
+    "sachets",
+    "moisturizing"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "10 x 6 ml",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+,{
+  "title": "Head & Shoulders Anti-Dandruff Shampoo (1₹ Sachets Pack of 10)",
+  "name": "Head & Shoulders Anti-Dandruff Shampoo (1₹ Sachets Pack of 10)",
+  "slug": "head-and-shoulders-shampoo-sachets",
+  "description": "Head & Shoulders Anti-Dandruff Shampoo effectively removes dandruff and provides up to 100% flake-free hair. This sachet pack of 10 is ideal for travel or daily refreshing hair care.",
+  "shortDescription": "Anti-dandruff shampoo sachets for clean, flake-free scalp",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504037/Head_Shoulders_Anti-Dandruff_Shampoo_wufaba.png",
+      "alt": "Head & Shoulders Shampoo Sachets"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Hair Care",
+  "tags": [
+    "head and shoulders",
+    "anti dandruff",
+    "shampoo",
+    "hair care",
+    "sachets",
+    "clean scalp"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "10 x 6 ml",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Patanjali Dant Kanti Toothpaste",
+  "name": "Patanjali Dant Kanti Toothpaste",
+  "slug": "patanjali-dant-kanti-toothpaste",
+  "description": "Patanjali Dant Kanti Toothpaste is an Ayurvedic formulation enriched with natural herbs like neem, clove, and babool. It strengthens gums, prevents cavities, and provides long-lasting freshness with every brush.",
+  "shortDescription": "Ayurvedic herbal toothpaste for strong teeth and gums",
+  "price": 60,
+  "originalPrice": 60,
+  "discountPrice": 60,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504037/Patanjali_Dant_Kanti_Toothpaste_bchcxh.png",
+      "alt": "Patanjali Dant Kanti Toothpaste"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Oral Care",
+  "tags": [
+    "toothpaste",
+    "patanjali",
+    "dant kanti",
+    "ayurvedic",
+    "oral care",
+    "herbal"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "18 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    },
+     {
+      "weight":"40 g",
+      "price": 20,
+      "originalPrice": 20,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Close-Up Red Hot Gel Toothpaste",
+  "name": "Close-Up Red Hot Gel Toothpaste",
+  "slug": "closeup-red-hot-gel-toothpaste",
+  "description": "Close-Up Red Hot Gel Toothpaste gives long-lasting fresh breath with its active gel and micro-shine crystals. Its spicy-minty flavor provides a powerful clean and refreshing mouth feel.",
+  "shortDescription": "Fresh gel toothpaste with spicy-mint flavor",
+  "price": 70,
+  "originalPrice": 70,
+  "discountPrice": 70,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504013/Close-Up_Red_Hot_Gel_Toothpaste_mqun18.png",
+      "alt": "Close-Up Red Hot Gel Toothpaste"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Oral Care",
+  "tags": [
+    "toothpaste",
+    "closeup",
+    "gel toothpaste",
+    "oral care",
+    "fresh breath",
+    "mint"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "18 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Dabur Red Toothpaste",
+  "name": "Dabur Red Toothpaste",
+  "slug": "dabur-red-toothpaste",
+  "description": "Dabur Red Toothpaste combines Ayurvedic ingredients like clove, mint, and babool to fight germs, prevent cavities, and strengthen gums. It gives you strong teeth and fresh breath with every brush.",
+  "shortDescription": "Ayurvedic herbal toothpaste for strong teeth and fresh breath",
+  "price": 65,
+  "originalPrice": 65,
+  "discountPrice": 65,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504014/Dabur_Red_Toothpaste_ozl7kt.png",
+      "alt": "Dabur Red Toothpaste"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Oral Care",
+  "tags": [
+    "dabur",
+    "red toothpaste",
+    "ayurvedic",
+    "herbal toothpaste",
+    "oral care"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "15 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Dabur Babool Toothpaste",
+  "name": "Dabur Babool Toothpaste",
+  "slug": "dabur-babool-toothpaste",
+  "description": "Dabur Babool Toothpaste is enriched with natural Babool extracts that help keep gums healthy and teeth strong. It offers natural protection against germs and cavities while keeping your breath fresh all day.",
+  "shortDescription": "Natural toothpaste with Babool extracts for strong gums",
+  "price": 55,
+  "originalPrice": 55,
+  "discountPrice": 55,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504015/Dabur_Babool_Toothpaste_vn7qmx.png",
+      "alt": "Dabur Babool Toothpaste"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Oral Care",
+  "tags": [
+    "dabur",
+    "babool",
+    "toothpaste",
+    "oral care",
+    "herbal",
+    "natural"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "15 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "tube"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "tube",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Bhaskar Namak (Iodized Salt)",
+  "name": "Bhaskar Namak (Iodized Salt)",
+  "slug": "bhaskar-namak",
+  "description": "Bhaskar Namak is refined, iodized salt that ensures purity and good health. It enhances the taste of your food and provides essential iodine to support healthy thyroid function.",
+  "shortDescription": "Refined iodized salt for everyday cooking",
+  "price": 20,
+  "originalPrice": 20,
+  "discountPrice": 20,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504012/Bhaskar_Namak_xhbghe.png",
+      "alt": "Bhaskar Namak"
+    }
+  ],
+  "category": { "$oid": "6882f90c5b1ba9254864dfe9"
+   },
+  "subcategory": "Essentials",
+  "tags": [
+    "bhaskar",
+    "salt",
+    "iodized",
+    "cooking essentials",
+    "namak"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "1 kg",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Match Box  (Pack of 10)",
+  "name": "Match Box (Pack of 10)",
+  "slug": "match-box-pack-of-10",
+  "description": "High-quality safety matchboxes with sturdy sticks that light instantly and burn evenly. This pack of 10 is ideal for home, kitchen, and daily use.",
+  "shortDescription": "Durable safety matchboxes for everyday use",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504037/Match_box_qysg5v.png",
+      "alt": "Match Box Pack of 10"
+    }
+  ],
+"category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Daily Use Items",
+  "tags": [
+    "match box",
+    "household",
+    "daily use",
+    "fire starter",
+    "essentials"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "Pack of 10",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "packet"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "packet",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Parachute 100% Pure Coconut Oil",
+  "name": "Parachute 100% Pure Coconut Oil",
+  "slug": "parachute-coconut-oil",
+  "description": "Parachute Coconut Oil is made from 100% pure and natural coconuts. Known for its purity and nourishment, it can be used for hair care, skin moisturizing, and cooking.",
+  "shortDescription": "Pure coconut oil for hair, skin, and cooking",
+  "price": 50,
+  "originalPrice": 50,
+  "discountPrice": 50,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504010/Parachute_100_Pure_Coconut_Oil_n37uen.png",
+      "alt": "Parachute Coconut Oil"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Hair & Body Oils",
+  "tags": [
+    "parachute",
+    "coconut oil",
+    "hair oil",
+    "pure oil",
+    "natural oil"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+   
+     {
+      "weight": "25 ml",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    },{
+      "weight": "100 ml",
+      "price": 50,
+      "originalPrice": 50,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    }, {
+      "weight": "175 ml",
+      "price": 115,
+      "originalPrice": 115,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bottle",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Bajaj Almond Drops Hair Oil",
+  "name": "Bajaj Almond Drops Hair Oil",
+  "slug": "bajaj-almond-drops-hair-oil",
+  "description": "Bajaj Almond Drops Hair Oil is enriched with Vitamin E and almond extracts that nourish hair from root to tip, keeping it soft, shiny, and strong without stickiness.",
+  "shortDescription": "Non-sticky hair oil enriched with almond and Vitamin E",
+  "price": 70,
+  "originalPrice": 70,
+  "discountPrice": 70,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504010/Bajaj_Almond_Drops_Hair_Oil_aa2xjg.png",
+      "alt": "Bajaj Almond Drops Hair Oil"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Hair & Body Oils",
+  "tags": [
+    "bajaj",
+    "almond drops",
+    "hair oil",
+    "vitamin e",
+    "non sticky"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "24 ml",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bottle",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},{
+  "title": "Santoor Sandal & Turmeric Soap Small Pack",
+  "name": "Santoor Sandal & Turmeric Soap Small Pack",
+  "slug": "santoor-soap-small-pack",
+  "description": "Santoor Soap is infused with the goodness of sandalwood and turmeric, giving you youthful, glowing skin. Its rich lather gently cleanses and leaves a long-lasting fragrance.",
+  "shortDescription": "Sandalwood and turmeric bathing bar for glowing skin",
+  "price": 10,
+  "originalPrice": 10,
+  "discountPrice": 10,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504010/Santoor_Sandal_Turmeric_Soap_Small_Pack_it4nzy.png",
+      "alt": "Santoor Soap Small Pack"
+    }
+  ],
+  "category": {
+      "$oid": "6882f90c5b1ba9254864dfe9"
+   
+  },
+  "subcategory": "Bath & Body",
+  "tags": [
+    "santoor",
+    "soap",
+    "sandalwood",
+    "turmeric",
+    "bathing bar",
+    "glowing skin"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "45 g",
+      "price": 10,
+      "originalPrice": 10,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bar"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bar",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+},
+{
+  "title": "Swadist Refined Oil",
+  "name": "Swadist Refined Oil",
+  "slug": "swadist-refined-oil",
+  "description": "Swadist Refined Oil is made from high-quality edible oils and is perfect for everyday cooking and frying. It ensures lightness and health with every dish while maintaining natural taste.",
+  "shortDescription": "Healthy refined cooking oil for daily use",
+  "price": 160,
+  "originalPrice": 160,
+  "discountPrice": 160,
+  "discount": 0,
+  "images": [
+    {
+      "url": "https://res.cloudinary.com/dcha7gy9o/image/upload/v1762504010/Swadist_Refined_Oil_irlnc7.png",
+      "alt": "Swadist Refined Oil"
+    }
+  ],
+  "category": { "$oid": "6882f90c5b1ba9254864dfe9"
+   },
+  "subcategory": "Cooking Oils",
+  "tags": [
+    "swadist",
+    "refined oil",
+    "cooking oil",
+    "healthy oil",
+    "edible oil"
+  ],
+  "seller": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "weightOptions": [
+    {
+      "weight": "500 L",
+      "price": 70,
+      "originalPrice": 70,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    },
+    {
+      "weight": "1 L",
+      "price": 125,
+      "originalPrice": 125,
+      "discount": 0,
+      "stock": 50,
+      "unitType": "bottle"
+    }
+  ],
+  "isActive": true,
+  "isVeg": true,
+  "isCollegeBranded": false,
+  "createdBy": {
+    "$oid": "687242b702db822f91b13586"
+  },
+  "stock": 50,
+  "unitType": "bottle",
+  "isPerishable": false,
+  "ratings": {
+    "average": 0,
+    "count": 0
+  },
+  "updatedAt": {
+    "$date": "2025-09-26T00:00:00.000Z"
+  }
+}
+
+
+]
