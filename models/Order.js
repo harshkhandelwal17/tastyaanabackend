@@ -732,7 +732,7 @@ orderSchema.pre('save', async function (next) {
   }
 
   // Validate total amount calculation
-  const calculatedTotal = this.subtotal - this.discountAmount + this.taxes.total
+  const calculatedTotal = this.subtotal - this.discountAmount + this.taxes?.total
 
   // Debug logging for Order model validation
   console.log('Order Model Validation Debug:', {
@@ -745,11 +745,11 @@ orderSchema.pre('save', async function (next) {
     calculationBreakdown: {
       subtotal: this.subtotal,
       discountAmount: this.discountAmount,
-      gst: this.taxes.gst || 0,
-      deliveryCharges: this.taxes.deliveryCharges || 0,
-      packagingCharges: this.taxes.packagingCharges || 0,
-      rainCharges: this.taxes.rainCharges || 0,
-      serviceCharges: this.taxes.serviceCharges || 0,
+      gst: this.taxes?.gst || 0,
+      deliveryCharges: this.taxes?.deliveryCharges || 0,
+      packagingCharges: this.taxes?.packagingCharges || 0,
+      rainCharges: this.taxes?.rainCharges || 0,
+      serviceCharges: this.taxes?.serviceCharges || 0,
       calculatedTotal
     }
   });

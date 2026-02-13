@@ -36,7 +36,8 @@ const notificationSchema = new mongoose.Schema({
       'price_drop',
       'restock',
       'maintenance',
-      'security'
+      'security',
+      'order'
     ],
     default: 'general'
   },

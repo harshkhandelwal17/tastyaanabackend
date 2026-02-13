@@ -124,7 +124,8 @@ class NotificationService {
         'price_drop',
         'restock',
         'maintenance',
-        'security'
+        'security',
+        'order',
       ];
 
       if (!validTypes.includes(type)) {

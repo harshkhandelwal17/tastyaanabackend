@@ -721,7 +721,6 @@ const productController = {
 
       let searchTerms = [];
       const searchLower = search.toLowerCase();
-
       // 0. TOKENIZE & CLEAN (Stopwords)
       const STOP_WORDS = new Set([
         'bhai', 'bhiya', 'muje', 'mujhe', 'ko', 'hai', 'h', 'ka', 'ki', 'ke', 'aur', 'and', 'for', 'the', 'with',
@@ -764,6 +763,8 @@ const productController = {
       const matchStage = {
         isActive: true,
         $or: [
+          { category},
+          { subcategory:category},
           { name: { $regex: searchRegex } },
           { title: { $regex: searchRegex } }, // Cover both name/title
           { description: { $regex: searchRegex } },

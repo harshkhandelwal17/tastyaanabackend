@@ -153,10 +153,10 @@ const createRazorpayOrder = async (req, res) => {
       const processedItems = orderData.items.map(item => {
 
         const processedItem = {
-          name: item.name,
+          name: item.product?.name,
           quantity: item.quantity || 1,
           price: item.price || 0,
-          category: item.category?.name?.toLowerCase() || item.category,
+          category: item?.product?.category?.name || item.category?.name?.toLowerCase() || item.category,
           customizations: item.customizations || [],
           product: item.productId || null,
           originalPrice: item.originalPrice || item.price || 0,
@@ -448,7 +448,7 @@ const handlePaymentSuccess = async (req, res) => {
     }
 
     // Check if payment was already processed
-    if (record.paymentStatus === 'paid') {
+    if (record.paymentStatus === 'paid' || record.paymentStatus === "completed" ) {
       return res.status(200).json({
         success: true,
         message: 'Payment already processed',

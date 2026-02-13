@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { authenticate } = require('../middlewares/auth.js');
-const subscriptionController = require('../controllers/subscriptionV2Controller.js');
+const { authenticate } = require('../middlewares/auth');
+const subscriptionController = require('../controllers/subscriptionV2Controller');
 const { validateSubscription } = require('../middleware/laundryValidation.js');
 
 // Protect all routes with authentication

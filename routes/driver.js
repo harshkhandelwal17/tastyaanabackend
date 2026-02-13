@@ -610,7 +610,7 @@ const {
 const { getDriverDailyDeliveries, updateDynamicDeliveryStatus } = require('../controllers/driverDailyDeliveriesController');
 
 // Add the new driver routes
-router.use('/delivery', require('./driverRoutes'));
+router.use('/delivery', require('../routes/driverRoutes'));
 // Driver authentication middleware
 const authenticateDriver = async (req, res, next) => {
   try {
