@@ -807,6 +807,7 @@ const homepageController = {
           id: seller._id,
           name: seller.sellerProfile?.storeName || seller.name,
           logo: seller.sellerProfile?.storeMedia?.logo || seller.avatar,
+          sellerPic: seller.sellerProfile?.sellerPic || null,
           rating: (seller.sellerProfile?.ratings?.average || seller.rating || 4.5).toFixed(1),
           cover: coverImage,
           type: storeType,

@@ -366,8 +366,7 @@ const productController = {
                 { name: { $regex: new RegExp(category, 'i') } },
                 { slug: { $regex: new RegExp(category, 'i') } }
               ]
-            });
-            // console.log(`Found category by name/slug:`, categoryObj);
+            }); 
             if (categoryObj) {
               query.category = categoryObj._id;
             } else {
@@ -441,10 +440,9 @@ const productController = {
       // console.log("request coming ");
       // Check if we should populate seller data
       const shouldPopulateSeller = req.query.populate === 'seller';
-
+    
       let productsQuery = Product.find(query)
         .populate('category', 'name slug');
-
       if (shouldPopulateSeller) {
         productsQuery = productsQuery.populate({
           path: 'seller',
@@ -699,7 +697,7 @@ const productController = {
     try {
       const { search, category, page = 1, limit = 12, lat, lng } = req.query;
       const skip = (page - 1) * parseInt(limit);
-
+     
       if (!search) {
         return res.status(400).json({ message: 'Search query required' });
       }
@@ -753,7 +751,7 @@ const productController = {
       // Escape special regex chars in terms just in case
       const escapedTerms = searchTerms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
       const searchRegex = new RegExp(escapedTerms.join("|"), 'i');
-
+      const wordRegex = new RegExp(`\\b(${escapedTerms.join("|")})\\b`, "i");
       console.log(`[Smart Search] Query: "${search}" | Tokens: [${tokensToUse}] | Final Regex: ${searchRegex}`);
 
       // 2. BUILD AGGREGATION PIPELINE
@@ -763,11 +761,9 @@ const productController = {
       const matchStage = {
         isActive: true,
         $or: [
-          { category},
-          { subcategory:category},
-          { name: { $regex: searchRegex } },
-          { title: { $regex: searchRegex } }, // Cover both name/title
-          { description: { $regex: searchRegex } },
+          { name: { $regex: wordRegex } },
+          { title: { $regex: wordRegex } }, // Cover both name/title
+          { description: { $regex: wordRegex } },
           { tags: { $in: searchTerms.map(t => new RegExp(t, 'i')) } },
           { 'seoData.metaTitle': { $regex: searchRegex } },
           { 'seoData.metaDescription': { $regex: searchRegex } },
@@ -803,7 +799,11 @@ const productController = {
       // Apply Category Filter if present
       if (category) {
         if (mongoose.Types.ObjectId.isValid(category)) {
-          matchStage.category = new mongoose.Types.ObjectId(category);
+         const categ  = new mongoose.Types.ObjectId(category);
+          matchStage.$or.push(
+            { category: categ},
+            {subcategory:categ}
+            )
         } else {
           // Try to find category by name/slug first (Blocking call, but needed)
           try {

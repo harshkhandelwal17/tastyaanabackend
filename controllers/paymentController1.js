@@ -136,7 +136,13 @@ const createRazorpayOrder = async (req, res) => {
     } else {
       console.log('📦 Processing regular order');
       recordType = 'order';
-
+      
+      if(!customerDetails.phone){
+         return res.status(400).json({
+          success: false,
+          message: 'customer contact no is required '
+        });
+      }
       // Validate order data for regular orders
       if (!orderData || !orderData.items) {
         return res.status(400).json({

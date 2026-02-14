@@ -983,6 +983,9 @@ const userSchema = new mongoose.Schema({
       freeDeliveryAbove: Number,
       deliveryRadius: { type: Number, default: 15000 }
     },
+    sellerPic:{
+      type:String,
+    },
     ratings: {
       average: { type: Number, default: 0 },
       count: { type: Number, default: 0 }
