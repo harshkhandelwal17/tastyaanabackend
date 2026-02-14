@@ -121,7 +121,7 @@ const allowedOrigins = [
   'http://192.168.1.2:5173',
   'https://192.168.1.2:5173',
   'https://localhost:5173',
-  "http://127.0.0.1:5500",
+  "http://127.0.0.1:5500","https://beta.tastyaana.com","https://www.beta.tastyaana.com",
   // 'https://tastyaanafrontendapp.vercel.app',
   // 'https://tastyaanafrontendappppp.vercel.app',
    'https://tastyaanav2.vercel.app',
