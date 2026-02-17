@@ -612,6 +612,7 @@ const homepageController = {
       if (lat && lng) {
         // Use central helper to get allowed seller IDs (Dynamic Radius applied inside)
         const allowedSellers = await getNearbySellers(lat, lng);
+       
         const allowedIds = allowedSellers.map(s => s._id);
 
         // Filter pipeline to only these IDs
@@ -819,7 +820,8 @@ const homepageController = {
           storeStatus: seller.sellerProfile?.storeStatus || 'open',
           storeDescription: seller.sellerProfile?.storeDescription || '',
           area: seller.addresses?.[0]?.city || 'Indore',
-          priceRange: seller.sellerProfile?.priceRange || {}
+          priceRange: seller.sellerProfile?.priceRange || {},
+          
         };
       });
 

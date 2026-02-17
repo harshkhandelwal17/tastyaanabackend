@@ -170,6 +170,10 @@ const mealPlanSchema = new mongoose.Schema({
     default: true
   },
 
+  associatedItem:{
+    type:mongoose.Types.ObjectId
+  },
+
   // Available meal shifts (morning, evening, or both)
   shifts: {
     type: [String],
