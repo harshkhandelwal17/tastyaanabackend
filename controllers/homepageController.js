@@ -622,6 +622,7 @@ const homepageController = {
       if (lat && lng) {
         // Use central helper to get allowed seller IDs (Dynamic Radius applied inside)
         const allowedSellers = await getNearbySellers(lat, lng);
+       
         const allowedIds = allowedSellers.map(s => s._id);
 
         // Filter pipeline to only these IDs
@@ -817,6 +818,7 @@ const homepageController = {
           id: seller._id,
           name: seller.sellerProfile?.storeName || seller.name,
           logo: seller.sellerProfile?.storeMedia?.logo || seller.avatar,
+          sellerPic: seller.sellerProfile?.sellerPic || null,
           rating: (seller.sellerProfile?.ratings?.average || seller.rating || 4.5).toFixed(1),
           cover: coverImage,
           type: storeType,
@@ -828,7 +830,8 @@ const homepageController = {
           storeStatus: seller.sellerProfile?.storeStatus || 'open',
           storeDescription: seller.sellerProfile?.storeDescription || '',
           area: seller.addresses?.[0]?.city || 'Indore',
-          priceRange: seller.sellerProfile?.priceRange || {}
+          priceRange: seller.sellerProfile?.priceRange || {},
+          
         };
       });
 
@@ -1535,6 +1538,7 @@ const homepageController = {
         const sellerName = product.seller?.sellerProfile?.storeName || product.seller?.name || 'Restaurant';
         const image = product.images?.[0]?.url || 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&q=80';
         const price = product.discountPrice || product.price || 0;
+        const weightOptions = product.weightOptions || null;
         const rating = product.ratings?.average || 4.5;
 
         // Calculate estimated delivery time (mock for now)
@@ -1545,6 +1549,7 @@ const homepageController = {
           id: product._id.toString(),
           name: product.title || product.name,
           price: price,
+          weightOptions: weightOptions,
           rating: rating.toFixed(1),
           time: time,
           img: image,

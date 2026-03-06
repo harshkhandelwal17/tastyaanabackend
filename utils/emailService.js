@@ -17,8 +17,8 @@ class EmailService {
         // Gmail configuration
         service: 'gmail',
         auth: {
-          user:  'tastyaana@gmail.com',
-          pass: 'wtywwtzqxjekflvn'
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
         }
       });
 

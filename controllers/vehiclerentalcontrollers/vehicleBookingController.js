@@ -241,7 +241,9 @@ const validateBookingDetails = async (req, res) => {
     }
 
     // Check duration limits
-    const durationHours = (endTime - startTime) / (1000 * 60 * 60);
+    let durationHours = (endTime - startTime) / (1000 * 60 * 60);
+    durationHours = Math.round(durationHours * 100) / 100; // Fix JS floating point bugs for exact 1h duration
+
     if (durationHours < 1) {
       return res.status(400).json({
         success: false,
@@ -263,11 +265,15 @@ const validateBookingDetails = async (req, res) => {
     const checkStart = new Date(startTime.getTime() - bufferMs);
     const checkEnd = new Date(endTime.getTime() + bufferMs);
 
-    // CHANGED: Only check against CONFIRMED (paid) or ONGOING bookings
-    // "First to pay wins" logic - pending/awaiting_approval do not block slots
+    // We check against 'confirmed', 'ongoing', AND recently created 'pending' bookings (within context of last 15 minutes lock)
+    // NOTE: We EXCLUDE the current user from their own pending locks so they can retry payments
+    const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000);
     const conflictingBookings = await VehicleBooking.find({
       vehicleId,
-      bookingStatus: { $in: ['confirmed', 'ongoing'] }, // Removed 'awaiting_approval'
+      $or: [
+        { bookingStatus: { $in: ['confirmed', 'ongoing'] } },
+        { bookingStatus: 'pending', createdAt: { $gt: fifteenMinsAgo }, userId: { $ne: req.user._id } } // the lock bypasses owner
+      ],
       $or: [
         {
           startDateTime: { $lt: checkEnd },
@@ -429,7 +435,9 @@ const createBooking = async (req, res) => {
     }
 
     // Validate booking duration (minimum 1 hour, maximum 7 days)
-    const durationHours = (endTime - startTime) / (1000 * 60 * 60);
+    let durationHours = (endTime - startTime) / (1000 * 60 * 60);
+    durationHours = Math.round(durationHours * 100) / 100; // Fix JS floating point bugs for exact 1h duration
+
     if (durationHours < 1) {
       return res.status(400).json({
         success: false,
@@ -450,11 +458,16 @@ const createBooking = async (req, res) => {
     const checkStart = new Date(requestedStart.getTime() - bufferMs);
     const checkEnd = new Date(requestedEnd.getTime() + bufferMs);
 
-    // CHANGED: Only check against CONFIRMED (paid) or ONGOING bookings
-    // "First to pay wins" logic
+    // CHECK: Find conflicting bookings.
+    // To prevent double checkout race conditions, a pending unpaid booking locks the slot for 15 minutes.
+    // NOTE: We EXCLUDE the current user from their own pending locks so they can retry payments!
+    const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000);
     const conflictingBookings = await VehicleBooking.find({
       vehicleId: bookingData.vehicleId,
-      bookingStatus: { $in: ['confirmed', 'ongoing'] }, // Removed 'awaiting_approval'
+      $or: [
+        { bookingStatus: { $in: ['confirmed', 'ongoing'] } },
+        { bookingStatus: 'pending', createdAt: { $gt: fifteenMinsAgo }, userId: { $ne: req.user._id } } // the lock bypasses owner
+      ],
       $or: [
         {
           startDateTime: { $lt: checkEnd },

@@ -167,10 +167,18 @@ router.post('/bookings/payment/create-order', vehicleBookingController.createRaz
 router.post('/bookings/payment/verify', vehicleBookingController.verifyPayment); // Verify payment
 router.post('/bookings/:bookingId/deposit/collect-at-pickup', authenticate, vehicleBookingController.collectDepositAtPickup); // Collect deposit at pickup
 
-// Document upload routes
 // Document upload routes with error handling
 router.post('/bookings/documents/upload', (req, res, next) => {
-  documentUpload.any()(req, res, (err) => {
+  // Hardened to prevent arbitrary file uploads
+  const uploadFields = documentUpload.fields([
+    { name: 'documents', maxCount: 10 },
+    { name: 'rcBook', maxCount: 1 },
+    { name: 'insurance', maxCount: 1 },
+    { name: 'drivingLicense', maxCount: 2 },
+    { name: 'idProof', maxCount: 2 }
+  ]);
+
+  uploadFields(req, res, (err) => {
     if (err) {
       console.error('❌ Document Upload Error:', err);
       // Handle Multer/Cloudinary specific errors
@@ -182,7 +190,7 @@ router.post('/bookings/documents/upload', (req, res, next) => {
     next();
   });
 }, bookingDocumentController.uploadBookingDocuments);
-router.post('/documents/upload', authenticate, documentUpload.any(), bookingDocumentController.uploadDocumentsOnly); // Upload documents without bookingId (for offline bookings)
+router.post('/documents/upload', authenticate, documentUpload.array('documents', 10), bookingDocumentController.uploadDocumentsOnly); // Upload documents safely
 router.put('/bookings/:id/documents', bookingDocumentController.updateBookingDocuments); // Update booking documents
 
 // Vehicle return and verification routes

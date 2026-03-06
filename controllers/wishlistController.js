@@ -15,13 +15,13 @@ exports.getWishlist = async (req, res) => {
       })
       .populate({
         path: 'items.vendor',
-        select: 'name avatar rating role isActive', // Basic vendor info
+        select: 'name avatar rating role isActive sellerProfile.sellerPic', // Basic vendor info
       })
       .populate({
         path: 'items.mealPlan',
         select: 'title price description type isActive images', // Basic plan info
         populate: { path: 'seller', select: 'name area' }
-      });
+      }).lean();
 
     if (!wishlist) {
       return res.status(200).json({ items: [] });
@@ -34,7 +34,12 @@ exports.getWishlist = async (req, res) => {
       if (item.mealPlan) return item.mealPlan.isActive !== false;
       return false;
     });
-
+    activeItems.forEach((element) => {
+      if (element.vendor) {
+        element.vendor.sellerPic=element.vendor.sellerProfile?.sellerPic;
+        delete element.vendor.sellerProfile;
+      }
+    });
     res.status(200).json({ items: activeItems });
   } catch (error) {
     console.log(error);
