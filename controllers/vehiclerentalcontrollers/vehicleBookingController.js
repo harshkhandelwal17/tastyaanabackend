@@ -265,14 +265,22 @@ const validateBookingDetails = async (req, res) => {
     const checkStart = new Date(startTime.getTime() - bufferMs);
     const checkEnd = new Date(endTime.getTime() + bufferMs);
 
+    // CHECK: Find conflicting bookings.
     // We check against 'confirmed', 'ongoing', AND recently created 'pending' bookings (within context of last 15 minutes lock)
-    // NOTE: We EXCLUDE the current user from their own pending locks so they can retry payments
-    const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000);
+    // NOTE: We safely handle unauthenticated/public price validation checks
+    const fiveMinsAgo = new Date(Date.now() - 5 * 60 * 1000);
+
+    // Safely exclude current user's OWN pending locks if authenticated, so they aren't blocked from retrying
+    const pendingLockCondition = { bookingStatus: 'pending', createdAt: { $gt: fiveMinsAgo } };
+    if (req.user && req.user._id) {
+      pendingLockCondition.userId = { $ne: req.user._id };
+    }
+
     const conflictingBookings = await VehicleBooking.find({
       vehicleId,
       $or: [
         { bookingStatus: { $in: ['confirmed', 'ongoing'] } },
-        { bookingStatus: 'pending', createdAt: { $gt: fifteenMinsAgo }, userId: { $ne: req.user._id } } // the lock bypasses owner
+        pendingLockCondition // the lock conditionally bypasses owner
       ],
       $or: [
         {
@@ -460,13 +468,19 @@ const createBooking = async (req, res) => {
 
     // CHECK: Find conflicting bookings.
     // To prevent double checkout race conditions, a pending unpaid booking locks the slot for 15 minutes.
-    // NOTE: We EXCLUDE the current user from their own pending locks so they can retry payments!
-    const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000);
+    // NOTE: We safely EXCLUDE the current user's own pending locks so they can retry payments!
+    const fiveMinsAgo = new Date(Date.now() - 5 * 60 * 1000);
+
+    const pendingLockCondition = { bookingStatus: 'pending', createdAt: { $gt: fiveMinsAgo } };
+    if (req.user && req.user._id) {
+      pendingLockCondition.userId = { $ne: req.user._id };
+    }
+
     const conflictingBookings = await VehicleBooking.find({
       vehicleId: bookingData.vehicleId,
       $or: [
         { bookingStatus: { $in: ['confirmed', 'ongoing'] } },
-        { bookingStatus: 'pending', createdAt: { $gt: fifteenMinsAgo }, userId: { $ne: req.user._id } } // the lock bypasses owner
+        pendingLockCondition // the lock conditionally bypasses owner
       ],
       $or: [
         {
