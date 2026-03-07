@@ -135,7 +135,10 @@ const getVehicles = async (req, res) => {
         // Get next available time
         const activeBookings = await VehicleBooking.find({
           vehicleId: vehicle._id,
-          bookingStatus: { $in: ['confirmed', 'ongoing'] },
+          $or: [
+            { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
+            { requestStatus: 'approved' }
+          ],
           endDateTime: { $gte: new Date() }
         }).sort({ endDateTime: 1 });
 
@@ -496,7 +499,10 @@ const deleteVehicle = async (req, res) => {
     // Check for active bookings
     const activeBookings = await VehicleBooking.countDocuments({
       vehicleId: id,
-      bookingStatus: { $in: ['confirmed', 'ongoing'] }
+      $or: [
+        { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
+        { requestStatus: 'approved' }
+      ]
     });
 
     if (activeBookings > 0) {
@@ -551,19 +557,26 @@ const checkAvailability = async (req, res) => {
     // Check for conflicting bookings
     const conflictingBookings = await VehicleBooking.find({
       vehicleId,
-      bookingStatus: { $in: ['confirmed', 'ongoing'] },
       $or: [
+        { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
+        { requestStatus: 'approved' }
+      ],
+      $and: [
         {
-          startDateTime: { $lte: new Date(startDateTime) },
-          endDateTime: { $gt: new Date(startDateTime) }
-        },
-        {
-          startDateTime: { $lt: new Date(endDateTime) },
-          endDateTime: { $gte: new Date(endDateTime) }
-        },
-        {
-          startDateTime: { $gte: new Date(startDateTime) },
-          endDateTime: { $lte: new Date(endDateTime) }
+          $or: [
+            {
+              startDateTime: { $lte: new Date(startDateTime) },
+              endDateTime: { $gt: new Date(startDateTime) }
+            },
+            {
+              startDateTime: { $lt: new Date(endDateTime) },
+              endDateTime: { $gte: new Date(endDateTime) }
+            },
+            {
+              startDateTime: { $gte: new Date(startDateTime) },
+              endDateTime: { $lte: new Date(endDateTime) }
+            }
+          ]
         }
       ]
     });

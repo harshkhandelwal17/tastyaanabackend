@@ -279,7 +279,8 @@ const validateBookingDetails = async (req, res) => {
     const conflictingBookings = await VehicleBooking.find({
       vehicleId,
       $or: [
-        { bookingStatus: { $in: ['confirmed', 'ongoing'] } },
+        { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
+        { requestStatus: 'approved' },
         pendingLockCondition // the lock conditionally bypasses owner
       ],
       $or: [
@@ -479,7 +480,8 @@ const createBooking = async (req, res) => {
     const conflictingBookings = await VehicleBooking.find({
       vehicleId: bookingData.vehicleId,
       $or: [
-        { bookingStatus: { $in: ['confirmed', 'ongoing'] } },
+        { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
+        { requestStatus: 'approved' },
         pendingLockCondition // the lock conditionally bypasses owner
       ],
       $or: [
@@ -844,13 +846,12 @@ const verifyPayment = async (req, res) => {
     const conflictingBookings = await VehicleBooking.find({
       _id: { $ne: booking._id }, // Exclude self
       vehicleId: booking.vehicleId,
-      bookingStatus: { $in: ['confirmed', 'ongoing'] },
       $or: [
-        {
-          startDateTime: { $lt: new Date(booking.endDateTime.getTime() + bufferMs) },
-          endDateTime: { $gt: new Date(booking.startDateTime.getTime() - bufferMs) }
-        }
-      ]
+        { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
+        { requestStatus: 'approved' }
+      ],
+      startDateTime: { $lt: new Date(booking.endDateTime.getTime() + bufferMs) },
+      endDateTime: { $gt: new Date(booking.startDateTime.getTime() - bufferMs) }
     });
 
     if (conflictingBookings.length > 0) {

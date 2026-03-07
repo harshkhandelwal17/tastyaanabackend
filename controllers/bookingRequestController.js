@@ -46,15 +46,15 @@ exports.createBookingRequest = async (req, res) => {
     }
 
     if (!vehicle.requireConfirmation) {
-      return res.status(400).json({ 
-        message: 'This vehicle does not require approval. Please proceed with direct booking.' 
+      return res.status(400).json({
+        message: 'This vehicle does not require approval. Please proceed with direct booking.'
       });
     }
 
     // Check if vehicle is available for the requested dates
     if (vehicle.availability !== 'available' || vehicle.status === 'booked') {
-      return res.status(400).json({ 
-        message: 'Vehicle is not available for booking' 
+      return res.status(400).json({
+        message: 'Vehicle is not available for booking'
       });
     }
 
@@ -64,8 +64,8 @@ exports.createBookingRequest = async (req, res) => {
     const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
 
     if (totalDays < 1) {
-      return res.status(400).json({ 
-        message: 'Return date must be after pickup date' 
+      return res.status(400).json({
+        message: 'Return date must be after pickup date'
       });
     }
 
@@ -82,7 +82,7 @@ exports.createBookingRequest = async (req, res) => {
       requestStatus: 'pending-approval',
       requestedAt,
       requestExpiresAt,
-      
+
       // Save all booking details
       savedBookingDetails: {
         pickupDate,
@@ -104,17 +104,17 @@ exports.createBookingRequest = async (req, res) => {
         idProofNumber,
         address
       },
-      
+
       // Timeline (will be updated after approval and payment)
       startDateTime: new Date(`${pickupDate}T${pickupTime}`),
       endDateTime: new Date(`${returnDate}T${returnTime}`),
-      
+
       // Location
       zone,
       zoneId,
       centerId,
       centerName,
-      
+
       // Customer details
       customerDetails: {
         name: customerName,
@@ -126,7 +126,7 @@ exports.createBookingRequest = async (req, res) => {
         },
         address
       },
-      
+
       // Billing details (using correct field name)
       billing: {
         baseAmount: calculatedAmount - (additionalServices?.reduce((sum, s) => sum + s.price, 0) || 0),
@@ -146,9 +146,9 @@ exports.createBookingRequest = async (req, res) => {
         },
         totalBill: calculatedAmount
       },
-      
+
       depositAmount: depositAmount || 0,
-      
+
       // Initial status (use correct enum values)
       bookingStatus: 'pending', // Correct enum value
       paymentStatus: 'unpaid'   // Correct enum value
@@ -177,9 +177,9 @@ exports.createBookingRequest = async (req, res) => {
 
   } catch (error) {
     console.error('Error creating booking request:', error);
-    res.status(500).json({ 
-      message: 'Failed to create booking request', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to create booking request',
+      error: error.message
     });
   }
 };
@@ -193,7 +193,7 @@ exports.getMyBookingRequests = async (req, res) => {
     const userId = req.user.id;
     const { status } = req.query; // Filter by status: pending-approval, approved, rejected, expired
 
-    let query = { 
+    let query = {
       userId,
       requiresApproval: true
     };
@@ -227,9 +227,9 @@ exports.getMyBookingRequests = async (req, res) => {
 
     // Check for expired requests and update status
     const now = new Date();
-    const expiredRequests = requests.filter(req => 
-      req.requestStatus === 'pending-approval' && 
-      req.requestExpiresAt && 
+    const expiredRequests = requests.filter(req =>
+      req.requestStatus === 'pending-approval' &&
+      req.requestExpiresAt &&
       req.requestExpiresAt < now
     );
 
@@ -250,9 +250,9 @@ exports.getMyBookingRequests = async (req, res) => {
 
   } catch (error) {
     console.error('Error fetching booking requests:', error);
-    res.status(500).json({ 
-      message: 'Failed to fetch booking requests', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to fetch booking requests',
+      error: error.message
     });
   }
 };
@@ -277,15 +277,15 @@ exports.proceedToPayment = async (req, res) => {
 
     // Verify ownership
     if (bookingRequest.userId.toString() !== userId) {
-      return res.status(403).json({ 
-        message: 'Unauthorized to access this booking request' 
+      return res.status(403).json({
+        message: 'Unauthorized to access this booking request'
       });
     }
 
     // Check if request is approved
     if (bookingRequest.requestStatus !== 'approved') {
-      return res.status(400).json({ 
-        message: `Cannot proceed to payment. Request status: ${bookingRequest.requestStatus}` 
+      return res.status(400).json({
+        message: `Cannot proceed to payment. Request status: ${bookingRequest.requestStatus}`
       });
     }
 
@@ -294,22 +294,22 @@ exports.proceedToPayment = async (req, res) => {
     if (bookingRequest.requestExpiresAt && bookingRequest.requestExpiresAt < now) {
       bookingRequest.requestStatus = 'payment-expired';
       bookingRequest.bookingStatus = 'cancelled'; // Cancel the booking so it doesn't block time slot
-      
+
       // Free the vehicle since payment window expired - use direct update to avoid validation issues
       await Vehicle.findByIdAndUpdate(
         bookingRequest.vehicleId._id,
-        { 
+        {
           status: 'active',
           availability: 'available',
           currentBookingId: null
         },
         { validateModifiedOnly: true }
       );
-      
+
       await bookingRequest.save();
-      
-      return res.status(400).json({ 
-        message: 'Payment window has expired (30 minutes after approval). Vehicle is now available again. Please create a new booking request.' 
+
+      return res.status(400).json({
+        message: 'Payment window has expired (30 minutes after approval). Vehicle is now available again. Please create a new booking request.'
       });
     }
 
@@ -318,10 +318,10 @@ exports.proceedToPayment = async (req, res) => {
     // 1. Upload payment proof/screenshot
     // 2. Upload required documents (Aadhaar, License)
     // 3. Then seller/admin verifies and confirms booking
-    
+
     // For now, we'll redirect to document upload flow
     // The booking request stays in 'approved' status until documents + payment proof are uploaded
-    
+
     return res.status(400).json({
       success: false,
       message: 'Please upload payment proof and required documents to complete your booking.',
@@ -337,9 +337,9 @@ exports.proceedToPayment = async (req, res) => {
 
   } catch (error) {
     console.error('Error processing payment:', error);
-    res.status(500).json({ 
-      message: 'Failed to process payment', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to process payment',
+      error: error.message
     });
   }
 };
@@ -355,10 +355,10 @@ exports.proceedToPayment = async (req, res) => {
 exports.getWorkerBookingRequests = async (req, res) => {
   try {
     const workerProfile = req.user.workerProfile;
-    
+
     if (!workerProfile || !workerProfile.zoneId) {
-      return res.status(403).json({ 
-        message: 'Worker profile not found or zone not assigned' 
+      return res.status(403).json({
+        message: 'Worker profile not found or zone not assigned'
       });
     }
 
@@ -384,9 +384,9 @@ exports.getWorkerBookingRequests = async (req, res) => {
 
     // Check and update expired requests
     const now = new Date();
-    const expiredRequests = requests.filter(req => 
-      req.requestStatus === 'pending-approval' && 
-      req.requestExpiresAt && 
+    const expiredRequests = requests.filter(req =>
+      req.requestStatus === 'pending-approval' &&
+      req.requestExpiresAt &&
       req.requestExpiresAt < now
     );
 
@@ -412,9 +412,9 @@ exports.getWorkerBookingRequests = async (req, res) => {
 
   } catch (error) {
     console.error('Error fetching worker booking requests:', error);
-    res.status(500).json({ 
-      message: 'Failed to fetch booking requests', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to fetch booking requests',
+      error: error.message
     });
   }
 };
@@ -430,8 +430,8 @@ exports.approveBookingRequest = async (req, res) => {
     const workerProfile = req.user.workerProfile;
 
     if (!workerProfile || !workerProfile.zoneId) {
-      return res.status(403).json({ 
-        message: 'Worker profile not found or zone not assigned' 
+      return res.status(403).json({
+        message: 'Worker profile not found or zone not assigned'
       });
     }
 
@@ -445,15 +445,15 @@ exports.approveBookingRequest = async (req, res) => {
 
     // Verify zone access
     if (bookingRequest.zoneId !== workerProfile.zoneId) {
-      return res.status(403).json({ 
-        message: 'You can only approve requests in your assigned zone' 
+      return res.status(403).json({
+        message: 'You can only approve requests in your assigned zone'
       });
     }
 
     // Check if request is pending
     if (bookingRequest.requestStatus !== 'pending-approval') {
-      return res.status(400).json({ 
-        message: `Cannot approve. Current status: ${bookingRequest.requestStatus}` 
+      return res.status(400).json({
+        message: `Cannot approve. Current status: ${bookingRequest.requestStatus}`
       });
     }
 
@@ -462,31 +462,22 @@ exports.approveBookingRequest = async (req, res) => {
     if (bookingRequest.requestExpiresAt && bookingRequest.requestExpiresAt < now) {
       bookingRequest.requestStatus = 'expired';
       await bookingRequest.save();
-      return res.status(400).json({ 
-        message: 'Booking request has expired' 
+      return res.status(400).json({
+        message: 'Booking request has expired'
       });
     }
 
     // Approve the request and set new 30-minute payment window
     const approvalTime = new Date();
     const paymentExpiresAt = new Date(approvalTime.getTime() + 30 * 60 * 1000); // 30 minutes from now
-    
+
     bookingRequest.requestStatus = 'approved';
     bookingRequest.approvedBy = workerId;
     bookingRequest.approvedAt = approvalTime;
     bookingRequest.approverRole = 'worker';
     bookingRequest.requestExpiresAt = paymentExpiresAt; // Update expiry to 30 min from approval
-    
-    // Reserve the vehicle temporarily (mark as pending payment) - use direct update
-    await Vehicle.findByIdAndUpdate(
-      bookingRequest.vehicleId._id || bookingRequest.vehicleId,
-      { 
-        status: 'booked',
-        availability: 'reserved',
-        currentBookingId: bookingRequest._id
-      },
-      { validateModifiedOnly: true }
-    );
+
+    // Calendar lock is now handled natively via overlap checking. No global vehicle status change needed.
 
     await bookingRequest.save();
 
@@ -506,9 +497,9 @@ exports.approveBookingRequest = async (req, res) => {
 
   } catch (error) {
     console.error('Error approving booking request:', error);
-    res.status(500).json({ 
-      message: 'Failed to approve booking request', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to approve booking request',
+      error: error.message
     });
   }
 };
@@ -525,14 +516,14 @@ exports.rejectBookingRequest = async (req, res) => {
     const { reason } = req.body;
 
     if (!workerProfile || !workerProfile.zoneId) {
-      return res.status(403).json({ 
-        message: 'Worker profile not found or zone not assigned' 
+      return res.status(403).json({
+        message: 'Worker profile not found or zone not assigned'
       });
     }
 
     if (!reason || reason.trim().length === 0) {
-      return res.status(400).json({ 
-        message: 'Rejection reason is required' 
+      return res.status(400).json({
+        message: 'Rejection reason is required'
       });
     }
 
@@ -546,15 +537,15 @@ exports.rejectBookingRequest = async (req, res) => {
 
     // Verify zone access
     if (bookingRequest.zoneId !== workerProfile.zoneId) {
-      return res.status(403).json({ 
-        message: 'You can only reject requests in your assigned zone' 
+      return res.status(403).json({
+        message: 'You can only reject requests in your assigned zone'
       });
     }
 
     // Check if request is pending
     if (bookingRequest.requestStatus !== 'pending-approval') {
-      return res.status(400).json({ 
-        message: `Cannot reject. Current status: ${bookingRequest.requestStatus}` 
+      return res.status(400).json({
+        message: `Cannot reject. Current status: ${bookingRequest.requestStatus}`
       });
     }
 
@@ -583,9 +574,9 @@ exports.rejectBookingRequest = async (req, res) => {
 
   } catch (error) {
     console.error('Error rejecting booking request:', error);
-    res.status(500).json({ 
-      message: 'Failed to reject booking request', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to reject booking request',
+      error: error.message
     });
   }
 };
@@ -635,9 +626,9 @@ exports.getSellerBookingRequests = async (req, res) => {
 
     // Check and update expired requests
     const now = new Date();
-    const expiredRequests = requests.filter(req => 
-      req.requestStatus === 'pending-approval' && 
-      req.requestExpiresAt && 
+    const expiredRequests = requests.filter(req =>
+      req.requestStatus === 'pending-approval' &&
+      req.requestExpiresAt &&
       req.requestExpiresAt < now
     );
 
@@ -658,9 +649,9 @@ exports.getSellerBookingRequests = async (req, res) => {
 
   } catch (error) {
     console.error('Error fetching seller booking requests:', error);
-    res.status(500).json({ 
-      message: 'Failed to fetch booking requests', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to fetch booking requests',
+      error: error.message
     });
   }
 };
@@ -684,15 +675,15 @@ exports.approveSellerBookingRequest = async (req, res) => {
 
     // Verify vehicle ownership
     if (bookingRequest.vehicleId.sellerId.toString() !== sellerId) {
-      return res.status(403).json({ 
-        message: 'You can only approve requests for your own vehicles' 
+      return res.status(403).json({
+        message: 'You can only approve requests for your own vehicles'
       });
     }
 
     // Check if request is pending
     if (bookingRequest.requestStatus !== 'pending-approval') {
-      return res.status(400).json({ 
-        message: `Cannot approve. Current status: ${bookingRequest.requestStatus}` 
+      return res.status(400).json({
+        message: `Cannot approve. Current status: ${bookingRequest.requestStatus}`
       });
     }
 
@@ -701,31 +692,22 @@ exports.approveSellerBookingRequest = async (req, res) => {
     if (bookingRequest.requestExpiresAt && bookingRequest.requestExpiresAt < now) {
       bookingRequest.requestStatus = 'expired';
       await bookingRequest.save();
-      return res.status(400).json({ 
-        message: 'Booking request has expired' 
+      return res.status(400).json({
+        message: 'Booking request has expired'
       });
     }
 
     // Approve the request and set new 30-minute payment window
     const approvalTime = new Date();
     const paymentExpiresAt = new Date(approvalTime.getTime() + 30 * 60 * 1000); // 30 minutes from now
-    
+
     bookingRequest.requestStatus = 'approved';
     bookingRequest.approvedBy = sellerId;
     bookingRequest.approvedAt = approvalTime;
     bookingRequest.approverRole = 'seller';
     bookingRequest.requestExpiresAt = paymentExpiresAt; // Update expiry to 30 min from approval
-    
-    // Reserve the vehicle temporarily (mark as pending payment) - use direct update
-    await Vehicle.findByIdAndUpdate(
-      bookingRequest.vehicleId._id || bookingRequest.vehicleId,
-      { 
-        status: 'booked',
-        availability: 'reserved',
-        currentBookingId: bookingRequest._id
-      },
-      { validateModifiedOnly: true }
-    );
+
+    // Calendar lock is now handled natively via overlap checking. No global vehicle status change needed.
 
     await bookingRequest.save();
 
@@ -745,9 +727,9 @@ exports.approveSellerBookingRequest = async (req, res) => {
 
   } catch (error) {
     console.error('Error approving booking request:', error);
-    res.status(500).json({ 
-      message: 'Failed to approve booking request', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to approve booking request',
+      error: error.message
     });
   }
 };
@@ -763,8 +745,8 @@ exports.rejectSellerBookingRequest = async (req, res) => {
     const { reason } = req.body;
 
     if (!reason || reason.trim().length === 0) {
-      return res.status(400).json({ 
-        message: 'Rejection reason is required' 
+      return res.status(400).json({
+        message: 'Rejection reason is required'
       });
     }
 
@@ -778,15 +760,15 @@ exports.rejectSellerBookingRequest = async (req, res) => {
 
     // Verify vehicle ownership
     if (bookingRequest.vehicleId.sellerId.toString() !== sellerId) {
-      return res.status(403).json({ 
-        message: 'You can only reject requests for your own vehicles' 
+      return res.status(403).json({
+        message: 'You can only reject requests for your own vehicles'
       });
     }
 
     // Check if request is pending
     if (bookingRequest.requestStatus !== 'pending-approval') {
-      return res.status(400).json({ 
-        message: `Cannot reject. Current status: ${bookingRequest.requestStatus}` 
+      return res.status(400).json({
+        message: `Cannot reject. Current status: ${bookingRequest.requestStatus}`
       });
     }
 
@@ -815,9 +797,9 @@ exports.rejectSellerBookingRequest = async (req, res) => {
 
   } catch (error) {
     console.error('Error rejecting booking request:', error);
-    res.status(500).json({ 
-      message: 'Failed to reject booking request', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to reject booking request',
+      error: error.message
     });
   }
 };
@@ -842,15 +824,15 @@ exports.verifyAndConfirmBooking = async (req, res) => {
 
     // Verify seller owns this vehicle
     if (bookingRequest.vehicleId.sellerId.toString() !== sellerId) {
-      return res.status(403).json({ 
-        message: 'Unauthorized: This vehicle does not belong to you' 
+      return res.status(403).json({
+        message: 'Unauthorized: This vehicle does not belong to you'
       });
     }
 
     // Check status
     if (bookingRequest.bookingStatus !== 'awaiting_approval') {
-      return res.status(400).json({ 
-        message: `Cannot verify. Booking status: ${bookingRequest.bookingStatus}` 
+      return res.status(400).json({
+        message: `Cannot verify. Booking status: ${bookingRequest.bookingStatus}`
       });
     }
 
@@ -891,7 +873,7 @@ exports.verifyAndConfirmBooking = async (req, res) => {
     // Update vehicle status (keep it booked)
     await Vehicle.findByIdAndUpdate(
       bookingRequest.vehicleId._id,
-      { 
+      {
         status: 'booked',
         availability: 'not-available',
         currentBookingId: bookingRequest._id
@@ -901,6 +883,32 @@ exports.verifyAndConfirmBooking = async (req, res) => {
 
     await bookingRequest.save();
 
+    // Auto-reject overlapping pending requests for the same vehicle
+    const bufferMinutes = bookingRequest.vehicleId?.minBufferTime || 30;
+    const bufferMs = bufferMinutes * 60 * 1000;
+
+    await VehicleBooking.updateMany(
+      {
+        _id: { $ne: bookingRequest._id },
+        vehicleId: bookingRequest.vehicleId._id,
+        requestStatus: 'pending-approval',
+        $or: [
+          {
+            startDateTime: { $lt: new Date(bookingRequest.endDateTime.getTime() + bufferMs) },
+            endDateTime: { $gt: new Date(bookingRequest.startDateTime.getTime() - bufferMs) }
+          }
+        ]
+      },
+      {
+        $set: {
+          requestStatus: 'rejected',
+          rejectedBy: sellerId,
+          rejectedAt: new Date(),
+          rejectionReason: 'System: Slot was successfully booked by another user first.'
+        }
+      }
+    );
+
     res.json({
       success: true,
       message: 'Documents and payment verified! Booking confirmed.',
@@ -909,9 +917,9 @@ exports.verifyAndConfirmBooking = async (req, res) => {
 
   } catch (error) {
     console.error('Error verifying booking:', error);
-    res.status(500).json({ 
-      message: 'Failed to verify booking', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to verify booking',
+      error: error.message
     });
   }
 };
@@ -930,7 +938,7 @@ exports.expirePendingRequests = async () => {
   try {
     const now = new Date();
     const Vehicle = require('../models/Vehicle');
-    
+
     // Case 1: Expire pending-approval requests (30 min after submission)
     const expiredPendingResult = await VehicleBooking.updateMany(
       {
@@ -960,7 +968,7 @@ exports.expirePendingRequests = async () => {
       if (request.vehicleId) {
         await Vehicle.findByIdAndUpdate(
           request.vehicleId,
-          { 
+          {
             status: 'active',
             availability: 'available',
             currentBookingId: null
@@ -972,11 +980,11 @@ exports.expirePendingRequests = async () => {
     }
 
     const totalExpired = expiredPendingResult.modifiedCount + approvedExpiredRequests.length;
-    
+
     console.log(`✅ Expired ${totalExpired} booking requests:`);
     console.log(`   - Pending approval: ${expiredPendingResult.modifiedCount}`);
     console.log(`   - Payment timeout: ${approvedExpiredRequests.length} (freed ${vehiclesFreed} vehicles)`);
-    
+
     return {
       modifiedCount: totalExpired,
       pendingExpired: expiredPendingResult.modifiedCount,
@@ -1010,23 +1018,23 @@ exports.uploadDocuments = async (req, res) => {
 
     // Verify ownership
     if (bookingRequest.userId.toString() !== userId) {
-      return res.status(403).json({ 
-        message: 'Unauthorized to access this booking request' 
+      return res.status(403).json({
+        message: 'Unauthorized to access this booking request'
       });
     }
 
     // Check if request is approved
     if (bookingRequest.requestStatus !== 'approved') {
-      return res.status(400).json({ 
-        message: `Cannot upload documents. Request must be approved first. Current status: ${bookingRequest.requestStatus}` 
+      return res.status(400).json({
+        message: `Cannot upload documents. Request must be approved first. Current status: ${bookingRequest.requestStatus}`
       });
     }
 
     // Check if request has expired
     const now = new Date();
     if (bookingRequest.requestExpiresAt && bookingRequest.requestExpiresAt < now) {
-      return res.status(400).json({ 
-        message: 'Upload window has expired (30 minutes after approval). Please create a new booking request.' 
+      return res.status(400).json({
+        message: 'Upload window has expired (30 minutes after approval). Please create a new booking request.'
       });
     }
 
@@ -1079,9 +1087,9 @@ exports.uploadDocuments = async (req, res) => {
 
   } catch (error) {
     console.error('Error uploading documents:', error);
-    res.status(500).json({ 
-      message: 'Failed to upload documents', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to upload documents',
+      error: error.message
     });
   }
 };
