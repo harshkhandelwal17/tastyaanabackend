@@ -167,6 +167,7 @@ router.post('/bookings/payment/create-order', vehicleBookingController.createRaz
 router.post('/bookings/payment/verify', vehicleBookingController.verifyPayment); // Verify payment
 router.post('/bookings/:bookingId/deposit/collect-at-pickup', authenticate, vehicleBookingController.collectDepositAtPickup); // Collect deposit at pickup
 
+<<<<<<< HEAD
 const {
   documentUploadMemory
 } = require('../../config/cloudinary');
@@ -175,15 +176,25 @@ const {
 router.post('/bookings/documents/upload', (req, res, next) => {
   // Hardened to prevent arbitrary file uploads
   const uploadFields = documentUploadMemory.fields([
+=======
+// Document upload routes with error handling
+router.post('/bookings/documents/upload', (req, res, next) => {
+  // Hardened to prevent arbitrary file uploads
+  const uploadFields = documentUpload.fields([
+>>>>>>> 46c061f3419be1fa77d9b66cf61eb9668058b222
     { name: 'documents', maxCount: 10 },
     { name: 'rcBook', maxCount: 1 },
     { name: 'insurance', maxCount: 1 },
     { name: 'drivingLicense', maxCount: 2 },
+<<<<<<< HEAD
     { name: 'idProof', maxCount: 2 },
     { name: 'license-front', maxCount: 1 },
     { name: 'aadhar-front', maxCount: 1 },
     { name: 'aadhar-back', maxCount: 1 },
     { name: 'user-selfie', maxCount: 1 }
+=======
+    { name: 'idProof', maxCount: 2 }
+>>>>>>> 46c061f3419be1fa77d9b66cf61eb9668058b222
   ]);
 
   uploadFields(req, res, (err) => {
