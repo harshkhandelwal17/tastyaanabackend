@@ -34,7 +34,7 @@ const getVehicles = async (req, res) => {
     let filter = {};
 
     if (category) filter.category = category;
-    if (type) filter.category = type;
+    if (type) filter.type = type;
     if (zoneCode) filter.zoneCode = zoneCode;
     if (status) filter.status = status;
     if (availability) filter.availability = availability;
@@ -98,6 +98,12 @@ const getVehicles = async (req, res) => {
       const start = new Date(req.query.startDateTime);
       const end = new Date(req.query.endDateTime);
 
+      // Add a 60-minute buffer for search to be safe against most vehicles' minBufferTime
+      // (Default is 30 mins, but some might be up to 60. Better to over-exclude than falsely show availability)
+      const bufferMs = 60 * 60 * 1000;
+      const queryStart = new Date(start.getTime() - bufferMs);
+      const queryEnd = new Date(end.getTime() + bufferMs);
+
       // Find bookings that overlap with the requested range
       const overlappingBookings = await VehicleBooking.find({
         $or: [
@@ -105,7 +111,7 @@ const getVehicles = async (req, res) => {
           { bookingStatus: 'pending', bookingDate: { $gt: new Date(Date.now() - 15 * 60 * 1000) } } // Also exclude pending bookings from last 15 mins
         ],
         $or: [
-          { startDateTime: { $lt: end }, endDateTime: { $gt: start } } // Overlap condition
+          { startDateTime: { $lt: queryEnd }, endDateTime: { $gt: queryStart } } // Overlap condition with buffer
         ]
       }).select('vehicleId');
 

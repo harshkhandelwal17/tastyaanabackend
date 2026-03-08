@@ -470,6 +470,25 @@ const createBooking = async (req, res) => {
     // CHECK: Find conflicting bookings.
     // To prevent double checkout race conditions, a pending unpaid booking locks the slot for 15 minutes.
     // NOTE: We safely EXCLUDE the current user's own pending locks so they can retry payments!
+
+    // --- Cancel user's previous dangling pending bookings for this vehicle to prevent lock spam ---
+    if (req.user && req.user._id) {
+      await VehicleBooking.updateMany(
+        {
+          userId: req.user._id,
+          vehicleId: bookingData.vehicleId,
+          bookingStatus: 'pending'
+        },
+        {
+          $set: {
+            bookingStatus: 'cancelled',
+            cancellationReason: 'System Cancelled: Suppressed by newer booking request'
+          }
+        }
+      );
+    }
+    // --------------------------------------------------------------------------------------------
+
     const fiveMinsAgo = new Date(Date.now() - 5 * 60 * 1000);
 
     const pendingLockCondition = { bookingStatus: 'pending', createdAt: { $gt: fiveMinsAgo } };
