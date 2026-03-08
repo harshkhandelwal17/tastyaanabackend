@@ -241,7 +241,9 @@ const validateBookingDetails = async (req, res) => {
     }
 
     // Check duration limits
-    const durationHours = (endTime - startTime) / (1000 * 60 * 60);
+    let durationHours = (endTime - startTime) / (1000 * 60 * 60);
+    durationHours = Math.round(durationHours * 100) / 100; // Fix JS floating point bugs for exact 1h duration
+
     if (durationHours < 1) {
       return res.status(400).json({
         success: false,
@@ -263,11 +265,24 @@ const validateBookingDetails = async (req, res) => {
     const checkStart = new Date(startTime.getTime() - bufferMs);
     const checkEnd = new Date(endTime.getTime() + bufferMs);
 
-    // CHANGED: Only check against CONFIRMED (paid) or ONGOING bookings
-    // "First to pay wins" logic - pending/awaiting_approval do not block slots
+    // CHECK: Find conflicting bookings.
+    // We check against 'confirmed', 'ongoing', AND recently created 'pending' bookings (within context of last 15 minutes lock)
+    // NOTE: We safely handle unauthenticated/public price validation checks
+    const fiveMinsAgo = new Date(Date.now() - 5 * 60 * 1000);
+
+    // Safely exclude current user's OWN pending locks if authenticated, so they aren't blocked from retrying
+    const pendingLockCondition = { bookingStatus: 'pending', createdAt: { $gt: fiveMinsAgo } };
+    if (req.user && req.user._id) {
+      pendingLockCondition.userId = { $ne: req.user._id };
+    }
+
     const conflictingBookings = await VehicleBooking.find({
       vehicleId,
-      bookingStatus: { $in: ['confirmed', 'ongoing'] }, // Removed 'awaiting_approval'
+      $or: [
+        { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
+        { requestStatus: 'approved' },
+        pendingLockCondition // the lock conditionally bypasses owner
+      ],
       $or: [
         {
           startDateTime: { $lt: checkEnd },
@@ -429,7 +444,9 @@ const createBooking = async (req, res) => {
     }
 
     // Validate booking duration (minimum 1 hour, maximum 7 days)
-    const durationHours = (endTime - startTime) / (1000 * 60 * 60);
+    let durationHours = (endTime - startTime) / (1000 * 60 * 60);
+    durationHours = Math.round(durationHours * 100) / 100; // Fix JS floating point bugs for exact 1h duration
+
     if (durationHours < 1) {
       return res.status(400).json({
         success: false,
@@ -450,11 +467,23 @@ const createBooking = async (req, res) => {
     const checkStart = new Date(requestedStart.getTime() - bufferMs);
     const checkEnd = new Date(requestedEnd.getTime() + bufferMs);
 
-    // CHANGED: Only check against CONFIRMED (paid) or ONGOING bookings
-    // "First to pay wins" logic
+    // CHECK: Find conflicting bookings.
+    // To prevent double checkout race conditions, a pending unpaid booking locks the slot for 15 minutes.
+    // NOTE: We safely EXCLUDE the current user's own pending locks so they can retry payments!
+    const fiveMinsAgo = new Date(Date.now() - 5 * 60 * 1000);
+
+    const pendingLockCondition = { bookingStatus: 'pending', createdAt: { $gt: fiveMinsAgo } };
+    if (req.user && req.user._id) {
+      pendingLockCondition.userId = { $ne: req.user._id };
+    }
+
     const conflictingBookings = await VehicleBooking.find({
       vehicleId: bookingData.vehicleId,
-      bookingStatus: { $in: ['confirmed', 'ongoing'] }, // Removed 'awaiting_approval'
+      $or: [
+        { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
+        { requestStatus: 'approved' },
+        pendingLockCondition // the lock conditionally bypasses owner
+      ],
       $or: [
         {
           startDateTime: { $lt: checkEnd },
@@ -817,13 +846,12 @@ const verifyPayment = async (req, res) => {
     const conflictingBookings = await VehicleBooking.find({
       _id: { $ne: booking._id }, // Exclude self
       vehicleId: booking.vehicleId,
-      bookingStatus: { $in: ['confirmed', 'ongoing'] },
       $or: [
-        {
-          startDateTime: { $lt: new Date(booking.endDateTime.getTime() + bufferMs) },
-          endDateTime: { $gt: new Date(booking.startDateTime.getTime() - bufferMs) }
-        }
-      ]
+        { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
+        { requestStatus: 'approved' }
+      ],
+      startDateTime: { $lt: new Date(booking.endDateTime.getTime() + bufferMs) },
+      endDateTime: { $gt: new Date(booking.startDateTime.getTime() - bufferMs) }
     });
 
     if (conflictingBookings.length > 0) {

@@ -185,12 +185,29 @@ const documentUpload = multer({
   }
 });
 
+// MEMORY STORAGE STRATEGY TO PREVENT 499 TIMEOUTS ON SLOW CONNECTIONS
+const documentMemoryStorage = multer.memoryStorage();
+const documentUploadMemory = multer({
+  storage: documentMemoryStorage,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/') || file.mimetype === 'application/pdf') {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image and PDF files are allowed!'), false);
+    }
+  }
+});
+
 module.exports = {
   cloudinary,
   upload,
   videoUpload,
   vehicleUpload,
-  documentUpload, // Export document upload middleware
+  documentUpload, // Export document upload middleware (Cloudinary storage)
+  documentUploadMemory, // Export memory upload middleware (Memory storage)
   deleteImage,
   deleteVideo,
   uploadFromBuffer
