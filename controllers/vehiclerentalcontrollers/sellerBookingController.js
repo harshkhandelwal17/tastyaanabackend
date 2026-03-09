@@ -118,9 +118,26 @@ const createOfflineBooking = async (req, res) => {
     }
 
     // Calculate total booking amount using vehicle rate calculation method
-    const durationHours = Math.ceil(
+    let durationHours = Math.ceil(
       (new Date(endDateTime) - new Date(startDateTime)) / (1000 * 60 * 60)
     );
+
+    // Apply minimum hours logic for scooties without fuel (hourly plan only)
+    // if (rateType === 'hourly') {
+    //   const isScooty = vehicle.category?.toLowerCase() === 'scooty' || 
+    //                    vehicle.category?.toLowerCase() === 'ev-scooty';
+    //   const minHours = (isScooty && !includesFuel) ? 5 : 1;
+    //   durationHours = Math.max(minHours, durationHours);
+      
+    //   console.log('⏱️ Duration with minimum hours applied:', {
+    //     category: vehicle.category,
+    //     isScooty,
+    //     includesFuel,
+    //     minHours,
+    //     actualDuration: Math.ceil((new Date(endDateTime) - new Date(startDateTime)) / (1000 * 60 * 60)),
+    //     billingDuration: durationHours
+    //   });
+    // }
 
     console.log('💰 Calculating cost:', {
       durationHours,
@@ -160,7 +177,6 @@ const createOfflineBooking = async (req, res) => {
     } else if (rateType === 'daily') {
       ratePlanUsed = {
         baseRate: vehicle.rate24hr.baseRate,
-        extraBlockRate: vehicle.rate24hr.extraBlockRate,
         ratePerHour: vehicle.rate24hr.ratePerHour,
         kmLimit: vehicle.rate24hr.kmLimit,
         extraChargePerKm: vehicle.rate24hr.extraChargePerKm,
@@ -274,6 +290,7 @@ const createOfflineBooking = async (req, res) => {
       customerDetails: {
         name: customerDetails.name,
         phone: customerDetails.phone,
+        alternativeNumber: customerDetails.alternativeNumber || '',
         email: customerDetails.email || '',
         address: customerDetails.address || {}
       },
@@ -311,6 +328,7 @@ const createOfflineBooking = async (req, res) => {
       // Billing Information (required)
       billing: {
         baseAmount: finalBaseAmount,
+        duration: durationHours, // Store billing duration (with minimum hours applied)
         kmLimit: costCalculation.rateConfig?.kmLimit || 0, // ✅ Store free KM limit from rate calculation
         addonsAmount: accessoriesCost, // Store addons separately for clarity
         extraKmCharge: 0,
@@ -423,6 +441,14 @@ const createOfflineBooking = async (req, res) => {
       totalBill: booking.billing.totalBill,
       paymentCount: booking.payments.length
     });
+
+    // Update vehicle's meterReading from the meter reading at handover
+    const startMeterReading = accessoriesChecklist.startMeterReading || 0;
+    if (startMeterReading > 0) {
+      vehicle.meterReading = startMeterReading;
+      await vehicle.save();
+      console.log(`📊 Updated vehicle ${vehicle._id} meterReading to ${startMeterReading} km`);
+    }
 
     await booking.save();
 
@@ -570,7 +596,10 @@ const getSellerBookings = async (req, res) => {
     });
 
     // Build query
-    const query = { bookedBy: sellerId };
+    const query = { 
+      bookedBy: sellerId,
+      isDeletedBySeller: { $ne: true } // Exclude soft-deleted bookings
+    };
 
     if (zoneId) query.zoneId = zoneId;
     if (bookingStatus) query.bookingStatus = bookingStatus;
@@ -1138,6 +1167,231 @@ const replaceVehicleOnBooking = async (req, res) => {
   }
 };
 
+// ===== Get Last Meter Reading for Vehicle =====
+const getLastMeterReading = async (req, res) => {
+  try {
+    const { vehicleId } = req.params;
+    const sellerId = req.user._id;
+
+    console.log('🔍 Fetching last meter reading for vehicle:', vehicleId);
+
+    // Verify seller owns the vehicle
+    const vehicle = await Vehicle.findOne({ _id: vehicleId, sellerId });
+    if (!vehicle) {
+      return res.status(404).json({
+        success: false,
+        message: 'Vehicle not found or you do not have permission to access it'
+      });
+    }
+
+    // Find the last completed booking for this vehicle
+    const lastBooking = await VehicleBooking.findOne({
+      vehicleId,
+      bookingStatus: 'completed',
+      'vehicleDropoff.endMeterReading': { $exists: true, $ne: null }
+    })
+      .sort({ 'vehicleDropoff.dropoffTime': -1 })
+      .select('vehicleDropoff.endMeterReading vehicleDropoff.dropoffTime');
+
+    if (!lastBooking || !lastBooking.vehicleDropoff?.endMeterReading) {
+      // No previous booking found, return vehicle's current meter reading
+      return res.status(200).json({
+        success: true,
+        meterReading: vehicle.meterReading,
+        source: 'vehicle',
+        message: 'No previous bookings found, using vehicle base meter reading'
+      });
+    }
+
+    console.log('✅ Last meter reading found:', {
+      bookingId: lastBooking._id,
+      meterReading: lastBooking.vehicleDropoff.endMeterReading,
+      dropoffTime: lastBooking.vehicleDropoff.dropoffTime
+    });
+
+    res.status(200).json({
+      success: true,
+      meterReading: lastBooking.vehicleDropoff.endMeterReading,
+      source: 'last-booking',
+      lastDropoffTime: lastBooking.vehicleDropoff.dropoffTime
+    });
+
+  } catch (error) {
+    console.error('Error fetching last meter reading:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch last meter reading',
+      error: error.message
+    });
+  }
+};
+
+// ===== Soft Delete Booking (Seller Panel Only) =====
+const softDeleteBooking = async (req, res) => {
+  try {
+    const sellerId = req.user._id;
+    const { bookingId } = req.params;
+    const { reason } = req.body;
+
+    console.log('🗑️ Soft delete request:', {
+      sellerId,
+      bookingId,
+      reason
+    });
+
+    // Find booking and verify seller ownership
+    const booking = await VehicleBooking.findOne({
+      bookingId,
+      bookedBy: sellerId,
+      isDeletedBySeller: { $ne: true } // Ensure not already deleted
+    });
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: 'Booking not found or already deleted'
+      });
+    }
+
+    // Prevent deletion of active or ongoing bookings
+    if (booking.bookingStatus === 'ongoing') {
+      return res.status(400).json({
+        success: false,
+        message: 'Cannot delete an ongoing booking. Please complete or cancel it first.'
+      });
+    }
+
+    // Update booking with soft delete flags
+    booking.isDeletedBySeller = true;
+    booking.deletedBySellerAt = new Date();
+    booking.deletedBySeller = sellerId;
+    booking.deletionReason = reason || 'Deleted by seller - wrong booking';
+
+    await booking.save();
+
+    console.log('✅ Booking soft-deleted successfully:', {
+      bookingId: booking.bookingId,
+      deletedAt: booking.deletedBySellerAt
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Booking deleted successfully',
+      booking: {
+        bookingId: booking.bookingId,
+        deletedAt: booking.deletedBySellerAt,
+        reason: booking.deletionReason
+      }
+    });
+
+  } catch (error) {
+    console.error('Error soft-deleting booking:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete booking',
+      error: error.message
+    });
+  }
+};
+
+// ===== Get Deleted Bookings (Optional - for recovery) =====
+const getDeletedBookings = async (req, res) => {
+  try {
+    const sellerId = req.user._id;
+    const { page = 1, limit = 10 } = req.query;
+
+    console.log('🗑️ Fetching deleted bookings for seller:', sellerId);
+
+    const query = {
+      bookedBy: sellerId,
+      isDeletedBySeller: true
+    };
+
+    const skip = (page - 1) * limit;
+    const bookings = await VehicleBooking.find(query)
+      .populate('vehicleId', 'name vehicleNo category')
+      .populate('userId', 'name email phone')
+      .populate('deletedBySeller', 'name email')
+      .sort({ deletedBySellerAt: -1 })
+      .skip(skip)
+      .limit(parseInt(limit));
+
+    const totalBookings = await VehicleBooking.countDocuments(query);
+
+    res.status(200).json({
+      success: true,
+      bookings,
+      pagination: {
+        currentPage: parseInt(page),
+        totalPages: Math.ceil(totalBookings / limit),
+        totalBookings,
+        limit: parseInt(limit)
+      }
+    });
+
+  } catch (error) {
+    console.error('Error fetching deleted bookings:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch deleted bookings',
+      error: error.message
+    });
+  }
+};
+
+// ===== Restore Deleted Booking (Optional) =====
+const restoreDeletedBooking = async (req, res) => {
+  try {
+    const sellerId = req.user._id;
+    const { bookingId } = req.params;
+
+    console.log('♻️ Restore booking request:', {
+      sellerId,
+      bookingId
+    });
+
+    const booking = await VehicleBooking.findOne({
+      bookingId,
+      bookedBy: sellerId,
+      isDeletedBySeller: true
+    });
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: 'Deleted booking not found'
+      });
+    }
+
+    // Restore booking
+    booking.isDeletedBySeller = false;
+    booking.deletedBySellerAt = undefined;
+    booking.deletedBySeller = undefined;
+    booking.deletionReason = undefined;
+
+    await booking.save();
+
+    console.log('✅ Booking restored successfully:', booking.bookingId);
+
+    res.status(200).json({
+      success: true,
+      message: 'Booking restored successfully',
+      booking: {
+        bookingId: booking.bookingId,
+        bookingStatus: booking.bookingStatus
+      }
+    });
+
+  } catch (error) {
+    console.error('Error restoring booking:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to restore booking',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   createOfflineBooking,
   getAvailableVehicles,
@@ -1145,5 +1399,9 @@ module.exports = {
   updateCashPayment,
   getCashFlowSummary,
   markCashHandover,
-  replaceVehicleOnBooking
+  replaceVehicleOnBooking,
+  getLastMeterReading,
+  softDeleteBooking,
+  getDeletedBookings,
+  restoreDeletedBooking
 };

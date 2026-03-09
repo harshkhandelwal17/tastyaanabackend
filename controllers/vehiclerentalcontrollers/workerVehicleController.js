@@ -1,6 +1,687 @@
-const Vehicle = require("../../models/Vehicle");
-const VehicleBooking = require("../../models/VehicleBooking");
-const User = require("../../models/User");
+const Vehicle = require('../../models/Vehicle');
+const VehicleBooking = require('../../models/VehicleBooking');
+const User = require('../../models/User');
+// const mongoose = require('mongoose');
+
+// Get worker dashboard data (scoped to worker's zone)
+const getWorkerDashboard = async (req, res) => {
+  try {
+    const workerId = req.user.id;
+    
+    // Get worker profile to find their zone
+    const worker = await User.findById(workerId).select('workerProfile');
+    if (!worker || !worker.workerProfile) {
+      return res.status(404).json({
+        success: false,
+        message: 'Worker profile not found'
+      });
+    }
+
+    const { sellerId, zoneCode, zoneName } = worker.workerProfile;
+
+    // Find vehicles in worker's zone
+    const vehicles = await Vehicle.find({
+      sellerId: sellerId,
+      zoneCode: zoneCode,
+      status: 'active'
+    });
+
+    const vehicleIds = vehicles.map(v => v._id);
+    const now = new Date();
+
+    // Get ongoing bookings
+    const ongoingBookings = await VehicleBooking.find({
+      vehicleId: { $in: vehicleIds },
+      bookingStatus: 'ongoing',
+      startDateTime: { $lte: now },
+      endDateTime: { $gte: now }
+    }).populate('vehicleId userId');
+
+    // Get upcoming bookings
+    const upcomingBookings = await VehicleBooking.find({
+      vehicleId: { $in: vehicleIds },
+      bookingStatus: { $in: ['confirmed', 'pending'] },
+      startDateTime: { $gt: now }
+    }).sort({ startDateTime: 1 }).limit(5).populate('vehicleId userId');
+
+    // Get overdue bookings
+    const overdueBookings = await VehicleBooking.find({
+      vehicleId: { $in: vehicleIds },
+      bookingStatus: { $in: ['confirmed', 'ongoing'] },
+      endDateTime: { $lt: now }
+    }).populate('vehicleId userId');
+
+    // Calculate stats
+    const totalVehicles = vehicles.length;
+    const availableVehicles = totalVehicles - ongoingBookings.length;
+    const reservedVehicles = ongoingBookings.length;
+
+    // Get today's revenue
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const todayCompletedBookings = await VehicleBooking.find({
+      vehicleId: { $in: vehicleIds },
+      bookingStatus: 'completed',
+      'vehicleReturn.returnTime': { $gte: startOfDay, $lte: endOfDay }
+    });
+
+    const todayRevenue = todayCompletedBookings.reduce((sum, booking) => {
+      return sum + (booking.billing?.finalAmount || 0);
+    }, 0);
+
+    res.json({
+      success: true,
+      data: {
+        overview: {
+          totalVehicles,
+          availableVehicles,
+          reservedVehicles,
+          overdueVehicles: overdueBookings.length,
+          todayRevenue,
+          zone: {
+            code: zoneCode,
+            name: zoneName
+          }
+        },
+        recentBookings: upcomingBookings,
+        overdueBookings,
+        vehicleStats: {
+          total: totalVehicles,
+          available: availableVehicles,
+          reserved: reservedVehicles
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error('Error fetching worker dashboard:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch dashboard data',
+      error: error.message
+    });
+  }
+};
+
+// Get worker vehicles (scoped to worker's zone)
+const getWorkerVehicles = async (req, res) => {
+  try {
+    const workerId = req.user.id;
+    const {
+      page = 1,
+      limit = 12,
+      search,
+      status,
+      category,
+      availability,
+      sortBy = 'createdAt',
+      sortOrder = 'desc'
+    } = req.query;
+
+    // Get worker profile
+    const worker = await User.findById(workerId).select('workerProfile');
+    if (!worker || !worker.workerProfile) {
+      return res.status(404).json({
+        success: false,
+        message: 'Worker profile not found'
+      });
+    }
+
+    const { sellerId, zoneCode } = worker.workerProfile;
+
+    const filter = { 
+      sellerId: sellerId,
+      zoneCode: zoneCode  // Automatically filter by worker's zone
+    };
+
+    // Add search filter
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { companyName: { $regex: search, $options: 'i' } },
+        { vehicleNo: { $regex: search, $options: 'i' } },
+        { color: { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    // Add status filter
+    if (status && status !== 'all') {
+      filter.status = status;
+    }
+
+    // Add category filter
+    if (category && category !== 'all') {
+      filter.category = category;
+    }
+
+    const bookingStatusFilter = availability && availability !== 'all' ? availability : null;
+
+    // Sorting
+    const sortOptions = {};
+    sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+
+    // Pagination
+    const skip = (page - 1) * limit;
+
+    const vehicles = await Vehicle.find(filter)
+      .sort(sortOptions)
+      .skip(skip)
+      .limit(parseInt(limit))
+      .populate('sellerId', 'name phone email businessName');
+
+    const totalVehicles = await Vehicle.countDocuments(filter);
+
+    // Enhance vehicles with current booking status
+    const now = new Date();
+    const enhancedVehicles = await Promise.all(
+      vehicles.map(async (vehicle) => {
+        const activeBooking = await VehicleBooking.findOne({
+          vehicleId: vehicle._id,
+          bookingStatus: 'ongoing',
+          startDateTime: { $lte: now },
+          endDateTime: { $gte: now }
+        }).select('bookingId startDateTime endDateTime userId');
+
+        const overdueBooking = await VehicleBooking.findOne({
+          vehicleId: vehicle._id,
+          bookingStatus: { $in: ['confirmed', 'ongoing'] },
+          endDateTime: { $lt: now }
+        }).select('bookingId startDateTime endDateTime userId');
+
+        const futureBooking = await VehicleBooking.findOne({
+          vehicleId: vehicle._id,
+          bookingStatus: { $in: ['confirmed', 'pending'] },
+          startDateTime: { $gt: now }
+        }).sort({ startDateTime: 1 }).select('bookingId startDateTime endDateTime');
+
+        let bookingStatus = 'available';
+        let bookingInfo = null;
+        let isOverdue = false;
+
+        if (overdueBooking) {
+          const overdueHours = Math.floor((now - new Date(overdueBooking.endDateTime)) / (1000 * 60 * 60));
+          bookingStatus = 'overdue';
+          isOverdue = true;
+          bookingInfo = {
+            bookingId: overdueBooking.bookingId,
+            startDateTime: overdueBooking.startDateTime,
+            endDateTime: overdueBooking.endDateTime,
+            status: `Overdue by ${overdueHours}h`,
+            overdueBy: overdueHours
+          };
+        } else if (activeBooking) {
+          bookingStatus = 'reserved';
+          bookingInfo = {
+            bookingId: activeBooking.bookingId,
+            startDateTime: activeBooking.startDateTime,
+            endDateTime: activeBooking.endDateTime,
+            status: 'Currently in use'
+          };
+        } else if (futureBooking) {
+          bookingStatus = 'pre-booked';
+          bookingInfo = {
+            bookingId: futureBooking.bookingId,
+            startDateTime: futureBooking.startDateTime,
+            endDateTime: futureBooking.endDateTime,
+            status: 'Booked for future'
+          };
+        }
+
+        return {
+          ...vehicle.toObject(),
+          currentBookingStatus: bookingStatus,
+          bookingInfo,
+          isOverdue
+        };
+      })
+    );
+
+    // Apply booking status filter if specified
+    let filteredVehicles = enhancedVehicles;
+    if (bookingStatusFilter) {
+      filteredVehicles = enhancedVehicles.filter(v => v.currentBookingStatus === bookingStatusFilter);
+    }
+
+    // Calculate category breakdown from ALL vehicles matching filter
+    const allVehiclesForCounts = await Vehicle.find(filter).select('category');
+    const categoryBreakdown = allVehiclesForCounts.reduce((acc, vehicle) => {
+      const category = (vehicle.category || 'other').toLowerCase();
+      acc[category] = (acc[category] || 0) + 1;
+      return acc;
+    }, {});
+
+    // Calculate counts for all statuses
+    const counts = {
+      total: totalVehicles,
+      available: enhancedVehicles.filter(v => v.currentBookingStatus === 'available').length,
+      reserved: enhancedVehicles.filter(v => v.currentBookingStatus === 'reserved').length,
+      preBooked: enhancedVehicles.filter(v => v.currentBookingStatus === 'pre-booked').length,
+      categoryBreakdown
+    };
+
+    res.json({
+      success: true,
+      data: {
+        vehicles: filteredVehicles,
+        counts,
+        pagination: {
+          currentPage: parseInt(page),
+          totalPages: Math.ceil(totalVehicles / limit),
+          totalItems: totalVehicles,
+          hasNextPage: page < Math.ceil(totalVehicles / limit),
+          hasPrevPage: page > 1
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error('Error fetching worker vehicles:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch vehicles',
+      error: error.message
+    });
+  }
+};
+
+// Get worker bookings (scoped to worker's zone)
+// const getWorkerBookings = async (req, res) => {
+//   try {
+//     const workerId = req.user.id;
+//     const {
+//       page = 1,
+//       limit = 20,
+//       status,
+//       search,
+//       startDate,
+//       endDate
+//     } = req.query;
+
+//     // Get worker profile
+//     const worker = await User.findById(workerId).select('workerProfile');
+//     if (!worker || !worker.workerProfile) {
+//       return res.status(404).json({
+//         success: false,
+//         message: 'Worker profile not found'
+//       });
+//     }
+
+//     const { sellerId, zoneCode } = worker.workerProfile;
+
+//     // First, find vehicles in worker's zone
+//     const zoneVehicles = await Vehicle.find({
+//       sellerId: sellerId,
+//       zoneCode: zoneCode
+//     }).select('_id');
+
+//     const vehicleIds = zoneVehicles.map(v => v._id);
+
+//     const filter = {
+//       vehicleId: { $in: vehicleIds }
+//     };
+
+//     // Add status filter
+//     if (status && status !== 'all') {
+//       filter.bookingStatus = status;
+//     }
+
+//     // Add date range filter
+//     if (startDate || endDate) {
+//       filter.startDateTime = {};
+//       if (startDate) filter.startDateTime.$gte = new Date(startDate);
+//       if (endDate) filter.startDateTime.$lte = new Date(endDate);
+//     }
+
+//     // Pagination
+//     const skip = (page - 1) * limit;
+
+//     let bookings = await VehicleBooking.find(filter)
+//       .sort({ createdAt: -1 })
+//       .skip(skip)
+//       .limit(parseInt(limit))
+//       .populate('vehicleId', 'name companyName vehicleNo category')
+//       .populate('userId', 'name phone email');
+
+//     // Apply search filter if provided (after population)
+//     if (search) {
+//       const searchLower = search.toLowerCase();
+//       bookings = bookings.filter(booking => {
+//         const vehicleName = booking.vehicleId?.name?.toLowerCase() || '';
+//         const vehicleNo = booking.vehicleId?.vehicleNo?.toLowerCase() || '';
+//         const customerName = booking.userId?.name?.toLowerCase() || booking.customerName?.toLowerCase() || '';
+//         const customerPhone = booking.userId?.phone?.toLowerCase() || booking.customerPhone?.toLowerCase() || '';
+//         const bookingId = booking.bookingId?.toLowerCase() || '';
+        
+//         return vehicleName.includes(searchLower) ||
+//                vehicleNo.includes(searchLower) ||
+//                customerName.includes(searchLower) ||
+//                customerPhone.includes(searchLower) ||
+//                bookingId.includes(searchLower);
+//       });
+//     }
+
+//     const totalBookings = await VehicleBooking.countDocuments(filter);
+
+//     res.json({
+//       success: true,
+//       data: {
+//         bookings,
+//         pagination: {
+//           currentPage: parseInt(page),
+//           totalPages: Math.ceil(totalBookings / limit),
+//           totalItems: totalBookings,
+//           hasNextPage: page < Math.ceil(totalBookings / limit),
+//           hasPrevPage: page > 1
+//         }
+//       }
+//     });
+
+//   } catch (error) {
+//     console.error('Error fetching worker bookings:', error);
+//     res.status(500).json({
+//       success: false,
+//       message: 'Failed to fetch bookings',
+//       error: error.message
+//     });
+//   }
+// };
+
+// Get booking details (with zone validation)
+const getWorkerBookingDetails = async (req, res) => {
+  try {
+    const workerId = req.user.id;
+    const { bookingId } = req.params;
+
+    // Get worker profile
+    const worker = await User.findById(workerId).select('workerProfile');
+    if (!worker || !worker.workerProfile) {
+      return res.status(404).json({
+        success: false,
+        message: 'Worker profile not found'
+      });
+    }
+
+    const { sellerId, zoneCode } = worker.workerProfile;
+
+    const booking = await VehicleBooking.findOne({ bookingId })
+      .populate('vehicleId')
+      .populate('userId', 'name phone email')
+      .populate('sellerId', 'name phone email businessName');
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: 'Booking not found'
+      });
+    }
+
+    // Verify booking is in worker's zone
+    if (booking.vehicleId.zoneCode !== zoneCode) {
+      return res.status(403).json({
+        success: false,
+        message: 'Unauthorized: Booking not in your assigned zone'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: booking
+    });
+
+  } catch (error) {
+    console.error('Error fetching booking details:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch booking details',
+      error: error.message
+    });
+  }
+};
+
+// Get worker profile
+const getWorkerProfile = async (req, res) => {
+  try {
+    const workerId = req.user.id;
+    
+    const worker = await User.findById(workerId)
+      .select('name email phone workerProfile')
+      .populate('workerProfile.sellerId', 'name businessName');
+
+    if (!worker) {
+      return res.status(404).json({
+        success: false,
+        message: 'Worker not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: worker
+    });
+
+  } catch (error) {
+    console.error('Error fetching worker profile:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch profile',
+      error: error.message
+    });
+  }
+};
+
+// Complete booking - Worker dropoff
+const completeWorkerBooking = async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+    const {
+      endMeterReading,
+      endFuelLevel,
+      vehicleCondition,
+      endDateTime,
+      extraCharges,
+      payment,
+      billing,
+      notes,
+      refundMode,
+    } = req.body;
+
+    // Get worker profile with zone info
+    const worker = await User.findById(req.user.id).populate('workerProfile');
+    
+    if (!worker?.workerProfile) {
+      return res.status(403).json({
+        success: false,
+        message: 'Worker profile not found'
+      });
+    }
+
+    const workerZoneCode = worker.workerProfile.zoneCode;
+
+    // Find booking
+    const booking = await VehicleBooking.findById(bookingId)
+      .populate('vehicleId')
+      .populate('userId');
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: 'Booking not found',
+      });
+    }
+
+    // Verify booking is in worker's zone
+    if (booking.vehicleId.zoneCode !== workerZoneCode) {
+      return res.status(403).json({
+        success: false,
+        message: 'Unauthorized: Booking is not in your zone',
+      });
+    }
+
+    // Update booking with dropoff details
+    booking.endMeterReading = endMeterReading;
+    booking.endFuelLevel = endFuelLevel;
+    booking.vehicleCondition = vehicleCondition;
+    booking.endDateTime = endDateTime ? new Date(endDateTime) : new Date();
+
+    // Update vehicleReturn schema
+    booking.vehicleReturn = booking.vehicleReturn || {};
+    booking.vehicleReturn.submitted = true;
+    booking.vehicleReturn.submittedAt = booking.endDateTime;
+    booking.vehicleReturn.submittedBy = req.user.id;
+    booking.vehicleReturn.endMeterReading = endMeterReading;
+    booking.vehicleReturn.returnFuelLevel = endFuelLevel;
+    booking.vehicleReturn.condition = vehicleCondition;
+    booking.vehicleReturn.vehicleAvailableAgain = true;
+    booking.vehicleReturn.madeAvailableAt = booking.endDateTime;
+
+    // Update billing
+    booking.billing.extraKmCharge = billing.extraKmCharge;
+    booking.billing.extraHourCharge = billing.extraHourCharge;
+    booking.billing.freeKm = billing.freeKm;
+    booking.billing.totalKm = billing.totalKm;
+
+    // Extra charges
+    if (extraCharges && extraCharges.amount) {
+      booking.billing.damageCharges = extraCharges.amount;
+      if (extraCharges.notes) {
+        booking.notes = (booking.notes || '') + '\nExtra Charges: ' + extraCharges.notes;
+      }
+    }
+
+    booking.billing.totalBill = billing.totalBill;
+
+    // Add payments
+    if (payment.cashReceived > 0 || payment.onlineReceived > 0) {
+      booking.payments = booking.payments || [];
+
+      if (payment.cashReceived > 0) {
+        booking.payments.push({
+          amount: payment.cashReceived,
+          paymentType: 'Cash',
+          paymentMethod: 'Cash',
+          status: 'success',
+          transactionDate: new Date(),
+        });
+      }
+
+      if (payment.onlineReceived > 0) {
+        booking.payments.push({
+          amount: payment.onlineReceived,
+          paymentType: 'UPI',
+          paymentMethod: 'Razorpay',
+          status: 'success',
+          transactionDate: new Date(),
+        });
+      }
+    }
+
+    // Calculate total paid
+    const totalPaidFromPayments = booking.payments.reduce(
+      (sum, p) => sum + (p.amount || 0),
+      0
+    );
+
+    booking.paidAmount = totalPaidFromPayments;
+
+    if (totalPaidFromPayments >= billing.totalBill) {
+      booking.paymentStatus = 'paid';
+    } else if (totalPaidFromPayments > 0) {
+      booking.paymentStatus = 'partially-paid';
+    } else {
+      booking.paymentStatus = 'unpaid';
+    }
+
+    // Update status to completed
+    booking.bookingStatus = 'completed';
+    booking.statusHistory.push({
+      status: 'completed',
+      timestamp: new Date(),
+      updatedBy: req.user.id,
+    });
+
+    // Mark drop verification
+    if (!booking.verificationCodes) {
+      booking.verificationCodes = {};
+    }
+    if (!booking.verificationCodes.drop) {
+      booking.verificationCodes.drop = {};
+    }
+    booking.verificationCodes.drop.verified = true;
+    booking.verificationCodes.drop.verifiedAt = new Date();
+
+    // Calculate refund
+    const totalPaid = booking.paidAmount || 0;
+    const actualBill = billing.totalBill || 0;
+    
+    if (totalPaid > actualBill) {
+      const refundAmount = totalPaid - actualBill;
+      let refundMethod = 'cash';
+      
+      if (refundMode) {
+        refundMethod = refundMode === 'online' ? 'bank-transfer' : 'cash';
+      } else {
+        const cashPayment = booking.payments?.find(p => p.paymentMethod === 'Cash' || p.paymentType === 'Cash');
+        refundMethod = cashPayment ? 'cash' : 'bank-transfer';
+      }
+      
+      booking.refundDetails = {
+        reason: 'overbilling',
+        requestedAmount: refundAmount,
+        approvedAmount: refundAmount,
+        refundMethod: refundMethod,
+        refundMode: refundMode || (refundMethod === 'cash' ? 'cash' : 'online'),
+        processedBy: req.user.id,
+        processedDate: new Date(),
+        refundReference: `REF-${booking.bookingId}-${Date.now().toString().slice(-6)}`,
+        notes: `Overpayment refund processed by worker. Customer paid ₹${totalPaid}, actual bill ₹${actualBill}. Refunded ₹${refundAmount} via ${refundMode || refundMethod}.`
+      };
+      
+      booking.refundStatus = 'completed';
+      booking.depositRefundStatus = 'not-applicable';
+    } else if (totalPaid < actualBill) {
+      booking.refundStatus = 'not-applicable';
+      booking.depositRefundStatus = 'not-applicable';
+    } else {
+      booking.refundStatus = 'not-applicable';
+      booking.depositRefundStatus = 'not-applicable';
+    }
+
+    // Add notes
+    if (notes && notes.returnNotes) {
+      booking.notes = (booking.notes || '') + '\nReturn: ' + notes.returnNotes;
+    }
+
+    await booking.save();
+
+    // Update vehicle availability
+    await Vehicle.findByIdAndUpdate(booking.vehicleId._id, {
+      availability: 'available',
+      currentBookingId: null,
+    });
+
+    res.json({
+      success: true,
+      message: 'Vehicle returned successfully by worker',
+      data: booking,
+    });
+  } catch (error) {
+    console.error('Error completing worker booking:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to complete booking',
+      error: error.message
+    });
+  }
+};
+
+
+
+// const Vehicle = require("../../models/Vehicle");
+// const VehicleBooking = require("../../models/VehicleBooking");
+// const User = require("../../models/User");
 
 /**
  * Worker Vehicle Controller
@@ -113,7 +794,7 @@ exports.getWorkerVehicles = async (req, res) => {
 };
 
 // Get worker bookings (zone-restricted)
-exports.getWorkerBookings = async (req, res) => {
+const getWorkerBookings = async (req, res) => {
   try {
     const workerId = req.user._id;
     const { status, dateRange, sortBy, search, zoneId } = req.query;
@@ -245,7 +926,7 @@ exports.getWorkerBookings = async (req, res) => {
 };
 
 // Get single booking details (zone-restricted)
-exports.getWorkerBookingById = async (req, res) => {
+const getWorkerBookingById = async (req, res) => {
   try {
     const workerId = req.user._id;
     const { bookingId } = req.params;
@@ -302,7 +983,7 @@ exports.getWorkerBookingById = async (req, res) => {
 };
 
 // Get bookings ready for handover (pickup/return) - zone-restricted
-exports.getWorkerHandoverBookings = async (req, res) => {
+const getWorkerHandoverBookings = async (req, res) => {
   try {
     const workerId = req.user._id;
     const { type } = req.query; // 'pickup' or 'return'
@@ -387,7 +1068,7 @@ exports.getWorkerHandoverBookings = async (req, res) => {
 };
 
 // Process vehicle handover (pickup/return) - zone-restricted
-exports.processWorkerHandover = async (req, res) => {
+const processWorkerHandover = async (req, res) => {
   try {
     const workerId = req.user._id;
     const { bookingId } = req.params;
@@ -514,7 +1195,7 @@ exports.processWorkerHandover = async (req, res) => {
 };
 
 // Create offline booking - zone-restricted
-exports.createWorkerOfflineBooking = async (req, res) => {
+const createWorkerOfflineBooking = async (req, res) => {
   try {
     const workerId = req.user._id;
     const {
@@ -698,7 +1379,7 @@ exports.createWorkerOfflineBooking = async (req, res) => {
 };
 
 // Update booking status - zone-restricted
-exports.updateWorkerBookingStatus = async (req, res) => {
+const updateWorkerBookingStatus = async (req, res) => {
   try {
     const workerId = req.user._id;
     const { bookingId } = req.params;
@@ -795,7 +1476,7 @@ exports.updateWorkerBookingStatus = async (req, res) => {
 };
 
 // Get worker reports/analytics - zone-restricted
-exports.getWorkerReports = async (req, res) => {
+const getWorkerReports = async (req, res) => {
   try {
     const workerId = req.user._id;
     const { period, startDate, endDate } = req.query;
@@ -938,7 +1619,7 @@ exports.getWorkerReports = async (req, res) => {
 };
 
 // Add note to booking - zone-restricted
-exports.addWorkerBookingNote = async (req, res) => {
+const addWorkerBookingNote = async (req, res) => {
   try {
     const workerId = req.user._id;
     const { bookingId } = req.params;
@@ -1017,4 +1698,19 @@ exports.addWorkerBookingNote = async (req, res) => {
       error: error.message,
     });
   }
+};
+module.exports = {
+  getWorkerDashboard,
+  getWorkerVehicles,
+  getWorkerBookings,
+  getWorkerBookingDetails,
+  getWorkerProfile,
+  completeWorkerBooking,
+  getWorkerHandoverBookings,
+  processWorkerHandover,
+  createWorkerOfflineBooking,
+  updateWorkerBookingStatus,
+  getWorkerReports,
+  addWorkerBookingNote,
+  getWorkerBookingById
 };
