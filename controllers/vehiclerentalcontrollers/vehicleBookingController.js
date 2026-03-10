@@ -244,7 +244,7 @@ const validateBookingDetails = async (req, res) => {
     let durationHours = (endTime - startTime) / (1000 * 60 * 60);
     durationHours = Math.round(durationHours * 100) / 100; // Fix JS floating point bugs for exact 1h duration
 
-    if (durationHours < 1) {
+    if (durationHours < 0.95) { // Relax strict rounding bounds
       return res.status(400).json({
         success: false,
         message: `Booking duration is ${durationHours.toFixed(1)} hours. Minimum booking duration is 1 hour.`,
@@ -447,7 +447,7 @@ const createBooking = async (req, res) => {
     let durationHours = (endTime - startTime) / (1000 * 60 * 60);
     durationHours = Math.round(durationHours * 100) / 100; // Fix JS floating point bugs for exact 1h duration
 
-    if (durationHours < 1) {
+    if (durationHours < 0.95) {
       return res.status(400).json({
         success: false,
         message: 'Minimum booking duration is 1 hour.'
