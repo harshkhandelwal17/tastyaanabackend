@@ -289,6 +289,7 @@ const createOfflineBooking = async (req, res) => {
       // Customer Details (required by schema)
       customerDetails: {
         name: customerDetails.name,
+        fatherName: customerDetails.fatherName || '',
         phone: customerDetails.phone,
         alternativeNumber: customerDetails.alternativeNumber || '',
         email: customerDetails.email || '',
