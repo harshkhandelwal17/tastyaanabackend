@@ -941,11 +941,35 @@ const userSchema = new mongoose.Schema({
       required: function () { return this.role === 'seller'; }
     },
     // Restored fields as per user request
-    sellerType: {
-      type: [String],
-      enum: ['food', 'tiffin', 'grocery', 'laundry', 'gifting', 'all', 'other'],
-      default: ['food']
-    },
+  sellerType: [{
+      type: String,
+      enum: [
+        'vehiclerental',
+        'vehicle',
+        'food',
+        'tiffin',
+        'meal-plan', 
+        'vegetable', 
+        'grocery',
+        'phones', 
+        'electronics',
+        'laundry', 
+        'rental',
+        'clothing',
+        'accessories',
+        'home-decor',
+        'books',
+        'stationery',
+        'health-wellness',
+        'beauty-cosmetics',
+        'sports-fitness',
+        'toys-games',
+        'pet-supplies',
+        'automotive',
+        'services',
+        'other'
+      ]
+    }],
     storeType: {
       type: [String],
       enum: ['restaurant', 'mess', 'kitchen', 'shop', 'store'],
