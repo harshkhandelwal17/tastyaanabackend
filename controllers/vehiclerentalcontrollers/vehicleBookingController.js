@@ -265,6 +265,7 @@ const validateBookingDetails = async (req, res) => {
 
     const conflictingBookings = await VehicleBooking.find({
       vehicleId,
+<<<<<<< HEAD
       $and: [
         {
           $or: [
@@ -273,6 +274,10 @@ const validateBookingDetails = async (req, res) => {
             pendingLockCondition
           ]
         },
+=======
+      bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] },
+      $or: [
+>>>>>>> 98b1491ba1a112b799308fbcd37b3998423fa8e1
         {
           startDateTime: { $lt: checkEnd },
           endDateTime: { $gt: checkStart }
