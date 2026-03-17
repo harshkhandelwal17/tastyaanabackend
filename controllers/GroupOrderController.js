@@ -79,7 +79,7 @@ exports.getGroupDetails = async (req, res) => {
         const { code } = req.params;
         const group = await GroupOrder.findOne({ code })
             .populate('restaurant', 'name address')
-            .populate('participants.items.product', 'title name images price isVeg'); // Ensure deep populate for polling
+            .populate('participants.items.product', 'title name images price isVeg seller'); // Added seller populate
         if (!group) return res.status(404).json({ success: false, message: "Group not found" });
         res.status(200).json({ success: true, group });
     } catch (error) {
@@ -99,23 +99,8 @@ exports.syncCart = async (req, res) => {
         const participant = group.participants.find(p => p.user.toString() === userId);
         if (!participant) return res.status(403).json({ success: false, message: "Not a participant" });
 
-        // Logic: If group has no restaurant, lock it to the first item's restaurant (if provided in item or look it up)
-        // For now, assuming Frontend sends consistent items. Validating strictly requires Product lookup.
-        // Simplified: If group.restaurant is null and items > 0, we try to set it.
-        // NOTE: Ideally we need product->restaurant mapping. 
-        // For MVP: We will trust the frontend to separate carts, or we just leave it flexible until checkout.
-        // But the user requested "Any restaurant". IF we want to lock it:
-
-        // if (!group.restaurant && items.length > 0) {
-        //    // We need to fetch one product to find its restaurant
-        //    // const sample = await Product.findById(items[0].product);
-        //    // group.restaurant = sample.restaurant;
-        // }
-        // The user specifically asked "Anyone can add any item". 
-        // So we might NOT want to lock it at all? 
-        // But `activeGroup` usually implies one restaurant for delivery.
-        // Let's implement: If null, set it. If set, we keep it. 
-        // But we won't strictly validate here to avoid latency, we'll let frontend warn.
+        // Multi-restaurant support: We don't lock the party to one restaurant.
+        // The host will see items from all participants and their respective sellers during checkout.
 
         participant.items = items; // Full replace for simplicity in sync
         await group.save();
@@ -125,7 +110,7 @@ exports.syncCart = async (req, res) => {
         // even if the incoming 'items' only had IDs.
         const populatedGroup = await GroupOrder.findById(group._id)
             .populate('restaurant', 'name address')
-            .populate('participants.items.product', 'title name images price isVeg');
+            .populate('participants.items.product', 'title name images price isVeg seller');
 
         const io = req.app.get('io');
         if (io) {

@@ -215,7 +215,7 @@ const orderController = {
           discount: item.originalPrice - item.price,
           image: item.product.images[0]?.url,
           category: item?.category?.name,
-          seller: item?.product?.seller ? new mongoose.Types.ObjectId(item.product.seller) : new mongoose.Types.ObjectId('68b0cbf4b645a7444132cbb3'),
+          seller: item?.product?.seller ? new mongoose.Types.ObjectId(item.product.seller) : undefined,
           variant: item.variant || {},
           isCollegeBranded: item.isCollegeBranded || false,
           ...(item.collegeName && { collegeName: item.collegeName }) // Include college name if present
@@ -235,7 +235,6 @@ const orderController = {
         // const allowedCategories = ['main', 'addon', 'sweets', 'beverage', 'tiffin', 'vegetables', 'fastfood', 'product','stationery','FoodZone','grocery','foodzone'];
         const categories = await Category.find({}, { name: 1, _id: 0 });
         const allowedCategories = categories.map(cat => cat.name.toLowerCase());
-        console.log(allowedCategories, "items categories are ", items)
         orderItems = items.map((item, idx) => {
           if (!item.name || typeof item.name !== 'string') {
             throw new Error(`Order item at index ${idx} is missing a valid 'name'.`);
@@ -257,7 +256,7 @@ const orderController = {
             category: item.category,
             customizations: item.customizations || [],
             product: isCustomAddOn ? undefined : item.productId, // Don't set product for custom add-ons
-            seller: item.seller || new mongoose.Types.ObjectId('687242b702db822f91b13586'), // Default to main seller ID
+            seller: item.seller ? new mongoose.Types.ObjectId(item.seller) : undefined,
             originalPrice: item.originalPrice,
             discount: item.discount,
             image: item?.image?.url,
@@ -518,7 +517,7 @@ const orderController = {
           serviceCharges
         },
         totalAmount: finalAmount,
-        paymentMethod: payment?.method || 'cod' || "COD",
+        paymentMethod: payment?.method || paymentMethod || "COD",
         paymentStatus: payment?.status || 'pending',
         cancelBefore,
         specialInstructions,
@@ -613,9 +612,6 @@ const orderController = {
       } else {
         console.log(`No coupon usage to record - couponId: ${couponId}, couponCode: ${couponCode}`);
       }
-
-      // Debug: Log saved order to verify college information
-      const savedOrder = await Order.findById(order._id);
 
       // Notify drivers about new normal order
       if (type !== 'gkk') { // Don't notify for subscription orders
