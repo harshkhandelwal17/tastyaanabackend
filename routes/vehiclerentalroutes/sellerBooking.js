@@ -9,7 +9,10 @@ const {
   updateCashPayment,
   getCashFlowSummary,
   markCashHandover,
-  replaceVehicleOnBooking
+  replaceVehicleOnBooking,
+  softDeleteBooking,
+  getDeletedBookings,
+  restoreDeletedBooking
 } = require('../../controllers/vehiclerentalcontrollers/sellerBookingController');
 
 // Middleware to check if user is seller
@@ -40,6 +43,21 @@ router.put('/:bookingId/cash-payment', checkSellerRole, updateCashPayment);
 // Replace vehicle on existing booking
 // PUT /api/seller/bookings/:bookingId/replace-vehicle
 router.put('/:bookingId/replace-vehicle', checkSellerRole, replaceVehicleOnBooking);
+
+// ===== Soft Delete Management Routes =====
+
+// Soft delete a booking (hide from seller view)
+// DELETE /api/seller/bookings/:bookingId
+// Body: { reason: "Optional reason for deletion" }
+router.delete('/:bookingId', checkSellerRole, softDeleteBooking);
+
+// Get deleted bookings (optional - for recovery)
+// GET /api/seller/bookings/deleted
+router.get('/deleted/list', checkSellerRole, getDeletedBookings);
+
+// Restore a deleted booking
+// PUT /api/seller/bookings/:bookingId/restore
+router.put('/:bookingId/restore', checkSellerRole, restoreDeletedBooking);
 
 // ===== Cash Flow Management Routes =====
 

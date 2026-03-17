@@ -2,7 +2,6 @@ const VehicleBooking = require('../../models/VehicleBooking');
 const Vehicle = require('../../models/Vehicle');
 const User = require('../../models/User');
 const Razorpay = require('razorpay');
-const mongoose = require('mongoose');
 
 // Initialize Razorpay
 const razorpay = new Razorpay({
@@ -36,8 +35,8 @@ const calculateBillingDetails = (vehicle, startDateTime, endDateTime, rateType, 
     // Calculate deposit amount (only if vehicle requires deposit)
     const depositAmount = vehicle.requiresDeposit ? vehicle.depositAmount : 0;
 
-    // Calculate final total (rental + addons + GST) - Deposit collected at pickup
-    const finalTotal = subtotal + gstAmount;
+    // Calculate final total (rental + addons + GST + deposit if required)
+    const finalTotal = subtotal + gstAmount + depositAmount; // Currently: subtotal + 0 + deposit
 
     return {
       durationHours,
@@ -48,7 +47,7 @@ const calculateBillingDetails = (vehicle, startDateTime, endDateTime, rateType, 
       finalTotal,
       depositAmount: depositAmount,
       requiresDeposit: vehicle.requiresDeposit,
-      depositCollectionMethod: vehicle.requiresDeposit ? 'at-pickup' : 'not-required',
+      depositCollectionMethod: vehicle.requiresDeposit ? 'online' : 'pickup',
       breakdown: {
         baseAmount: rateCalculation.baseRate,
         extraCharges: rateCalculation.extraCharges,
@@ -210,9 +209,8 @@ const validateBookingDetails = async (req, res) => {
     const startTime = new Date(startDateTime);
     const endTime = new Date(endDateTime);
 
-    // Check for past dates (with 15 min buffer)
-    const gracePeriodMs = 15 * 60 * 1000;
-    if (startTime.getTime() < (now.getTime() - gracePeriodMs)) {
+    // Check for past dates
+    if (startTime < now) {
       const timeDiff = Math.round((now - startTime) / (1000 * 60)); // difference in minutes
       return res.status(400).json({
         success: false,
@@ -221,7 +219,7 @@ const validateBookingDetails = async (req, res) => {
         details: {
           requestedStart: startTime.toISOString(),
           currentTime: now.toISOString(),
-          suggestion: 'Please select a start time that is in the future.'
+          suggestion: 'Please select a start time that is at least 15 minutes in the future.'
         }
       });
     }
@@ -264,17 +262,6 @@ const validateBookingDetails = async (req, res) => {
     const bufferMs = bufferMinutes * 60 * 1000;
     const checkStart = new Date(startTime.getTime() - bufferMs);
     const checkEnd = new Date(endTime.getTime() + bufferMs);
-
-    // CHECK: Find conflicting bookings.
-    // We check against 'confirmed', 'ongoing', AND recently created 'pending' bookings (within context of last 15 minutes lock)
-    // NOTE: We safely handle unauthenticated/public price validation checks
-    const fiveMinsAgo = new Date(Date.now() - 5 * 60 * 1000);
-
-    // Safely exclude current user's OWN pending locks if authenticated, so they aren't blocked from retrying
-    const pendingLockCondition = { bookingStatus: 'pending', createdAt: { $gt: fiveMinsAgo } };
-    if (req.user && req.user._id) {
-      pendingLockCondition.userId = { $ne: req.user._id };
-    }
 
     const conflictingBookings = await VehicleBooking.find({
       vehicleId,
@@ -398,8 +385,8 @@ const validateBookingDetails = async (req, res) => {
 const createBooking = async (req, res) => {
   try {
     const bookingData = req.body;
-    //     console.log("files received", req.files);
-    // console.log('Received booking data:', bookingData);
+//     console.log("files received", req.files);
+// console.log('Received booking data:', bookingData);
     // Validate vehicle exists and is available
     const vehicle = await Vehicle.findById(bookingData.vehicleId);
     if (!vehicle) {
@@ -418,14 +405,12 @@ const createBooking = async (req, res) => {
       });
     }
 
-    // Validate start time is in future (with 15 min buffer for latency)
+    // Validate start time is in future (with 1 hour buffer to allow for processing)
     const now = new Date();
     const startTime = new Date(bookingData.startDateTime);
     const endTime = new Date(bookingData.endDateTime);
 
-    // Allow booking to start up to 15 minutes in the past (clock skew/user delay)
-    const gracePeriodMs = 15 * 60 * 1000;
-    if (startTime.getTime() < (now.getTime() - gracePeriodMs)) {
+    if (startTime < now) {
       return res.status(400).json({
         success: false,
         message: 'Booking start time cannot be in the past. Please select a future date and time.'
@@ -463,35 +448,6 @@ const createBooking = async (req, res) => {
     // Extend requested range by buffer for safety check
     const checkStart = new Date(requestedStart.getTime() - bufferMs);
     const checkEnd = new Date(requestedEnd.getTime() + bufferMs);
-
-    // CHECK: Find conflicting bookings.
-    // To prevent double checkout race conditions, a pending unpaid booking locks the slot for 15 minutes.
-    // NOTE: We safely EXCLUDE the current user's own pending locks so they can retry payments!
-
-    // --- Cancel user's previous dangling pending bookings for this vehicle to prevent lock spam ---
-    if (req.user && req.user._id) {
-      await VehicleBooking.updateMany(
-        {
-          userId: req.user._id,
-          vehicleId: bookingData.vehicleId,
-          bookingStatus: 'pending'
-        },
-        {
-          $set: {
-            bookingStatus: 'cancelled',
-            cancellationReason: 'System Cancelled: Suppressed by newer booking request'
-          }
-        }
-      );
-    }
-    // --------------------------------------------------------------------------------------------
-
-    const fiveMinsAgo = new Date(Date.now() - 5 * 60 * 1000);
-
-    const pendingLockCondition = { bookingStatus: 'pending', createdAt: { $gt: fiveMinsAgo } };
-    if (req.user && req.user._id) {
-      pendingLockCondition.userId = { $ne: req.user._id };
-    }
 
     const conflictingBookings = await VehicleBooking.find({
       vehicleId: bookingData.vehicleId,
@@ -609,19 +565,20 @@ const createBooking = async (req, res) => {
       // Fix customerDetails.address - ensure it's an object
       customerDetails: {
         ...bookingData.customerDetails,
+        alternativeNumber: bookingData.customerDetails?.alternativeNumber || '',
         address: typeof bookingData.customerDetails?.address === 'string'
           ? {
-            street: bookingData.customerDetails.address,
-            city: '',
-            state: '',
-            pincode: ''
-          }
+              street: bookingData.customerDetails.address,
+              city: '',
+              state: '',
+              pincode: ''
+            }
           : (bookingData.customerDetails?.address || {
-            street: '',
-            city: '',
-            state: '',
-            pincode: ''
-          })
+              street: '',
+              city: '',
+              state: '',
+              pincode: ''
+            })
       },
       // Approval settings based on vehicle configuration
       requiresApproval: requiresApproval,
@@ -629,7 +586,7 @@ const createBooking = async (req, res) => {
       bookingStatus: initialBookingStatus,
       paymentStatus: 'unpaid', // Valid enum value for online bookings
       depositAmount: billingDetails.depositAmount,
-      depositCollectionMethod: vehicle.requiresDeposit ? 'at-pickup' : 'not-required',
+      depositCollectionMethod: vehicle.requiresDeposit ? 'online' : 'at-pickup',
       depositStatus: vehicle.requiresDeposit ? 'pending' : 'not-required',
       addons: bookingData.addons || [],
       // Payment tracking for online bookings
@@ -667,7 +624,6 @@ const createBooking = async (req, res) => {
         extraChargePerHour: billingDetails.rateCalculation.rateConfig.extraChargePerHour,
         gracePeriodMinutes: billingDetails.rateCalculation.rateConfig.gracePeriodMinutes || 0,
         kmFreePerHour: billingDetails.rateCalculation.rateConfig.kmFreePerHour || 0,
-        extraBlockRate: billingDetails.rateCalculation.rateConfig.extraBlockRate || 0,
         includesFuel: bookingData.includesFuel || false
       },
       billing: {
@@ -726,22 +682,9 @@ const createBooking = async (req, res) => {
 // Create Razorpay order
 const createRazorpayOrder = async (req, res) => {
   try {
-    let { bookingId, amount } = req.body;
+    const { bookingId, amount } = req.body;
 
-    // Handle nested bookingId from RazorpayComponent
-    if (!bookingId && req.body.orderData?.bookingId) {
-      bookingId = req.body.orderData.bookingId;
-    }
-
-    let booking;
-    // Check if bookingId is a valid ObjectId
-    const mongoose = require('mongoose');
-    if (mongoose.Types.ObjectId.isValid(bookingId)) {
-      booking = await VehicleBooking.findById(bookingId);
-    } else {
-      // If not ObjectId, try finding by custom bookingId string
-      booking = await VehicleBooking.findOne({ bookingId: bookingId });
-    }
+    const booking = await VehicleBooking.findById(bookingId);
     if (!booking) {
       return res.status(404).json({
         success: false,
@@ -767,10 +710,7 @@ const createRazorpayOrder = async (req, res) => {
         orderId: order.id,
         amount: order.amount,
         currency: order.currency,
-        key: process.env.RAZORPAY_KEY_ID, // Required by component
-        bookingId: bookingId,
-        recordId: bookingId, // Required by RazorpayComponent for verification
-        type: 'vehicle_rental' // Useful content for payment record
+        bookingId: bookingId
       }
     });
   } catch (error) {
@@ -790,11 +730,8 @@ const verifyPayment = async (req, res) => {
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
-      bookingId,
-      recordId // RazorpayComponent sends this
+      bookingId
     } = req.body;
-
-    const targetBookingId = bookingId || recordId;
 
     // Verify signature
     const crypto = require('crypto');
@@ -812,12 +749,7 @@ const verifyPayment = async (req, res) => {
     }
 
     // Update booking with payment details
-    let booking;
-    if (mongoose.Types.ObjectId.isValid(targetBookingId)) {
-      booking = await VehicleBooking.findById(targetBookingId);
-    } else {
-      booking = await VehicleBooking.findOne({ bookingId: targetBookingId });
-    }
+    const booking = await VehicleBooking.findById(bookingId);
     if (!booking) {
       return res.status(404).json({
         success: false,
@@ -825,78 +757,13 @@ const verifyPayment = async (req, res) => {
       });
     }
 
-    // --- CRITICAL RACE CONDITION CHECK ---
-    // Check if slot was taken by someone else while this user was paying
-    const vehicle = await Vehicle.findById(booking.vehicleId);
-    const bufferMinutes = vehicle.minBufferTime || 30;
-    const bufferMs = bufferMinutes * 60 * 1000;
-
-    // We only care about CONFIRMED/ONGOING bookings that are NOT this booking
-    const conflictingBookings = await VehicleBooking.find({
-      _id: { $ne: booking._id }, // Exclude self
-      vehicleId: booking.vehicleId,
-      $or: [
-        { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
-        { requestStatus: 'approved' }
-      ],
-      startDateTime: { $lt: new Date(booking.endDateTime.getTime() + bufferMs) },
-      endDateTime: { $gt: new Date(booking.startDateTime.getTime() - bufferMs) }
-    });
-
-    if (conflictingBookings.length > 0) {
-      console.warn(`🚨 RACE CONDITION: Booking ${booking._id} paid but slot taken by ${conflictingBookings[0]._id}. Initiating Refund.`);
-
-      // Attempt Refund
-      try {
-        await razorpay.payments.refund(razorpay_payment_id, {
-          "speed": "normal",
-          "notes": {
-            "reason": "Slot unavailable (Race Condition)",
-            "bookingId": booking._id.toString()
-          }
-        });
-        console.log(`✅ Refund Initiated for ${razorpay_payment_id}`);
-
-        // Mark booking as cancelled/failed
-        booking.paymentStatus = 'refunded';
-        booking.bookingStatus = 'cancelled';
-        booking.statusHistory.push({
-          status: 'cancelled',
-          updatedAt: new Date(),
-          notes: 'System Cancelled: Slot taken by another user during payment. Refund initiated.'
-        });
-        await booking.save();
-
-        return res.status(409).json({ // 409 Conflict
-          success: false,
-          message: 'Slot no longer available. Payment refunded.',
-          error: 'SLOT_TAKEN_RACE_CONDITION'
-        });
-
-      } catch (refundError) {
-        console.error('❌ Refund Failed:', refundError);
-        // Mark as refund-pending so admin can manually fix
-        booking.paymentStatus = 'refund-pending';
-        booking.bookingStatus = 'cancelled';
-        booking.notes = (booking.notes || '') + ' \n[SYSTEM]: Slot taken. Refund FAILED. Manual refund required.';
-        await booking.save();
-
-        return res.status(409).json({
-          success: false,
-          message: 'Slot no longer available. Refund processing failed. Please contact support.',
-          error: 'SLOT_TAKEN_REFUND_FAILED'
-        });
-      }
-    }
-    // -------------------------------------
-
     // Get payment details from Razorpay
     const payment = await razorpay.payments.fetch(razorpay_payment_id);
 
     // ✅ CHECK FOR DUPLICATE PAYMENT - Prevent double payment entries
     const existingPayment = booking.payments.find(
       p => p.paymentReference?.razorpayPaymentId === razorpay_payment_id ||
-        p.paymentReference?.transactionId === razorpay_payment_id
+           p.paymentReference?.transactionId === razorpay_payment_id
     );
 
     if (existingPayment) {
@@ -931,16 +798,17 @@ const verifyPayment = async (req, res) => {
     // Update cash flow details to reflect online payment
     if (booking.cashFlowDetails) {
       booking.cashFlowDetails.cashPaymentDetails.onlinePaymentAmount += payment.amount / 100;
-      booking.cashFlowDetails.cashPaymentDetails.pendingCashAmount = Math.max(0,
+      booking.cashFlowDetails.cashPaymentDetails.pendingCashAmount = Math.max(0, 
         booking.billing.totalBill - booking.cashFlowDetails.cashPaymentDetails.totalCashReceived - booking.cashFlowDetails.cashPaymentDetails.onlinePaymentAmount
       );
     }
 
-    // Vehicle already fetched above for race condition check
+    // Get vehicle to check approval requirement
+    const vehicle = await Vehicle.findById(booking.vehicleId);
 
     if (booking.paidAmount >= booking.billing.totalBill) {
       booking.paymentStatus = 'paid';
-
+      
       // Update deposit status if deposit was included in payment
       if (booking.depositCollectionMethod === 'online' && booking.depositAmount > 0) {
         booking.depositStatus = 'collected-online';
@@ -1392,22 +1260,22 @@ const approveBooking = async (req, res) => {
 
     if (action === 'approve') {
       booking.bookingStatus = 'confirmed';
-
+      
       // If this is an approval-required booking, update requestStatus as well
       if (booking.requiresApproval && booking.requestStatus === 'pending-approval') {
         booking.requestStatus = 'approved';
         booking.approvedBy = req.user.id;
         booking.approvedAt = new Date();
         booking.approverRole = req.user.role;
-
+        
         // Set payment expiry (30 minutes from approval)
         booking.requestExpiresAt = new Date(Date.now() + 30 * 60 * 1000);
       }
-
+      
       booking.statusHistory.push({
         status: 'confirmed',
         updatedBy: req.user.id,
-        notes: booking.requiresApproval
+        notes: booking.requiresApproval 
           ? 'Booking request approved by seller - awaiting payment'
           : 'Request approved by seller'
       });
@@ -1825,7 +1693,7 @@ const recalculateBillOnDrop = async (req, res) => {
         const blocks = Math.floor(extraTime / 12);
         const remaining = extraTime % 12;
 
-        const blockRate = rateConfig.extraBlockRate || 500;
+        const blockRate = (vehicle.rate12hr && vehicle.rate12hr.baseRate) || 500;
         const hrRate = rateConfig.extraChargePerHour || 3;
 
         rentTotal += (blocks * blockRate) + (remaining * hrRate);
@@ -2124,7 +1992,7 @@ const getWorkerDashboard = async (req, res) => {
     // Calculate statistics
     const stats = {
       totalBookings: bookings.length,
-      activeBookings: bookings.filter(b =>
+      activeBookings: bookings.filter(b => 
         ['confirmed', 'ongoing', 'picked-up'].includes(b.bookingStatus)
       ).length,
       pendingBookings: bookings.filter(b => b.bookingStatus === 'pending').length,

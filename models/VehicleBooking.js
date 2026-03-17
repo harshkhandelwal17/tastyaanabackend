@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const vehicleBookingSchema = new mongoose.Schema({
   // ===== Basic Booking Information =====
-
+  
   bookingId: {
     type: String,
     unique: true,
@@ -40,7 +40,7 @@ const vehicleBookingSchema = new mongoose.Schema({
     index: true,
     description: 'Source of the booking to track where it originated'
   },
-
+  
   // Cash flow management for seller bookings
   cashFlowDetails: {
     isOfflineBooking: {
@@ -82,7 +82,7 @@ const vehicleBookingSchema = new mongoose.Schema({
         description: 'Additional notes about cash payment'
       }
     },
-
+    
     // For tracking seller cash handling
     sellerCashFlow: {
       dailyCashCollected: {
@@ -113,7 +113,7 @@ const vehicleBookingSchema = new mongoose.Schema({
     default: false,
     description: 'True if this booking requires seller/worker approval before payment can be made'
   },
-
+  
   requestStatus: {
     type: String,
     enum: ['none', 'pending-approval', 'approved', 'rejected', 'expired', 'payment-expired'],
@@ -121,55 +121,55 @@ const vehicleBookingSchema = new mongoose.Schema({
     index: true,
     description: 'Status of the booking request. payment-expired means approved but user did not pay within 30 minutes'
   },
-
+  
   // Request submission details
   requestedAt: {
     type: Date,
     description: 'Timestamp when the booking request was submitted by user'
   },
-
+  
   requestExpiresAt: {
     type: Date,
     index: true,
     description: 'Expiry time for pending approval (30 minutes from requestedAt)'
   },
-
+  
   // Approval details
   approvedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     description: 'Worker or Seller who approved the booking request'
   },
-
+  
   approvedAt: {
     type: Date,
     description: 'Timestamp when the request was approved'
   },
-
+  
   approverRole: {
     type: String,
     enum: ['worker', 'seller', 'admin'],
     description: 'Role of the person who approved the request'
   },
-
+  
   // Rejection details
   rejectedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     description: 'Worker or Seller who rejected the booking request'
   },
-
+  
   rejectedAt: {
     type: Date,
     description: 'Timestamp when the request was rejected'
   },
-
+  
   rejectionReason: {
     type: String,
     maxlength: 500,
     description: 'Reason provided for rejecting the booking request'
   },
-
+  
   // Saved booking details for pending requests
   // Stores all user-entered information so they don't need to re-enter after approval
   savedBookingDetails: {
@@ -434,7 +434,6 @@ const vehicleBookingSchema = new mongoose.Schema({
     extraChargePerHour: Number,
     gracePeriodMinutes: Number,
     kmFreePerHour: Number, // For Hourly plan
-    extraBlockRate: Number, // For 24h plan
     includesFuel: {
       type: Boolean,
       default: false
@@ -454,6 +453,11 @@ const vehicleBookingSchema = new mongoose.Schema({
       type: Number,
       required: true,
       min: 0
+    },
+    duration: {
+      type: Number,
+      min: 0,
+      description: 'Billing duration in hours (with minimum hours applied for hourly plans)'
     },
     kmLimit: {
       type: Number,
@@ -559,7 +563,7 @@ const vehicleBookingSchema = new mongoose.Schema({
     },
     paymentMethod: {
       type: String,
-      enum: ['Razorpay', 'Cash', 'Manual'],
+      enum: ['Razorpay', 'Cash', 'Manual', 'Refund-Cash', 'Refund-Online'],
       default: 'Razorpay'
     },
     paymentReference: {
@@ -600,9 +604,18 @@ const vehicleBookingSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    fatherName: {
+      type: String,
+      required: false
+    },
     phone: {
       type: String,
       required: true
+    },
+    alternativeNumber: {
+      type: String,
+      required: false,
+      description: 'Alternative contact number for the customer'
     },
     email: String,
     address: {
@@ -625,7 +638,7 @@ const vehicleBookingSchema = new mongoose.Schema({
   documents: [{
     type: {
       type: String,
-      enum: ['rental-agreement', 'id-proof', 'driving-license', 'address-proof', 'security-deposit-receipt', 'other', 'document', 'documents', 'license-front', 'license-back', 'aadhar-front', 'aadhar-back', 'user-selfie'],
+      enum: ['rental-agreement', 'id-proof', 'driving-license', 'address-proof', 'security-deposit-receipt', 'other', 'document', 'documents'],
       required: true
     },
     url: {
@@ -693,7 +706,17 @@ const vehicleBookingSchema = new mongoose.Schema({
     approvedAmount: Number,
     refundMethod: {
       type: String,
-      enum: ['bank-transfer', 'wallet', 'cash', 'adjustment']
+      enum: ['bank-transfer', 'wallet', 'cash', 'adjustment', 'mixed']
+    },
+    cashAmount: {
+      type: Number,
+      default: 0,
+      description: 'Amount refunded via cash'
+    },
+    onlineAmount: {
+      type: Number,
+      default: 0,
+      description: 'Amount refunded via online transfer'
     },
     refundMode: {
       type: String,
@@ -870,6 +893,30 @@ const vehicleBookingSchema = new mongoose.Schema({
     evidence: [String] // Image/document URLs
   }],
 
+  // ===== Soft Delete (Seller Panel) =====
+  // Allows sellers to hide bookings from their view without permanent deletion
+  // Data is preserved for admin/audit purposes
+  isDeletedBySeller: {
+    type: Boolean,
+    default: false,
+    index: true,
+    description: 'Soft delete flag - hides booking from seller view but preserves data'
+  },
+  deletedBySellerAt: {
+    type: Date,
+    description: 'Timestamp when seller soft-deleted this booking'
+  },
+  deletedBySeller: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    description: 'Seller who soft-deleted this booking'
+  },
+  deletionReason: {
+    type: String,
+    maxlength: 500,
+    description: 'Reason provided by seller for deletion'
+  },
+
   // ===== Timestamps =====
   createdAt: {
     type: Date,
@@ -942,7 +989,7 @@ vehicleBookingSchema.methods.calculateExtraCharges = function (actualKm, actualH
 vehicleBookingSchema.methods.calculateTripMetrics = function () {
   const startReading = this.vehicleHandover?.startMeterReading;
   const endReading = this.vehicleReturn?.endMeterReading;
-
+  
   if (!startReading || !endReading) {
     return {
       success: false,
@@ -950,7 +997,7 @@ vehicleBookingSchema.methods.calculateTripMetrics = function () {
       totalKmTraveled: null
     };
   }
-
+  
   if (endReading < startReading) {
     return {
       success: false,
@@ -958,15 +1005,15 @@ vehicleBookingSchema.methods.calculateTripMetrics = function () {
       totalKmTraveled: null
     };
   }
-
+  
   const totalKmTraveled = endReading - startReading;
-
+  
   // Update the tripMetrics
   this.tripMetrics = {
     totalKmTraveled: totalKmTraveled,
     calculatedAt: new Date()
   };
-
+  
   return {
     success: true,
     totalKmTraveled: totalKmTraveled,
@@ -992,7 +1039,7 @@ vehicleBookingSchema.methods.updateMeterReading = function (type, reading, updat
       this.vehicleReturn.submittedBy = updatedBy;
     }
   }
-
+  
   // Automatically calculate trip metrics if both readings are available
   const metrics = this.calculateTripMetrics();
   return metrics;
@@ -1000,7 +1047,7 @@ vehicleBookingSchema.methods.updateMeterReading = function (type, reading, updat
 
 vehicleBookingSchema.methods.calculateExtraKmCharges = function () {
   const metrics = this.calculateTripMetrics();
-
+  
   if (!metrics.success || !this.ratePlanUsed?.kmLimit) {
     return {
       success: false,
@@ -1008,19 +1055,19 @@ vehicleBookingSchema.methods.calculateExtraKmCharges = function () {
       extraKmCharge: 0
     };
   }
-
+  
   const totalKm = metrics.totalKmTraveled;
   const kmLimit = this.ratePlanUsed.kmLimit;
   const extraChargePerKm = this.ratePlanUsed.extraChargePerKm || 0;
-
+  
   let extraKm = 0;
   let extraKmCharge = 0;
-
+  
   if (totalKm > kmLimit) {
     extraKm = totalKm - kmLimit;
     extraKmCharge = extraKm * extraChargePerKm;
   }
-
+  
   return {
     success: true,
     totalKm: totalKm,
@@ -1034,18 +1081,18 @@ vehicleBookingSchema.methods.calculateExtraKmCharges = function () {
 vehicleBookingSchema.methods.finalizeBookingBilling = function () {
   const tripMetrics = this.calculateTripMetrics();
   const extraKmCharges = this.calculateExtraKmCharges();
-
+  
   if (!tripMetrics.success) {
     return {
       success: false,
       message: 'Cannot finalize billing: ' + tripMetrics.message
     };
   }
-
+  
   // Update billing with extra km charges
   if (extraKmCharges.success) {
     this.billing.extraKmCharge = extraKmCharges.extraKmCharge;
-
+    
     // Recalculate total bill
     const baseAmount = this.billing.baseAmount || 0;
     const extraKmCharge = this.billing.extraKmCharge || 0;
@@ -1055,12 +1102,12 @@ vehicleBookingSchema.methods.finalizeBookingBilling = function () {
     const cleaningCharges = this.billing.cleaningCharges || 0;
     const tollCharges = this.billing.tollCharges || 0;
     const lateFees = this.billing.lateFees || 0;
-
-    this.billing.totalBill = baseAmount + extraKmCharge + extraHourCharge +
-      fuelCharges + damageCharges + cleaningCharges +
-      tollCharges + lateFees;
+    
+    this.billing.totalBill = baseAmount + extraKmCharge + extraHourCharge + 
+                            fuelCharges + damageCharges + cleaningCharges + 
+                            tollCharges + lateFees;
   }
-
+  
   return {
     success: true,
     tripMetrics: tripMetrics,
@@ -1208,34 +1255,34 @@ vehicleBookingSchema.pre('save', function (next) {
 
 // ===== STATIC METHODS FOR BOOKING TYPE IDENTIFICATION =====
 
-vehicleBookingSchema.statics.isOnlineBooking = function (booking) {
+vehicleBookingSchema.statics.isOnlineBooking = function(booking) {
   return booking.bookingSource === 'online';
 };
 
-vehicleBookingSchema.statics.isOfflineBooking = function (booking) {
-  return ['seller-portal', 'worker-portal', 'offline'].includes(booking.bookingSource) ||
-    booking.cashFlowDetails?.isOfflineBooking === true;
+vehicleBookingSchema.statics.isOfflineBooking = function(booking) {
+  return ['seller-portal', 'worker-portal', 'offline'].includes(booking.bookingSource) || 
+         booking.cashFlowDetails?.isOfflineBooking === true;
 };
 
-vehicleBookingSchema.statics.getBookingsByType = function (type = 'all', filters = {}) {
+vehicleBookingSchema.statics.getBookingsByType = function(type = 'all', filters = {}) {
   let query = { ...filters };
-
+  
   if (type === 'online') {
     query.bookingSource = 'online';
   } else if (type === 'offline') {
     query.bookingSource = { $in: ['seller-portal', 'worker-portal', 'offline'] };
   }
-
+  
   return this.find(query);
 };
 
-vehicleBookingSchema.statics.getBookingStats = function (dateRange = {}) {
+vehicleBookingSchema.statics.getBookingStats = function(dateRange = {}) {
   const matchStage = {};
   if (dateRange.startDate) matchStage.bookingDate = { $gte: new Date(dateRange.startDate) };
   if (dateRange.endDate) {
-    matchStage.bookingDate = {
-      ...matchStage.bookingDate,
-      $lte: new Date(dateRange.endDate)
+    matchStage.bookingDate = { 
+      ...matchStage.bookingDate, 
+      $lte: new Date(dateRange.endDate) 
     };
   }
 
@@ -1255,7 +1302,7 @@ vehicleBookingSchema.statics.getBookingStats = function (dateRange = {}) {
 
 // ===== INSTANCE METHODS =====
 
-vehicleBookingSchema.methods.getBookingTypeInfo = function () {
+vehicleBookingSchema.methods.getBookingTypeInfo = function() {
   return {
     source: this.bookingSource,
     type: this.bookingSource === 'online' ? 'online' : 'offline',
@@ -1266,8 +1313,8 @@ vehicleBookingSchema.methods.getBookingTypeInfo = function () {
   };
 };
 
-vehicleBookingSchema.methods.getCreatedBy = function () {
-  switch (this.bookingSource) {
+vehicleBookingSchema.methods.getCreatedBy = function() {
+  switch(this.bookingSource) {
     case 'online': return 'Customer (Online)';
     case 'seller-portal': return 'Seller (Offline)';
     case 'worker-portal': return 'Worker (Offline)';

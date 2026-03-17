@@ -739,11 +739,13 @@ const getSellerBookings = async (req, res) => {
     // Filter for bookings that are EITHER:
     // 1. For vehicles owned by this seller, OR
     // 2. Booked by this seller (seller-portal bookings)
+    // AND exclude soft-deleted bookings
     const filter = {
       $or: [
         { vehicleId: { $in: vehicleIds } },  // Vehicles owned by seller
         { bookedBy: sellerId }                // Bookings created by seller
-      ]
+      ],
+      isDeletedBySeller: { $ne: true }  // Exclude soft-deleted bookings from seller view
     };
 
     // Add filters
@@ -1055,6 +1057,14 @@ const getBookingDetails = async (req, res) => {
       return res.status(404).json({
         success: false,
         message: 'Booking not found or access denied'
+      });
+    }
+
+    // Check if booking is soft-deleted by seller
+    if (booking.isDeletedBySeller === true) {
+      return res.status(404).json({
+        success: false,
+        message: 'Booking not found or has been deleted'
       });
     }
 
@@ -2419,6 +2429,8 @@ const completeBooking = async (req, res) => {
       billing,
       notes,
       refundMode, // NEW: 'cash' or 'online' - how refund was given to customer
+      refundCash, // Cash refund amount
+      refundOnline, // Online refund amount
     } = req.body;
 
     // Find booking
@@ -2542,33 +2554,71 @@ const completeBooking = async (req, res) => {
     // If customer paid more than the actual bill, refund the difference
     if (totalPaid > actualBill) {
       const refundAmount = totalPaid - actualBill;
+      const cashRefund = parseFloat(refundCash) || 0;
+      const onlineRefund = parseFloat(refundOnline) || 0;
+      const totalRefunded = cashRefund + onlineRefund;
       
-      // Determine refund method based on refundMode or default to collection method
+      // Determine primary refund method
       let refundMethod = 'cash'; // Default
-      if (refundMode) {
-        refundMethod = refundMode === 'online' ? 'bank-transfer' : 'cash';
-      } else {
-        // Check how they paid originally
-        const cashPayment = booking.payments?.find(p => p.paymentMethod === 'Cash' || p.paymentType === 'Cash');
-        refundMethod = cashPayment ? 'cash' : 'bank-transfer';
+      if (onlineRefund > cashRefund) {
+        refundMethod = 'bank-transfer';
+      } else if (cashRefund > 0 && onlineRefund > 0) {
+        refundMethod = 'mixed'; // Both methods used
       }
       
-      // Create refund details
+      // Create refund details with breakdown
       booking.refundDetails = {
         reason: 'overbilling', // Overpayment at booking time
         requestedAmount: refundAmount,
-        approvedAmount: refundAmount,
+        approvedAmount: totalRefunded,
         refundMethod: refundMethod,
         refundMode: refundMode || (refundMethod === 'cash' ? 'cash' : 'online'),
+        cashAmount: cashRefund,
+        onlineAmount: onlineRefund,
         processedBy: req.user.id,
         processedDate: new Date(),
         refundReference: `REF-${booking.bookingId}-${Date.now().toString().slice(-6)}`,
-        notes: `Overpayment refund: Customer paid ₹${totalPaid} at booking, actual bill was ₹${actualBill}. Refunded ₹${refundAmount} via ${refundMode || refundMethod}.`
+        notes: `Overpayment refund: Customer paid ₹${totalPaid} at booking, actual bill was ₹${actualBill}. Refunded ₹${cashRefund} via cash and ₹${onlineRefund} via online.`
       };
       
       // Update refund status
       booking.refundStatus = 'completed';
       booking.depositRefundStatus = 'not-applicable'; // This is not a deposit refund
+      // Record refund transactions as negative payments so collected amount reflects net after refunds
+      booking.payments = booking.payments || [];
+      if (cashRefund > 0) {
+        booking.payments.push({
+          amount: -Math.abs(cashRefund),
+          paymentType: 'Cash',
+          paymentMethod: 'Refund-Cash',
+          status: 'success',
+          transactionDate: new Date(),
+          processedBy: req.user.id
+        });
+      }
+      if (onlineRefund > 0) {
+        booking.payments.push({
+          amount: -Math.abs(onlineRefund),
+          paymentType: 'UPI',
+          paymentMethod: 'Refund-Online',
+          status: 'success',
+          transactionDate: new Date(),
+          processedBy: req.user.id
+        });
+      }
+
+      // Recalculate paidAmount from payments (including negative refund entries)
+      const netPaid = (booking.payments || []).reduce((sum, p) => sum + (parseFloat(p.amount) || 0), 0);
+      booking.paidAmount = Math.round((netPaid + Number.EPSILON) * 100) / 100;
+
+      // Update paymentStatus after refund
+      if (booking.paidAmount >= booking.billing.totalBill) {
+        booking.paymentStatus = 'paid';
+      } else if (booking.paidAmount > 0) {
+        booking.paymentStatus = 'partially-paid';
+      } else {
+        booking.paymentStatus = 'unpaid';
+      }
     } else if (totalPaid < actualBill) {
       // Customer owes money
       booking.refundStatus = 'not-applicable';
@@ -2586,6 +2636,28 @@ const completeBooking = async (req, res) => {
 
     await booking.save();
 
+    // Update vehicle's meterReading to the end meter reading
+    console.log('🔍 Updating vehicle meterReading:', {
+      vehicleId: booking.vehicleId._id,
+      endMeterReading,
+      endMeterReadingType: typeof endMeterReading,
+      endMeterReadingValue: endMeterReading
+    });
+
+    if (endMeterReading && endMeterReading > 0) {
+      const vehicle = await Vehicle.findById(booking.vehicleId._id);
+      if (vehicle) {
+        console.log('📊 Current vehicle meterReading:', vehicle.meterReading);
+        vehicle.meterReading = parseInt(endMeterReading);
+        await vehicle.save();
+        console.log(`✅ Updated vehicle ${vehicle._id} meterReading to ${endMeterReading} km at dropoff`);
+      } else {
+        console.log('❌ Vehicle not found:', booking.vehicleId._id);
+      }
+    } else {
+      console.log('⚠️ End meter reading is invalid:', endMeterReading);
+    }
+
     // Update vehicle availability
     await Vehicle.findByIdAndUpdate(booking.vehicleId._id, {
       availability: 'available',
@@ -2602,6 +2674,254 @@ const completeBooking = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to complete booking',
+      error: error.message,
+    });
+  }
+};
+
+// ===== VEHICLE HISTORY =====
+
+// Get specific vehicle by ID
+const getVehicleById = async (req, res) => {
+  try {
+    const { vehicleId } = req.params;
+    const sellerId = req.user.id;
+
+    const vehicle = await Vehicle.findOne({ _id: vehicleId, sellerId });
+
+    if (!vehicle) {
+      return res.status(404).json({
+        success: false,
+        message: 'Vehicle not found',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {
+        vehicle,
+      },
+    });
+  } catch (error) {
+    console.error('Error fetching vehicle:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch vehicle',
+      error: error.message,
+    });
+  }
+};
+
+// Get booking history for a specific vehicle
+const getVehicleBookingHistory = async (req, res) => {
+  try {
+    const { vehicleId } = req.params;
+    const sellerId = req.user.id;
+
+    // Verify vehicle belongs to seller
+    const vehicle = await Vehicle.findOne({ _id: vehicleId, sellerId });
+    if (!vehicle) {
+      return res.status(404).json({
+        success: false,
+        message: 'Vehicle not found',
+      });
+    }
+
+    // Get all bookings for this vehicle (exclude soft-deleted)
+    const bookings = await VehicleBooking.find({ 
+      vehicleId,
+      isDeletedBySeller: { $ne: true }  // Exclude soft-deleted bookings from seller view
+    })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    res.status(200).json({
+      success: true,
+      data: {
+        bookings,
+      },
+    });
+  } catch (error) {
+    console.error('Error fetching vehicle booking history:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch booking history',
+      error: error.message,
+    });
+  }
+};
+
+// Get maintenance history for a specific vehicle
+const getVehicleMaintenanceHistory = async (req, res) => {
+  try {
+    const { vehicleId } = req.params;
+    const sellerId = req.user.id;
+
+    // Verify vehicle belongs to seller
+    const vehicle = await Vehicle.findOne({ _id: vehicleId, sellerId });
+    if (!vehicle) {
+      return res.status(404).json({
+        success: false,
+        message: 'Vehicle not found',
+      });
+    }
+
+    // Get maintenance records from vehicle
+    const maintenance = vehicle.maintenanceHistory || [];
+
+    res.status(200).json({
+      success: true,
+      data: {
+        maintenance,
+      },
+    });
+  } catch (error) {
+    console.error('Error fetching maintenance history:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch maintenance history',
+      error: error.message,
+    });
+  }
+};
+
+// Add maintenance record
+const addVehicleMaintenance = async (req, res) => {
+  try {
+    const { vehicleId } = req.params;
+    const sellerId = req.user.id;
+    const maintenanceData = req.body;
+
+    // Verify vehicle belongs to seller
+    const vehicle = await Vehicle.findOne({ _id: vehicleId, sellerId });
+    if (!vehicle) {
+      return res.status(404).json({
+        success: false,
+        message: 'Vehicle not found',
+      });
+    }
+
+    // Initialize maintenanceHistory if it doesn't exist
+    if (!vehicle.maintenanceHistory) {
+      vehicle.maintenanceHistory = [];
+    }
+
+    // Add new maintenance record
+    const newMaintenance = {
+      date: maintenanceData.date || new Date(),
+      type: maintenanceData.type,
+      description: maintenanceData.description,
+      cost: maintenanceData.cost || 0,
+      serviceProvider: maintenanceData.serviceProvider,
+      meterReading: maintenanceData.meterReading,
+      nextServiceDue: maintenanceData.nextServiceDue,
+    };
+
+    vehicle.maintenanceHistory.push(newMaintenance);
+    await vehicle.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Maintenance record added successfully',
+      data: {
+        maintenance: vehicle.maintenanceHistory[vehicle.maintenanceHistory.length - 1],
+      },
+    });
+  } catch (error) {
+    console.error('Error adding maintenance record:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to add maintenance record',
+      error: error.message,
+    });
+  }
+};
+
+// Update maintenance record
+const updateVehicleMaintenance = async (req, res) => {
+  try {
+    const { vehicleId, maintenanceId } = req.params;
+    const sellerId = req.user.id;
+    const updateData = req.body;
+
+    // Verify vehicle belongs to seller
+    const vehicle = await Vehicle.findOne({ _id: vehicleId, sellerId });
+    if (!vehicle) {
+      return res.status(404).json({
+        success: false,
+        message: 'Vehicle not found',
+      });
+    }
+
+    // Find and update maintenance record
+    const maintenanceIndex = vehicle.maintenanceHistory.findIndex(
+      m => m._id.toString() === maintenanceId
+    );
+
+    if (maintenanceIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        message: 'Maintenance record not found',
+      });
+    }
+
+    // Update fields
+    Object.keys(updateData).forEach(key => {
+      if (updateData[key] !== undefined) {
+        vehicle.maintenanceHistory[maintenanceIndex][key] = updateData[key];
+      }
+    });
+
+    await vehicle.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Maintenance record updated successfully',
+      data: {
+        maintenance: vehicle.maintenanceHistory[maintenanceIndex],
+      },
+    });
+  } catch (error) {
+    console.error('Error updating maintenance record:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update maintenance record',
+      error: error.message,
+    });
+  }
+};
+
+// Delete maintenance record
+const deleteVehicleMaintenance = async (req, res) => {
+  try {
+    const { vehicleId, maintenanceId } = req.params;
+    const sellerId = req.user.id;
+
+    // Verify vehicle belongs to seller
+    const vehicle = await Vehicle.findOne({ _id: vehicleId, sellerId });
+    if (!vehicle) {
+      return res.status(404).json({
+        success: false,
+        message: 'Vehicle not found',
+      });
+    }
+
+    // Remove maintenance record
+    vehicle.maintenanceHistory = vehicle.maintenanceHistory.filter(
+      m => m._id.toString() !== maintenanceId
+    );
+
+    await vehicle.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Maintenance record deleted successfully',
+    });
+  } catch (error) {
+    console.error('Error deleting maintenance record:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete maintenance record',
       error: error.message,
     });
   }
@@ -2633,4 +2953,10 @@ module.exports = {
   respondToExtension,
   processVehicleDrop,
   completeBooking,
+  getVehicleById,
+  getVehicleBookingHistory,
+  getVehicleMaintenanceHistory,
+  addVehicleMaintenance,
+  updateVehicleMaintenance,
+  deleteVehicleMaintenance,
 };

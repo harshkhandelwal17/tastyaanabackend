@@ -61,6 +61,8 @@ const groupOrderRoutes = require('./routes/groupOrderRoutes');
 const vehicleRoutes = require('./routes/vehiclerentalroutes/vehicleRoutes');
 const sellerVehicleRoutes = require('./routes/vehiclerentalroutes/sellerVehicleRoutes');
 const sellerBookingRoutes = require('./routes/vehiclerentalroutes/sellerBooking');
+const adminVehicleRentalRoutes = require('./routes/vehiclerentalroutes/adminVehicleRentalRoutes');
+const workerVehicleRoutes = require('./routes/workerVehicleRoutes');
 const app = express();
 // Middleware
 // Middleware
@@ -230,6 +232,14 @@ app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/seller/vehicles', sellerVehicleRoutes);
 app.use('/api/seller/bookings', sellerBookingRoutes);
 // Initialize cron jobs
+
+//Routes for Rental vehicles
+app.use('/api/vehicles', vehicleRoutes);
+app.use('/api/seller/vehicles', sellerVehicleRoutes);
+app.use('/api/seller/bookings', sellerBookingRoutes);
+app.use('/api/admin/vehicle-rental', adminVehicleRentalRoutes);
+app.use('/api/worker/vehicles', workerVehicleRoutes);
+
 require('./corn/jobs');
 
 module.exports = app;
