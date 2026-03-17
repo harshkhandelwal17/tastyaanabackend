@@ -275,46 +275,113 @@ const createSubscription = async (req, res) => {
       });
     }
 
-    // 1. Clean up ALL old pending/failed subscriptions for this user in one query
-    await Subscription.updateMany(
-      {
-        user: userId,
-        status: 'pending_payment'
-      },
-      {
-        $set: {
-          status: 'cancelled',
-          cancellationReason: 'Replaced or auto-cancelled',
-          cancelledAt: new Date()
-        }
-      }
-    );
-
-    // 2. ONE strict check for any recent duplicates (within last 10 mins)
-    const recentDuplicate = await Subscription.findOne({
+    // FIXED: Handle unique index constraint by cleaning up old pending_payment subscriptions
+    // Check for any existing pending_payment subscriptions that might cause unique index conflicts
+    const existingPendingSubscriptions = await Subscription.find({
       user: userId,
-      status: { $in: ['active', 'pending_payment'] },
-      createdAt: { $gte: new Date(Date.now() - 10 * 60 * 1000) },
-      $or: [
-        { mealPlan: mealPlanId, planType: planType },
-        { createdAt: { $gte: new Date(Date.now() - 5 * 60 * 1000) } } // Or ANY subscription in last 5 mins
-      ]
+      status: 'pending_payment'
     });
 
-    if (recentDuplicate) {
+
+    // Clean up old pending_payment subscriptions to prevent unique index conflicts
+    if (existingPendingSubscriptions.length > 0) {
+
+      // Update all pending_payment subscriptions to cancelled status
+      await Subscription.updateMany(
+        {
+          user: userId,
+          status: 'pending_payment'
+        },
+        {
+          $set: {
+            status: 'cancelled',
+            cancellationReason: 'Replaced by new subscription - auto-cancelled',
+            cancelledAt: new Date()
+          }
+        }
+      );
+    }
+
+    // CRITICAL: Check for existing subscriptions to prevent duplicates
+    // Use a more strict check to prevent race conditions
+    const existingSubscriptions = await Subscription.find({
+      user: userId,
+      status: { $in: ['active', 'pending_payment'] },
+      createdAt: { $gte: new Date(Date.now() - 5 * 60 * 1000) } // Only check last 5 minutes
+    });
+
+
+    // If there are any recent subscriptions, block creation to prevent duplicates
+    if (existingSubscriptions.length > 0) {
       return res.status(400).json({
         success: false,
-        message: 'A similar subscription was recently created. Please check your existing subscriptions.',
-        error: 'DUPLICATE_SUBSCRIPTION_ATTEMPT',
+        message: 'A subscription was recently created. Please wait a moment or check your existing subscriptions.',
+        error: 'RECENT_SUBSCRIPTION_EXISTS',
         data: {
           existingSubscription: {
-            id: recentDuplicate._id,
-            subscriptionId: recentDuplicate.subscriptionId,
-            status: recentDuplicate.status,
-            createdAt: recentDuplicate.createdAt
+            id: existingSubscriptions[0]._id,
+            subscriptionId: existingSubscriptions[0].subscriptionId,
+            status: existingSubscriptions[0].status,
+            createdAt: existingSubscriptions[0].createdAt
           }
         }
       });
+    }
+
+    // Additional check: Prevent duplicate subscriptions with same meal plan and timing
+    const duplicateCheck = await Subscription.findOne({
+      user: userId,
+      mealPlan: mealPlanId,
+      planType: planType,
+      status: { $in: ['active', 'pending_payment'] },
+      createdAt: { $gte: new Date(Date.now() - 10 * 60 * 1000) } // Check last 10 minutes
+    });
+
+    if (duplicateCheck) {
+
+      return res.status(400).json({
+        success: false,
+        message: 'A subscription with this meal plan and type was recently created. Please check your existing subscriptions.',
+        error: 'DUPLICATE_SUBSCRIPTION_ATTEMPT',
+        data: {
+          existingSubscription: {
+            id: duplicateCheck._id,
+            subscriptionId: duplicateCheck.subscriptionId,
+            status: duplicateCheck.status,
+            createdAt: duplicateCheck.createdAt
+          }
+        }
+      });
+    }
+
+    // FIXED: Clean up old failed subscriptions before creating new ones
+    // This prevents the unique index error when user tries to create subscription after failed payment
+    const oldFailedSubscriptions = await Subscription.find({
+      user: userId,
+      status: 'pending_payment',
+      createdAt: { $lt: new Date(Date.now() - 5 * 60 * 1000) } // Older than 5 minutes
+    });
+
+
+
+    // Clean up old failed subscriptions to prevent unique index conflicts
+    if (oldFailedSubscriptions.length > 0) {
+
+      await Subscription.updateMany(
+        {
+          user: userId,
+          status: 'pending_payment',
+          createdAt: { $lt: new Date(Date.now() - 5 * 60 * 1000) }
+        },
+        {
+          $set: {
+            status: 'cancelled',
+            cancellationReason: 'Payment failed - auto-cancelled after 5 minutes',
+            cancelledAt: new Date()
+          }
+        }
+      );
+
     }
 
     // Optional: Limit to prevent abuse (e.g., max 3 active subscriptions)
@@ -848,41 +915,55 @@ const processSubscriptionPayment = async (req, res) => {
     // **CRITICAL FIX**: Check for existing active subscription BEFORE processing payment
     // This prevents the duplicate key error that occurs when trying to activate a subscription
     // when the user already has an active subscription
+    // Check for existing active subscription - COMMENTED OUT TO ALLOW MULTIPLE SUBSCRIPTIONS
+    // const existingActiveSubscription = await Subscription.findOne({
+    //   user: userId,
+    //   status: 'active',
+    //   _id: { $ne: subscriptionId } // Exclude the current subscription being processed
+    // });
 
+    if (false) { // existingActiveSubscription check disabled
+      console.log(`❌ User ${userId} already has an active subscription: ${existingActiveSubscription.subscriptionId}`);
 
-    const subscriptionCheck = await Subscription.findOne({
-      _id: subscriptionId,
-      status: 'pending_payment'
-    });
-
-    if (!subscriptionCheck) {
-      return res.status(404).json({
+      // Instead of failing completely, we could offer options:
+      // Option 1: Return error and ask user to cancel existing subscription first
+      return res.status(409).json({
         success: false,
-        message: 'Subscription not found or already processed'
+        message: 'You already have an active subscription. Please cancel your current subscription before creating a new one.',
+        code: 'DUPLICATE_ACTIVE_SUBSCRIPTION',
+        existingSubscription: {
+          id: existingActiveSubscription.subscriptionId,
+          mealPlan: existingActiveSubscription.mealPlan,
+          startDate: existingActiveSubscription.startDate,
+          status: existingActiveSubscription.status
+        }
       });
+
+      // Option 2: Auto-cancel the old subscription (uncomment if preferred)
+      // try {
+      //   await Subscription.findByIdAndUpdate(existingActiveSubscription._id, {
+      //     status: 'cancelled',
+      //     isActive: false,
+      //     cancelledAt: new Date(),
+      //     cancellationReason: 'Replaced by new subscription'
+      //   });
+      //   console.log(`✅ Auto-cancelled old subscription: ${existingActiveSubscription.subscriptionId}`);
+      // } catch (cancelError) {
+      //   console.error('Error auto-cancelling old subscription:', cancelError);
+      //   return res.status(500).json({
+      //     success: false,
+      //     message: 'Failed to cancel existing subscription. Please contact support.'
+      //   });
+      // }
     }
 
-    // Verify the subscription belongs to the user (security check)
-    if (subscriptionCheck.user.toString() !== userId.toString()) {
-      return res.status(403).json({
-        success: false,
-        message: 'Access denied. Subscription does not belong to this user.'
-      });
-    }
-
-    // IMPORTANT: Verify payment amount BEFORE activating the subscription
-    if (Math.abs(paidAmount - subscriptionCheck.pricing.finalAmount) > 0.01) {
-      return res.status(400).json({
-        success: false,
-        message: `Payment amount mismatch. Expected: ${subscriptionCheck.pricing.finalAmount}, Paid: ${paidAmount}`
-      });
-    }
-
-    // Now safely activate the subscription
+    // Find the existing subscription by ID - this is the key: we verify by subscription ID, not user ID
+    // Use findOneAndUpdate with optimistic locking to prevent write conflicts
+    // NO TRANSACTION - use atomic operations instead
     const subscription = await Subscription.findOneAndUpdate(
       {
         _id: subscriptionId,
-        status: 'pending_payment'
+        status: 'pending_payment' // Only update if still pending
       },
       {
         $set: {
@@ -895,10 +976,33 @@ const processSubscriptionPayment = async (req, res) => {
         }
       },
       {
-        new: true,
-        runValidators: false
+        new: true, // Return the updated document
+        runValidators: false // Skip validation to avoid conflicts
       }
     );
+
+    if (!subscription) {
+      return res.status(404).json({
+        success: false,
+        message: 'Subscription not found or already processed'
+      });
+    }
+
+    // Verify the subscription belongs to the user (security check)
+    if (subscription.user.toString() !== userId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied. Subscription does not belong to this user.'
+      });
+    }
+
+    // Verify payment amount matches subscription amount
+    if (Math.abs(paidAmount - subscription.pricing.finalAmount) > 0.01) {
+      return res.status(400).json({
+        success: false,
+        message: `Payment amount mismatch. Expected: ${subscription.pricing.finalAmount}, Paid: ${paidAmount}`
+      });
+    }
 
     // Calculate and set next delivery date
     const today = new Date();

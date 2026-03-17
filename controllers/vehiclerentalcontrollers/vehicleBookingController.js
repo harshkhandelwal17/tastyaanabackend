@@ -239,10 +239,8 @@ const validateBookingDetails = async (req, res) => {
     }
 
     // Check duration limits
-    let durationHours = (endTime - startTime) / (1000 * 60 * 60);
-    durationHours = Math.round(durationHours * 100) / 100; // Fix JS floating point bugs for exact 1h duration
-
-    if (durationHours < 0.95) { // Relax strict rounding bounds
+    const durationHours = (endTime - startTime) / (1000 * 60 * 60);
+    if (durationHours < 1) {
       return res.status(400).json({
         success: false,
         message: `Booking duration is ${durationHours.toFixed(1)} hours. Minimum booking duration is 1 hour.`,
@@ -265,19 +263,8 @@ const validateBookingDetails = async (req, res) => {
 
     const conflictingBookings = await VehicleBooking.find({
       vehicleId,
-<<<<<<< HEAD
-      $and: [
-        {
-          $or: [
-            { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
-            { requestStatus: 'approved' },
-            pendingLockCondition
-          ]
-        },
-=======
       bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] },
       $or: [
->>>>>>> 98b1491ba1a112b799308fbcd37b3998423fa8e1
         {
           startDateTime: { $lt: checkEnd },
           endDateTime: { $gt: checkStart }
@@ -401,7 +388,12 @@ const createBooking = async (req, res) => {
       });
     }
 
-
+    // Debug: Check vehicle zone data
+    console.log('Vehicle zone data:', {
+      zoneId: vehicle.zoneId,
+      zoneCode: vehicle.zoneCode,
+      zoneCenterName: vehicle.zoneCenterName
+    });
 
     if (!vehicle.isAvailableForBooking()) {
       return res.status(400).json({
@@ -431,10 +423,8 @@ const createBooking = async (req, res) => {
     }
 
     // Validate booking duration (minimum 1 hour, maximum 7 days)
-    let durationHours = (endTime - startTime) / (1000 * 60 * 60);
-    durationHours = Math.round(durationHours * 100) / 100; // Fix JS floating point bugs for exact 1h duration
-
-    if (durationHours < 0.95) {
+    const durationHours = (endTime - startTime) / (1000 * 60 * 60);
+    if (durationHours < 1) {
       return res.status(400).json({
         success: false,
         message: 'Minimum booking duration is 1 hour.'
@@ -456,14 +446,8 @@ const createBooking = async (req, res) => {
 
     const conflictingBookings = await VehicleBooking.find({
       vehicleId: bookingData.vehicleId,
-      $and: [
-        {
-          $or: [
-            { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
-            { requestStatus: 'approved' },
-            pendingLockCondition
-          ]
-        },
+      bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] }, // Include awaiting_approval
+      $or: [
         {
           startDateTime: { $lt: checkEnd },
           endDateTime: { $gt: checkStart }
@@ -535,7 +519,13 @@ const createBooking = async (req, res) => {
       });
     }
 
-
+    console.log('--- DEBUG BOOKING CREATION ---');
+    console.log('Duration (hours):', billingDetails.durationHours);
+    console.log('Rate Type:', bookingData.rateType);
+    console.log('Includes Fuel:', bookingData.includesFuel);
+    console.log('🚗 FREE KM LIMIT:', billingDetails.rateCalculation.rateConfig.kmLimit);
+    console.log('Billing Details:', billingDetails);
+    console.log('------------------------------');
 
     // Handle document uploads if provided
     let uploadedDocuments = [];
@@ -554,7 +544,12 @@ const createBooking = async (req, res) => {
     const initialRequestStatus = requiresApproval ? 'pending-approval' : 'none';
     const initialBookingStatus = requiresApproval ? 'awaiting_approval' : 'pending'; // Will be 'confirmed' after payment
 
-
+    console.log('--- APPROVAL LOGIC ---');
+    console.log('Vehicle requireConfirmation:', vehicle.requireConfirmation);
+    console.log('Booking requiresApproval:', requiresApproval);
+    console.log('Initial requestStatus:', initialRequestStatus);
+    console.log('Initial bookingStatus:', initialBookingStatus);
+    console.log('---------------------');
 
     // Create booking object
     const booking = new VehicleBooking({
@@ -656,14 +651,20 @@ const createBooking = async (req, res) => {
       documents: uploadedDocuments
     });
 
-
+    console.log('🎯 STORING KM LIMIT:', {
+      'billing.kmLimit': billingDetails.rateCalculation.rateConfig.kmLimit,
+      'currentKmLimit': billingDetails.rateCalculation.rateConfig.kmLimit,
+      'rateType': bookingData.rateType,
+      'duration': billingDetails.durationHours
+    });
 
     await booking.save();
 
     // ⚠️ IMPORTANT: Do NOT mark vehicle as reserved here!
     // Vehicle should only be reserved after successful payment confirmation
     // For now, we'll just log the booking creation
-
+    console.log(`📝 Booking ${booking._id} created with status: ${booking.bookingStatus}, Payment: ${booking.paymentStatus}`);
+    console.log(`⏳ Vehicle ${vehicle._id} remains available until payment is confirmed`);
 
     // Note: Vehicle will be marked as reserved in the payment verification callback
 
@@ -746,7 +747,6 @@ const verifyPayment = async (req, res) => {
       .digest('hex');
 
     if (expectedSignature !== razorpay_signature) {
-      console.error('Payment signature mismatch for order:', razorpay_order_id);
       return res.status(400).json({
         success: false,
         message: 'Invalid payment signature'
@@ -772,7 +772,7 @@ const verifyPayment = async (req, res) => {
     );
 
     if (existingPayment) {
-
+      console.log(`⚠️ Duplicate payment detected for booking ${bookingId}, payment ID: ${razorpay_payment_id}`);
       return res.json({
         success: true,
         message: 'Payment already recorded',
@@ -838,14 +838,14 @@ const verifyPayment = async (req, res) => {
         availability: 'reserved',
         currentBookingId: booking._id
       });
-
+      console.log(`🔒 Vehicle ${booking.vehicleId} marked as reserved for confirmed booking ${booking._id}`);
     } else if (booking.bookingStatus === 'awaiting_approval' && ['paid', 'partially-paid'].includes(booking.paymentStatus)) {
       // Also reserve vehicle for paid bookings awaiting approval
       await Vehicle.findByIdAndUpdate(booking.vehicleId, {
         availability: 'reserved',
         currentBookingId: booking._id
       });
-
+      console.log(`🔒 Vehicle ${booking.vehicleId} marked as reserved for booking ${booking._id} (awaiting approval)`);
     }
 
     res.json({
