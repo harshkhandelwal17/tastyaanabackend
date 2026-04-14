@@ -1,5 +1,5 @@
 // app.js
-require('dotenv').config();
+require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -234,6 +234,14 @@ app.use('/api/seller/bookings', sellerBookingRoutes);
 app.use('/api/admin/vehicle-rental', adminVehicleRentalRoutes);
 app.use('/api/worker/vehicles', workerVehicleRoutes);
 // Initialize cron jobs
+
+//Routes for Rental vehicles
+app.use('/api/vehicles', vehicleRoutes);
+app.use('/api/seller/vehicles', sellerVehicleRoutes);
+app.use('/api/seller/bookings', sellerBookingRoutes);
+app.use('/api/admin/vehicle-rental', adminVehicleRentalRoutes);
+app.use('/api/worker/vehicles', workerVehicleRoutes);
+
 require('./corn/jobs');
 
 module.exports = app;

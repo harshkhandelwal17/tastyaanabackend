@@ -277,4 +277,3 @@ const getDailyHisab = async (req, res) => {
 module.exports = {
   getDailyHisab
 };
-

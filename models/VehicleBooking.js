@@ -434,7 +434,6 @@ const vehicleBookingSchema = new mongoose.Schema({
     extraChargePerHour: Number,
     gracePeriodMinutes: Number,
     kmFreePerHour: Number, // For Hourly plan
-    extraBlockRate: Number, // For 24h plan
     includesFuel: {
       type: Boolean,
       default: false
@@ -454,6 +453,11 @@ const vehicleBookingSchema = new mongoose.Schema({
       type: Number,
       required: true,
       min: 0
+    },
+    duration: {
+      type: Number,
+      min: 0,
+      description: 'Billing duration in hours (with minimum hours applied for hourly plans)'
     },
     kmLimit: {
       type: Number,
@@ -559,7 +563,7 @@ const vehicleBookingSchema = new mongoose.Schema({
     },
     paymentMethod: {
       type: String,
-      enum: ['Razorpay', 'Cash', 'Manual'],
+      enum: ['Razorpay', 'Cash', 'Manual', 'Refund-Cash', 'Refund-Online'],
       default: 'Razorpay'
     },
     paymentReference: {
@@ -600,9 +604,18 @@ const vehicleBookingSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    fatherName: {
+      type: String,
+      required: false
+    },
     phone: {
       type: String,
       required: true
+    },
+    alternativeNumber: {
+      type: String,
+      required: false,
+      description: 'Alternative contact number for the customer'
     },
     email: String,
     address: {
@@ -625,7 +638,7 @@ const vehicleBookingSchema = new mongoose.Schema({
   documents: [{
     type: {
       type: String,
-      enum: ['rental-agreement', 'id-proof', 'driving-license', 'address-proof', 'security-deposit-receipt', 'other', 'document', 'documents', 'license-front', 'license-back', 'aadhar-front', 'aadhar-back', 'user-selfie'],
+      enum: ['rental-agreement', 'id-proof', 'driving-license', 'address-proof', 'security-deposit-receipt', 'other', 'document', 'documents', 'license-front', 'license-back', 'aadhar-front', 'aadhar-back'],
       required: true
     },
     url: {
@@ -693,7 +706,17 @@ const vehicleBookingSchema = new mongoose.Schema({
     approvedAmount: Number,
     refundMethod: {
       type: String,
-      enum: ['bank-transfer', 'wallet', 'cash', 'adjustment']
+      enum: ['bank-transfer', 'wallet', 'cash', 'adjustment', 'mixed']
+    },
+    cashAmount: {
+      type: Number,
+      default: 0,
+      description: 'Amount refunded via cash'
+    },
+    onlineAmount: {
+      type: Number,
+      default: 0,
+      description: 'Amount refunded via online transfer'
     },
     refundMode: {
       type: String,
@@ -869,6 +892,30 @@ const vehicleBookingSchema = new mongoose.Schema({
     resolvedAt: Date,
     evidence: [String] // Image/document URLs
   }],
+
+  // ===== Soft Delete (Seller Panel) =====
+  // Allows sellers to hide bookings from their view without permanent deletion
+  // Data is preserved for admin/audit purposes
+  isDeletedBySeller: {
+    type: Boolean,
+    default: false,
+    index: true,
+    description: 'Soft delete flag - hides booking from seller view but preserves data'
+  },
+  deletedBySellerAt: {
+    type: Date,
+    description: 'Timestamp when seller soft-deleted this booking'
+  },
+  deletedBySeller: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    description: 'Seller who soft-deleted this booking'
+  },
+  deletionReason: {
+    type: String,
+    maxlength: 500,
+    description: 'Reason provided by seller for deletion'
+  },
 
   // ===== Timestamps =====
   createdAt: {

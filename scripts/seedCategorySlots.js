@@ -56,7 +56,6 @@ async function seedCategorySlots() {
       serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
       socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
     });
-    
     console.log('MongoDB Connected successfully to database:', mongoose.connection.name);
 
     // Get all categories
@@ -102,7 +101,7 @@ async function seedCategorySlots() {
           console.log(`Skipping ${category.name} on ${day.dayName} - already exists`);
         }
       }
-    }
+    }     
 
     console.log('\nSlot seeding complete!');
     console.log(`Created: ${createdCount} slot configurations`);

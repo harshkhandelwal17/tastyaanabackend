@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const connect = async () => {
     try {
         
-        const connectionString = "mongodb+srv://harsh:harsh@unifiedcampus.i5fit.mongodb.net/onlinestore";
+        const connectionString = "mongodb://harsh:harsh@unifiedcampus-shard-00-00.i5fit.mongodb.net:27017,unifiedcampus-shard-00-01.i5fit.mongodb.net:27017,unifiedcampus-shard-00-02.i5fit.mongodb.net:27017/onlinestore?ssl=true&replicaSet=atlas-ivxkaa-shard-0&authSource=admin&retryWrites=true";
         // const connectionString = "mongodb://localhost:27017/sweetshop";
         await mongoose.connect(connectionString);
         console.log("DATABASE -- connected");

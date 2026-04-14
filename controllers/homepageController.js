@@ -54,7 +54,7 @@ const homepageController = {
 
       let nearbySellerIds = [];
       let isServiceable = true; // Default to true if no location provided (backend safe default)
-      let availableServices = ['food', 'tiffin', 'rental', 'grocery']; // Default all
+      let availableServices = ['food', 'tiffin', 'rental', 'grocery', 'gifting']; // Default all
 
       // 1. LOCATION & SERVICEABILITY CHECK
       if (lat && lng) {
@@ -68,10 +68,14 @@ const homepageController = {
         const rentalSellers = allNearbySellers.filter(s =>
           s.sellerProfile?.sellerType?.some(t => ['rental', 'vehicle'].includes(t.toLowerCase()))
         );
+        const giftingSellers = allNearbySellers.filter(s =>
+          s.sellerProfile?.sellerType?.some(t => ['gifting', 'florist', 'gifts'].includes(t.toLowerCase()))
+        );
 
         nearbySellerIds = allNearbySellers.map(s => s._id);
         const foodSellerIds = foodSellers.map(s => s._id);
         const rentalSellerIds = rentalSellers.map(s => s._id);
+        const giftingSellerIds = giftingSellers.map(s => s._id);
 
         console.log(`📍 [Homepage] Lat/Lng: ${lat},${lng} | Nearby Sellers: ${allNearbySellers.length}`);
 
@@ -114,6 +118,11 @@ const homepageController = {
           // const hasRental = await Vehicle.exists({ sellerId: { $in: rentalSellerIds }, status: 'active' });
           // if (hasRental) availableServices.push('rental');
           availableServices.push('rental');
+        }
+
+        // Gifting check
+        if (giftingSellerIds.length > 0) {
+          availableServices.push('gifting');
         }
 
         console.log(`📍 [Homepage Debug] Available Services: ${availableServices.join(', ')}`);
@@ -210,6 +219,7 @@ const homepageController = {
             debugInfo: {
               foodCount: foodSellerIds.length,
               rentalCount: rentalSellerIds.length,
+              giftingCount: giftingSellerIds.length,
               latReceived: lat,
               lngReceived: lng
             }
@@ -883,10 +893,12 @@ const homepageController = {
           const hasFood = validSellers.some(s => s.sellerProfile?.sellerType?.some(t => ['food', 'grocery'].includes(t.toLowerCase())));
           const hasTiffin = validSellers.some(s => s.sellerProfile?.sellerType?.some(t => ['tiffin', 'ghar-ka-khana'].includes(t.toLowerCase())));
           const hasRental = validSellers.some(s => s.sellerProfile?.sellerType?.some(t => ['rental', 'vehicle'].includes(t.toLowerCase())));
+ const hasGifting = validSellers.some(s => s.sellerProfile?.sellerType?.some(t => ['gifting', 'gifts'].includes(t.toLowerCase())));
 
           if (hasFood) availableServices.push('food', 'grocery');
           if (hasTiffin) availableServices.push('tiffin', 'ghar-ka-khana');
           if (hasRental) availableServices.push('rental');
+          if (hasGifting) availableServices.push('gifting');
 
           if (availableServices.length === 0) isServiceable = false;
         }

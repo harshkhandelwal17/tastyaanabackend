@@ -83,6 +83,11 @@ router.get('/public/:invalidRoute', (req, res, next) => {
 });
 
 router.post('/check-availability', vehicleController.checkAvailability); // Check availability
+
+// Booking validation and calculation (no auth required for price checking)
+router.post('/bookings/validate', vehicleBookingController.validateBookingDetails); // Validate booking details
+router.post('/bookings/calculate', vehicleBookingController.validateBookingDetails); // Alias for validation
+
 router.get('/public/:id', vehicleController.getVehicleById); // Get single vehicle details (must be last)
 
 // Protected routes (authentication required) 
@@ -150,9 +155,8 @@ router.post('/bookings/:id/offline-collection', vehicleRefundController.recordOf
 
 // ===== BOOKING ROUTES =====
 
-// Booking validation and calculation (no auth required for price checking)
-router.post('/bookings/validate', vehicleBookingController.validateBookingDetails); // Validate booking details
-router.post('/bookings/calculate', vehicleBookingController.validateBookingDetails); // Alias for validation
+// Booking validation is public and moved above auth middleware
+
 
 // Booking CRUD operations
 router.get('/bookings/all', vehicleBookingController.getBookings); // Get all bookings

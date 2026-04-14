@@ -1,4 +1,4 @@
-const cloudinary = require('../config/cloudinary');
+const { cloudinary, uploadFromBuffer } = require('../config/cloudinary');
 const VehicleBooking = require('../models/VehicleBooking');
 const Vehicle = require('../models/Vehicle');
 
@@ -11,7 +11,18 @@ const uploadBookingDocuments = async (req, res) => {
 
     const { bookingId } = req.body; // Get booking ID from request
 
-    if (!req.files || req.files.length === 0) {
+    let filesArray = [];
+    if (req.files) {
+      if (Array.isArray(req.files)) {
+        filesArray = req.files;
+      } else {
+        Object.values(req.files).forEach(fileArr => {
+          filesArray = filesArray.concat(fileArr);
+        });
+      }
+    }
+
+    if (filesArray.length === 0) {
       return res.status(400).json({
         success: false,
         message: 'No files uploaded'
@@ -57,14 +68,29 @@ const uploadBookingDocuments = async (req, res) => {
       });
     }
 
-    const uploadPromises = req.files.map(async (file) => {
-      // Files are already uploaded to Cloudinary by the middleware
-      // file.path contains the secure Cloudinary URL
-      // file.filename contains the public_id
+    const uploadPromises = filesArray.map(async (file) => {
+      let secureUrl = file.path;
+      let pubId = file.filename;
+
+      // If we are using MemoryStorage (file.buffer exists), upload it manually to prevent timeouts
+      if (file.buffer) {
+        try {
+          const result = await uploadFromBuffer(file.buffer, {
+            folder: 'Tastyaana/booking-documents',
+            resource_type: 'auto'
+          });
+          secureUrl = result.secure_url;
+          pubId = result.public_id;
+        } catch (err) {
+          console.error("Cloudinary Buffer Upload Error:", err);
+          throw new Error("Failed to upload document to Cloudinary");
+        }
+      }
+
       return {
         type: file.fieldname || 'document',
-        url: file.path,
-        publicId: file.filename,
+        url: secureUrl,
+        publicId: pubId,
         originalName: file.originalname,
         size: file.size,
         uploadedAt: new Date(),
@@ -250,14 +276,25 @@ const markVehicleReturned = async (req, res) => {
 // Upload documents without booking ID (for offline bookings being created)
 const uploadDocumentsOnly = async (req, res) => {
   try {
-    if (!req.files || req.files.length === 0) {
+    let filesArray = [];
+    if (req.files) {
+      if (Array.isArray(req.files)) {
+        filesArray = req.files;
+      } else {
+        Object.values(req.files).forEach(fileArr => {
+          filesArray = filesArray.concat(fileArr);
+        });
+      }
+    }
+
+    if (filesArray.length === 0) {
       return res.status(400).json({
         success: false,
         message: 'No files uploaded'
       });
     }
 
-    const uploadedDocuments = req.files.map((file) => ({
+    const uploadedDocuments = filesArray.map((file) => ({
       type: file.fieldname || 'document',
       url: file.path,
       publicId: file.filename,

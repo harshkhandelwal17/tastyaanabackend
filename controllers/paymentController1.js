@@ -168,7 +168,7 @@ const createRazorpayOrder = async (req, res) => {
           originalPrice: item.originalPrice || item.price || 0,
           discount: item.discount || 0,
           image: item.image || null,
-          seller: new mongoose.Types.ObjectId(item.seller),
+          seller: item.seller ? new mongoose.Types.ObjectId(item.seller._id || item.seller) : null,
           isCollegeBranded: item.isCollegeBranded || false,
           ...(item.collegeName && { collegeName: item.collegeName }) // Include college name if present
         };
