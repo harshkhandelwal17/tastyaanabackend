@@ -1445,8 +1445,8 @@ exports.updateSellerMealPlanByTierAndShift = async (req, res) => {
 
     // Get or create seller meal plan
     const sellerMealPlan = await SellerMealPlan.getOrCreateSellerMealPlan(sellerId, tier);
-
-    // Update the shift-specific meal plan
+    
+    // Update the shift-specific meal plan 
     await sellerMealPlan.updateShiftMeal(shift, {
       items: items.map(item => ({
         name: item.name.trim(),

@@ -326,7 +326,7 @@ const subscriptionSchema = new mongoose.Schema({
   packaging: {
     name: String,
     price: Number,
-    type: { type: String, enum: ['free', 'deposit', 'one-time'], default: 'free' },
+    type: { type: String, enum: ['free', 'deposit', 'one-time','per-meal'], default: 'free' },
     isRefundable: { type: Boolean, default: false }
   },
 
@@ -1845,18 +1845,19 @@ subscriptionSchema.methods.getTodayMeal = async function () {
     // Get meal plan tier from populated mealPlan
     await this.populate('mealPlan', 'tier title');
     const mealPlanTier = this.mealPlan?.tier || 'basic';
-
+    
     // Determine meal type and shift based on subscription settings
     const currentShift = this.shift === 'both' ? this.startShift : this.shift;
     const mealType = currentShift === 'morning' ? 'lunch' : 'dinner';
 
     // Get seller meal plan for this tier and shift
     const SellerMealPlan = mongoose.model('SellerMealPlan');
+  
     const sellerMealPlan = await SellerMealPlan.findOne({
       sellerId: this.sellerId,
       tier: mealPlanTier
     });
-
+    
     if (sellerMealPlan && sellerMealPlan.shiftMeals && sellerMealPlan.shiftMeals[currentShift]) {
       const shiftMealData = sellerMealPlan.shiftMeals[currentShift];
 

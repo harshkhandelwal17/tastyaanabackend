@@ -139,7 +139,7 @@ exports.createCustomization = async (req, res) => {
     }
 
     // VALIDATION 2: Check if user's per-meal price is at least ₹60
-    const basePricePerMeal = subscription.pricing?.basePricePerMeal || 0;
+    const basePricePerMeal = subscription.pricing?.basePricePerMeal || subscription.mealPlan?.pricing?.oneDay || 75;
     // if (basePricePerMeal < 60) {
     //   return res.status(400).json({
     //     success: false,

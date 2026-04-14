@@ -3,10 +3,12 @@ const router = express.Router();
 const vehicleController = require('../../controllers/vehiclerentalcontrollers/vehicleController');
 const vehicleBookingController = require('../../controllers/vehiclerentalcontrollers/vehicleBookingController');
 const vehicleRefundController = require('../../controllers/vehiclerentalcontrollers/vehicleRefundController');
-const bookingDocumentController = require('../../controllers/bookingDocumentController');
+const bookingDocumentController = require('../../controllers/vehiclerentalcontrollers/bookingDocumentController');
+const workerVehicleController = require('../../controllers/vehiclerentalcontrollers/workerVehicleController');
+// const bookingRequestController = require('../../controllers/bookingRequestController');
 const { authenticate } = require('../../middlewares/auth');
 const { vehicleUpload, documentUpload } = require('../../config/cloudinary'); // Use vehicle-specific and document-specific Cloudinary configuration
-
+const {getWorkerHandoverBookings}= require('../../controllers/vehiclerentalcontrollers/workerVehicleController');
 
 // ===== VEHICLE ROUTES =====
 
@@ -96,7 +98,7 @@ router.post('/bookings/request/:requestId/pay', bookingRequestController.proceed
 router.post('/bookings/request/:requestId/upload-documents', bookingRequestController.uploadDocuments); // Upload documents + payment proof
 
 // ===== WORKER ROUTES (Zone-restricted access) =====
-const workerVehicleController = require('../../controllers/vehiclerentalcontrollers/workerVehicleController');
+// const workerVehicleController = require('../../controllers/vehiclerentalcontrollers/workerVehicleController');
 
 // Worker dashboard
 router.get('/worker/dashboard', vehicleBookingController.getWorkerDashboard); // Worker dashboard - zone-restricted
@@ -111,7 +113,7 @@ router.put('/worker/booking-requests/:requestId/approve', bookingRequestControll
 router.put('/worker/booking-requests/:requestId/reject', bookingRequestController.rejectBookingRequest); // Reject booking request with reason
 
 // Worker handover operations (BEFORE dynamic routes)
-router.get('/worker/handover/bookings', workerVehicleController.getWorkerHandoverBookings); // Get pickup/return ready bookings
+router.get('/worker/handover/bookings', getWorkerHandoverBookings); // Get pickup/return ready bookings
 router.post('/worker/handover/:bookingId', workerVehicleController.processWorkerHandover); // Process pickup/return
 
 // Worker offline booking (BEFORE dynamic routes)
@@ -168,20 +170,7 @@ router.post('/bookings/payment/verify', vehicleBookingController.verifyPayment);
 router.post('/bookings/:bookingId/deposit/collect-at-pickup', authenticate, vehicleBookingController.collectDepositAtPickup); // Collect deposit at pickup
 
 // Document upload routes
-// Document upload routes with error handling
-router.post('/bookings/documents/upload', (req, res, next) => {
-  documentUpload.any()(req, res, (err) => {
-    if (err) {
-      console.error('❌ Document Upload Error:', err);
-      // Handle Multer/Cloudinary specific errors
-      if (err.message === 'Unexpected field') {
-        return res.status(400).json({ success: false, message: 'Unexpected file field in upload' });
-      }
-      return res.status(500).json({ success: false, message: 'File upload failed', error: err.message });
-    }
-    next();
-  });
-}, bookingDocumentController.uploadBookingDocuments);
+router.post('/bookings/documents/upload', documentUpload.any(), bookingDocumentController.uploadBookingDocuments); // Upload documents with any field names (requires bookingId)
 router.post('/documents/upload', authenticate, documentUpload.any(), bookingDocumentController.uploadDocumentsOnly); // Upload documents without bookingId (for offline bookings)
 router.put('/bookings/:id/documents', bookingDocumentController.updateBookingDocuments); // Update booking documents
 
@@ -189,7 +178,6 @@ router.put('/bookings/:id/documents', bookingDocumentController.updateBookingDoc
 router.post('/bookings/:id/return', bookingDocumentController.markVehicleReturned); // Mark vehicle as returned
 
 // Extension routes
-router.post('/bookings/:id/extend', vehicleBookingController.requestExtension); // Alias for extend
 router.post('/bookings/:id/request-extension', vehicleBookingController.requestExtension); // User requests extension
 router.post('/bookings/:id/respond-extension', vehicleBookingController.respondToExtension); // Seller approves/rejects
 router.post('/bookings/:id/verify-extension-payment', vehicleBookingController.verifyExtensionPayment); // Verify extension payment

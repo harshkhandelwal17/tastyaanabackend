@@ -100,7 +100,7 @@ const mealPlanSchema = new mongoose.Schema({
     name: { type: String, required: true }, // e.g., "Disposable", "Steel Tiffin"
     description: String,
     price: { type: Number, default: 0 },
-    type: { type: String, enum: ['free', 'deposit', 'one-time'], default: 'free' },
+    type: { type: String, enum: ['free', 'deposit', 'one-time','per-meal'], default: 'free' },
     isRefundable: { type: Boolean, default: false },
     image: String
   }],

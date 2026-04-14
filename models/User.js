@@ -1041,7 +1041,8 @@ const userSchema = new mongoose.Schema({
     priceRange: {
       min: { type: Number, default: 0 },
       max: { type: Number, default: 0 },
-      costForTwo: { type: Number, default: 0 }
+      costForTwo: { type: Number, default: 0 },
+      daysAvailable:{type: Number,default:30}
     },
     tags: [String] // e.g. "Best Seller", "Pure Veg"
   },

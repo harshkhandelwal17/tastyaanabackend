@@ -2,7 +2,6 @@ const Vehicle = require('../../models/Vehicle');
 const VehicleBooking = require('../../models/VehicleBooking');
 const User = require('../../models/User');
 const mongoose = require('mongoose');
-const { getNearbySellers } = require('../../utils/geoHelper');
 
 // ===== VEHICLE MANAGEMENT =====
 
@@ -25,9 +24,7 @@ const getVehicles = async (req, res) => {
       limit = 100,
       sortBy = 'createdAt',
       sortOrder = 'desc',
-      search,
-      lat,
-      lng
+      search
     } = req.query;
 
     // Build filter object
@@ -41,40 +38,6 @@ const getVehicles = async (req, res) => {
     if (sellerId) filter.sellerId = sellerId;
     if (fuelType) filter.fuelType = fuelType;
     if (brand) filter.companyName = new RegExp(brand, 'i');
-
-    // Location filtering (Unified Logic)
-    if (lat && lng) {
-      // 1. Find Sellers using unified helper
-      const nearbySellers = await getNearbySellers(lat, lng);
-      const nearbySellerIds = nearbySellers.map(u => u._id);
-
-      // 2. Filter Vehicles belonging to these sellers
-      if (nearbySellerIds.length > 0) {
-        if (filter.sellerId) {
-          // If sellerId was already filtered, ensure it's also in nearby list
-          const isNearby = nearbySellerIds.some(id => id.toString() === filter.sellerId.toString());
-          if (!isNearby) {
-            return res.json({ success: true, data: [], pagination: { totalItems: 0 } });
-          }
-        } else {
-          // Filter for all nearby sellers
-          filter.sellerId = { $in: nearbySellerIds };
-        }
-      } else {
-        // No sellers nearby -> No vehicles
-        return res.json({
-          success: true,
-          data: [],
-          pagination: {
-            currentPage: parseInt(page),
-            totalPages: 0,
-            totalItems: 0,
-            hasNext: false,
-            hasPrev: false
-          }
-        });
-      }
-    }
 
     // Price range filtering
     if (minPrice || maxPrice) {
@@ -91,29 +54,6 @@ const getVehicles = async (req, res) => {
         { companyName: { $regex: search, $options: 'i' } },
         { zoneCenterName: { $regex: search, $options: 'i' } }
       ];
-    }
-
-    // Date range filtering
-    if (req.query.startDateTime && req.query.endDateTime) {
-      const start = new Date(req.query.startDateTime);
-      const end = new Date(req.query.endDateTime);
-
-      // Find bookings that overlap with the requested range
-      const overlappingBookings = await VehicleBooking.find({
-        $or: [
-          { bookingStatus: { $in: ['confirmed', 'ongoing', 'awaiting_approval'] } },
-          { bookingStatus: 'pending', bookingDate: { $gt: new Date(Date.now() - 15 * 60 * 1000) } } // Also exclude pending bookings from last 15 mins
-        ],
-        $or: [
-          { startDateTime: { $lt: end }, endDateTime: { $gt: start } } // Overlap condition
-        ]
-      }).select('vehicleId');
-
-      const bookedVehicleIds = overlappingBookings.map(b => b.vehicleId);
-
-      if (bookedVehicleIds.length > 0) {
-        filter._id = { $nin: bookedVehicleIds };
-      }
     }
 
     const sortOptions = {};
@@ -444,6 +384,37 @@ const updateVehicle = async (req, res) => {
     // Handle null values that got stringified to "null"
     if (updateData.currentBookingId === 'null' || updateData.currentBookingId === '') {
       updateData.currentBookingId = null;
+    }
+
+    // ===== DATA SANITIZATION =====
+
+    // Auto-set zoneId from zoneCode if zoneId is empty
+    if (!updateData.zoneId || updateData.zoneId.trim() === '') {
+      if (updateData.zoneCode && updateData.zoneCode.trim() !== '') {
+        updateData.zoneId = updateData.zoneCode;
+        console.log(`Auto-set zoneId from zoneCode: ${updateData.zoneId}`);
+      } else if (vehicle.zoneCode) {
+        updateData.zoneId = vehicle.zoneCode;
+        console.log(`Auto-set zoneId from existing vehicle zoneCode: ${updateData.zoneId}`);
+      }
+    }
+
+    // Clean up rateDaily to remove invalid dayName values
+    if (updateData.rateDaily && Array.isArray(updateData.rateDaily)) {
+      const validDayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Weekend', 'Festival-day'];
+      const originalLength = updateData.rateDaily.length;
+
+      updateData.rateDaily = updateData.rateDaily.filter(rate => {
+        if (!rate.dayName || !validDayNames.includes(rate.dayName)) {
+          console.log(`Removing invalid rateDaily entry with dayName: ${rate.dayName}`);
+          return false;
+        }
+        return true;
+      });
+
+      if (originalLength !== updateData.rateDaily.length) {
+        console.log(`Cleaned rateDaily: removed ${originalLength - updateData.rateDaily.length} invalid entries`);
+      }
     }
 
     const updatedVehicle = await Vehicle.findByIdAndUpdate(
@@ -788,39 +759,15 @@ const updateSellerFleetStats = async (sellerId) => {
 // Get vehicle shops with their details and vehicle counts
 const getVehicleShops = async (req, res) => {
   try {
-    const { zoneCode, lat, lng } = req.query;
+    const { zoneCode } = req.query;
 
     // Build filter for vehicles
     let vehicleFilter = { status: 'active' };
     if (zoneCode) vehicleFilter.zoneCode = zoneCode;
 
-    // Construct pipeline
-    const pipeline = [];
-
-    // 1. Geo-spatial filtering (Unified: Use Seller Location)
-    if (lat && lng) {
-      // Find Sellers using unified helper
-      const nearbySellers = await getNearbySellers(lat, lng);
-      const nearbySellerIds = nearbySellers.map(u => u._id);
-
-
-
-      // Filter vehicles by these sellers
-      // Note: We cannot use $geoNear in pipeline anymore because we are not querying geo on Vehicle
-      pipeline.push({
-        $match: {
-          ...vehicleFilter,
-          sellerId: { $in: nearbySellerIds }
-        }
-      });
-
-    } else {
-      // Standard match if no location
-      pipeline.push({ $match: vehicleFilter });
-    }
-
-    // 2. Group by Seller
-    pipeline.push(
+    // Get shops with their vehicle counts and details
+    const shops = await Vehicle.aggregate([
+      { $match: vehicleFilter },
       {
         $group: {
           _id: '$sellerId',
@@ -828,7 +775,7 @@ const getVehicleShops = async (req, res) => {
           availableCount: {
             $sum: { $cond: [{ $eq: ['$availability', 'available'] }, 1, 0] }
           },
-          vehicleTypes: { $addToSet: '$category' },
+          vehicleTypes: { $addToSet: '$type' },
           priceRange: {
             $push: {
               $cond: [
@@ -875,9 +822,7 @@ const getVehicleShops = async (req, res) => {
         }
       },
       { $sort: { vehicleCount: -1, rating: -1 } }
-    );
-
-    const shops = await Vehicle.aggregate(pipeline);
+    ]);
 
     res.json({
       success: true,
@@ -897,32 +842,18 @@ const getVehicleShops = async (req, res) => {
 // Get vehicle types with counts and details
 const getVehicleTypes = async (req, res) => {
   try {
-    const { zoneCode, shopId, lat, lng } = req.query;
+    const { zoneCode, shopId } = req.query;
 
     // Build filter
     let filter = { status: 'active' };
     if (zoneCode) filter.zoneCode = zoneCode;
     if (shopId) filter.sellerId = shopId;
 
-    // Location Filter
-    if (lat && lng) {
-      const nearbySellers = await getNearbySellers(lat, lng);
-      const nearbySellerIds = nearbySellers.map(s => s._id);
-
-      if (filter.sellerId) {
-        // Verify specific shop is in range
-        const isNearby = nearbySellerIds.some(id => id.toString() === filter.sellerId.toString());
-        if (!isNearby) return res.json({ success: true, data: [] });
-      } else {
-        filter.sellerId = { $in: nearbySellerIds };
-      }
-    }
-
     const vehicleTypes = await Vehicle.aggregate([
       { $match: filter },
       {
         $group: {
-          _id: '$category',
+          _id: '$type',
           count: { $sum: 1 },
           availableCount: {
             $sum: { $cond: [{ $eq: ['$availability', 'available'] }, 1, 0] }

@@ -483,7 +483,7 @@ exports.getDriverDailyDeliveries = async (req, res) => {
         }
 // console.log("Existing Delivery: ", existingDelivery)
         // Determine delivery status and details
-        let actualStatus = existingDelivery.status || 'pending';
+        let actualStatus = existingDelivery?.status || 'pending';
         let actualMealPlan = subscription.mealPlan;
         let displayMealName = subscription.mealPlan?.name;
         let skipReason = null;

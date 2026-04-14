@@ -222,6 +222,7 @@ const createSubscription = async (req, res) => {
       deliverySettings,
       deliveryTiming,
       shift,
+      duration,
       selectedAddOns,
       customizations,
       dietaryPreference,
@@ -239,7 +240,7 @@ const createSubscription = async (req, res) => {
 
     const userId = req.user.id;
 
-
+   console.log("req body",req.body);
     // Check for existing active subscription - COMMENTED OUT TO ALLOW MULTIPLE SUBSCRIPTIONS
     // const existingActiveSubscription = await Subscription.findOne({
     //   user: userId,
@@ -430,7 +431,7 @@ const createSubscription = async (req, res) => {
         calculatedDuration = 30;
         break;
       default:
-        calculatedDuration = pricing?.totalDays || 30;
+        calculatedDuration = duration || pricing?.totalDays  || 30;
     }
 
     // 4. Calculate end date
@@ -489,8 +490,9 @@ const createSubscription = async (req, res) => {
     // 7. Calculate pricing
     let finalPricing;
     if (!pricing) {
+ 
       // Default pricing calculation if not provided
-      const basePricePerMeal = mealPlan.price || 0;
+      const basePricePerMeal = ((pricing.finalAmount-packaging.price)/duration) || 0;
       const totalDays = calculatedDuration;
       const mealsPerDay = 1; // Default to 1 meal per day
       const totalMeals = totalDays * mealsPerDay;
@@ -515,7 +517,9 @@ const createSubscription = async (req, res) => {
       };
     } else {
       // Use provided pricing but apply coupon if needed
-      finalPricing = { ...pricing };
+       const basePricePerMeal = ((pricing.finalAmount-packaging.price)/duration) || 0;
+      const totalDays = calculatedDuration;
+      finalPricing = { ...pricing ,basePricePerMeal,totalDays};
       if (couponCode && couponId && discount && discount > 0) {
         finalPricing.couponCode = couponCode;
         finalPricing.couponId = couponId;
@@ -1805,7 +1809,7 @@ const getSubscriptionBySubscriptionId = async (req, res) => {
  * Get user subscriptions
  */
 const getUserSubscriptions = async (req, res) => {
-  console.log("here")
+ 
   try {
     const { status = 'active', page = 1, limit = 10 } = req.query;
     //  console.log("inside subscription controller ",req.user)
@@ -1880,7 +1884,7 @@ const getUserSubscriptions = async (req, res) => {
       // Calculate remaining meals
       const totalMeals = sub.pricing?.totalMeals || 0;
       const remainingMeals = isFuture ? totalMeals : Math.max(0, totalMeals - (sub.mealCounts?.mealsDelivered || 0));
-
+      
       return {
         ...sub,
         remainingDays: Math.max(0, remaining),
@@ -1888,7 +1892,7 @@ const getUserSubscriptions = async (req, res) => {
         isFuture,
         daysCompleted: Math.max(0, elapsed),
         progressPercentage,
-        dailyAmount: sub.pricing ? (sub.pricing.finalAmount / totalDuration) : 0,
+        dailyAmount: sub.pricing ? ((sub.pricing.finalAmount - sub.packaging.price)/ totalDuration) : 0,
         mealCounts: {
           ...sub.mealCounts,
           mealsRemaining: remainingMeals,
@@ -1926,10 +1930,9 @@ const getUserSubscriptions = async (req, res) => {
 const getUserTodayMeal = async (req, res) => {
   try {
     const userId = req.user._id;
-
     // Find ALL active subscriptions for the user
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    //today.setHours(0, 0, 0, 0);
 
     console.log(`Debug TodayMeal: User ${userId}, Today: ${today.toISOString()}`);
 
@@ -1938,8 +1941,9 @@ const getUserTodayMeal = async (req, res) => {
       status: 'active',
       startDate: { $lte: today },
       endDate: { $gte: today }
-    }).populate('mealPlan', 'tier title')
+    }).populate('mealPlan', 'seller tier title')
       .populate('sellerId', 'name businessName email phone');
+
 
     console.log(`Debug TodayMeal: Found ${activeSubscriptions.length} active subs`);
     activeSubscriptions.forEach(s => console.log(`Sub: ${s._id}, Start: ${s.startDate}, End: ${s.endDate}`));
@@ -1958,6 +1962,8 @@ const getUserTodayMeal = async (req, res) => {
     // Get today's meal for EACH subscription
     const mealPromises = activeSubscriptions.map(async (sub) => {
       try {
+     
+        sub.sellerId = sub.mealPlan?.seller
         const todayMeal = await sub.getTodayMeal();
         console.log(`Debug TodayMeal Result for ${sub._id}: Available=${todayMeal.isAvailable}`);
         return {
@@ -2854,7 +2860,7 @@ const skipMeal = async (req, res) => {
       try {
         const dateRangeText = validatedSkips.length === 1
           ? `${moment(validatedSkips[0].date).format('MMM D, YYYY')} (${validatedSkips[0].shift})`
-          : `${validatedSkips.length} meals from ${moment(validatedSkips[0].date).format('MMM D')} to ${moment(validatedSkips[validatedSkips.length - 1].date).format('MMM D, YYYY')}`;
+          : `${validatedSkips.length} meals from ${moment(validatedSkips[0]?.date).format('MMM D')} to ${moment(validatedSkips[validatedSkips.length - 1]?.date).format('MMM D, YYYY')}`;
 
         await createNotification({
           userId,
@@ -3088,8 +3094,8 @@ const customizeMeal = async (req, res) => {
       }
     }
 
-    // Calculate base meal price
-    const baseMealPrice = subscription.mealPlan?.pricing?.oneDay || 80;
+    // Calculate base meal price - prefer stored subscription pricing, fallback to mealPlan
+    const baseMealPrice = subscription.pricing?.basePricePerMeal || subscription.mealPlan?.pricing?.oneDay || 75;
     const calculatedExtraCost = totalExtraCost || 0;
 
     // Smart payment logic: 
@@ -3859,7 +3865,7 @@ const createSubscriptionFromOrder = async (orderData, userId) => {
     // Get pricing from meal plan
     const totalAmount = mealPlan.pricing?.[planConfig.pricingKey] || 0;
     const dailyPrice = totalAmount / planConfig.duration;
-
+  
     // Determine delivery timing based on order data
     let deliveryTiming = {
       morning: { enabled: false, time: "08:00" },
@@ -4262,8 +4268,8 @@ const replaceThali = async (req, res) => {
       });
     }
 
-    // Calculate base meal price from subscription
-    const baseMealPrice = subscription.pricing?.basePricePerMeal || 0;
+    // Calculate base meal price from subscription - prefer stored pricing, fallback to mealPlan
+    const baseMealPrice = subscription.pricing?.basePricePerMeal || subscription.mealPlan?.pricing?.oneDay || 75;
     const replacementPrice = thali.price || 0;
 
     // Calculate price difference based on replacement type

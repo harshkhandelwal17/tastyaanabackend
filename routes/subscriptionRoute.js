@@ -10,6 +10,10 @@ const {
   exportDailyMeals,
   getDailyMealStats
 } = require('../controllers/adminController');
+
+console.log("you are in subscription ROute");
+router.get('/user/today-meal', authenticate, subscriptionController.getUserTodayMeal);
+
 // ===== Subscription Management =====
 router.post('/:id/skip-meal', authenticate, subscriptionController.skipMeal);
 // Add this route to get skip history and limits
@@ -46,7 +50,6 @@ router.get('/:subscriptionId/detail', authenticate, subscriptionController.getSu
 router.get('/:subscriptionId/today-meal', authenticate, subscriptionController.getSubscriptionTodayMealForUser);
 
 // Get user's today meal
-router.get('/user/today-meal', authenticate, subscriptionController.getUserTodayMeal);
 
 // Update user's today meal (refresh)
 router.post('/user/today-meal/refresh', authenticate, subscriptionController.updateUserTodayMeal);
