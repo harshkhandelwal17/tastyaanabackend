@@ -53,6 +53,9 @@ const homepageController = {
       res.set('Expires', '0');
 
       let nearbySellerIds = [];
+      let foodSellerIds = [];
+      let rentalSellerIds = [];
+      let giftingSellerIds = [];
       let isServiceable = true; // Default to true if no location provided (backend safe default)
       let availableServices = ['food', 'tiffin', 'rental', 'grocery', 'gifting']; // Default all
 
@@ -73,9 +76,9 @@ const homepageController = {
         );
 
         nearbySellerIds = allNearbySellers.map(s => s._id);
-        const foodSellerIds = foodSellers.map(s => s._id);
-        const rentalSellerIds = rentalSellers.map(s => s._id);
-        const giftingSellerIds = giftingSellers.map(s => s._id);
+        foodSellerIds = foodSellers.map(s => s._id);
+        rentalSellerIds = rentalSellers.map(s => s._id);
+        giftingSellerIds = giftingSellers.map(s => s._id);
 
         console.log(`📍 [Homepage] Lat/Lng: ${lat},${lng} | Nearby Sellers: ${allNearbySellers.length}`);
 
