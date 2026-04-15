@@ -903,7 +903,7 @@ const userSchema = new mongoose.Schema({
   // ===== Roles & Status =====
   role: {
     type: String,
-    enum: ['buyer', 'admin', 'seller', 'delivery', 'super-admin', 'customer'],
+    enum: ['buyer', 'admin', 'seller', 'delivery', 'super-admin', 'customer', 'worker'],
     default: 'buyer'
   },
   rating: {
@@ -1353,6 +1353,35 @@ const userSchema = new mongoose.Schema({
     location: {
       type: Boolean,
       default: true
+    }
+  },
+
+  // ===== Worker Profile (when role is 'worker') =====
+  workerProfile: {
+    sellerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: function() { return this.role === 'worker'; }
+    },
+    zoneId: {
+      type: String,
+      required: function() { return this.role === 'worker'; }
+    },
+    zoneCode: {
+      type: String,
+      required: function() { return this.role === 'worker'; }
+    },
+    zoneName: {
+      type: String,
+      required: function() { return this.role === 'worker'; }
+    },
+    isActive: { type: Boolean, default: true },
+    joinedDate: { type: Date, default: Date.now },
+    lastActiveDate: { type: Date, default: Date.now },
+    performance: {
+      bookingsHandled: { type: Number, default: 0 },
+      averageRating: { type: Number, default: 0, min: 0, max: 5 },
+      totalRatings: { type: Number, default: 0 }
     }
   }
 }, {

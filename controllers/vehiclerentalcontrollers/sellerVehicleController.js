@@ -2516,6 +2516,10 @@ const completeBooking = async (req, res) => {
     booking.billing.extraHourCharge = billing.extraHourCharge;
     booking.billing.freeKm = billing.freeKm; // Track free km provided
     booking.billing.totalKm = billing.totalKm; // Track total km traveled
+    // Save discount applied at dropoff
+    if (billing.discountAmount > 0) {
+      booking.billing.discount = { amount: billing.discountAmount, discountType: 'fixed' };
+    }
 
     // Single extra charges field
     if (extraCharges && extraCharges.amount) {
@@ -3001,6 +3005,155 @@ const changeSellerPassword = async (req, res) => {
   }
 };
 
+// ===== WORKER MANAGEMENT =====
+
+// Get all workers for this seller
+const getSellerWorkers = async (req, res) => {
+  try {
+    const sellerId = req.user.id;
+    const workers = await User.find({
+      role: 'worker',
+      'workerProfile.sellerId': sellerId
+    }).select('name email phone workerProfile createdAt isActive');
+
+    res.json({ success: true, workers });
+  } catch (error) {
+    console.error('Error fetching workers:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch workers', error: error.message });
+  }
+};
+
+// Create a new worker under this seller
+const createWorker = async (req, res) => {
+  try {
+    const sellerId = req.user.id;
+    const { name, email, phone, password, zoneId, zoneCode, zoneName } = req.body;
+
+    if (!name || !email || !password || !zoneId || !zoneCode || !zoneName) {
+      return res.status(400).json({ success: false, message: 'name, email, password, zoneId, zoneCode, and zoneName are required' });
+    }
+
+    // Check if email already taken
+    const existing = await User.findOne({ email: email.toLowerCase().trim() });
+    if (existing) {
+      return res.status(409).json({ success: false, message: 'Email already in use' });
+    }
+
+    // Verify the zone belongs to this seller
+    const seller = await User.findById(sellerId).select('sellerProfile');
+    if (!seller) {
+      return res.status(404).json({ success: false, message: 'Seller not found' });
+    }
+
+    const worker = new User({
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      phone: phone || '',
+      password,
+      role: 'worker',
+      isEmailVerified: true,
+      workerProfile: {
+        sellerId,
+        zoneId,
+        zoneCode,
+        zoneName,
+        isActive: true,
+        joinedDate: new Date()
+      }
+    });
+
+    await worker.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Worker created successfully',
+      worker: {
+        _id: worker._id,
+        name: worker.name,
+        email: worker.email,
+        phone: worker.phone,
+        workerProfile: worker.workerProfile,
+        createdAt: worker.createdAt
+      }
+    });
+  } catch (error) {
+    console.error('Error creating worker:', error);
+    res.status(500).json({ success: false, message: 'Failed to create worker', error: error.message });
+  }
+};
+
+// Update a worker
+const updateWorker = async (req, res) => {
+  try {
+    const sellerId = req.user.id;
+    const { workerId } = req.params;
+    const { name, phone, zoneId, zoneCode, zoneName, isActive } = req.body;
+
+    const worker = await User.findOne({ _id: workerId, role: 'worker', 'workerProfile.sellerId': sellerId });
+    if (!worker) {
+      return res.status(404).json({ success: false, message: 'Worker not found' });
+    }
+
+    if (name) worker.name = name.trim();
+    if (phone !== undefined) worker.phone = phone;
+    if (zoneId) worker.workerProfile.zoneId = zoneId;
+    if (zoneCode) worker.workerProfile.zoneCode = zoneCode;
+    if (zoneName) worker.workerProfile.zoneName = zoneName;
+    if (isActive !== undefined) worker.workerProfile.isActive = isActive;
+
+    await worker.save();
+    res.json({ success: true, message: 'Worker updated', worker: { _id: worker._id, name: worker.name, phone: worker.phone, workerProfile: worker.workerProfile } });
+  } catch (error) {
+    console.error('Error updating worker:', error);
+    res.status(500).json({ success: false, message: 'Failed to update worker', error: error.message });
+  }
+};
+
+// Delete (deactivate) a worker
+const deleteWorker = async (req, res) => {
+  try {
+    const sellerId = req.user.id;
+    const { workerId } = req.params;
+
+    const worker = await User.findOne({ _id: workerId, role: 'worker', 'workerProfile.sellerId': sellerId });
+    if (!worker) {
+      return res.status(404).json({ success: false, message: 'Worker not found' });
+    }
+
+    worker.workerProfile.isActive = false;
+    await worker.save();
+    res.json({ success: true, message: 'Worker deactivated' });
+  } catch (error) {
+    console.error('Error deleting worker:', error);
+    res.status(500).json({ success: false, message: 'Failed to deactivate worker', error: error.message });
+  }
+};
+
+// Reset worker password
+const resetWorkerPassword = async (req, res) => {
+  try {
+    const sellerId = req.user.id;
+    const { workerId } = req.params;
+    const { newPassword } = req.body;
+
+    if (!newPassword || newPassword.length < 6) {
+      return res.status(400).json({ success: false, message: 'Password must be at least 6 characters' });
+    }
+
+    const worker = await User.findOne({ _id: workerId, role: 'worker', 'workerProfile.sellerId': sellerId });
+    if (!worker) {
+      return res.status(404).json({ success: false, message: 'Worker not found' });
+    }
+
+    worker.password = newPassword; // pre-save hook hashes it
+    await worker.save();
+    res.json({ success: true, message: 'Worker password reset successfully' });
+  } catch (error) {
+    console.error('Error resetting worker password:', error);
+    res.status(500).json({ success: false, message: 'Failed to reset password', error: error.message });
+  }
+};
+
 module.exports = {
   getSellerDashboard,
   getSellerVehicles,
@@ -3034,4 +3187,9 @@ module.exports = {
   addVehicleMaintenance,
   updateVehicleMaintenance,
   deleteVehicleMaintenance,
+  getSellerWorkers,
+  createWorker,
+  updateWorker,
+  deleteWorker,
+  resetWorkerPassword,
 };

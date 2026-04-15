@@ -486,6 +486,7 @@ const completeWorkerBooking = async (req, res) => {
       billing,
       notes,
       refundMode,
+      refund, // { refundCash, refundOnline, refundNotes, totalRefund }
     } = req.body;
 
     // Get worker profile with zone info
@@ -542,6 +543,10 @@ const completeWorkerBooking = async (req, res) => {
     booking.billing.extraHourCharge = billing.extraHourCharge;
     booking.billing.freeKm = billing.freeKm;
     booking.billing.totalKm = billing.totalKm;
+    // Save discount applied at dropoff
+    if (billing.discountAmount > 0) {
+      booking.billing.discount = { amount: billing.discountAmount, discountType: 'fixed' };
+    }
 
     // Extra charges
     if (extraCharges && extraCharges.amount) {
@@ -618,43 +623,59 @@ const completeWorkerBooking = async (req, res) => {
     
     if (totalPaid > actualBill) {
       const refundAmount = totalPaid - actualBill;
+
+      // Use explicit cash/online split from frontend if provided
+      const cashRefund = parseFloat(refund?.refundCash || 0);
+      const onlineRefund = parseFloat(refund?.refundOnline || 0);
+      const totalRefunded = (cashRefund + onlineRefund) > 0 ? cashRefund + onlineRefund : refundAmount;
+
+      // Determine primary refund method label
       let refundMethod = 'cash';
-      
-      if (refundMode) {
+      if (onlineRefund > 0 && cashRefund === 0) {
+        refundMethod = 'bank-transfer';
+      } else if (cashRefund > 0 && onlineRefund > 0) {
+        refundMethod = 'mixed';
+      } else if (refundMode) {
         refundMethod = refundMode === 'online' ? 'bank-transfer' : 'cash';
       } else {
         const cashPayment = booking.payments?.find(p => p.paymentMethod === 'Cash' || p.paymentType === 'Cash');
         refundMethod = cashPayment ? 'cash' : 'bank-transfer';
       }
-      
+
+      const finalCashRefund = cashRefund > 0 ? cashRefund : (refundMethod === 'cash' ? totalRefunded : 0);
+      const finalOnlineRefund = onlineRefund > 0 ? onlineRefund : (refundMethod !== 'cash' ? totalRefunded : 0);
+
       booking.refundDetails = {
         reason: 'overbilling',
         requestedAmount: refundAmount,
-        approvedAmount: refundAmount,
+        approvedAmount: totalRefunded,
         refundMethod: refundMethod,
-        refundMode: refundMode || (refundMethod === 'cash' ? 'cash' : 'online'),
+        refundMode: refundMode || (finalCashRefund >= finalOnlineRefund ? 'cash' : 'online'),
+        cashAmount: finalCashRefund,
+        onlineAmount: finalOnlineRefund,
         processedBy: req.user.id,
         processedDate: new Date(),
         refundReference: `REF-${booking.bookingId}-${Date.now().toString().slice(-6)}`,
-        notes: `Overpayment refund processed by worker. Customer paid ₹${totalPaid}, actual bill ₹${actualBill}. Refunded ₹${refundAmount} via ${refundMode || refundMethod}.`
+        notes: `Overpayment refund processed by worker. Customer paid ₹${totalPaid}, actual bill ₹${actualBill}. Refunded ₹${finalCashRefund} cash and ₹${finalOnlineRefund} online.`
       };
-      
+
       booking.refundStatus = 'completed';
       booking.depositRefundStatus = 'not-applicable';
 
       booking.payments = booking.payments || [];
-      if (refundMethod === 'cash') {
+      if (finalCashRefund > 0) {
         booking.payments.push({
-          amount: -Math.abs(refundAmount),
+          amount: -Math.abs(finalCashRefund),
           paymentType: 'Cash',
           paymentMethod: 'Refund-Cash',
           status: 'success',
           paymentDate: new Date(),
           processedBy: req.user.id
         });
-      } else {
+      }
+      if (finalOnlineRefund > 0) {
         booking.payments.push({
-          amount: -Math.abs(refundAmount),
+          amount: -Math.abs(finalOnlineRefund),
           paymentType: 'UPI',
           paymentMethod: 'Refund-Online',
           status: 'success',
@@ -1834,6 +1855,10 @@ const getWorkerDailyHisab = async (req, res) => {
 
     let totalIn = 0;
     let totalOut = 0;
+    let totalCashIn = 0;
+    let totalOnlineIn = 0;
+    let totalCashOut = 0;
+    let totalOnlineOut = 0;
     let totalNewBookings = 0;
     let totalSubmittedBookings = 0;
     const vehicleTransactions = [];
@@ -1843,14 +1868,14 @@ const getWorkerDailyHisab = async (req, res) => {
       const vehicleName = `${vehicleInfo.companyName || ''} ${vehicleInfo.name || ''}`.trim();
       const vehicleNo = vehicleInfo.vehicleNo || 'N/A';
 
-      // Payments on this date
+      // Payments on this date (exclude negative refund entries — those are tracked via refundDetails)
       let dayPayments = 0;
       const paymentDetails = [];
       if (booking.payments?.length > 0) {
         for (const payment of booking.payments) {
           const payDate = new Date(payment.paymentDate);
-          if (payDate >= startOfDayUTC && payDate <= endOfDayUTC && payment.status === 'success') {
-            dayPayments += payment.amount || 0;
+          if (payDate >= startOfDayUTC && payDate <= endOfDayUTC && payment.status === 'success' && (payment.amount || 0) > 0) {
+            dayPayments += payment.amount;
             paymentDetails.push({ amount: payment.amount, type: payment.paymentType, method: payment.paymentMethod, time: payment.paymentDate });
           }
         }
@@ -1858,15 +1883,33 @@ const getWorkerDailyHisab = async (req, res) => {
 
       // Refunds on this date
       let dayRefunds = 0;
+      let dayCashOut = 0;
+      let dayOnlineOut = 0;
       let refundDetail = null;
       if (booking.refundDetails?.processedDate) {
         const refundDate = new Date(booking.refundDetails.processedDate);
         if (refundDate >= startOfDayUTC && refundDate <= endOfDayUTC) {
-          dayRefunds = booking.refundDetails.cashAmount || 0;
+          const approvedAmount = booking.refundDetails.approvedAmount || 0;
+          // Derive cash/online split — old bookings may not have cashAmount/onlineAmount
+          if (booking.refundDetails.cashAmount != null || booking.refundDetails.onlineAmount != null) {
+            dayCashOut = booking.refundDetails.cashAmount || 0;
+            dayOnlineOut = booking.refundDetails.onlineAmount || 0;
+          } else {
+            // Fallback: derive from refundMethod
+            const method = booking.refundDetails.refundMethod || booking.refundDetails.refundMode || 'cash';
+            if (method === 'cash') {
+              dayCashOut = approvedAmount;
+              dayOnlineOut = 0;
+            } else {
+              dayCashOut = 0;
+              dayOnlineOut = approvedAmount;
+            }
+          }
+          dayRefunds = dayCashOut + dayOnlineOut;
           refundDetail = {
-            totalRefund: booking.refundDetails.approvedAmount || 0,
-            cashRefund: booking.refundDetails.cashAmount || 0,
-            onlineRefund: booking.refundDetails.onlineAmount || 0,
+            totalRefund: approvedAmount,
+            cashRefund: dayCashOut,
+            onlineRefund: dayOnlineOut,
             reason: booking.refundDetails.reason,
             mode: booking.refundDetails.refundMode
           };
@@ -1887,6 +1930,22 @@ const getWorkerDailyHisab = async (req, res) => {
       if (dayPayments > 0 || dayRefunds > 0) {
         totalIn += dayPayments;
         totalOut += dayRefunds;
+
+        // Cash/online split for payments
+        let dayCashIn = 0;
+        let dayOnlineIn = 0;
+        for (const p of paymentDetails) {
+          if (p.method === 'Cash') {
+            dayCashIn += p.amount || 0;
+          } else {
+            dayOnlineIn += p.amount || 0;
+          }
+        }
+        totalCashIn += dayCashIn;
+        totalOnlineIn += dayOnlineIn;
+        totalCashOut += dayCashOut;
+        totalOnlineOut += dayOnlineOut;
+
         const extraKmCharge = booking.billing?.extraKmCharge || 0;
         const extraHourCharge = booking.billing?.extraHourCharge || 0;
         const extraKm = booking.ratePlanUsed?.extraChargePerKm ? extraKmCharge / booking.ratePlanUsed.extraChargePerKm : null;
@@ -1911,11 +1970,13 @@ const getWorkerDailyHisab = async (req, res) => {
           durationHours: booking.billing?.duration || null,
           kmLimit: booking.billing?.kmLimit || null,
           totalBill: booking.billing?.totalBill || 0,
+          discountAmount: booking.billing?.discount?.amount || 0,
           depositAmount: booking.depositAmount || 0,
           totalPaid: booking.paidAmount || 0,
           extraKmCharge, extraHourCharge, extraKm, extraHours,
           isNewBooking, isSubmitted,
-          dayPayments, dayRefunds,
+          dayPayments, dayCashIn, dayOnlineIn,
+          dayRefunds, dayCashOut, dayOnlineOut,
           dayNet: dayPayments - dayRefunds,
           paymentDetails, refundDetail,
         });
@@ -1933,8 +1994,12 @@ const getWorkerDailyHisab = async (req, res) => {
       date,
       summary: {
         totalIn,
+        totalCashIn,
+        totalOnlineIn,
         totalOut,
-        collectFromWorker: totalIn - totalOut,
+        totalCashOut,
+        totalOnlineOut,
+        collectFromWorker: totalCashIn - totalCashOut,
         totalNewBookings,
         totalSubmittedBookings,
         totalTransactions: vehicleTransactions.length

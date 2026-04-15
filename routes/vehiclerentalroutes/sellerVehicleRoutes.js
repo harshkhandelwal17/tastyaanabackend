@@ -124,7 +124,7 @@
 const express = require('express');
 const router = express.Router();
 const sellerVehicleController = require('../../controllers/vehiclerentalcontrollers/sellerVehicleController');
-const { changeSellerPassword } = sellerVehicleController;
+const { changeSellerPassword, getSellerWorkers, createWorker, updateWorker, deleteWorker, resetWorkerPassword } = sellerVehicleController;
 const sellerRevenueController = require('../../controllers/sellerRevenueController');
 const { getAvailableVehicles, getLastMeterReading } = require('../../controllers/vehiclerentalcontrollers/sellerBookingController');
 const { getDailyHisab } = require('../../controllers/vehiclerentalcontrollers/sellerDailyHisabController');
@@ -250,5 +250,22 @@ router.put('/zones/:zoneId', sellerVehicleController.updateZone);
 
 // Delete specific zone
 router.delete('/zones/:zoneId', sellerVehicleController.deleteZone);
+
+// ===== WORKER MANAGEMENT =====
+
+// Get all workers for this seller
+router.get('/workers', getSellerWorkers);
+
+// Create a new worker
+router.post('/workers', createWorker);
+
+// Update worker
+router.put('/workers/:workerId', updateWorker);
+
+// Delete/deactivate worker
+router.delete('/workers/:workerId', deleteWorker);
+
+// Reset worker password
+router.put('/workers/:workerId/reset-password', resetWorkerPassword);
 
 module.exports = router;
