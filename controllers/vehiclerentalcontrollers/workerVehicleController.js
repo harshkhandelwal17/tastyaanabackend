@@ -583,9 +583,12 @@ const completeWorkerBooking = async (req, res) => {
       }
     }
 
-    // Calculate total paid
+    // Calculate total paid — only count positive entries; negative entries are refund records
     const totalPaidFromPayments = booking.payments.reduce(
-      (sum, p) => sum + (p.amount || 0),
+      (sum, p) => {
+        const amt = parseFloat(p.amount) || 0;
+        return sum + (amt > 0 ? amt : 0);
+      },
       0
     );
 
@@ -685,7 +688,7 @@ const completeWorkerBooking = async (req, res) => {
       }
 
       const netPaid = (booking.payments || []).reduce((sum, p) => sum + (parseFloat(p.amount) || 0), 0);
-      booking.paidAmount = Math.round((netPaid + Number.EPSILON) * 100) / 100;
+      booking.paidAmount = Math.max(0, Math.round((netPaid + Number.EPSILON) * 100) / 100);
       
       if (booking.paidAmount >= booking.billing.totalBill) {
         booking.paymentStatus = 'paid';
@@ -707,13 +710,27 @@ const completeWorkerBooking = async (req, res) => {
       booking.notes = (booking.notes || '') + '\nReturn: ' + notes.returnNotes;
     }
 
-    await booking.save();
+    // ── Pre-flight validation ─────────────────────────────────────────────────
+    try {
+      await booking.validate();
+    } catch (validationErr) {
+      console.error('Booking pre-save validation failed:', validationErr.message);
+      return res.status(400).json({
+        success: false,
+        message: 'Booking data is invalid — dropoff not saved. Please check the values and retry.',
+        error: validationErr.message,
+      });
+    }
+    // ─────────────────────────────────────────────────────────────────────────
 
-    // Update vehicle availability
+    // Update vehicle BEFORE saving the booking.
     await Vehicle.findByIdAndUpdate(booking.vehicleId._id, {
       availability: 'available',
       currentBookingId: null,
     });
+
+    // All side-effects done — now persist the booking as completed.
+    await booking.save();
 
     res.json({
       success: true,

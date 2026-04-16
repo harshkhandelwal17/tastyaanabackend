@@ -2557,9 +2557,12 @@ const completeBooking = async (req, res) => {
       }
     }
 
-    // Calculate total paid
+    // Calculate total paid — only count positive entries; negative entries are refund records
     const totalPaidFromPayments = booking.payments.reduce(
-      (sum, p) => sum + (p.amount || 0),
+      (sum, p) => {
+        const amt = parseFloat(p.amount) || 0;
+        return sum + (amt > 0 ? amt : 0);
+      },
       0
     );
 
@@ -2652,9 +2655,9 @@ const completeBooking = async (req, res) => {
         });
       }
 
-      // Recalculate paidAmount from payments (including negative refund entries)
+      // Recalculate paidAmount from payments (positive only — refund entries don't reduce what was paid)
       const netPaid = (booking.payments || []).reduce((sum, p) => sum + (parseFloat(p.amount) || 0), 0);
-      booking.paidAmount = Math.round((netPaid + Number.EPSILON) * 100) / 100;
+      booking.paidAmount = Math.max(0, Math.round((netPaid + Number.EPSILON) * 100) / 100);
 
       // Update paymentStatus after refund
       if (booking.paidAmount >= booking.billing.totalBill) {
@@ -2679,35 +2682,39 @@ const completeBooking = async (req, res) => {
       booking.notes = (booking.notes || '') + '\nReturn: ' + notes.returnNotes;
     }
 
-    await booking.save();
+    // ── Pre-flight validation ─────────────────────────────────────────────────
+    // Validate the in-memory booking BEFORE writing anything to the DB.
+    // If this throws, no DB has been touched yet and the user gets a clear error.
+    try {
+      await booking.validate();
+    } catch (validationErr) {
+      console.error('Booking pre-save validation failed:', validationErr.message);
+      return res.status(400).json({
+        success: false,
+        message: 'Booking data is invalid — dropoff not saved. Please check the values and retry.',
+        error: validationErr.message,
+      });
+    }
+    // ─────────────────────────────────────────────────────────────────────────
 
-    // Update vehicle's meterReading to the end meter reading
-    console.log('🔍 Updating vehicle meterReading:', {
-      vehicleId: booking.vehicleId._id,
-      endMeterReading,
-      endMeterReadingType: typeof endMeterReading,
-      endMeterReadingValue: endMeterReading
-    });
-
+    // Update vehicle BEFORE saving the booking so that if vehicle update fails
+    // the booking is still in its original state in the DB.
     if (endMeterReading && endMeterReading > 0) {
-      const vehicle = await Vehicle.findById(booking.vehicleId._id);
-      if (vehicle) {
-        console.log('📊 Current vehicle meterReading:', vehicle.meterReading);
-        vehicle.meterReading = parseInt(endMeterReading);
-        await vehicle.save();
-        console.log(`✅ Updated vehicle ${vehicle._id} meterReading to ${endMeterReading} km at dropoff`);
-      } else {
-        console.log('❌ Vehicle not found:', booking.vehicleId._id);
-      }
+      await Vehicle.findByIdAndUpdate(booking.vehicleId._id, {
+        meterReading: parseInt(endMeterReading)
+      });
+      console.log(`✅ Updated vehicle ${booking.vehicleId._id} meterReading to ${endMeterReading} km at dropoff`);
     } else {
       console.log('⚠️ End meter reading is invalid:', endMeterReading);
     }
 
-    // Update vehicle availability
     await Vehicle.findByIdAndUpdate(booking.vehicleId._id, {
       availability: 'available',
       currentBookingId: null,
     });
+
+    // All side-effects done — now persist the booking as completed.
+    await booking.save();
 
     res.json({
       success: true,
