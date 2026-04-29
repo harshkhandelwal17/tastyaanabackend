@@ -55,7 +55,7 @@ const getAllRefunds = async (req, res) => {
       VehicleRefund.find(filter)
         .populate('bookingId', 'bookingId bookingDate customerDetails')
         .populate('userId', 'name phone email')
-        .populate('vehicleId', 'name vehicleNumber')
+        .populate('vehicleId', 'name vehicleNo')
         .populate('processedBy', 'name')
         .sort(sort)
         .skip(skip)
@@ -220,7 +220,7 @@ const getRefundById = async (req, res) => {
     const refund = await VehicleRefund.findById(id)
       .populate('bookingId', 'bookingId bookingDate customerDetails billing')
       .populate('userId', 'name phone email')
-      .populate('vehicleId', 'name vehicleNumber')
+      .populate('vehicleId', 'name vehicleNo')
       .populate('processedBy', 'name email')
       .populate('approvedBy', 'name email');
 

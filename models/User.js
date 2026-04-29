@@ -864,7 +864,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: function () {
       // Password is required only if user doesn't have Google account
-      return !this.googleId && this.role !== 'seller';
+      return !this.googleId && this.role !== 'seller' && this.role !== 'guest';
     },
     minlength: 6
   },
@@ -903,7 +903,7 @@ const userSchema = new mongoose.Schema({
   // ===== Roles & Status =====
   role: {
     type: String,
-    enum: ['buyer', 'admin', 'seller', 'delivery', 'super-admin', 'customer', 'worker'],
+    enum: ['buyer', 'admin', 'seller', 'delivery', 'super-admin', 'customer', 'worker', 'guest'],
     default: 'buyer'
   },
   rating: {
@@ -931,6 +931,13 @@ const userSchema = new mongoose.Schema({
   isPhoneVerified: {
     type: Boolean,
     default: false
+  },
+  isGuestUser: {
+    type: Boolean,
+    default: false
+  },
+  idProof: {
+    type: String
   },
 
   // ===== Seller Profile (from first schema) =====

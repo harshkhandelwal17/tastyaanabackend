@@ -128,7 +128,7 @@ const createOfflineBooking = async (req, res) => {
     //                    vehicle.category?.toLowerCase() === 'ev-scooty';
     //   const minHours = (isScooty && !includesFuel) ? 5 : 1;
     //   durationHours = Math.max(minHours, durationHours);
-      
+
     //   console.log('⏱️ Duration with minimum hours applied:', {
     //     category: vehicle.category,
     //     isScooty,
@@ -346,7 +346,7 @@ const createOfflineBooking = async (req, res) => {
           appliedBy: null
         }
       },
-      
+
       // Initialize current KM limit for extensions
       currentKmLimit: costCalculation.rateConfig?.kmLimit || 0, // ✅ Initialize current KM limit
 
@@ -574,6 +574,7 @@ const getAvailableVehicles = async (req, res) => {
 // ===== Get Seller's Bookings =====
 const getSellerBookings = async (req, res) => {
   try {
+    const isAdmin = req.user.role === 'admin' || req.user.role === 'super-admin';
     const sellerId = req.user._id;
     const {
       zoneId,
@@ -587,6 +588,7 @@ const getSellerBookings = async (req, res) => {
 
     console.log('🔍 getSellerBookings filters:', {
       sellerId,
+      isAdmin,
       zoneId,
       bookingStatus,
       startDate,
@@ -597,10 +599,24 @@ const getSellerBookings = async (req, res) => {
     });
 
     // Build query
-    const query = { 
-      bookedBy: sellerId,
+    const query = {
       isDeletedBySeller: { $ne: true } // Exclude soft-deleted bookings
     };
+
+    if (!isAdmin) {
+      if (isSeller) {
+        // Sellers can see bookings they created OR bookings for their vehicles
+        const Vehicle = require("../../models/Vehicle");
+        const sellerVehicles = await Vehicle.find({ sellerId: sellerId }, "_id");
+        const vehicleIds = sellerVehicles.map(v => v._id);
+        query.$or = [
+          { bookedBy: sellerId },
+          { vehicleId: { $in: vehicleIds } }
+        ];
+      } else {
+        query.bookedBy = sellerId;
+      }
+    }
 
     if (zoneId) query.zoneId = zoneId;
     if (bookingStatus) query.bookingStatus = bookingStatus;
@@ -611,28 +627,29 @@ const getSellerBookings = async (req, res) => {
       // Parse the date components
       const dateParts = startDate.split('-');
       const year = parseInt(dateParts[0]);
-      const month = parseInt(dateParts[1]) - 1; // JS months are 0-based
+      const month = parseInt(dateParts[1]) - 1;
+      // JS months are 0-based
       const day = parseInt(dateParts[2]);
-      
+
       // IST is UTC+5:30
       // To get IST midnight in UTC: subtract 5 hours 30 minutes
       // Example: 2026-01-18 00:00:00 IST = 2026-01-17 18:30:00 UTC
-      
+
       // Start of day: midnight IST
       const startOfDayUTC = new Date(Date.UTC(year, month, day, 0, 0, 0, 0));
       startOfDayUTC.setUTCHours(startOfDayUTC.getUTCHours() - 5);
       startOfDayUTC.setUTCMinutes(startOfDayUTC.getUTCMinutes() - 30);
-      
+
       // End of day: 23:59:59.999 IST
       const endOfDayUTC = new Date(Date.UTC(year, month, day, 23, 59, 59, 999));
       endOfDayUTC.setUTCHours(endOfDayUTC.getUTCHours() - 5);
       endOfDayUTC.setUTCMinutes(endOfDayUTC.getUTCMinutes() - 30);
-      
+
       query.startDateTime = {
         $gte: startOfDayUTC,
         $lte: endOfDayUTC
       };
-      
+
       console.log('📅 Filtering by start date (IST):', {
         inputDate: startDate,
         ISTRange: `${startDate} 00:00:00 to 23:59:59`,
@@ -648,22 +665,22 @@ const getSellerBookings = async (req, res) => {
       const year = parseInt(dateParts[0]);
       const month = parseInt(dateParts[1]) - 1;
       const day = parseInt(dateParts[2]);
-      
+
       // Start of day: midnight IST
       const startOfDayUTC = new Date(Date.UTC(year, month, day, 0, 0, 0, 0));
       startOfDayUTC.setUTCHours(startOfDayUTC.getUTCHours() - 5);
       startOfDayUTC.setUTCMinutes(startOfDayUTC.getUTCMinutes() - 30);
-      
+
       // End of day: 23:59:59.999 IST
       const endOfDayUTC = new Date(Date.UTC(year, month, day, 23, 59, 59, 999));
       endOfDayUTC.setUTCHours(endOfDayUTC.getUTCHours() - 5);
       endOfDayUTC.setUTCMinutes(endOfDayUTC.getUTCMinutes() - 30);
-      
+
       query.endDateTime = {
         $gte: startOfDayUTC,
         $lte: endOfDayUTC
       };
-      
+
       console.log('📅 Filtering by end date (IST):', {
         inputDate: endDate,
         ISTRange: `${endDate} 00:00:00 to 23:59:59`,
@@ -684,7 +701,7 @@ const getSellerBookings = async (req, res) => {
       .limit(parseInt(limit));
 
     console.log(`✅ Found ${bookings.length} bookings`);
-    
+
     // Log booking details for debugging
     if (bookings.length > 0 && (startDate || endDate)) {
       console.log('🔍 Booking date details:');
@@ -1040,9 +1057,15 @@ const replaceVehicleOnBooking = async (req, res) => {
 
     console.log('✅ Both vehicles in same zone:', newVehicle.zoneCode);
 
-    // Verify new vehicle is available
-    if (newVehicle.availability !== 'available') {
-      console.log('❌ New vehicle not available:', newVehicle.availability);
+    // Verify new vehicle is available or reserved (but not not-available)
+    // We'll rely on the more comprehensive conflictingBooking check below for actual availability
+    const allowedAvailability = ['available', 'reserved'];
+    if (!allowedAvailability.includes(newVehicle.availability)) {
+      console.log('❌ New vehicle has restricted availability in DB:', {
+        id: newVehicle._id,
+        availability: newVehicle.availability,
+        status: newVehicle.status
+      });
       return res.status(400).json({
         success: false,
         message: `Replacement vehicle is not available (current status: ${newVehicle.availability})`
@@ -1116,7 +1139,7 @@ const replaceVehicleOnBooking = async (req, res) => {
 
     // Update booking with new vehicle
     booking.vehicleId = newVehicleId;
-    
+
     // Add to status history
     booking.statusHistory.push({
       status: booking.bookingStatus,
@@ -1230,21 +1253,24 @@ const getLastMeterReading = async (req, res) => {
 // ===== Soft Delete Booking (Seller Panel Only) =====
 const softDeleteBooking = async (req, res) => {
   try {
+    const isAdmin = req.user.role === 'admin' || req.user.role === 'super-admin';
+    const isSeller = req.user.role === 'seller';
     const sellerId = req.user._id;
     const { bookingId } = req.params;
     const { reason } = req.body;
 
     console.log('🗑️ Soft delete request:', {
       sellerId,
+      isAdmin,
+      isSeller,
       bookingId,
       reason
     });
 
-    // Find booking and verify seller ownership
-    const booking = await VehicleBooking.findOne({
+    // Find booking
+    let booking = await VehicleBooking.findOne({
       bookingId,
-      bookedBy: sellerId,
-      isDeletedBySeller: { $ne: true } // Ensure not already deleted
+      isDeletedBySeller: { $ne: true }
     });
 
     if (!booking) {
@@ -1252,6 +1278,25 @@ const softDeleteBooking = async (req, res) => {
         success: false,
         message: 'Booking not found or already deleted'
       });
+    }
+
+    // Permission check for non-admins
+    if (!isAdmin) {
+      const isCreator = booking.bookedBy?.toString() === sellerId.toString();
+      let isVehicleOwner = false;
+
+      if (isSeller) {
+        const Vehicle = require("../../models/Vehicle");
+        const vehicle = await Vehicle.findOne({ _id: booking.vehicleId, sellerId: sellerId });
+        isVehicleOwner = !!vehicle;
+      }
+
+      if (!isCreator && !isVehicleOwner) {
+        return res.status(403).json({
+          success: false,
+          message: 'Not authorized to delete this booking'
+        });
+      }
     }
 
     // Prevent deletion of active or ongoing bookings
@@ -1298,15 +1343,25 @@ const softDeleteBooking = async (req, res) => {
 // ===== Get Deleted Bookings (Optional - for recovery) =====
 const getDeletedBookings = async (req, res) => {
   try {
+    const isAdmin = req.user.role === 'admin' || req.user.role === 'super-admin';
     const sellerId = req.user._id;
     const { page = 1, limit = 10 } = req.query;
 
-    console.log('🗑️ Fetching deleted bookings for seller:', sellerId);
+    console.log('🗑️ Fetching deleted bookings. Admin:', isAdmin, 'Seller:', sellerId);
 
-    const query = {
-      bookedBy: sellerId,
-      isDeletedBySeller: true
-    };
+    let query = { isDeletedBySeller: true };
+
+    if (!isAdmin) {
+      const Vehicle = require("../../models/Vehicle");
+      const sellerVehicles = await Vehicle.find({ sellerId: sellerId }, "_id");
+      const vehicleIds = sellerVehicles.map(v => v._id);
+      query = { 
+        $and: [
+          { $or: [{ vehicleId: { $in: vehicleIds } }, { bookedBy: sellerId }] }, 
+          { isDeletedBySeller: true }
+        ] 
+      };
+    }
 
     const skip = (page - 1) * limit;
     const bookings = await VehicleBooking.find(query)
@@ -1343,17 +1398,20 @@ const getDeletedBookings = async (req, res) => {
 // ===== Restore Deleted Booking (Optional) =====
 const restoreDeletedBooking = async (req, res) => {
   try {
+    const isAdmin = req.user.role === 'admin' || req.user.role === 'super-admin';
+    const isSeller = req.user.role === 'seller';
     const sellerId = req.user._id;
     const { bookingId } = req.params;
 
     console.log('♻️ Restore booking request:', {
       sellerId,
+      isAdmin,
+      isSeller,
       bookingId
     });
 
     const booking = await VehicleBooking.findOne({
       bookingId,
-      bookedBy: sellerId,
       isDeletedBySeller: true
     });
 
@@ -1362,6 +1420,25 @@ const restoreDeletedBooking = async (req, res) => {
         success: false,
         message: 'Deleted booking not found'
       });
+    }
+
+    // Permission check for non-admins
+    if (!isAdmin) {
+      const isCreator = booking.bookedBy?.toString() === sellerId.toString();
+      let isVehicleOwner = false;
+
+      if (isSeller) {
+        const Vehicle = require("../../models/Vehicle");
+        const vehicle = await Vehicle.findOne({ _id: booking.vehicleId, sellerId: sellerId });
+        isVehicleOwner = !!vehicle;
+      }
+
+      if (!isCreator && !isVehicleOwner) {
+        return res.status(403).json({
+          success: false,
+          message: 'Not authorized to restore this booking'
+        });
+      }
     }
 
     // Restore booking

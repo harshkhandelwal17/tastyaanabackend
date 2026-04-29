@@ -124,7 +124,7 @@
 const express = require('express');
 const router = express.Router();
 const sellerVehicleController = require('../../controllers/vehiclerentalcontrollers/sellerVehicleController');
-const { changeSellerPassword, getSellerWorkers, createWorker, updateWorker, deleteWorker, resetWorkerPassword } = sellerVehicleController;
+const { changeSellerPassword, getSellerWorkers, createWorker, updateWorker, deleteWorker, activateWorker, resetWorkerPassword } = sellerVehicleController;
 const sellerRevenueController = require('../../controllers/sellerRevenueController');
 const { getAvailableVehicles, getLastMeterReading } = require('../../controllers/vehiclerentalcontrollers/sellerBookingController');
 const { getDailyHisab } = require('../../controllers/vehiclerentalcontrollers/sellerDailyHisabController');
@@ -202,41 +202,6 @@ router.get('/bookings/:bookingId/trip-metrics', sellerVehicleController.getTripM
 // Complete booking - vehicle dropoff
 router.post('/bookings/:bookingId/complete', sellerVehicleController.completeBooking);
 
-// ===== VEHICLE-SPECIFIC ROUTES (dynamic routes must come after specific paths) =====
-
-// Get last meter reading for a vehicle
-router.get('/:vehicleId/last-meter-reading', getLastMeterReading);
-
-// Get vehicle booking history
-router.get('/:vehicleId/bookings', sellerVehicleController.getVehicleBookingHistory);
-
-// Get vehicle maintenance history
-router.get('/:vehicleId/maintenance', sellerVehicleController.getVehicleMaintenanceHistory);
-
-// Add maintenance record
-router.post('/:vehicleId/maintenance', sellerVehicleController.addVehicleMaintenance);
-
-// Update maintenance record
-router.put('/:vehicleId/maintenance/:maintenanceId', sellerVehicleController.updateVehicleMaintenance);
-
-// Delete maintenance record
-router.delete('/:vehicleId/maintenance/:maintenanceId', sellerVehicleController.deleteVehicleMaintenance);
-
-// Get specific vehicle by ID
-router.get('/:vehicleId', sellerVehicleController.getVehicleById);
-
-// Create new vehicle
-router.post('/', vehicleUpload.array('images', 10), sellerVehicleController.createVehicle);
-
-// Update vehicle
-router.put('/:vehicleId', vehicleUpload.array('images', 5), sellerVehicleController.updateVehicle);
-
-// Delete vehicle
-router.delete('/:vehicleId', sellerVehicleController.deleteVehicle);
-
-// Toggle vehicle availability
-router.patch('/:vehicleId/toggle-availability', sellerVehicleController.toggleVehicleAvailability);
-
 // ===== ZONE MANAGEMENT =====
 
 // Get seller's service zones
@@ -265,7 +230,48 @@ router.put('/workers/:workerId', updateWorker);
 // Delete/deactivate worker
 router.delete('/workers/:workerId', deleteWorker);
 
+// Activate worker
+router.patch('/workers/:workerId/activate', activateWorker);
+
 // Reset worker password
 router.put('/workers/:workerId/reset-password', resetWorkerPassword);
+
+// ===== VEHICLE-SPECIFIC ROUTES (dynamic routes must come after specific paths) =====
+
+// Get last meter reading for a vehicle
+router.get('/:vehicleId/last-meter-reading', getLastMeterReading);
+
+// Get vehicle booking history
+router.get('/:vehicleId/bookings', sellerVehicleController.getVehicleBookingHistory);
+
+// Get all maintenance history for a seller
+router.get('/maintenance/all', sellerVehicleController.getSellerAllMaintenanceHistory);
+
+// Get vehicle maintenance history
+router.get('/:vehicleId/maintenance', sellerVehicleController.getVehicleMaintenanceHistory);
+
+// Add maintenance record
+router.post('/:vehicleId/maintenance', sellerVehicleController.addVehicleMaintenance);
+
+// Update maintenance record
+router.put('/:vehicleId/maintenance/:maintenanceId', sellerVehicleController.updateVehicleMaintenance);
+
+// Delete maintenance record
+router.delete('/:vehicleId/maintenance/:maintenanceId', sellerVehicleController.deleteVehicleMaintenance);
+
+// Get specific vehicle by ID
+router.get('/:vehicleId', sellerVehicleController.getVehicleById);
+
+// Create new vehicle
+router.post('/', vehicleUpload.array('images', 10), sellerVehicleController.createVehicle);
+
+// Update vehicle
+router.put('/:vehicleId', vehicleUpload.array('images', 5), sellerVehicleController.updateVehicle);
+
+// Delete vehicle
+router.delete('/:vehicleId', sellerVehicleController.deleteVehicle);
+
+// Toggle vehicle availability
+router.patch('/:vehicleId/toggle-availability', sellerVehicleController.toggleVehicleAvailability);
 
 module.exports = router;

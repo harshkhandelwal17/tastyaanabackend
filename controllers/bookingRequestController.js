@@ -208,7 +208,7 @@ exports.getMyBookingRequests = async (req, res) => {
     console.log('-------------------------------');
 
     const requests = await VehicleBooking.find(query)
-      .populate('vehicleId', 'brand model images rentalRates vehicleNumber')
+      .populate('vehicleId', 'companyName name images rentalRates vehicleNo')
       .populate('approvedBy rejectedBy', 'name email phone')
       .sort({ requestedAt: -1 });
 
@@ -364,8 +364,15 @@ exports.getWorkerBookingRequests = async (req, res) => {
 
     const { status } = req.query;
 
-    let query = {
-      zoneId: workerProfile.zoneId,
+    // Get all vehicles in worker's zone to filter bookings accurately
+    const zoneVehicles = await Vehicle.find({
+      zoneCode: workerProfile.zoneCode,
+    }).select("_id");
+
+    const zoneVehicleIds = zoneVehicles.map((v) => v._id);
+
+    const query = {
+      vehicleId: { $in: zoneVehicleIds },
       requiresApproval: true
     };
 
@@ -377,7 +384,7 @@ exports.getWorkerBookingRequests = async (req, res) => {
     }
 
     const requests = await VehicleBooking.find(query)
-      .populate('vehicleId', 'brand model images rentalRates vehicleNumber category')
+      .populate('vehicleId', 'companyName name images rentalRates vehicleNo category')
       .populate('userId', 'name email phone')
       .populate('approvedBy rejectedBy', 'name')
       .sort({ requestedAt: -1 });
@@ -399,9 +406,30 @@ exports.getWorkerBookingRequests = async (req, res) => {
       );
     }
 
+    // Get counts for all statuses in this zone
+    const statusCounts = await VehicleBooking.aggregate([
+      { $match: { vehicleId: { $in: zoneVehicleIds }, requiresApproval: true } },
+      { $group: { _id: '$requestStatus', count: { $sum: 1 } } }
+    ]);
+
+    const counts = {
+      'pending-approval': 0,
+      'approved': 0,
+      'rejected': 0,
+      'expired': 0,
+      'payment-expired': 0
+    };
+
+    statusCounts.forEach(c => {
+      if (counts.hasOwnProperty(c._id)) {
+        counts[c._id] = c.count;
+      }
+    });
+
     res.json({
       success: true,
       count: requests.length,
+      counts,
       zone: {
         zoneId: workerProfile.zoneId,
         zoneCode: workerProfile.zoneCode,
@@ -443,8 +471,8 @@ exports.approveBookingRequest = async (req, res) => {
       return res.status(404).json({ message: 'Booking request not found' });
     }
 
-    // Verify zone access
-    if (bookingRequest.zoneId !== workerProfile.zoneId) {
+    // Verify zone access - check if vehicle belongs to worker's zone
+    if (bookingRequest.vehicleId.zoneCode !== workerProfile.zoneCode && bookingRequest.zoneId !== workerProfile.zoneId) {
       return res.status(403).json({
         message: 'You can only approve requests in your assigned zone'
       });
@@ -535,8 +563,8 @@ exports.rejectBookingRequest = async (req, res) => {
       return res.status(404).json({ message: 'Booking request not found' });
     }
 
-    // Verify zone access
-    if (bookingRequest.zoneId !== workerProfile.zoneId) {
+    // Verify zone access - check if vehicle belongs to worker's zone
+    if (bookingRequest.vehicleId.zoneCode !== workerProfile.zoneCode && bookingRequest.zoneId !== workerProfile.zoneId) {
       return res.status(403).json({
         message: 'You can only reject requests in your assigned zone'
       });
@@ -619,7 +647,7 @@ exports.getSellerBookingRequests = async (req, res) => {
     }
 
     const requests = await VehicleBooking.find(query)
-      .populate('vehicleId', 'brand model images rentalRates vehicleNumber category')
+      .populate('vehicleId', 'companyName name images rentalRates vehicleNo category')
       .populate('userId', 'name email phone')
       .populate('approvedBy rejectedBy', 'name')
       .sort({ requestedAt: -1 });

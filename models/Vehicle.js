@@ -1656,6 +1656,11 @@ vehicleSchema.virtual('rentalRates').get(function () {
   };
 });
 
+// Add images virtual field for frontend compatibility
+vehicleSchema.virtual('images').get(function () {
+  return this.vehicleImages || [];
+});
+
 // ===== Middleware / Hooks =====
 // Ensure default values for rate plans on read (for backward compatibility with existing documents)
 vehicleSchema.post('find', function(docs) {

@@ -941,6 +941,8 @@ vehicleBookingSchema.index({ bookingSource: 1, bookingDate: -1 }); // For bookin
 vehicleBookingSchema.index({ 'cashFlowDetails.isOfflineBooking': 1 }); // For offline booking queries
 vehicleBookingSchema.index({ bookedBy: 1, bookingDate: -1 }); // For seller/worker booking queries
 vehicleBookingSchema.index({ bookingId: 1 });
+vehicleBookingSchema.index({ 'payments.paymentDate': 1 });
+vehicleBookingSchema.index({ 'refundDetails.processedDate': 1 });
 
 // ===== Pre-save Hooks =====
 vehicleBookingSchema.pre('save', function (next) {

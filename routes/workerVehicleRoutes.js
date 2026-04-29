@@ -12,7 +12,10 @@ const {
   createWorkerExtension,
   getWorkerDailyHisab,
   getWorkerRevenueAnalytics,
-  getWorkerMonthlyRevenue
+  getWorkerMonthlyRevenue,
+  getVehicleMaintenanceHistory,
+  addVehicleMaintenance,
+  deleteVehicleMaintenance
 } = require('../controllers/vehiclerentalcontrollers/workerVehicleController');
 const { authenticate, authorize } = require('../middlewares/auth');
 
@@ -31,6 +34,11 @@ router.get('/profile', getWorkerProfile);
 
 // Vehicles (in worker's zone)
 router.get('/vehicles', getWorkerVehicles);
+
+// Vehicle Maintenance History
+router.get('/vehicles/:vehicleId/maintenance', getVehicleMaintenanceHistory);
+router.post('/vehicles/:vehicleId/maintenance', addVehicleMaintenance);
+router.delete('/vehicles/:vehicleId/maintenance/:maintenanceId', deleteVehicleMaintenance);
 
 // Bookings (in worker's zone)
 router.get('/bookings', getWorkerBookings);

@@ -18,7 +18,7 @@ const getSellerDashboard = async (req, res) => {
 
     // Get all bookings for these vehicles (needed for all-time stats)
     const bookings = await VehicleBooking.find({ vehicleId: { $in: vehicleIds } })
-      .populate('vehicleId', 'vehicleName registrationNumber brand model images status');
+      .populate('vehicleId', 'companyName name vehicleNo images status');
 
     // Date markers
     const now = new Date();
@@ -181,6 +181,7 @@ const getSellerDashboard = async (req, res) => {
           activeVehicles: vehicles.filter(v => v.status === 'active').length,
           totalBookings: bookings.length,
           activeBookings: bookings.filter(b => ['confirmed', 'ongoing'].includes(b.bookingStatus || b.status)).length,
+          pendingApprovals: bookings.filter(b => (b.bookingStatus || b.status) === 'awaiting_approval').length,
           totalRevenue: netTotalRevenue,
           monthlyRevenue: monthlyRevenue,
           dailyCashRevenue,
@@ -837,14 +838,14 @@ const getSellerBookings = async (req, res) => {
       
       const matchingVehicleIds = matchingVehicles.map(v => v._id);
       
-      filter.$or = [
+      const searchConditions = [
         { bookingId: { $regex: search, $options: 'i' } },
         // Customer details search
         { 'customerDetails.name': { $regex: search, $options: 'i' } },
         { 'customerDetails.phone': { $regex: search, $options: 'i' } },
         // Vehicle ID search (from matching vehicles)
         ...(matchingVehicleIds.length > 0 ? [{ vehicleId: { $in: matchingVehicleIds } }] : [])
-      ];
+      ]; const currentOr = filter.$or; delete filter.$or; filter.$and = [{ $or: currentOr }, { $or: searchConditions }];
     }
 
     // Zone filter - filter by vehicle's zone
@@ -912,6 +913,38 @@ const getSellerBookings = async (req, res) => {
 
     const totalBookings = await VehicleBooking.countDocuments(filter);
 
+    // Aggregate status counts using the BASE ownership filter (not status-filtered)
+    // so counts always reflect the full picture regardless of active filter
+    const mongoose = require('mongoose');
+    const sellerObjectId = new mongoose.Types.ObjectId(sellerId);
+    const baseOwnershipFilter = {
+      $or: [
+        { vehicleId: { $in: vehicleIds } },
+        { bookedBy: sellerObjectId }
+      ],
+      isDeletedBySeller: { $ne: true }
+    };
+
+    const statusCountsAgg = await VehicleBooking.aggregate([
+      { $match: baseOwnershipFilter },
+      { $group: { _id: '$bookingStatus', count: { $sum: 1 } } }
+    ]);
+
+    const counts = {
+      pending: 0,
+      awaiting_approval: 0,
+      confirmed: 0,
+      ongoing: 0,
+      completed: 0,
+      cancelled: 0
+    };
+
+    statusCountsAgg.forEach(item => {
+      if (item._id && counts.hasOwnProperty(item._id)) {
+        counts[item._id] = item.count;
+      }
+    });
+
     // Disable caching
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
     res.setHeader('Pragma', 'no-cache');
@@ -919,6 +952,7 @@ const getSellerBookings = async (req, res) => {
 
     res.json({
       success: true,
+      counts,
       data: {
         bookings,
         pagination: {
@@ -963,7 +997,24 @@ const updateBookingStatus = async (req, res) => {
     }
 
     // Update Status
-    if (status) booking.bookingStatus = status; // Use bookingStatus field
+    if (status) {
+      booking.bookingStatus = status; // Use bookingStatus field
+      
+      const Vehicle = require('../../models/Vehicle');
+      // If booking is cancelled or completed, free up the vehicle
+      if (['cancelled', 'completed'].includes(status)) {
+        await Vehicle.findByIdAndUpdate(booking.vehicleId._id, {
+          availability: 'available',
+          currentBookingId: null
+        });
+        console.log(`🔓 Vehicle ${booking.vehicleId._id} freed after booking ${status}`);
+      } else if (status === 'ongoing') {
+        await Vehicle.findByIdAndUpdate(booking.vehicleId._id, {
+          availability: 'reserved',
+          currentBookingId: booking._id
+        });
+      }
+    }
     if (notes) booking.notes = notes;
 
     // 1. Vehicle Tracking (Meter Reading)
@@ -1463,97 +1514,67 @@ const updateBookingDetails = async (req, res) => {
 // Get seller's service zones
 const getSellerZones = async (req, res) => {
   try {
-    const sellerId = req.user.id;
+    const isAdmin = req.user.role === 'admin' || req.user.role === 'super-admin';
+    const sellerId = req.user.id || req.user._id;
 
     // Get seller profile with vehicle rental service zones
     const seller = await User.findById(sellerId).select('sellerProfile.vehicleRentalService.serviceZones');
 
-    if (!seller || !seller.sellerProfile) {
-      return res.status(404).json({
-        success: false,
-        message: 'Seller profile not found'
-      });
+    let profileZones = [];
+    if (seller && seller.sellerProfile?.vehicleRentalService?.serviceZones) {
+      profileZones = seller.sellerProfile.vehicleRentalService.serviceZones;
     }
 
-    // If vehicleRentalService doesn't exist, create it with default zones
-    if (!seller.sellerProfile.vehicleRentalService) {
-      // Create default zones
-      const defaultZones = [
-        {
-          zoneName: 'Bholaram ustad marg',
-          zoneCode: 'ind001',
-          address: 'Bholaram ustad marg, Indore',
-          isActive: true
-        },
-        {
-          zoneName: 'Indrapuri main office',
-          zoneCode: 'ind003',
-          address: 'Indrapuri main office, Indore',
-          isActive: true
-        },
-        {
-          zoneName: 'Vijay nagar square',
-          zoneCode: 'ind004',
-          address: 'Vijay nagar square, Indore',
-          isActive: true
-        }
+    // If no zones in profile, use defaults
+    if (profileZones.length === 0) {
+      profileZones = [
+        { zoneName: 'Bholaram ustad marg', zoneCode: 'ind001', address: 'Bholaram ustad marg, Indore', isActive: true },
+        { zoneName: 'Anandnagar', zoneCode: 'ind002', address: 'Anandnagar, Indore', isActive: true },
+        { zoneName: 'Indrapuri main office', zoneCode: 'ind003', address: 'Indrapuri main office, Indore', isActive: true },
+        { zoneName: 'Vijay nagar square', zoneCode: 'ind004', address: 'Vijay nagar square, Indore', isActive: true }
       ];
-
-      // Initialize vehicleRentalService with default zones
-      seller.sellerProfile.vehicleRentalService = {
-        isEnabled: true,
-        serviceStatus: 'active',
-        businessType: 'individual',
-        serviceZones: defaultZones
-      };
-
-      await seller.save();
-
-      return res.json({
-        success: true,
-        message: 'Default zones created successfully',
-        data: defaultZones
-      });
-    }
-
-    // If serviceZones is empty, add default zones
-    if (!seller.sellerProfile.vehicleRentalService.serviceZones ||
-      seller.sellerProfile.vehicleRentalService.serviceZones.length === 0) {
-
-      const defaultZones = [
-        {
-          zoneName: 'Bholaram ustad marg',
-          zoneCode: 'ind001',
-          address: 'Bholaram ustad marg, Indore',
-          isActive: true
-        },
-        {
-          zoneName: 'Indrapuri main office',
-          zoneCode: 'ind003',
-          address: 'Indrapuri main office, Indore',
-          isActive: true
-        },
-        {
-          zoneName: 'Vijay nagar square',
-          zoneCode: 'ind004',
-          address: 'Vijay nagar square, Indore',
-          isActive: true
+      
+      // If regular seller has no zones, we might want to save these defaults
+      if (!isAdmin && seller && seller.sellerProfile) {
+        if (!seller.sellerProfile.vehicleRentalService) {
+          seller.sellerProfile.vehicleRentalService = {
+            isEnabled: true,
+            serviceStatus: 'active',
+            businessType: 'individual',
+            serviceZones: profileZones
+          };
+        } else {
+          seller.sellerProfile.vehicleRentalService.serviceZones = profileZones;
         }
-      ];
-
-      seller.sellerProfile.vehicleRentalService.serviceZones = defaultZones;
-      await seller.save();
-
-      return res.json({
-        success: true,
-        message: 'Default zones added successfully',
-        data: defaultZones
-      });
+        await seller.save();
+      }
     }
+
+    // Dynamically fetch unique zones from vehicles to ensure all active centers are shown
+    const vehicleFilter = isAdmin ? {} : { sellerId };
+    const vehicles = await Vehicle.find(vehicleFilter).select('zoneCode zoneCenterName');
+    
+    const dynamicZones = [];
+    const zoneCodesSet = new Set(profileZones.map(z => z.zoneCode));
+
+    vehicles.forEach(v => {
+      if (v.zoneCode && !zoneCodesSet.has(v.zoneCode)) {
+        zoneCodesSet.add(v.zoneCode);
+        dynamicZones.push({
+          _id: v._id,
+          zoneName: v.zoneCenterName || v.zoneCode,
+          zoneCode: v.zoneCode,
+          address: v.zoneCenterName || v.zoneCode,
+          isActive: true
+        });
+      }
+    });
+
+    const allZones = [...profileZones, ...dynamicZones];
 
     res.json({
       success: true,
-      data: seller.sellerProfile.vehicleRentalService.serviceZones
+      data: allZones
     });
 
   } catch (error) {
@@ -1614,6 +1635,7 @@ const updateSellerZones = async (req, res) => {
 
     // Update service zones
     seller.sellerProfile.vehicleRentalService.serviceZones = serviceZones;
+    seller.markModified('sellerProfile');
 
     await seller.save();
 
@@ -2808,23 +2830,48 @@ const getVehicleMaintenanceHistory = async (req, res) => {
   try {
     const { vehicleId } = req.params;
     const sellerId = req.user.id;
+    console.log(`[DEBUG] Fetching maintenance for vehicle: ${vehicleId}, seller: ${sellerId}`);
 
     // Verify vehicle belongs to seller
     const vehicle = await Vehicle.findOne({ _id: vehicleId, sellerId });
     if (!vehicle) {
+      console.log(`[DEBUG] Vehicle ${vehicleId} not found for seller ${sellerId}`);
       return res.status(404).json({
         success: false,
         message: 'Vehicle not found',
       });
     }
 
-    // Get maintenance records from vehicle
-    const maintenance = vehicle.maintenanceHistory || [];
+    // Merge any old maintenanceHistory with maintenance just in case
+    const legacyHistory = vehicle.maintenanceHistory || [];
+    const currentMaintenance = vehicle.maintenance || [];
+    console.log(`[DEBUG] Vehicle ${vehicleId} has ${currentMaintenance.length} current and ${legacyHistory.length} legacy records`);
+    
+    // Convert legacy records to new format if needed
+    const convertedLegacy = legacyHistory.map(record => ({
+      _id: record._id,
+      lastServicingDate: record.date || record.lastServicingDate || new Date(),
+      nextDueDate: record.nextServiceDue || record.nextDueDate,
+      serviceType: record.type || record.serviceType || 'general-service',
+      serviceCost: Number(record.cost || record.serviceCost) || 0,
+      serviceCenter: record.serviceProvider || record.serviceCenter || 'Local Service Center',
+      notes: record.description || record.notes || '',
+      isCompleted: record.isCompleted !== undefined ? record.isCompleted : true,
+      createdAt: record.createdAt || new Date()
+    }));
+
+    // Combine avoiding duplicates by ID
+    const combinedMaintenance = [...currentMaintenance];
+    convertedLegacy.forEach(legacyRecord => {
+      if (!combinedMaintenance.some(m => m._id.toString() === legacyRecord._id.toString())) {
+        combinedMaintenance.push(legacyRecord);
+      }
+    });
 
     res.status(200).json({
       success: true,
       data: {
-        maintenance,
+        maintenance: combinedMaintenance,
       },
     });
   } catch (error) {
@@ -2837,46 +2884,130 @@ const getVehicleMaintenanceHistory = async (req, res) => {
   }
 };
 
+// Get all maintenance history for a seller's vehicles
+const getSellerAllMaintenanceHistory = async (req, res) => {
+  try {
+    const sellerId = req.user.id;
+    console.log(`[DEBUG] Fetching ALL maintenance for seller: ${sellerId}`);
+
+    // Find all vehicles belonging to the seller
+    const vehicles = await Vehicle.find({ sellerId });
+    console.log(`[DEBUG] Found ${vehicles.length} vehicles for seller ${sellerId}`);
+    
+    // Aggregate all maintenance records with vehicle info
+    const allMaintenance = [];
+    vehicles.forEach(vehicle => {
+      // Handle both new 'maintenance' and old 'maintenanceHistory' arrays
+      const recordsToProcess = [];
+      
+      if (vehicle.maintenance && vehicle.maintenance.length > 0) {
+        recordsToProcess.push(...vehicle.maintenance);
+      }
+      
+      // Also grab legacy records if they exist and aren't already in maintenance
+      if (vehicle.maintenanceHistory && vehicle.maintenanceHistory.length > 0) {
+        vehicle.maintenanceHistory.forEach(legacy => {
+          if (!recordsToProcess.some(m => m._id.toString() === legacy._id.toString())) {
+            recordsToProcess.push({
+              _id: legacy._id,
+              lastServicingDate: legacy.date || legacy.lastServicingDate || new Date(),
+              nextDueDate: legacy.nextServiceDue || legacy.nextDueDate,
+              serviceType: legacy.type || legacy.serviceType || 'general-service',
+              serviceCost: Number(legacy.cost || legacy.serviceCost) || 0,
+              serviceCenter: legacy.serviceProvider || legacy.serviceCenter || 'Local Service Center',
+              notes: legacy.description || legacy.notes || '',
+              isCompleted: legacy.isCompleted !== undefined ? legacy.isCompleted : true,
+              createdAt: legacy.createdAt || new Date()
+            });
+          }
+        });
+      }
+      
+      if (recordsToProcess.length > 0) {
+        console.log(`[DEBUG] Vehicle ${vehicle.vehicleNo} has ${recordsToProcess.length} maintenance records`);
+        recordsToProcess.forEach(record => {
+          // Check if record has toObject method (it's a mongoose document) or is a plain object
+          const recordObj = typeof record.toObject === 'function' ? record.toObject() : record;
+          allMaintenance.push({
+            ...recordObj,
+            vehicleId: vehicle._id,
+            vehicleName: `${vehicle.companyName || ''} ${vehicle.name || ''}`.trim(),
+            vehicleNo: vehicle.vehicleNo
+          });
+        });
+      }
+    });
+
+    console.log(`[DEBUG] Total combined maintenance records found: ${allMaintenance.length}`);
+
+    // Sort by most recent first
+    allMaintenance.sort((a, b) => new Date(b.lastServicingDate) - new Date(a.lastServicingDate));
+
+    res.status(200).json({
+      success: true,
+      data: {
+        maintenance: allMaintenance,
+      },
+    });
+  } catch (error) {
+    console.error('Error fetching all maintenance history:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch all maintenance history',
+      error: error.message,
+    });
+  }
+};
+
 // Add maintenance record
 const addVehicleMaintenance = async (req, res) => {
   try {
     const { vehicleId } = req.params;
     const sellerId = req.user.id;
     const maintenanceData = req.body;
+    console.log(`[DEBUG] Adding maintenance for vehicle: ${vehicleId}, seller: ${sellerId}, data:`, maintenanceData);
 
     // Verify vehicle belongs to seller
     const vehicle = await Vehicle.findOne({ _id: vehicleId, sellerId });
     if (!vehicle) {
+      console.log(`[DEBUG] Vehicle ${vehicleId} not found for adding maintenance`);
       return res.status(404).json({
         success: false,
         message: 'Vehicle not found',
       });
     }
 
-    // Initialize maintenanceHistory if it doesn't exist
-    if (!vehicle.maintenanceHistory) {
-      vehicle.maintenanceHistory = [];
+    if (!vehicle.maintenance) {
+      vehicle.maintenance = [];
     }
 
-    // Add new maintenance record
-    const newMaintenance = {
-      date: maintenanceData.date || new Date(),
-      type: maintenanceData.type,
-      description: maintenanceData.description,
-      cost: maintenanceData.cost || 0,
-      serviceProvider: maintenanceData.serviceProvider,
-      meterReading: maintenanceData.meterReading,
-      nextServiceDue: maintenanceData.nextServiceDue,
+    // Adapt to schema (handle both old and new formats coming from different frontends)
+    const newRecord = {
+      lastServicingDate: maintenanceData.lastServicingDate || maintenanceData.date || new Date(),
+      nextDueDate: maintenanceData.nextDueDate || maintenanceData.nextServiceDue,
+      serviceType: maintenanceData.serviceType || maintenanceData.type || 'general-service',
+      serviceCost: Number(maintenanceData.serviceCost || maintenanceData.cost) || 0,
+      serviceCenter: maintenanceData.serviceCenter || maintenanceData.serviceProvider || 'Local Service Center',
+      notes: maintenanceData.notes || maintenanceData.description || '',
+      isCompleted: maintenanceData.isCompleted !== undefined ? maintenanceData.isCompleted : true,
+      createdAt: new Date()
     };
 
-    vehicle.maintenanceHistory.push(newMaintenance);
+    vehicle.maintenance.push(newRecord);
+    
+    // Auto-update vehicle status if it was in-maintenance and this is completed
+    if (newRecord.isCompleted && vehicle.status === 'in-maintenance') {
+      vehicle.status = 'active';
+    }
+    
     await vehicle.save();
+    console.log(`[DEBUG] Maintenance record saved. Total records now: ${vehicle.maintenance.length}`);
 
     res.status(201).json({
       success: true,
       message: 'Maintenance record added successfully',
       data: {
-        maintenance: vehicle.maintenanceHistory[vehicle.maintenanceHistory.length - 1],
+        maintenance: vehicle.maintenance[vehicle.maintenance.length - 1],
       },
     });
   } catch (error) {
@@ -2905,24 +3036,79 @@ const updateVehicleMaintenance = async (req, res) => {
       });
     }
 
+    // Initialize if needed
+    if (!vehicle.maintenance) vehicle.maintenance = [];
+
     // Find and update maintenance record
-    const maintenanceIndex = vehicle.maintenanceHistory.findIndex(
+    const maintenanceIndex = vehicle.maintenance.findIndex(
       m => m._id.toString() === maintenanceId
     );
 
+    // If not found in maintenance, check maintenanceHistory (legacy)
     if (maintenanceIndex === -1) {
+      const legacyIndex = (vehicle.maintenanceHistory || []).findIndex(
+        m => m._id.toString() === maintenanceId
+      );
+      
+      if (legacyIndex !== -1) {
+        // Move legacy record to new array
+        const legacy = vehicle.maintenanceHistory[legacyIndex];
+        const migratedRecord = {
+          _id: legacy._id,
+          lastServicingDate: updateData.lastServicingDate || updateData.date || legacy.date || legacy.lastServicingDate || new Date(),
+          nextDueDate: updateData.nextDueDate || updateData.nextServiceDue || legacy.nextServiceDue || legacy.nextDueDate,
+          serviceType: updateData.serviceType || updateData.type || legacy.type || legacy.serviceType || 'general-service',
+          serviceCost: Number(updateData.serviceCost || updateData.cost || legacy.cost || legacy.serviceCost) || 0,
+          serviceCenter: updateData.serviceCenter || updateData.serviceProvider || legacy.serviceProvider || legacy.serviceCenter || 'Local Service Center',
+          notes: updateData.notes || updateData.description || legacy.description || legacy.notes || '',
+          isCompleted: updateData.isCompleted !== undefined ? updateData.isCompleted : (legacy.isCompleted !== undefined ? legacy.isCompleted : true),
+          createdAt: legacy.createdAt || new Date()
+        };
+        
+        vehicle.maintenance.push(migratedRecord);
+        // Remove from legacy array
+        vehicle.maintenanceHistory.splice(legacyIndex, 1);
+        await vehicle.save();
+        
+        return res.status(200).json({
+          success: true,
+          message: 'Maintenance record updated and migrated successfully',
+          data: {
+            maintenance: vehicle.maintenance[vehicle.maintenance.length - 1],
+          },
+        });
+      }
+
       return res.status(404).json({
         success: false,
         message: 'Maintenance record not found',
       });
     }
 
-    // Update fields
-    Object.keys(updateData).forEach(key => {
-      if (updateData[key] !== undefined) {
-        vehicle.maintenanceHistory[maintenanceIndex][key] = updateData[key];
-      }
-    });
+    // Update fields adapting to the schema
+    const record = vehicle.maintenance[maintenanceIndex];
+    
+    if (updateData.lastServicingDate || updateData.date) {
+      record.lastServicingDate = updateData.lastServicingDate || updateData.date;
+    }
+    if (updateData.nextDueDate || updateData.nextServiceDue) {
+      record.nextDueDate = updateData.nextDueDate || updateData.nextServiceDue;
+    }
+    if (updateData.serviceType || updateData.type) {
+      record.serviceType = updateData.serviceType || updateData.type;
+    }
+    if (updateData.serviceCost || updateData.cost !== undefined) {
+      record.serviceCost = Number(updateData.serviceCost || updateData.cost);
+    }
+    if (updateData.serviceCenter || updateData.serviceProvider) {
+      record.serviceCenter = updateData.serviceCenter || updateData.serviceProvider;
+    }
+    if (updateData.notes !== undefined || updateData.description !== undefined) {
+      record.notes = updateData.notes !== undefined ? updateData.notes : updateData.description;
+    }
+    if (updateData.isCompleted !== undefined) {
+      record.isCompleted = updateData.isCompleted;
+    }
 
     await vehicle.save();
 
@@ -2930,7 +3116,7 @@ const updateVehicleMaintenance = async (req, res) => {
       success: true,
       message: 'Maintenance record updated successfully',
       data: {
-        maintenance: vehicle.maintenanceHistory[maintenanceIndex],
+        maintenance: vehicle.maintenance[maintenanceIndex],
       },
     });
   } catch (error) {
@@ -2958,10 +3144,32 @@ const deleteVehicleMaintenance = async (req, res) => {
       });
     }
 
-    // Remove maintenance record
-    vehicle.maintenanceHistory = vehicle.maintenanceHistory.filter(
-      m => m._id.toString() !== maintenanceId
-    );
+    let found = false;
+
+    // Remove from active maintenance array
+    if (vehicle.maintenance) {
+      const initialLength = vehicle.maintenance.length;
+      vehicle.maintenance = vehicle.maintenance.filter(
+        m => m._id.toString() !== maintenanceId
+      );
+      if (vehicle.maintenance.length < initialLength) found = true;
+    }
+    
+    // Also remove from legacy array if present
+    if (vehicle.maintenanceHistory) {
+      const initialLength = vehicle.maintenanceHistory.length;
+      vehicle.maintenanceHistory = vehicle.maintenanceHistory.filter(
+        m => m._id.toString() !== maintenanceId
+      );
+      if (vehicle.maintenanceHistory.length < initialLength) found = true;
+    }
+
+    if (!found) {
+      return res.status(404).json({
+        success: false,
+        message: 'Maintenance record not found',
+      });
+    }
 
     await vehicle.save();
 
@@ -3023,7 +3231,7 @@ const getSellerWorkers = async (req, res) => {
       'workerProfile.sellerId': sellerId
     }).select('name email phone workerProfile createdAt isActive');
 
-    res.json({ success: true, workers });
+    res.json({ success: true, data: workers });
   } catch (error) {
     console.error('Error fetching workers:', error);
     res.status(500).json({ success: false, message: 'Failed to fetch workers', error: error.message });
@@ -3136,6 +3344,26 @@ const deleteWorker = async (req, res) => {
   }
 };
 
+// Activate a worker
+const activateWorker = async (req, res) => {
+  try {
+    const sellerId = req.user.id;
+    const { workerId } = req.params;
+
+    const worker = await User.findOne({ _id: workerId, role: 'worker', 'workerProfile.sellerId': sellerId });
+    if (!worker) {
+      return res.status(404).json({ success: false, message: 'Worker not found' });
+    }
+
+    worker.workerProfile.isActive = true;
+    await worker.save();
+    res.json({ success: true, message: 'Worker activated successfully' });
+  } catch (error) {
+    console.error('Error activating worker:', error);
+    res.status(500).json({ success: false, message: 'Failed to activate worker', error: error.message });
+  }
+};
+
 // Reset worker password
 const resetWorkerPassword = async (req, res) => {
   try {
@@ -3190,6 +3418,7 @@ module.exports = {
   completeBooking,
   getVehicleById,
   getVehicleBookingHistory,
+  getSellerAllMaintenanceHistory,
   getVehicleMaintenanceHistory,
   addVehicleMaintenance,
   updateVehicleMaintenance,
@@ -3198,5 +3427,6 @@ module.exports = {
   createWorker,
   updateWorker,
   deleteWorker,
+  activateWorker,
   resetWorkerPassword,
 };

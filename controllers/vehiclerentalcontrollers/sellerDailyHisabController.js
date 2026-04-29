@@ -53,7 +53,7 @@ const getDailyHisab = async (req, res) => {
     const { startOfDayUTC, endOfDayUTC } = getISTDayRange(date);
 
     // Get all vehicles belonging to this seller
-    const sellerVehicles = await Vehicle.find({ sellerId }, '_id companyName name vehicleNo category type zoneCode zoneCenterName');
+    const sellerVehicles = await Vehicle.find({ sellerId }, '_id companyName name vehicleNo category type zoneCode zoneCenterName maintenance maintenanceHistory');
     const vehicleIds = sellerVehicles.map(v => v._id);
     const vehicleMap = {};
     sellerVehicles.forEach(v => {
@@ -115,16 +115,31 @@ const getDailyHisab = async (req, res) => {
       const zoneCode = vehicleInfo.zoneCode || vehicleMapData.zoneCode || booking.zone || null;
       const zoneCenterName = vehicleInfo.zoneCenterName || vehicleMapData.zoneCenterName || booking.centerName || null;
 
-      // Calculate payments received on this date (exclude negative refund entries — those are tracked via refundDetails)
+      // Calculate payments received on this date
       let dayPayments = 0;
+      let dayCashIn = 0;
+      let dayOnlineIn = 0;
       const paymentDetails = [];
+      
       if (booking.payments && booking.payments.length > 0) {
         for (const payment of booking.payments) {
           const payDate = new Date(payment.paymentDate);
           if (payDate >= startOfDayUTC && payDate <= endOfDayUTC && payment.status === 'success' && (payment.amount || 0) > 0) {
-            dayPayments += payment.amount;
+            const amount = payment.amount || 0;
+            dayPayments += amount;
+            
+            // Check for cash in both type and method fields to be robust
+            const isCash = (payment.paymentType || '').toLowerCase() === 'cash' || 
+                          (payment.paymentMethod || '').toLowerCase() === 'cash';
+            
+            if (isCash) {
+              dayCashIn += amount;
+            } else {
+              dayOnlineIn += amount;
+            }
+
             paymentDetails.push({
-              amount: payment.amount,
+              amount: amount,
               type: payment.paymentType,
               method: payment.paymentMethod,
               time: payment.paymentDate
@@ -138,18 +153,20 @@ const getDailyHisab = async (req, res) => {
       let dayCashOut = 0;
       let dayOnlineOut = 0;
       let refundDetail = null;
+      
       if (booking.refundDetails && booking.refundDetails.processedDate) {
         const refundDate = new Date(booking.refundDetails.processedDate);
         if (refundDate >= startOfDayUTC && refundDate <= endOfDayUTC) {
           const approvedAmount = booking.refundDetails.approvedAmount || 0;
-          // Derive cash/online split — old bookings may not have cashAmount/onlineAmount
+          
+          // Derive cash/online split
           if (booking.refundDetails.cashAmount != null || booking.refundDetails.onlineAmount != null) {
             dayCashOut = booking.refundDetails.cashAmount || 0;
             dayOnlineOut = booking.refundDetails.onlineAmount || 0;
           } else {
-            // Fallback: derive from refundMethod
-            const method = booking.refundDetails.refundMethod || booking.refundDetails.refundMode || 'cash';
-            if (method === 'cash') {
+            // Fallback: derive from refundMethod/refundMode
+            const mode = (booking.refundDetails.refundMode || booking.refundDetails.refundMethod || 'cash').toLowerCase();
+            if (mode === 'cash') {
               dayCashOut = approvedAmount;
               dayOnlineOut = 0;
             } else {
@@ -157,13 +174,14 @@ const getDailyHisab = async (req, res) => {
               dayOnlineOut = approvedAmount;
             }
           }
+          
           dayRefunds = dayCashOut + dayOnlineOut;
           refundDetail = {
-            totalRefund: approvedAmount,
+            totalRefund: dayRefunds,
             cashRefund: dayCashOut,
             onlineRefund: dayOnlineOut,
             reason: booking.refundDetails.reason,
-            mode: booking.refundDetails.refundMode
+            mode: booking.refundDetails.refundMode || booking.refundDetails.refundMethod || 'Other'
           };
         }
       }
@@ -182,12 +200,13 @@ const getDailyHisab = async (req, res) => {
       if (isNewBooking) totalNewBookings++;
       if (isSubmitted) totalSubmittedBookings++;
 
-      // Only include if there's actual money movement on this date
-      if (dayPayments > 0 || dayRefunds > 0) {
+      // Include if there's money movement OR it's a new booking OR it was submitted today
+      if (dayPayments > 0 || dayRefunds > 0 || isNewBooking || isSubmitted) {
         totalIn += dayPayments;
+        totalCashIn += dayCashIn;
+        totalOnlineIn += dayOnlineIn;
+        
         totalOut += dayRefunds;
-        totalCashIn += (paymentDetails.filter(p => p.method === 'Cash').reduce((s, p) => s + (p.amount || 0), 0));
-        totalOnlineIn += (paymentDetails.filter(p => p.method !== 'Cash').reduce((s, p) => s + (p.amount || 0), 0));
         totalCashOut += dayCashOut;
         totalOnlineOut += dayOnlineOut;
 
@@ -203,21 +222,10 @@ const getDailyHisab = async (req, res) => {
         // Total km actually traveled by customer
         const totalKm = booking.tripMetrics?.totalKmTraveled ?? null;
 
-        // Deposit split: online vs cash
+        // Deposit split: online vs cash (historical data helper)
         const depositAmount = booking.depositAmount || 0;
         const depositOnline = (booking.depositStatus === 'collected-online') ? depositAmount : 0;
         const depositCash = (booking.depositStatus === 'collected-at-pickup') ? depositAmount : 0;
-
-        // Payment split for this day: cash vs online
-        let dayCashIn = 0;
-        let dayOnlineIn = 0;
-        for (const p of paymentDetails) {
-          if (p.method === 'Cash') {
-            dayCashIn += p.amount || 0;
-          } else {
-            dayOnlineIn += p.amount || 0;
-          }
-        }
 
         vehicleTransactions.push({
           bookingId: booking.bookingId,
@@ -228,7 +236,7 @@ const getDailyHisab = async (req, res) => {
           vehicleType: vehicleType,
           zoneCode: zoneCode,
           zoneCenterName: zoneCenterName,
-          customerName: booking.customerDetails?.name || 'N/A',
+          customerName: booking.customerDetails?.name || booking.userId?.name || 'Customer',
           customerPhone: booking.customerDetails?.phone || 'N/A',
           bookingStatus: booking.bookingStatus,
           bookingDate: booking.bookingDate,
@@ -263,13 +271,66 @@ const getDailyHisab = async (req, res) => {
       }
     }
 
-    // Sort: new bookings first, then submitted, by time
+    // NEW: Include maintenance costs in Hisab
+    // Since workers often pay for maintenance out of their daily cash collection
+    let totalMaintenance = 0;
+    for (const vehicle of sellerVehicles) {
+      const records = vehicle.maintenance || [];
+      const legacyRecords = (vehicle._doc && vehicle._doc.maintenanceHistory) || vehicle.maintenanceHistory || [];
+      
+      const allMaintenance = [...records];
+      legacyRecords.forEach(l => {
+        if (!allMaintenance.some(m => m._id.toString() === l._id.toString())) {
+          allMaintenance.push(l);
+        }
+      });
+
+      for (const record of allMaintenance) {
+        const maintDate = new Date(record.lastServicingDate || record.date);
+        if (maintDate >= startOfDayUTC && maintDate <= endOfDayUTC) {
+          const cost = Number(record.serviceCost || record.cost) || 0;
+          if (cost > 0) {
+            totalMaintenance += cost;
+            
+            // Add as a special transaction
+            vehicleTransactions.push({
+              isMaintenance: true,
+              _id: record._id || `maint-${Date.now()}-${Math.random()}`,
+              vehicleName: `${vehicle.companyName || ''} ${vehicle.name || ''}`.trim(),
+              vehicleNo: vehicle.vehicleNo,
+              vehicleCategory: vehicle.category,
+              serviceType: record.serviceType || record.type || 'Maintenance',
+              serviceCenter: record.serviceCenter || record.serviceProvider || 'Local Shop',
+              notes: record.notes || record.description || 'Maintenance cost',
+              dayPayments: 0,
+              dayRefunds: cost,
+              dayCashOut: cost, // Maintenance is almost always paid in cash by workers
+              dayOnlineOut: 0,
+              dayNet: -cost,
+              lastServicingDate: record.lastServicingDate || record.date
+            });
+          }
+        }
+      }
+    }
+
+    // Update totals with maintenance
+    totalOut += totalMaintenance;
+    totalCashOut += totalMaintenance;
+
+    // Sort: new bookings first, then submitted, then maintenance, then by time
     vehicleTransactions.sort((a, b) => {
       if (a.isNewBooking && !b.isNewBooking) return -1;
       if (!a.isNewBooking && b.isNewBooking) return 1;
-      return new Date(b.bookingDate) - new Date(a.bookingDate);
+      if (a.isMaintenance && !b.isMaintenance) return 1;
+      if (!a.isMaintenance && b.isMaintenance) return -1;
+      
+      const dateA = a.bookingDate || a.lastServicingDate || a.time || a.createdAt;
+      const dateB = b.bookingDate || b.lastServicingDate || b.time || b.createdAt;
+      return new Date(dateB) - new Date(dateA);
     });
 
+    // Collection calculation: Only deduct cash refunds and maintenance from cash received
     const collectFromWorker = totalCashIn - totalCashOut;
 
     res.status(200).json({

@@ -4,15 +4,22 @@ const Vehicle = require('../models/Vehicle');
 // Get comprehensive revenue analytics for seller
 exports.getRevenueAnalytics = async (req, res) => {
   try {
-    const sellerId = req.user._id;
-    const { startDate, endDate, period = 'all' } = req.query;
+    const isAdmin = req.user.role === 'admin' || req.user.role === 'super-admin';
+    const sellerId = req.user.id || req.user._id;
+    const { startDate, endDate, period = 'all', zoneCode } = req.query;
 
-    console.log('Revenue Analytics Request:', { sellerId, startDate, endDate, period });
+    console.log('Revenue Analytics Request:', { sellerId, isAdmin, startDate, endDate, period, zoneCode });
 
-    // Get seller's vehicles
-    const sellerVehicles = await Vehicle.find({
-      sellerId: sellerId
-    });
+    // Get vehicles
+    const vehicleFilter = {};
+    if (!isAdmin) {
+      vehicleFilter.sellerId = sellerId;
+    }
+    if (zoneCode && zoneCode !== 'all') {
+      vehicleFilter.zoneCode = zoneCode;
+    }
+
+    const sellerVehicles = await Vehicle.find(vehicleFilter);
 
     const vehicleIds = sellerVehicles.map(v => v._id);
 
@@ -69,21 +76,111 @@ exports.getRevenueAnalytics = async (req, res) => {
 
     // Define query to match bookings with activity in the date range
     // We fetch any booking that has a payment OR refund in the range
-    const bookingsQuery = {
-      vehicleId: { $in: vehicleIds },
-      $or: [
-        { 'payments.paymentDate': { $gte: start, $lte: end } },
-        { 'refundDetails.processedDate': { $gte: start, $lte: end } }
-      ]
-    };
+    // --- OPTIMIZED AGGREGATION PIPELINE ---
+    const revenueAgg = await VehicleBooking.aggregate([
+      { $match: { vehicleId: { $in: vehicleIds } } },
+      {
+        $facet: {
+          // Calculate payments within range
+          payments: [
+            { $unwind: "$payments" },
+            { 
+              $match: { 
+                "payments.status": "success",
+                "payments.paymentDate": { $gte: start, $lte: end }
+              } 
+            },
+            {
+              $group: {
+                _id: { $dateToString: { format: "%Y-%m-%d", date: "$payments.paymentDate" } },
+                cashIn: { $sum: { $cond: [{ $eq: ["$payments.paymentType", "Cash"] }, "$payments.amount", 0] } },
+                onlineIn: { $sum: { $cond: [{ $ne: ["$payments.paymentType", "Cash"] }, "$payments.amount", 0] } },
+                totalIn: { $sum: "$payments.amount" },
+                count: { $sum: 1 }
+              }
+            }
+          ],
+          // Calculate refunds within range
+          refunds: [
+            { 
+              $match: { 
+                "refundDetails.processedDate": { $gte: start, $lte: end }
+              } 
+            },
+            {
+              $group: {
+                _id: { $dateToString: { format: "%Y-%m-%d", date: "$refundDetails.processedDate" } },
+                amount: { $sum: { $ifNull: ["$refundDetails.approvedAmount", 0] } },
+                count: { $sum: 1 }
+              }
+            }
+          ],
+          // Vehicle-wise revenue (payments in range)
+          vehicleRevenue: [
+            { $unwind: "$payments" },
+            { 
+              $match: { 
+                "payments.status": "success",
+                "payments.paymentDate": { $gte: start, $lte: end }
+              } 
+            },
+            {
+              $group: {
+                _id: "$vehicleId",
+                revenue: { $sum: "$payments.amount" },
+                bookings: { $addToSet: "$_id" }
+              }
+            },
+            {
+              $set: {
+                vehicleId: {
+                  $convert: {
+                    input: "$vehicleId",
+                    to: "objectId",
+                    onError: "$vehicleId",
+                    onNull: "$vehicleId"
+                  }
+                }
+              }
+            },
+            {
+              $lookup: {
+                from: "vehicles",
+                localField: "vehicleId",
+                foreignField: "_id",
+                as: "vehicleInfo"
+              }
+            },
+            { $unwind: { path: "$vehicleInfo", preserveNullAndEmptyArrays: true } },
+            {
+              $project: {
+                vehicleId: "$_id",
+                vehicleName: { 
+                  $trim: { 
+                    input: { 
+                      $concat: [
+                        { $ifNull: ["$vehicleInfo.companyName", ""] }, 
+                        " ", 
+                        { $ifNull: ["$vehicleInfo.name", "Unknown"] }
+                      ] 
+                    } 
+                  } 
+                },
+                registrationNumber: { $ifNull: ["$vehicleInfo.vehicleNo", "N/A"] },
+                revenue: 1,
+                bookingsCount: { $size: "$bookings" }
+              }
+            }
+          ]
+        }
+      }
+    ]);
 
-    const bookings = await VehicleBooking.find(bookingsQuery)
-      .populate('vehicleId', 'vehicleName registrationNumber');
-
-    // Initialize ledger and analytics
+    // Process aggregated results into the ledger
+    const results = revenueAgg[0];
     const ledger = {};
-
-    // Initialize ledger with dates if period is week or month (optional but good for charts)
+    
+    // Initialize period if not 'all'
     if (period !== 'all') {
       let curr = new Date(start);
       while (curr <= end) {
@@ -100,111 +197,91 @@ exports.getRevenueAnalytics = async (req, res) => {
       totalRefunds: 0,
       maintenanceCosts: 0,
       netRevenue: 0,
-      totalBookings: bookings.length, // Total bookings touched by this period's cash flow
+      totalBookings: 0,
       paymentTypeBreakdown: {},
-      refundReasons: {},
       vehicleWiseRevenue: {},
-      bookingsList: []
+      bookingsList: [] // We'll still fetch this with a limit for the UI
     };
 
-    // Process Bookings for Payments and Refunds
-    bookings.forEach(booking => {
-      let bookingInPeriodActivity = false;
-      let bookingDataForList = {
+    // Fill ledger with payment data
+    results.payments.forEach(p => {
+      if (!ledger[p._id]) {
+        ledger[p._id] = { date: p._id, cashIn: 0, onlineIn: 0, totalIn: 0, refunds: 0, maintenance: 0, moneyOut: 0, net: 0, transactions: 0 };
+      }
+      ledger[p._id].cashIn = p.cashIn;
+      ledger[p._id].onlineIn = p.onlineIn;
+      ledger[p._id].totalIn = p.totalIn;
+      ledger[p._id].net += p.totalIn;
+      ledger[p._id].transactions = p.count;
+
+      analytics.cashRevenue += p.cashIn;
+      analytics.onlineRevenue += p.onlineIn;
+      analytics.totalRevenue += p.totalIn;
+    });
+
+    // Fill ledger with refund data
+    results.refunds.forEach(r => {
+      if (!ledger[r._id]) {
+        ledger[r._id] = { date: r._id, cashIn: 0, onlineIn: 0, totalIn: 0, refunds: 0, maintenance: 0, moneyOut: 0, net: 0, transactions: 0 };
+      }
+      ledger[r._id].refunds = r.amount;
+      ledger[r._id].moneyOut += r.amount;
+      ledger[r._id].net -= r.amount;
+      analytics.totalRefunds += r.amount;
+    });
+
+    // Handle vehicle stats
+    const vehicleStats = results.vehicleRevenue;
+    for (const stat of vehicleStats) {
+      analytics.vehicleWiseRevenue[stat.vehicleId] = {
+        vehicleName: stat.vehicleName,
+        registrationNumber: stat.registrationNumber,
+        revenue: stat.revenue,
+        bookings: stat.bookingsCount
+      };
+    }
+
+    const bookingsQuery = {
+      vehicleId: { $in: vehicleIds },
+      $or: [
+        { 'payments.paymentDate': { $gte: start, $lte: end } },
+        { 'refundDetails.processedDate': { $gte: start, $lte: end } }
+      ]
+    };
+
+    // Fetch recent bookings for the list (limited for performance)
+    const recentBookings = await VehicleBooking.find(bookingsQuery)
+      .populate('vehicleId', 'companyName name vehicleNo')
+      .sort({ bookingDate: -1 })
+      .limit(100);
+
+    analytics.bookingsList = recentBookings.map(booking => {
+      let cash = 0, online = 0;
+      booking.payments?.forEach(p => {
+        if (p.status === 'success' && p.paymentDate >= start && p.paymentDate <= end) {
+          if (p.paymentType === 'Cash') cash += p.amount;
+          else online += p.amount;
+        }
+      });
+
+      return {
         bookingId: booking.bookingId,
-        vehicleName: booking.vehicleId?.vehicleName || 'Unknown',
-        registrationNumber: booking.vehicleId?.registrationNumber || 'N/A',
+        vehicleName: booking.vehicleId 
+          ? `${booking.vehicleId.companyName || ''} ${booking.vehicleId.name || ''}`.trim() 
+          : `Unknown (ID: ${booking.vehicleId?.toString() || 'Missing'})`,
+        registrationNumber: booking.vehicleId?.vehicleNo || 'N/A',
         customerName: booking.customerDetails?.name,
-        cashAmount: 0,
-        onlineAmount: 0,
-        totalAmount: 0,
-        refundAmount: 0,
+        cashAmount: cash,
+        onlineAmount: online,
+        totalAmount: cash + online,
+        refundAmount: (booking.refundDetails?.processedDate >= start && booking.refundDetails?.processedDate <= end) 
+          ? (booking.refundDetails?.approvedAmount || 0) : 0,
         paymentStatus: booking.paymentStatus,
         bookingDate: booking.bookingDate
       };
-
-      // 1. Process Payments
-      if (booking.payments && booking.payments.length > 0) {
-        booking.payments.forEach(payment => {
-          if (payment.status === 'success' && payment.paymentDate >= start && payment.paymentDate <= end) {
-            bookingInPeriodActivity = true;
-            const dateStr = new Date(payment.paymentDate).toISOString().split('T')[0];
-
-            if (!ledger[dateStr]) {
-              ledger[dateStr] = { date: dateStr, cashIn: 0, onlineIn: 0, totalIn: 0, refunds: 0, maintenance: 0, moneyOut: 0, net: 0, transactions: 0 };
-            }
-
-            const amount = payment.amount;
-            if (payment.paymentType === 'Cash') {
-              ledger[dateStr].cashIn += amount;
-              analytics.cashRevenue += amount;
-              bookingDataForList.cashAmount += amount;
-            } else {
-              ledger[dateStr].onlineIn += amount;
-              analytics.onlineRevenue += amount;
-              bookingDataForList.onlineAmount += amount;
-            }
-            bookingDataForList.totalAmount += amount;
-
-            ledger[dateStr].totalIn += amount;
-            ledger[dateStr].net += amount;
-            ledger[dateStr].transactions++;
-            analytics.totalRevenue += amount;
-
-            // Type breakdown
-            if (!analytics.paymentTypeBreakdown[payment.paymentType]) {
-              analytics.paymentTypeBreakdown[payment.paymentType] = { amount: 0, count: 0 };
-            }
-            analytics.paymentTypeBreakdown[payment.paymentType].amount += amount;
-            analytics.paymentTypeBreakdown[payment.paymentType].count++;
-          }
-        });
-      }
-
-      // 2. Process Refunds
-      if (booking.refundDetails && booking.refundDetails.processedDate >= start && booking.refundDetails.processedDate <= end) {
-        bookingInPeriodActivity = true;
-        const dateStr = new Date(booking.refundDetails.processedDate).toISOString().split('T')[0];
-
-        if (!ledger[dateStr]) {
-          ledger[dateStr] = { date: dateStr, cashIn: 0, onlineIn: 0, totalIn: 0, refunds: 0, maintenance: 0, moneyOut: 0, net: 0, transactions: 0 };
-        }
-
-        const refundAmt = booking.refundDetails.approvedAmount || 0;
-        ledger[dateStr].refunds += refundAmt;
-        ledger[dateStr].moneyOut += refundAmt;
-        ledger[dateStr].net -= refundAmt;
-        analytics.totalRefunds += refundAmt;
-        bookingDataForList.refundAmount += refundAmt;
-
-        // Reason breakdown
-        const reason = booking.refundDetails.reason || 'other';
-        if (!analytics.refundReasons[reason]) {
-          analytics.refundReasons[reason] = { amount: 0, count: 0 };
-        }
-        analytics.refundReasons[reason].amount += refundAmt;
-        analytics.refundReasons[reason].count++;
-      }
-
-      if (bookingInPeriodActivity) {
-        analytics.bookingsList.push(bookingDataForList);
-
-        // Vehicle stats
-        const vId = booking.vehicleId?._id?.toString();
-        if (vId) {
-          if (!analytics.vehicleWiseRevenue[vId]) {
-            analytics.vehicleWiseRevenue[vId] = {
-              vehicleName: booking.vehicleId.vehicleName,
-              registrationNumber: booking.vehicleId.registrationNumber,
-              revenue: 0,
-              bookings: 0
-            };
-          }
-          analytics.vehicleWiseRevenue[vId].revenue += (bookingDataForList.cashAmount + bookingDataForList.onlineAmount);
-          analytics.vehicleWiseRevenue[vId].bookings++;
-        }
-      }
     });
+
+    analytics.totalBookings = analytics.bookingsList.length;
 
     // 3. Process Maintenance Costs from Vehicles
     sellerVehicles.forEach(vehicle => {
@@ -248,64 +325,94 @@ exports.getRevenueAnalytics = async (req, res) => {
   }
 };
 
-// Get monthly revenue comparison
 exports.getMonthlyComparison = async (req, res) => {
   try {
-    const sellerId = req.user._id;
-    const { months = 6 } = req.query;
+    const isAdmin = req.user.role === 'admin' || req.user.role === 'super-admin';
+    const sellerId = req.user.id || req.user._id;
+    const { months = 6, zoneCode } = req.query;
 
-    // Get seller's vehicles
-    const sellerVehicles = await Vehicle.find({
-      sellerId: sellerId
-    }).select('_id');
+    // Get seller's vehicles with optional zone filtering
+    const vehicleFilter = {};
+    if (!isAdmin) {
+      vehicleFilter.sellerId = sellerId;
+    }
+    if (zoneCode && zoneCode !== 'all') {
+      vehicleFilter.zoneCode = zoneCode;
+    }
 
+    const sellerVehicles = await Vehicle.find(vehicleFilter).select('_id');
     const vehicleIds = sellerVehicles.map(v => v._id);
 
-    // Generate date range for last N months
-    const monthlyData = [];
     const now = new Date();
+    const monthsCount = parseInt(months);
+    const startDate = new Date(now.getFullYear(), now.getMonth() - monthsCount + 1, 1);
 
-    for (let i = parseInt(months) - 1; i >= 0; i--) {
-      const monthDate = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const nextMonth = new Date(now.getFullYear(), now.getMonth() - i + 1, 1);
+    const monthlyAgg = await VehicleBooking.aggregate([
+      { 
+        $match: { 
+          vehicleId: { $in: vehicleIds },
+          bookingDate: { $gte: startDate }
+        } 
+      },
+      { $unwind: { path: "$payments", preserveNullAndEmptyArrays: true } },
+      {
+        $group: {
+          _id: { 
+            year: { $year: "$bookingDate" },
+            month: { $month: "$bookingDate" }
+          },
+          totalRevenue: { 
+            $sum: { 
+              $cond: [
+                { $eq: ["$payments.status", "success"] }, 
+                "$payments.amount", 
+                0
+              ] 
+            } 
+          },
+          cashRevenue: { 
+            $sum: { 
+              $cond: [
+                { $and: [
+                  { $eq: ["$payments.status", "success"] },
+                  { $eq: ["$payments.paymentType", "Cash"] }
+                ]}, 
+                "$payments.amount", 
+                0
+              ] 
+            } 
+          },
+          onlineRevenue: { 
+            $sum: { 
+              $cond: [
+                { $and: [
+                  { $eq: ["$payments.status", "success"] },
+                  { $ne: ["$payments.paymentType", "Cash"] }
+                ]}, 
+                "$payments.amount", 
+                0
+              ] 
+            } 
+          },
+          refunds: { $sum: { $ifNull: ["$refundDetails.approvedAmount", 0] } },
+          bookingsCount: { $addToSet: "$_id" }
+        }
+      },
+      { $sort: { "_id.year": 1, "_id.month": 1 } }
+    ]);
 
-      const bookings = await VehicleBooking.find({
-        vehicleId: { $in: vehicleIds },
-        bookingDate: { $gte: monthDate, $lt: nextMonth }
-      });
-
-      let monthRevenue = {
-        month: monthDate.toLocaleString('default', { month: 'long', year: 'numeric' }),
-        totalRevenue: 0,
-        cashRevenue: 0,
-        onlineRevenue: 0,
-        refunds: 0,
-        netRevenue: 0,
-        bookings: bookings.length
+    const monthlyData = monthlyAgg.map(item => {
+      const monthName = new Date(item._id.year, item._id.month - 1).toLocaleString('default', { month: 'long', year: 'numeric' });
+      return {
+        month: monthName,
+        totalRevenue: item.totalRevenue,
+        cashRevenue: item.cashRevenue,
+        onlineRevenue: item.onlineRevenue,
+        refunds: item.refunds,
+        netRevenue: item.totalRevenue - item.refunds,
+        bookings: item.bookingsCount.length
       };
-
-      bookings.forEach(booking => {
-        if (booking.payments) {
-          booking.payments.forEach(payment => {
-            if (payment.status === 'success') {
-              monthRevenue.totalRevenue += payment.amount;
-              if (payment.paymentType === 'Cash') {
-                monthRevenue.cashRevenue += payment.amount;
-              } else {
-                monthRevenue.onlineRevenue += payment.amount;
-              }
-            }
-          });
-        }
-
-        if (booking.paymentStatus === 'refunded' && booking.refundDetails?.approvedAmount) {
-          monthRevenue.refunds += booking.refundDetails.approvedAmount;
-        }
-      });
-
-      monthRevenue.netRevenue = monthRevenue.totalRevenue - monthRevenue.refunds;
-      monthlyData.push(monthRevenue);
-    }
+    });
 
     res.json({
       success: true,
