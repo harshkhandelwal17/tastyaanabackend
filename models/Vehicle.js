@@ -1366,6 +1366,23 @@ vehicleSchema.index({ locationGeo: '2dsphere' });
 vehicleSchema.index({ 'maintenance.nextDueDate': 1 });
 
 // ===== Pre-save Hooks =====
+vehicleSchema.pre('validate', function (next) {
+  // Fix for locationGeo being malformed which causes validation/index failure
+  if (this.locationGeo) {
+    // Ensure type is 'Point'
+    if (this.locationGeo.type === null || this.locationGeo.type === undefined) {
+      this.locationGeo.type = 'Point';
+    }
+    
+    // Ensure coordinates is a valid array [lng, lat]
+    if (!this.locationGeo.coordinates || !Array.isArray(this.locationGeo.coordinates) || this.locationGeo.coordinates.length !== 2) {
+      // Default to [0, 0] if missing or invalid to satisfy 2dsphere index
+      this.locationGeo.coordinates = [73.8567, 18.5204]; // Default to Pune, India coordinates as a reasonable fallback for this app
+    }
+  }
+  next();
+});
+
 vehicleSchema.pre('save', function (next) {
   this.updatedAt = new Date();
 

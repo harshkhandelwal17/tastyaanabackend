@@ -349,9 +349,16 @@ const getSellerVehicles = async (req, res) => {
           startDateTime: { $gt: now }
         }).sort({ startDateTime: 1 }).select('bookingId startDateTime endDateTime');
 
-        let bookingStatus = 'available';
+        let bookingStatus = vehicle.availability || 'available';
         let bookingInfo = null;
         let isOverdue = false;
+
+        // If vehicle is explicitly marked as not-available or in-maintenance via status/availability
+        if (vehicle.status === 'inactive' || vehicle.status === 'out-of-service') {
+          bookingStatus = 'inactive';
+        } else if (vehicle.status === 'in-maintenance') {
+          bookingStatus = 'maintenance';
+        }
 
         if (overdueBooking) {
           // Vehicle is overdue (end time passed but not completed)
@@ -373,7 +380,7 @@ const getSellerVehicles = async (req, res) => {
             endDateTime: activeBooking.endDateTime,
             status: 'Currently in use'
           };
-        } else if (futureBooking) {
+        } else if (bookingStatus === 'available' && futureBooking) {
           bookingStatus = 'pre-booked';
           bookingInfo = {
             bookingId: futureBooking.bookingId,
@@ -381,6 +388,9 @@ const getSellerVehicles = async (req, res) => {
             endDateTime: futureBooking.endDateTime,
             status: 'Booked for future'
           };
+        } else if (vehicle.availability && vehicle.availability !== 'available') {
+          // Manual availability override (like 'not-available')
+          bookingStatus = vehicle.availability;
         }
 
         return {
@@ -680,20 +690,34 @@ const toggleVehicleAvailability = async (req, res) => {
       });
     }
 
-    vehicle.status = vehicle.status === 'active' ? 'inactive' : 'active';
+    // Toggle between available and not-available
+    // If it's currently reserved/in-use/pre-booked, we might want to prevent toggling 
+    // or just allow toggling back to not-available if they want to block future ones.
+    // For now, let's stick to the simple toggle.
+    if (vehicle.availability === 'available') {
+      vehicle.availability = 'not-available';
+    } else {
+      vehicle.availability = 'available';
+    }
+    
+    // Also ensure status is active if we are making it available
+    if (vehicle.availability === 'available') {
+      vehicle.status = 'active';
+    }
+
     await vehicle.save();
 
     res.json({
       success: true,
-      message: `Vehicle ${vehicle.status === 'active' ? 'activated' : 'deactivated'} successfully`,
-      data: { status: vehicle.status }
+      message: `Vehicle availability set to ${vehicle.availability} successfully`,
+      data: { availability: vehicle.availability, status: vehicle.status }
     });
 
   } catch (error) {
     console.error('Error toggling vehicle availability:', error);
     res.status(500).json({
       success: false,
-      message: 'Failed to update vehicle status',
+      message: 'Failed to update vehicle availability',
       error: error.message
     });
   }

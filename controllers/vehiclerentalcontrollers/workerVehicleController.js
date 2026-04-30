@@ -116,9 +116,25 @@ const getWorkerDashboard = async (req, res) => {
 
     // 7. Results
     const totalVehiclesCount = vehicles.length;
+    
+    // For more accurate counts, we should check each vehicle's manual availability/status
+    // But since dashboard uses a simplified count, we'll fetch them with details
+    const detailedVehicles = await Vehicle.find({
+      _id: { $in: vehicleIds }
+    }).select('status availability');
+
     const reservedVehiclesCount = activeBookings.length;
     const overdueVehiclesCount = overdueBookings.length;
-    const availableVehiclesCount = Math.max(0, totalVehiclesCount - reservedVehiclesCount - overdueVehiclesCount);
+    
+    // Count how many are actually available (Active status + Available availability + No active booking)
+    const trulyAvailableCount = detailedVehicles.filter(v => 
+      v.status === 'active' && 
+      v.availability === 'available' && 
+      !activeBookings.some(b => b.vehicleId._id.toString() === v._id.toString()) &&
+      !overdueBookings.some(b => b.vehicleId._id.toString() === v._id.toString())
+    ).length;
+
+    const availableVehiclesCount = trulyAvailableCount;
 
     res.json({
       success: true,
@@ -255,9 +271,16 @@ const getWorkerVehicles = async (req, res) => {
         .filter(b => ['confirmed', 'pending'].includes(b.bookingStatus) && new Date(b.startDateTime) > now)
         .sort((a, b) => new Date(a.startDateTime) - new Date(b.startDateTime))[0];
 
-      let bookingStatus = 'available';
+      let bookingStatus = vehicle.availability || 'available';
       let bookingInfo = null;
       let isOverdue = false;
+
+      // Handle explicit status overrides
+      if (vehicle.status === 'inactive' || vehicle.status === 'out-of-service') {
+        bookingStatus = 'inactive';
+      } else if (vehicle.status === 'in-maintenance') {
+        bookingStatus = 'maintenance';
+      }
 
       const extractCustomerName = (booking) => {
         return booking?.customerDetails?.name || booking?.userId?.name || 'Customer';
@@ -295,7 +318,7 @@ const getWorkerVehicles = async (req, res) => {
           bookingStatus: activeBooking.bookingStatus,
           status: activeBooking.bookingStatus === 'ongoing' ? 'Currently in use' : 'Ready for pickup'
         };
-      } else if (futureBooking) {
+      } else if (bookingStatus === 'available' && futureBooking) {
         bookingStatus = 'pre-booked';
         bookingInfo = {
           _id: futureBooking._id,
@@ -308,6 +331,9 @@ const getWorkerVehicles = async (req, res) => {
           bookingStatus: futureBooking.bookingStatus,
           status: 'Booked for future'
         };
+      } else if (vehicle.availability && vehicle.availability !== 'available') {
+        // Manual availability override
+        bookingStatus = vehicle.availability;
       }
 
       const vehicleObj = vehicle.toObject();
