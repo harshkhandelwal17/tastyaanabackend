@@ -1541,6 +1541,9 @@ const createWorkerOfflineBooking = async (req, res) => {
       rateType,
       totalAmount: frontendTotalAmount,
       depositAmount,
+      depositPaymentMethod,
+      depositCashAmount,
+      depositOnlineAmount,
       cashAmount,
       onlineAmount,
     } = req.body;
@@ -1704,7 +1707,7 @@ const createWorkerOfflineBooking = async (req, res) => {
       depositAmount: deposit,
       paymentMethod: paymentMethod || "cash",
       depositCollectionMethod: deposit > 0 ? "at-pickup" : "not-required",
-      depositStatus: deposit > 0 ? "collected-at-pickup" : "not-required",
+      depositStatus: deposit > 0 ? (depositPaymentMethod === 'mixed' ? 'collected-at-pickup' : (depositPaymentMethod === 'online' ? 'collected-online' : 'collected-at-pickup')) : "not-required",
       
       bookingStatus: (pickup <= new Date()) ? "ongoing" : "confirmed", // Mark as ongoing only if pickup is now or past
       paymentStatus: advancePaid >= totalAmount ? "paid" : "partially-paid",
@@ -1771,16 +1774,46 @@ const createWorkerOfflineBooking = async (req, res) => {
       // Check if we should add it as a separate record
       // Logic: if total paid matches only rent, then deposit is missing from payments
       const totalPaymentsSoFar = (booking.payments || []).reduce((sum, p) => sum + (p.amount || 0), 0);
+      
       if (totalPaymentsSoFar < (totalAmount + deposit) && totalPaymentsSoFar <= totalAmount) {
-        booking.payments.push({
-          amount: deposit,
-          paymentType: booking.depositStatus === 'collected-online' ? 'UPI' : 'Cash',
-          paymentMethod: booking.depositStatus === 'collected-online' ? 'Manual' : 'Cash',
-          status: 'success',
-          receivedBy: workerId,
-          receivedAt: new Date(),
-          notes: 'Security deposit collected at pickup'
-        });
+        if (depositPaymentMethod === 'mixed') {
+          const cashDep = parseFloat(depositCashAmount) || 0;
+          const onlineDep = parseFloat(depositOnlineAmount) || 0;
+
+          if (cashDep > 0) {
+            booking.payments.push({
+              amount: cashDep,
+              paymentType: 'Cash',
+              paymentMethod: 'Cash',
+              status: 'success',
+              receivedBy: workerId,
+              receivedAt: new Date(),
+              notes: 'Security deposit (Cash) collected at pickup'
+            });
+          }
+
+          if (onlineDep > 0) {
+            booking.payments.push({
+              amount: onlineDep,
+              paymentType: 'UPI',
+              paymentMethod: 'Manual',
+              status: 'success',
+              receivedBy: workerId,
+              receivedAt: new Date(),
+              notes: 'Security deposit (Online) collected at pickup'
+            });
+          }
+        } else {
+          booking.payments.push({
+            amount: deposit,
+            paymentType: depositPaymentMethod === 'online' ? 'UPI' : 'Cash',
+            paymentMethod: depositPaymentMethod === 'online' ? 'Manual' : 'Cash',
+            status: 'success',
+            receivedBy: workerId,
+            receivedAt: new Date(),
+            notes: 'Security deposit collected at pickup'
+          });
+        }
       }
     }
 
