@@ -122,6 +122,19 @@ const getDailyHisab = async (req, res) => {
       const paymentDetails = [];
       
       if (booking.payments && booking.payments.length > 0) {
+        // Track cumulative paid amount to determine purpose of each payment
+        let cumulativePaid = 0;
+        const depositAmt = booking.depositAmount || 0;
+        const extraKmC = booking.billing?.extraKmCharge || 0;
+        const extraHrC = booking.billing?.extraHourCharge || 0;
+        const damageC = booking.billing?.damageCharges || 0;
+        const cleaningC = booking.billing?.cleaningCharges || 0;
+        const fuelC = booking.billing?.fuelCharges || 0;
+        const lateC = booking.billing?.lateFees || 0;
+        const extC = booking.totalExtensionAmount || 0;
+        const totalExtras = extraKmC + extraHrC + damageC + cleaningC + fuelC + lateC + extC;
+        const successPaymentsCount = booking.payments.filter(p => p.status === 'success').length;
+
         for (const payment of booking.payments) {
           const payDate = new Date(payment.paymentDate);
           if (payDate >= startOfDayUTC && payDate <= endOfDayUTC && payment.status === 'success' && (payment.amount || 0) > 0) {
@@ -138,12 +151,44 @@ const getDailyHisab = async (req, res) => {
               dayOnlineIn += amount;
             }
 
+            // Determine purpose of this payment
+            let purpose = 'Rental Payment';
+            if (cumulativePaid === 0 && depositAmt > 0 && amount <= depositAmt + 10) {
+              // First payment ≈ deposit → Security Deposit
+              purpose = 'Security Deposit';
+            } else if (cumulativePaid === 0 && depositAmt === 0) {
+              // No deposit, first payment
+              purpose = successPaymentsCount > 1 ? 'Partial Payment' : 'Full Payment';
+            } else if (cumulativePaid > 0) {
+              // Build detailed breakdown of any extra charges present on this booking
+              const extraParts = [];
+              if (extraKmC > 0) extraParts.push(`Extra KM ₹${extraKmC}`);
+              if (extraHrC > 0) extraParts.push(`Extra Hr ₹${extraHrC}`);
+              if (damageC > 0) extraParts.push(`Damage ₹${damageC}`);
+              if (cleaningC > 0) extraParts.push(`Cleaning ₹${cleaningC}`);
+              if (fuelC > 0) extraParts.push(`Fuel ₹${fuelC}`);
+              if (lateC > 0) extraParts.push(`Late Fee ₹${lateC}`);
+              if (extC > 0) extraParts.push(`Extension ₹${extC}`);
+              // Always show extras breakdown if any exist — amount may include
+              // both remaining rental + extras combined, so don't rely on exact match
+              purpose = extraParts.length > 0
+                ? `Final: ${extraParts.join(' + ')}`
+                : 'Remaining Payment';
+            }
+            cumulativePaid += amount;
+
             paymentDetails.push({
               amount: amount,
               type: payment.paymentType,
               method: payment.paymentMethod,
-              time: payment.paymentDate
+              time: payment.paymentDate,
+              purpose,
             });
+          } else {
+            // Still track cumulative for non-today payments to keep context correct
+            if (payment.status === 'success' && (payment.amount || 0) > 0) {
+              cumulativePaid += payment.amount || 0;
+            }
           }
         }
       }

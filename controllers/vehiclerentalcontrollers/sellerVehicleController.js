@@ -36,13 +36,13 @@ const getSellerDashboard = async (req, res) => {
     let dailyOnlineRevenue = 0;
     let dailyCashBookings = 0;
     let dailyOnlineBookings = 0;
-    
+
     // Payment IN/OUT tracking
     let paymentInCash = 0;
     let paymentInOnline = 0;
     let paymentOutCash = 0;
     let paymentOutOnline = 0;
-    
+
     // Today's tracking
     let todayCashIn = 0;
     let todayOnlineIn = 0;
@@ -94,7 +94,7 @@ const getSellerDashboard = async (req, res) => {
         const refundAmt = booking.refundDetails.approvedAmount || 0;
         totalRefunds += refundAmt;
         const rDate = new Date(booking.refundDetails.processedDate);
-        
+
         // Track refund as payment OUT
         if (booking.refundDetails.refundMethod === 'cash') {
           paymentOutCash += refundAmt;
@@ -107,7 +107,7 @@ const getSellerDashboard = async (req, res) => {
             todayOnlineOut += refundAmt;
           }
         }
-        
+
         if (rDate >= monthStart) {
           monthlyRevenue -= refundAmt;
         }
@@ -122,13 +122,13 @@ const getSellerDashboard = async (req, res) => {
             const cost = m.serviceCost || 0;
             totalMaintenance += cost;
             const mDate = new Date(m.lastServicingDate);
-            
+
             // Track maintenance as payment OUT (assume cash for now)
             paymentOutCash += cost;
             if (mDate >= todayStart && mDate < tomorrowStart) {
               todayCashOut += cost;
             }
-            
+
             if (mDate >= monthStart) {
               monthlyRevenue -= cost;
             }
@@ -479,7 +479,7 @@ const createVehicle = async (req, res) => {
     if (typeof vehicleData.location === 'string') {
       vehicleData.location = JSON.parse(vehicleData.location);
     }
-    
+
     // Parse rate plan objects
     if (typeof vehicleData.rate12hr === 'string') {
       vehicleData.rate12hr = JSON.parse(vehicleData.rate12hr);
@@ -493,7 +493,7 @@ const createVehicle = async (req, res) => {
     if (typeof vehicleData.rateDaily === 'string') {
       vehicleData.rateDaily = JSON.parse(vehicleData.rateDaily);
     }
-    
+
     // Parse array fields
     if (typeof vehicleData.vehicleFeatures === 'string') {
       vehicleData.vehicleFeatures = JSON.parse(vehicleData.vehicleFeatures);
@@ -563,7 +563,7 @@ const updateVehicle = async (req, res) => {
     if (typeof updateData.location === 'string') {
       updateData.location = JSON.parse(updateData.location);
     }
-    
+
     // Parse rate plan objects
     if (typeof updateData.rate12hr === 'string') {
       updateData.rate12hr = JSON.parse(updateData.rate12hr);
@@ -577,7 +577,7 @@ const updateVehicle = async (req, res) => {
     if (typeof updateData.rateDaily === 'string') {
       updateData.rateDaily = JSON.parse(updateData.rateDaily);
     }
-    
+
     // Parse array fields
     if (typeof updateData.vehicleFeatures === 'string') {
       updateData.vehicleFeatures = JSON.parse(updateData.vehicleFeatures);
@@ -591,7 +591,7 @@ const updateVehicle = async (req, res) => {
     if (typeof updateData.locationGeo === 'string') {
       updateData.locationGeo = JSON.parse(updateData.locationGeo);
     }
-    
+
     // Handle null values that got stringified to "null"
     if (updateData.currentBookingId === 'null' || updateData.currentBookingId === '') {
       updateData.currentBookingId = null;
@@ -699,7 +699,7 @@ const toggleVehicleAvailability = async (req, res) => {
     } else {
       vehicle.availability = 'available';
     }
-    
+
     // Also ensure status is active if we are making it available
     if (vehicle.availability === 'available') {
       vehicle.status = 'active';
@@ -782,7 +782,7 @@ const getSellerBookings = async (req, res) => {
         filter.bookingStatus = status;
       }
     }
-    
+
     // Old date filters (kept for backward compatibility)
     if (dateFrom) filter.bookingDate = { $gte: new Date(dateFrom) };
     if (dateTo) {
@@ -796,21 +796,21 @@ const getSellerBookings = async (req, res) => {
       const year = parseInt(dateParts[0]);
       const month = parseInt(dateParts[1]) - 1;
       const day = parseInt(dateParts[2]);
-      
+
       // IST midnight in UTC: subtract 5:30
       const startOfDayUTC = new Date(Date.UTC(year, month, day, 0, 0, 0, 0));
       startOfDayUTC.setUTCHours(startOfDayUTC.getUTCHours() - 5);
       startOfDayUTC.setUTCMinutes(startOfDayUTC.getUTCMinutes() - 30);
-      
+
       const endOfDayUTC = new Date(Date.UTC(year, month, day, 23, 59, 59, 999));
       endOfDayUTC.setUTCHours(endOfDayUTC.getUTCHours() - 5);
       endOfDayUTC.setUTCMinutes(endOfDayUTC.getUTCMinutes() - 30);
-      
+
       filter.startDateTime = {
         $gte: startOfDayUTC,
         $lte: endOfDayUTC
       };
-      
+
       console.log('📅 Filtering by start date (IST):', {
         inputDate: startDate,
         startOfDayUTC: startOfDayUTC.toISOString(),
@@ -824,20 +824,20 @@ const getSellerBookings = async (req, res) => {
       const year = parseInt(dateParts[0]);
       const month = parseInt(dateParts[1]) - 1;
       const day = parseInt(dateParts[2]);
-      
+
       const startOfDayUTC = new Date(Date.UTC(year, month, day, 0, 0, 0, 0));
       startOfDayUTC.setUTCHours(startOfDayUTC.getUTCHours() - 5);
       startOfDayUTC.setUTCMinutes(startOfDayUTC.getUTCMinutes() - 30);
-      
+
       const endOfDayUTC = new Date(Date.UTC(year, month, day, 23, 59, 59, 999));
       endOfDayUTC.setUTCHours(endOfDayUTC.getUTCHours() - 5);
       endOfDayUTC.setUTCMinutes(endOfDayUTC.getUTCMinutes() - 30);
-      
+
       filter.endDateTime = {
         $gte: startOfDayUTC,
         $lte: endOfDayUTC
       };
-      
+
       console.log('📅 Filtering by end date (IST):', {
         inputDate: endDate,
         startOfDayUTC: startOfDayUTC.toISOString(),
@@ -848,7 +848,7 @@ const getSellerBookings = async (req, res) => {
     // Search filter - search by booking ID, vehicle name, vehicle number, customer name, or customer phone
     if (search) {
       const searchLower = search.toLowerCase();
-      
+
       // First, find vehicles that match the search (by name or vehicle number)
       const Vehicle = require('../../models/Vehicle');
       const matchingVehicles = await Vehicle.find({
@@ -859,9 +859,9 @@ const getSellerBookings = async (req, res) => {
           { vehicleNo: { $regex: search, $options: 'i' } }
         ]
       }).select('_id');
-      
+
       const matchingVehicleIds = matchingVehicles.map(v => v._id);
-      
+
       const searchConditions = [
         { bookingId: { $regex: search, $options: 'i' } },
         // Customer details search
@@ -882,15 +882,15 @@ const getSellerBookings = async (req, res) => {
           { zoneCenterName: { $regex: zone, $options: 'i' } }
         ]
       }).select('_id');
-      
+
       const matchingVehicleIds = matchingVehicles.map(v => v._id);
-      
+
       if (matchingVehicleIds.length > 0) {
         // If there's already a filter, we need to combine them
         if (filter.vehicleId) {
           // Combine with existing vehicleId filter
-          filter.vehicleId = { 
-            $in: matchingVehicleIds.filter(id => 
+          filter.vehicleId = {
+            $in: matchingVehicleIds.filter(id =>
               vehicleIds.some(vId => vId.toString() === id.toString())
             )
           };
@@ -1023,7 +1023,7 @@ const updateBookingStatus = async (req, res) => {
     // Update Status
     if (status) {
       booking.bookingStatus = status; // Use bookingStatus field
-      
+
       const Vehicle = require('../../models/Vehicle');
       // If booking is cancelled or completed, free up the vehicle
       if (['cancelled', 'completed'].includes(status)) {
@@ -1209,18 +1209,18 @@ const updateSellerProfile = async (req, res) => {
     if (updateData.sellerProfile) {
       // Convert to plain object to avoid Mongoose getters/setters
       const currentProfile = seller.sellerProfile.toObject();
-      
+
       // Clean vehicleRentalService zones - remove empty workerId
       if (updateData.sellerProfile.vehicleRentalService?.serviceZones) {
-        updateData.sellerProfile.vehicleRentalService.serviceZones = 
+        updateData.sellerProfile.vehicleRentalService.serviceZones =
           updateData.sellerProfile.vehicleRentalService.serviceZones.map(zone => {
             const cleanedZone = { ...zone };
-            
+
             // Remove workerId if it's empty string or undefined
             if (!cleanedZone.workerId || cleanedZone.workerId === '') {
               delete cleanedZone.workerId;
             }
-            
+
             return cleanedZone;
           });
       }
@@ -1228,14 +1228,14 @@ const updateSellerProfile = async (req, res) => {
       // Deep clean the update data - remove all undefined, null, empty values
       const cleanSellerProfile = JSON.parse(JSON.stringify(updateData.sellerProfile, (key, value) => {
         // Remove undefined, null, "undefined", "null" and empty objects
-        if (value === undefined || 
-            value === null || 
-            value === 'undefined' || 
-            value === 'null' ||
-            (typeof value === 'object' && 
-             value !== null &&
-             !Array.isArray(value) &&
-             Object.keys(value).length === 0)) {
+        if (value === undefined ||
+          value === null ||
+          value === 'undefined' ||
+          value === 'null' ||
+          (typeof value === 'object' &&
+            value !== null &&
+            !Array.isArray(value) &&
+            Object.keys(value).length === 0)) {
           return undefined; // This will cause JSON.stringify to omit the property
         }
         return value;
@@ -1550,34 +1550,34 @@ const getSellerZones = async (req, res) => {
     }
 
     // If no zones in profile, use defaults
-    if (profileZones.length === 0) {
-      profileZones = [
-        { zoneName: 'Bholaram ustad marg', zoneCode: 'ind001', address: 'Bholaram ustad marg, Indore', isActive: true },
-        { zoneName: 'Anandnagar', zoneCode: 'ind002', address: 'Anandnagar, Indore', isActive: true },
-        { zoneName: 'Indrapuri main office', zoneCode: 'ind003', address: 'Indrapuri main office, Indore', isActive: true },
-        { zoneName: 'Vijay nagar square', zoneCode: 'ind004', address: 'Vijay nagar square, Indore', isActive: true }
-      ];
-      
-      // If regular seller has no zones, we might want to save these defaults
-      if (!isAdmin && seller && seller.sellerProfile) {
-        if (!seller.sellerProfile.vehicleRentalService) {
-          seller.sellerProfile.vehicleRentalService = {
-            isEnabled: true,
-            serviceStatus: 'active',
-            businessType: 'individual',
-            serviceZones: profileZones
-          };
-        } else {
-          seller.sellerProfile.vehicleRentalService.serviceZones = profileZones;
-        }
-        await seller.save();
-      }
-    }
+    // if (profileZones.length === 0) {
+    //   profileZones = [
+    //     { zoneName: 'Bholaram ustad marg', zoneCode: 'ind001', address: 'Bholaram ustad marg, Indore', isActive: true },
+    //     { zoneName: 'Anandnagar', zoneCode: 'ind002', address: 'Anandnagar, Indore', isActive: true },
+    //     { zoneName: 'Indrapuri main office', zoneCode: 'ind003', address: 'Indrapuri main office, Indore', isActive: true },
+    //     { zoneName: 'Vijay nagar square', zoneCode: 'ind004', address: 'Vijay nagar square, Indore', isActive: true }
+    //   ];
+
+    //   // If regular seller has no zones, we might want to save these defaults
+    //   if (!isAdmin && seller && seller.sellerProfile) {
+    //     if (!seller.sellerProfile.vehicleRentalService) {
+    //       seller.sellerProfile.vehicleRentalService = {
+    //         isEnabled: true,
+    //         serviceStatus: 'active',
+    //         businessType: 'individual',
+    //         serviceZones: profileZones
+    //       };
+    //     } else {
+    //       seller.sellerProfile.vehicleRentalService.serviceZones = profileZones;
+    //     }
+    //     await seller.save();
+    //   }
+    // }
 
     // Dynamically fetch unique zones from vehicles to ensure all active centers are shown
     const vehicleFilter = isAdmin ? {} : { sellerId };
     const vehicles = await Vehicle.find(vehicleFilter).select('zoneCode zoneCenterName');
-    
+
     const dynamicZones = [];
     const zoneCodesSet = new Set(profileZones.map(z => z.zoneCode));
 
@@ -1593,7 +1593,8 @@ const getSellerZones = async (req, res) => {
         });
       }
     });
-
+    console.log("profile zone ", profileZones)
+    console.log("dynamic zone ", dynamicZones)
     const allZones = [...profileZones, ...dynamicZones];
 
     res.json({
@@ -1688,10 +1689,9 @@ const updateZone = async (req, res) => {
 
     // Find seller
     const seller = await User.findById(sellerId);
-    
+
     if (!seller || !seller.sellerProfile?.vehicleRentalService?.serviceZones) {
-      console.log("zone data ",seller.sellerProfile);
-      console.log("keys:", Object.keys(seller.sellerProfile));
+
       return res.status(404).json({
         success: false,
         message: 'Seller or zones not found'
@@ -1710,9 +1710,11 @@ const updateZone = async (req, res) => {
       });
     }
 
+    console.log("data to be edited ", seller.sellerProfile.vehicleRentalService.serviceZones[zoneIndex]);
+
     // Update zone data
     Object.keys(updateData).forEach(key => {
-      if (['zoneName', 'zoneCode', 'address', 'isActive', 'coordinates'].includes(key)) {
+      if (['zoneName', 'zoneCode', 'address', 'isActive', 'coordinates', 'operatingHours', 'contactInfo'].includes(key)) {
         seller.sellerProfile.vehicleRentalService.serviceZones[zoneIndex][key] = updateData[key];
       }
     });
@@ -2341,7 +2343,7 @@ const calculateDropBilling = (booking, vehicle, dropData) => {
   // - For rentals ≥24 hours: Always apply 24hr plan blocks first, then 12hr blocks, then remaining hours
   // - Extra hour/km charges: Based on SELECTED plan rates, not hourly plan
   // - Use vehicle's ACTUAL rate plans (not hardcoded values)
-  
+
   // Get selected plan rates for extra charges
   const selectedPlanExtraHourRate = ratePlan.extraChargePerHour || ratePlan.extra_hr || 50;
   const selectedPlanExtraKmRate = ratePlan.extraChargePerKm || ratePlan.extra_km || 6;
@@ -2374,7 +2376,7 @@ const calculateDropBilling = (booking, vehicle, dropData) => {
 
     // Calculate free km based on blocks used (vehicle's actual km limits)
     freeKm = (blocks24Hr * freeKm24Hr) + (blocks12Hr * freeKm12Hr);
-    
+
     // Extra km charged at SELECTED plan's extra km rate
     extraKm = Math.max(0, totalKmTraveled - freeKm);
     extraKmCharge = extraKm * selectedPlanExtraKmRate;
@@ -2419,7 +2421,7 @@ const calculateDropBilling = (booking, vehicle, dropData) => {
 
         // Extra charges using SELECTED (12hr) plan's rates
         timeCharge = baseRate12 + (extraTime12 * selectedPlanExtraHourRate);
-        
+
         extraKm = Math.max(0, totalKmTraveled - freeDistance12);
         extraKmCharge = extraKm * selectedPlanExtraKmRate;
 
@@ -2434,7 +2436,7 @@ const calculateDropBilling = (booking, vehicle, dropData) => {
         const freeDistance24 = ratePlan.kmLimit || ratePlan.limit_km || 150;
 
         timeCharge = baseRate24;
-        
+
         extraKm = Math.max(0, totalKmTraveled - freeDistance24);
         extraKmCharge = extraKm * selectedPlanExtraKmRate;
 
@@ -2454,7 +2456,7 @@ const calculateDropBilling = (booking, vehicle, dropData) => {
 
         // Use SELECTED plan's extra hour rate
         timeCharge = (dailyRate * baseDays) + (extraHoursDaily * selectedPlanExtraHourRate);
-        
+
         extraKm = Math.max(0, totalKmTraveled - (dailyKmLimit * baseDays));
         extraKmCharge = extraKm * selectedPlanExtraKmRate;
 
@@ -2647,14 +2649,14 @@ const completeBooking = async (req, res) => {
     // Calculate refund based on overpayment (not just deposit)
     const totalPaid = booking.paidAmount || 0;
     const actualBill = billing.totalBill || 0;
-    
+
     // If customer paid more than the actual bill, refund the difference
     if (totalPaid > actualBill) {
       const refundAmount = totalPaid - actualBill;
       const cashRefund = parseFloat(refundCash) || 0;
       const onlineRefund = parseFloat(refundOnline) || 0;
       const totalRefunded = cashRefund + onlineRefund;
-      
+
       // Determine primary refund method
       let refundMethod = 'cash'; // Default
       if (onlineRefund > cashRefund) {
@@ -2662,7 +2664,7 @@ const completeBooking = async (req, res) => {
       } else if (cashRefund > 0 && onlineRefund > 0) {
         refundMethod = 'mixed'; // Both methods used
       }
-      
+
       // Create refund details with breakdown
       booking.refundDetails = {
         reason: 'overbilling', // Overpayment at booking time
@@ -2677,7 +2679,7 @@ const completeBooking = async (req, res) => {
         refundReference: `REF-${booking.bookingId}-${Date.now().toString().slice(-6)}`,
         notes: `Overpayment refund: Customer paid ₹${totalPaid} at booking, actual bill was ₹${actualBill}. Refunded ₹${cashRefund} via cash and ₹${onlineRefund} via online.`
       };
-      
+
       // Update refund status
       booking.refundStatus = 'completed';
       booking.depositRefundStatus = 'not-applicable'; // This is not a deposit refund
@@ -2829,7 +2831,7 @@ const getVehicleBookingHistory = async (req, res) => {
     }
 
     // Get all bookings for this vehicle (exclude soft-deleted)
-    const bookings = await VehicleBooking.find({ 
+    const bookings = await VehicleBooking.find({
       vehicleId,
       isDeletedBySeller: { $ne: true }  // Exclude soft-deleted bookings from seller view
     })
@@ -2873,7 +2875,7 @@ const getVehicleMaintenanceHistory = async (req, res) => {
     const legacyHistory = vehicle.maintenanceHistory || [];
     const currentMaintenance = vehicle.maintenance || [];
     console.log(`[DEBUG] Vehicle ${vehicleId} has ${currentMaintenance.length} current and ${legacyHistory.length} legacy records`);
-    
+
     // Convert legacy records to new format if needed
     const convertedLegacy = legacyHistory.map(record => ({
       _id: record._id,
@@ -2920,17 +2922,17 @@ const getSellerAllMaintenanceHistory = async (req, res) => {
     // Find all vehicles belonging to the seller
     const vehicles = await Vehicle.find({ sellerId });
     console.log(`[DEBUG] Found ${vehicles.length} vehicles for seller ${sellerId}`);
-    
+
     // Aggregate all maintenance records with vehicle info
     const allMaintenance = [];
     vehicles.forEach(vehicle => {
       // Handle both new 'maintenance' and old 'maintenanceHistory' arrays
       const recordsToProcess = [];
-      
+
       if (vehicle.maintenance && vehicle.maintenance.length > 0) {
         recordsToProcess.push(...vehicle.maintenance);
       }
-      
+
       // Also grab legacy records if they exist and aren't already in maintenance
       if (vehicle.maintenanceHistory && vehicle.maintenanceHistory.length > 0) {
         vehicle.maintenanceHistory.forEach(legacy => {
@@ -2949,7 +2951,7 @@ const getSellerAllMaintenanceHistory = async (req, res) => {
           }
         });
       }
-      
+
       if (recordsToProcess.length > 0) {
         console.log(`[DEBUG] Vehicle ${vehicle.vehicleNo} has ${recordsToProcess.length} maintenance records`);
         recordsToProcess.forEach(record => {
@@ -3021,12 +3023,12 @@ const addVehicleMaintenance = async (req, res) => {
     };
 
     vehicle.maintenance.push(newRecord);
-    
+
     // Auto-update vehicle status if it was in-maintenance and this is completed
     if (newRecord.isCompleted && vehicle.status === 'in-maintenance') {
       vehicle.status = 'active';
     }
-    
+
     await vehicle.save();
     console.log(`[DEBUG] Maintenance record saved. Total records now: ${vehicle.maintenance.length}`);
 
@@ -3076,7 +3078,7 @@ const updateVehicleMaintenance = async (req, res) => {
       const legacyIndex = (vehicle.maintenanceHistory || []).findIndex(
         m => m._id.toString() === maintenanceId
       );
-      
+
       if (legacyIndex !== -1) {
         // Move legacy record to new array
         const legacy = vehicle.maintenanceHistory[legacyIndex];
@@ -3091,12 +3093,12 @@ const updateVehicleMaintenance = async (req, res) => {
           isCompleted: updateData.isCompleted !== undefined ? updateData.isCompleted : (legacy.isCompleted !== undefined ? legacy.isCompleted : true),
           createdAt: legacy.createdAt || new Date()
         };
-        
+
         vehicle.maintenance.push(migratedRecord);
         // Remove from legacy array
         vehicle.maintenanceHistory.splice(legacyIndex, 1);
         await vehicle.save();
-        
+
         return res.status(200).json({
           success: true,
           message: 'Maintenance record updated and migrated successfully',
@@ -3114,7 +3116,7 @@ const updateVehicleMaintenance = async (req, res) => {
 
     // Update fields adapting to the schema
     const record = vehicle.maintenance[maintenanceIndex];
-    
+
     if (updateData.lastServicingDate || updateData.date) {
       record.lastServicingDate = updateData.lastServicingDate || updateData.date;
     }
@@ -3181,7 +3183,7 @@ const deleteVehicleMaintenance = async (req, res) => {
       );
       if (vehicle.maintenance.length < initialLength) found = true;
     }
-    
+
     // Also remove from legacy array if present
     if (vehicle.maintenanceHistory) {
       const initialLength = vehicle.maintenanceHistory.length;
