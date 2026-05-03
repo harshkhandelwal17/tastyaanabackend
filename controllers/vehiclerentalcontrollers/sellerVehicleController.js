@@ -1581,18 +1581,18 @@ const getSellerZones = async (req, res) => {
     const dynamicZones = [];
     const zoneCodesSet = new Set(profileZones.map(z => z.zoneCode));
 
-    vehicles.forEach(v => {
-      if (v.zoneCode && !zoneCodesSet.has(v.zoneCode)) {
-        zoneCodesSet.add(v.zoneCode);
-        dynamicZones.push({
-          _id: v._id,
-          zoneName: v.zoneCenterName || v.zoneCode,
-          zoneCode: v.zoneCode,
-          address: v.zoneCenterName || v.zoneCode,
-          isActive: true
-        });
-      }
-    });
+    // vehicles.forEach(v => {
+    //   if (v.zoneCode && !zoneCodesSet.has(v.zoneCode)) {
+    //     zoneCodesSet.add(v.zoneCode);
+    //     dynamicZones.push({
+    //       _id: v._id,
+    //       zoneName: v.zoneCenterName || v.zoneCode,
+    //       zoneCode: v.zoneCode,
+    //       address: v.zoneCenterName || v.zoneCode,
+    //       isActive: true
+    //     });
+    //   }
+    // });
     console.log("profile zone ", profileZones)
     console.log("dynamic zone ", dynamicZones)
     const allZones = [...profileZones, ...dynamicZones];
