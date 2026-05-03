@@ -948,19 +948,19 @@ const userSchema = new mongoose.Schema({
       required: function () { return this.role === 'seller'; }
     },
     // Restored fields as per user request
-  sellerType: [{
+    sellerType: [{
       type: String,
       enum: [
         'vehiclerental',
         'vehicle',
         'food',
         'tiffin',
-        'meal-plan', 
-        'vegetable', 
+        'meal-plan',
+        'vegetable',
         'grocery',
-        'phones', 
+        'phones',
         'electronics',
-        'laundry', 
+        'laundry',
         'rental',
         'clothing',
         'accessories',
@@ -1014,8 +1014,8 @@ const userSchema = new mongoose.Schema({
       freeDeliveryAbove: Number,
       deliveryRadius: { type: Number, default: 15000 }
     },
-    sellerPic:{
-      type:String,
+    sellerPic: {
+      type: String,
     },
     ratings: {
       average: { type: Number, default: 0 },
@@ -1073,9 +1073,45 @@ const userSchema = new mongoose.Schema({
       min: { type: Number, default: 0 },
       max: { type: Number, default: 0 },
       costForTwo: { type: Number, default: 0 },
-      daysAvailable:{type: Number,default:30}
+      daysAvailable: { type: Number, default: 30 }
     },
-    tags: [String] // e.g. "Best Seller", "Pure Veg"
+    tags: [String], // e.g. "Best Seller", "Pure Veg"
+
+    // ===== Vehicle Rental Service (for vehicle rental sellers) =====
+    vehicleRentalService: {
+      isEnabled: { type: Boolean, default: false },
+      businessName: { type: String, default: '' },
+      businessAddress: { type: String, default: '' },
+      businessPhone: { type: String, default: '' },
+      businessEmail: { type: String, default: '' },
+      gstNumber: { type: String, default: '' },
+      serviceZones: [{
+        zoneName: { type: String, required: true },
+        zoneCode: { type: String, required: true },
+        address: { type: String, default: '' },
+        workerId: { type: String, default: '' },
+        isActive: { type: Boolean, default: true },
+        coordinates: {
+          lat: { type: Number, default: 0 },
+          lng: { type: Number, default: 0 }
+        },
+        contactInfo: {
+          phone: { type: String, default: '' },
+          email: { type: String, default: '' },
+          managerName: { type: String, default: '' }
+        },
+        operatingHours: {
+          monday:    { open: { type: String, default: '09:00' }, close: { type: String, default: '18:00' }, isOpen: { type: Boolean, default: true } },
+          tuesday:   { open: { type: String, default: '09:00' }, close: { type: String, default: '18:00' }, isOpen: { type: Boolean, default: true } },
+          wednesday: { open: { type: String, default: '09:00' }, close: { type: String, default: '18:00' }, isOpen: { type: Boolean, default: true } },
+          thursday:  { open: { type: String, default: '09:00' }, close: { type: String, default: '18:00' }, isOpen: { type: Boolean, default: true } },
+          friday:    { open: { type: String, default: '09:00' }, close: { type: String, default: '18:00' }, isOpen: { type: Boolean, default: true } },
+          saturday:  { open: { type: String, default: '09:00' }, close: { type: String, default: '18:00' }, isOpen: { type: Boolean, default: true } },
+          sunday:    { open: { type: String, default: '09:00' }, close: { type: String, default: '18:00' }, isOpen: { type: Boolean, default: false } }
+        },
+        createdAt: { type: Date, default: Date.now }
+      }]
+    }
   },
 
   // ===== Addresses (Enhanced) =====
@@ -1368,19 +1404,19 @@ const userSchema = new mongoose.Schema({
     sellerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: function() { return this.role === 'worker'; }
+      required: function () { return this.role === 'worker'; }
     },
     zoneId: {
       type: String,
-      required: function() { return this.role === 'worker'; }
+      required: function () { return this.role === 'worker'; }
     },
     zoneCode: {
       type: String,
-      required: function() { return this.role === 'worker'; }
+      required: function () { return this.role === 'worker'; }
     },
     zoneName: {
       type: String,
-      required: function() { return this.role === 'worker'; }
+      required: function () { return this.role === 'worker'; }
     },
     isActive: { type: Boolean, default: true },
     joinedDate: { type: Date, default: Date.now },

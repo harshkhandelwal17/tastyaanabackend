@@ -1688,7 +1688,10 @@ const updateZone = async (req, res) => {
 
     // Find seller
     const seller = await User.findById(sellerId);
+    
     if (!seller || !seller.sellerProfile?.vehicleRentalService?.serviceZones) {
+      console.log("zone data ",seller.sellerProfile);
+      console.log("keys:", Object.keys(seller.sellerProfile));
       return res.status(404).json({
         success: false,
         message: 'Seller or zones not found'
@@ -3210,6 +3213,8 @@ const deleteVehicleMaintenance = async (req, res) => {
     });
   }
 };
+
+
 
 // ===== CHANGE SELLER PASSWORD =====
 const changeSellerPassword = async (req, res) => {

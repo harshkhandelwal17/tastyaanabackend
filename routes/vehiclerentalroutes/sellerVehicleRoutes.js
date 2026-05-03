@@ -238,14 +238,14 @@ router.put('/workers/:workerId/reset-password', resetWorkerPassword);
 
 // ===== VEHICLE-SPECIFIC ROUTES (dynamic routes must come after specific paths) =====
 
+// Get all maintenance history for a seller (MUST be before /:vehicleId routes)
+router.get('/maintenance/all', sellerVehicleController.getSellerAllMaintenanceHistory);
+
 // Get last meter reading for a vehicle
 router.get('/:vehicleId/last-meter-reading', getLastMeterReading);
 
 // Get vehicle booking history
 router.get('/:vehicleId/bookings', sellerVehicleController.getVehicleBookingHistory);
-
-// Get all maintenance history for a seller
-router.get('/maintenance/all', sellerVehicleController.getSellerAllMaintenanceHistory);
 
 // Get vehicle maintenance history
 router.get('/:vehicleId/maintenance', sellerVehicleController.getVehicleMaintenanceHistory);
