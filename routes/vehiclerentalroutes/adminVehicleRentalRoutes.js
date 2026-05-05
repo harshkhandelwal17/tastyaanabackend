@@ -7,7 +7,8 @@ const {
   getSellerBookingsAdmin,
   getSellerVehiclesAdmin,
   getSellerWorkersAdmin,
-  getSellerIncomeAnalysis
+  getSellerIncomeAnalysis,
+  deleteWorkerAdmin
 } = require('../../controllers/vehiclerentalcontrollers/adminVehicleRentalController');
 
 // All routes require admin authentication
@@ -30,5 +31,8 @@ router.get('/sellers/:sellerId/workers', getSellerWorkersAdmin);
 
 // Get seller's income analysis
 router.get('/sellers/:sellerId/income', getSellerIncomeAnalysis);
+
+// Delete a worker (admin only) - also cancels active bookings & frees vehicles
+router.delete('/workers/:workerId', deleteWorkerAdmin);
 
 module.exports = router;

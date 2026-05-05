@@ -3355,7 +3355,7 @@ const updateWorker = async (req, res) => {
   }
 };
 
-// Delete (deactivate) a worker
+// Permanently delete a worker (seller-scoped)
 const deleteWorker = async (req, res) => {
   try {
     const sellerId = req.user.id;
@@ -3363,17 +3363,50 @@ const deleteWorker = async (req, res) => {
 
     const worker = await User.findOne({ _id: workerId, role: 'worker', 'workerProfile.sellerId': sellerId });
     if (!worker) {
-      return res.status(404).json({ success: false, message: 'Worker not found' });
+      return res.status(404).json({ success: false, message: 'Worker not found or does not belong to your fleet' });
     }
 
-    worker.workerProfile.isActive = false;
-    await worker.save();
-    res.json({ success: true, message: 'Worker deactivated' });
+    const workerObjId = worker._id;
+
+    // Cancel any active/confirmed/pending bookings created by this worker & free vehicles
+    const activeBookings = await VehicleBooking.find({
+      bookedBy: workerObjId,
+      bookingStatus: { $in: ['confirmed', 'ongoing', 'pending'] }
+    }).lean();
+
+    for (const booking of activeBookings) {
+      await VehicleBooking.findByIdAndUpdate(booking._id, {
+        bookingStatus: 'cancelled',
+        cancellationReason: `Worker account deleted by seller (Worker: ${worker.name})`
+      });
+      if (booking.vehicleId) {
+        await Vehicle.findByIdAndUpdate(booking.vehicleId, {
+          availability: 'available',
+          currentBookingId: null
+        });
+      }
+    }
+
+    // Nullify bookedBy on completed/cancelled bookings — preserve history
+    await VehicleBooking.updateMany(
+      { bookedBy: workerObjId, bookingStatus: { $in: ['completed', 'cancelled'] } },
+      { $set: { bookedBy: null, adminNotes: `Original worker (${worker.name} / ${worker.phone}) account was deleted by seller.` } }
+    );
+
+    // Hard delete the worker
+    await User.findByIdAndDelete(workerId);
+
+    res.json({
+      success: true,
+      message: `Worker "${worker.name}" deleted successfully.`,
+      data: { cancelledBookings: activeBookings.length }
+    });
   } catch (error) {
     console.error('Error deleting worker:', error);
-    res.status(500).json({ success: false, message: 'Failed to deactivate worker', error: error.message });
+    res.status(500).json({ success: false, message: 'Failed to delete worker', error: error.message });
   }
 };
+
 
 // Activate a worker
 const activateWorker = async (req, res) => {

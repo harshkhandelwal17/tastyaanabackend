@@ -674,11 +674,79 @@ const getSellerIncomeAnalysis = async (req, res) => {
   }
 };
 
+// ===== Delete a worker (admin) =====
+const deleteWorkerAdmin = async (req, res) => {
+  try {
+    const { workerId } = req.params;
+
+    const worker = await User.findById(workerId).lean();
+    if (!worker || worker.role !== 'worker') {
+      return res.status(404).json({ success: false, message: 'Worker not found' });
+    }
+
+    // 1. Find all bookings created by this worker
+    const workerObjId = mongoose.Types.ObjectId.createFromHexString(workerId);
+
+    // 2. Cancel any active bookings (confirmed/ongoing) created by this worker
+    //    and free the vehicles
+    const activeBookings = await VehicleBooking.find({
+      bookedBy: workerObjId,
+      bookingStatus: { $in: ['confirmed', 'ongoing', 'pending'] }
+    }).lean();
+
+    for (const booking of activeBookings) {
+      await VehicleBooking.findByIdAndUpdate(booking._id, {
+        bookingStatus: 'cancelled',
+        cancellationReason: `Worker account deleted by admin (Worker: ${worker.name})`,
+        'statusHistory': {
+          $push: {
+            status: 'cancelled',
+            updatedAt: new Date(),
+            notes: `Worker deleted by admin`
+          }
+        }
+      });
+
+      // Free the vehicle
+      if (booking.vehicleId) {
+        await Vehicle.findByIdAndUpdate(booking.vehicleId, {
+          availability: 'available',
+          currentBookingId: null
+        });
+      }
+    }
+
+    // 3. Nullify bookedBy on completed/cancelled bookings (preserve history)
+    await VehicleBooking.updateMany(
+      { bookedBy: workerObjId, bookingStatus: { $in: ['completed', 'cancelled'] } },
+      { $set: { bookedBy: null, 'adminNotes': `Original worker (${worker.name} / ${worker.phone}) account was deleted by admin.` } }
+    );
+
+    // 4. Delete the worker user document
+    await User.findByIdAndDelete(workerId);
+
+    console.log(`✅ Admin deleted worker ${worker.name} (${workerId}). Cancelled ${activeBookings.length} active bookings.`);
+
+    res.status(200).json({
+      success: true,
+      message: `Worker "${worker.name}" deleted successfully.`,
+      data: {
+        cancelledBookings: activeBookings.length,
+        workerName: worker.name
+      }
+    });
+  } catch (error) {
+    console.error('Error deleting worker:', error);
+    res.status(500).json({ success: false, message: 'Failed to delete worker', error: error.message });
+  }
+};
+
 module.exports = {
   getVehicleRentalSellers,
   getSellerOverview,
   getSellerBookingsAdmin,
   getSellerVehiclesAdmin,
   getSellerWorkersAdmin,
-  getSellerIncomeAnalysis
+  getSellerIncomeAnalysis,
+  deleteWorkerAdmin
 };

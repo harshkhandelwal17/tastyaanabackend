@@ -1522,19 +1522,28 @@ const createWorkerOfflineBooking = async (req, res) => {
     const workerId = req.user._id;
     const {
       customerName,
+      fatherName,
       customerPhone,
+      alternativeNumber,
       customerEmail,
+      address,
       customerIdProof,
       vehicleId,
       pickupDate,
       returnDate,
+      startDateTime,
+      endDateTime,
       pickupTime,
       returnTime,
       requiresHelmet,
       requiresInsurance,
+      includesFuel,
+      extraHelmets,
+      phoneMount,
       paymentMethod,
       advancePayment,
       workerNotes,
+      notes,
       startMeterReading,
       fuelLevel,
       vehicleCondition,
@@ -1547,6 +1556,10 @@ const createWorkerOfflineBooking = async (req, res) => {
       cashAmount,
       onlineAmount,
     } = req.body;
+
+    // Support both pickupDate/returnDate and startDateTime/endDateTime
+    const resolvedPickup = pickupDate || startDateTime;
+    const resolvedReturn = returnDate || endDateTime;
 
     console.log(`📝 Worker ${workerId} creating offline booking`);
 
@@ -1571,7 +1584,7 @@ const createWorkerOfflineBooking = async (req, res) => {
     }
 
     // Validate required fields
-    if (!customerName || !customerPhone || !vehicleId || !pickupDate || !returnDate) {
+    if (!customerName || !customerPhone || !vehicleId || !resolvedPickup || !resolvedReturn) {
       return res.status(400).json({
         success: false,
         message: "Missing required fields: customerName, customerPhone, vehicleId, pickupDate, returnDate",
@@ -1604,8 +1617,8 @@ const createWorkerOfflineBooking = async (req, res) => {
     }
 
     // Parse dates
-    const pickup = new Date(pickupDate);
-    const returnDt = new Date(returnDate);
+    const pickup = new Date(resolvedPickup);
+    const returnDt = new Date(resolvedReturn);
 
     if (pickup >= returnDt) {
       return res.status(400).json({
@@ -1620,24 +1633,24 @@ const createWorkerOfflineBooking = async (req, res) => {
     
     // Use rateType from frontend or fallback to "hourly"
     const finalRateType = rateType || "hourly";
-    const includesFuelCalc = false; // Based on frontend requirements or explicitly add it to req.body if needed
+    const includesFuelCalc = includesFuel === true || includesFuel === 'true';
 
     // Calculate rental duration and amount using the selected rateType
     const costCalculation = vehicle.calculateRate(durationHours, finalRateType, includesFuelCalc);
     
-    let baseAmount = costCalculation.total || costCalculation.breakdown?.total || 0;
+    // Addons from frontend
+    const helmetCount = Number(extraHelmets) || (requiresHelmet ? 1 : 0);
+    const helmetCharges = helmetCount * 50;
+    const phoneMountCharge = phoneMount ? 30 : 0;
+    const addonsTotal = helmetCharges + phoneMountCharge;
 
-    // Add extras
-    if (requiresHelmet) {
-      baseAmount += 50; // Helmet charge
-    }
     if (requiresInsurance) {
       const durationDays = Math.ceil(durationHours / 24);
       baseAmount += durationDays * 20; // Daily insurance
     }
 
     // Safety: use frontend total amount if provided, otherwise backend calculation
-    const totalAmount = frontendTotalAmount ? Number(frontendTotalAmount) : Math.max(0, baseAmount);
+    const totalAmount = frontendTotalAmount ? Number(frontendTotalAmount) : Math.max(0, baseAmount + addonsTotal);
     const deposit = Number(depositAmount) || 0;
     const advancePaid = Number(advancePayment) || 0;
     const cashPaid = Number(cashAmount) || 0;
@@ -1677,9 +1690,16 @@ const createWorkerOfflineBooking = async (req, res) => {
       bookingSource: 'worker-portal',
       customerDetails: {
         name: customerName,
+        fatherName: fatherName || undefined,
         phone: customerPhone,
+        alternativeNumber: alternativeNumber || undefined,
         email: customerEmail || guestUser.email,
-        address: { street: '', city: '', state: '', pincode: '' }
+        address: address ? {
+          street: address.street || '',
+          city: address.city || '',
+          state: address.state || '',
+          pincode: address.pincode || ''
+        } : undefined
       },
       startDateTime: pickup,
       endDateTime: returnDt,
@@ -1694,10 +1714,10 @@ const createWorkerOfflineBooking = async (req, res) => {
         totalBill: totalAmount,
         duration: durationHours,
         kmLimit: costCalculation.rateConfig?.kmLimit || 0,
-        addonsAmount: requiresHelmet ? 50 : 0,
+        addonsAmount: addonsTotal,
+        fuelCharges: includesFuelCalc ? (totalAmount - (costCalculation.total || 0)) : 0,
         extraKmCharge: 0,
         extraHourCharge: 0,
-        fuelCharges: 0,
         damageCharges: 0,
         cleaningCharges: 0,
         tollCharges: 0,
@@ -1707,10 +1727,11 @@ const createWorkerOfflineBooking = async (req, res) => {
       depositAmount: deposit,
       paymentMethod: paymentMethod || "cash",
       depositCollectionMethod: deposit > 0 ? "at-pickup" : "not-required",
-      depositStatus: deposit > 0 ? (depositPaymentMethod === 'mixed' ? 'collected-at-pickup' : (depositPaymentMethod === 'online' ? 'collected-online' : 'collected-at-pickup')) : "not-required",
-      
-      bookingStatus: (pickup <= new Date()) ? "ongoing" : "confirmed", // Mark as ongoing only if pickup is now or past
-      paymentStatus: advancePaid >= totalAmount ? "paid" : "partially-paid",
+      depositStatus: deposit > 0 ? 'collected-at-pickup' : "not-required",
+
+      // Worker offline bookings are ALWAYS ongoing — the vehicle is being handed over right now
+      bookingStatus: "ongoing",
+      paymentStatus: advancePaid <= 0 ? "unpaid" : advancePaid >= totalAmount ? "paid" : "partially-paid",
       paidAmount: advancePaid,
       
       cashFlowDetails: {
@@ -1734,10 +1755,18 @@ const createWorkerOfflineBooking = async (req, res) => {
         fuelLevel: fuelLevel || 'unknown',
         vehicleCondition: vehicleCondition || 'good',
         handoverTime: new Date(),
-        handoverNotes: workerNotes || '',
+        handoverNotes: notes || workerNotes || '',
         handoverBy: workerId
       },
-      
+
+      includesFuel: includesFuelCalc,
+
+      // Addons array — helmet, phone mount
+      addons: [
+        ...(helmetCount > 0 ? [{ name: 'Helmet', count: helmetCount, price: 50 }] : []),
+        ...(phoneMount ? [{ name: 'Phone Mount', count: 1, price: 30 }] : [])
+      ],
+
       verificationCodes: {
         pickup: { code: '0000', verified: true, verifiedAt: new Date(), verifiedBy: workerId },
         drop: { code: Math.floor(1000 + Math.random() * 9000).toString(), verified: false }
