@@ -377,6 +377,18 @@ const validateBookingDetails = async (req, res) => {
 const createBooking = async (req, res) => {
   try {
     const bookingData = req.body;
+    // Debug timezone parsing for booking creation
+    console.log('[TZ CHECK][vehicleBooking] server now:', new Date().toString(), new Date().toISOString());
+    console.log('[TZ CHECK][vehicleBooking] payload start/end:', {
+      startDateTime: bookingData.startDateTime,
+      endDateTime: bookingData.endDateTime
+    });
+    if (bookingData.startDateTime && bookingData.endDateTime) {
+      console.log('[TZ CHECK][vehicleBooking] parsed start/end:', {
+        startISO: new Date(bookingData.startDateTime).toISOString(),
+        endISO: new Date(bookingData.endDateTime).toISOString()
+      });
+    }
 //     console.log("files received", req.files);
 // console.log('Received booking data:', bookingData);
     // Validate vehicle exists and is available

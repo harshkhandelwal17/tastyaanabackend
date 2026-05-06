@@ -58,6 +58,14 @@ exports.createBookingRequest = async (req, res) => {
       });
     }
 
+    // Debug timezone parsing for booking requests
+    console.log('[TZ CHECK][bookingRequest] server now:', new Date().toString(), new Date().toISOString());
+    console.log('[TZ CHECK][bookingRequest] payload pickup/return:', { pickupDate, pickupTime, returnDate, returnTime });
+    console.log('[TZ CHECK][bookingRequest] parsed start/end:', {
+      startISO: new Date(`${pickupDate}T${pickupTime}`).toISOString(),
+      endISO: new Date(`${returnDate}T${returnTime}`).toISOString()
+    });
+
     // Calculate total days
     const start = new Date(pickupDate);
     const end = new Date(returnDate);
