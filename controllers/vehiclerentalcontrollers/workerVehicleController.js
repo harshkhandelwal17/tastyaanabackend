@@ -1639,8 +1639,9 @@ const createWorkerOfflineBooking = async (req, res) => {
     const costCalculation = vehicle.calculateRate(durationHours, finalRateType, includesFuelCalc);
     
     // Addons from frontend
+    // NOTE: 1st helmet is always FREE — only extra helmets (count - 1) are charged at ₹50 each
     const helmetCount = Number(extraHelmets) || (requiresHelmet ? 1 : 0);
-    const helmetCharges = helmetCount * 50;
+    const helmetCharges = Math.max(0, (helmetCount - 1) * 50);
     const phoneMountCharge = phoneMount ? 30 : 0;
     const addonsTotal = helmetCharges + phoneMountCharge;
 
@@ -2489,6 +2490,7 @@ const getWorkerDailyHisab = async (req, res) => {
           startDateTime: booking.startDateTime,
           endDateTime: booking.endDateTime,
           planType: booking.rateType,
+          includesFuel: booking.includesFuel ?? false,
           durationHours: booking.billing?.duration || null,
           kmLimit: booking.billing?.kmLimit || null,
           totalBill: booking.billing?.totalBill || 0,
@@ -2994,6 +2996,25 @@ const updateWorkerBookingDetails = async (req, res) => {
     // Notes
     if (updateData.notes !== undefined) booking.notes = updateData.notes;
     if (updateData.specialRequests !== undefined) booking.specialRequests = updateData.specialRequests;
+
+    // Fuel option
+    if (updateData.includesFuel !== undefined) booking.includesFuel = updateData.includesFuel === true || updateData.includesFuel === 'true';
+
+    // Booking times
+    if (updateData.startDateTime) booking.startDateTime = new Date(updateData.startDateTime);
+    if (updateData.endDateTime) booking.endDateTime = new Date(updateData.endDateTime);
+
+    // Payment amounts
+    if (updateData.cashAmount !== undefined && updateData.cashAmount !== '') {
+      booking.cashFlowDetails = booking.cashFlowDetails || {};
+      booking.cashFlowDetails.cashPaymentDetails = booking.cashFlowDetails.cashPaymentDetails || {};
+      booking.cashFlowDetails.cashPaymentDetails.totalCashReceived = Number(updateData.cashAmount);
+    }
+    if (updateData.onlineAmount !== undefined && updateData.onlineAmount !== '') {
+      booking.cashFlowDetails = booking.cashFlowDetails || {};
+      booking.cashFlowDetails.cashPaymentDetails = booking.cashFlowDetails.cashPaymentDetails || {};
+      booking.cashFlowDetails.cashPaymentDetails.onlinePaymentAmount = Number(updateData.onlineAmount);
+    }
 
     booking.statusHistory.push({
       status: booking.bookingStatus,

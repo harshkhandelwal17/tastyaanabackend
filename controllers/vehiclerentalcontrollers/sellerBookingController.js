@@ -1470,6 +1470,85 @@ const restoreDeletedBooking = async (req, res) => {
   }
 };
 
+// ===== Update Booking Details (seller edit) =====
+const updateBookingDetails = async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+    const sellerId = req.user._id;
+    const updateData = req.body;
+
+    let booking;
+    if (mongoose.Types.ObjectId.isValid(bookingId)) {
+      booking = await VehicleBooking.findById(bookingId);
+    }
+    if (!booking) {
+      booking = await VehicleBooking.findOne({ bookingId });
+    }
+    if (!booking) {
+      return res.status(404).json({ success: false, message: 'Booking not found' });
+    }
+
+    // Customer details
+    if (updateData.customerDetails) {
+      booking.customerDetails = booking.customerDetails || {};
+      const cd = updateData.customerDetails;
+      if (cd.name !== undefined) booking.customerDetails.name = cd.name;
+      if (cd.phone !== undefined) booking.customerDetails.phone = cd.phone;
+      if (cd.alternativeNumber !== undefined) booking.customerDetails.alternativeNumber = cd.alternativeNumber;
+      if (cd.fatherName !== undefined) booking.customerDetails.fatherName = cd.fatherName;
+      if (cd.email !== undefined) booking.customerDetails.email = cd.email;
+    }
+
+    // Booking times
+    if (updateData.startDateTime) booking.startDateTime = new Date(updateData.startDateTime);
+    if (updateData.endDateTime) booking.endDateTime = new Date(updateData.endDateTime);
+
+    // Fuel option
+    if (updateData.includesFuel !== undefined) booking.includesFuel = updateData.includesFuel === true || updateData.includesFuel === 'true';
+
+    // Meter reading
+    if (updateData.startMeterReading !== undefined && updateData.startMeterReading !== '') {
+      booking.vehicleHandover = booking.vehicleHandover || {};
+      booking.vehicleHandover.startMeterReading = Number(updateData.startMeterReading);
+    }
+
+    // Deposit
+    if (updateData.depositAmount !== undefined && updateData.depositAmount !== '') {
+      booking.depositAmount = Number(updateData.depositAmount);
+    }
+
+    // Payment amounts
+    if (updateData.cashAmount !== undefined && updateData.cashAmount !== '') {
+      booking.cashFlowDetails = booking.cashFlowDetails || {};
+      booking.cashFlowDetails.cashPaymentDetails = booking.cashFlowDetails.cashPaymentDetails || {};
+      booking.cashFlowDetails.cashPaymentDetails.totalCashReceived = Number(updateData.cashAmount);
+    }
+    if (updateData.onlineAmount !== undefined && updateData.onlineAmount !== '') {
+      booking.cashFlowDetails = booking.cashFlowDetails || {};
+      booking.cashFlowDetails.cashPaymentDetails = booking.cashFlowDetails.cashPaymentDetails || {};
+      booking.cashFlowDetails.cashPaymentDetails.onlinePaymentAmount = Number(updateData.onlineAmount);
+    }
+
+    // Notes
+    if (updateData.notes !== undefined) booking.notes = updateData.notes;
+
+    booking.statusHistory = booking.statusHistory || [];
+    booking.statusHistory.push({
+      status: booking.bookingStatus,
+      updatedBy: sellerId,
+      updatedAt: new Date(),
+      notes: 'Booking details updated by seller'
+    });
+
+    await booking.save();
+
+    res.json({ success: true, message: 'Booking updated successfully', data: booking });
+  } catch (error) {
+    console.error('Error updating booking details:', error);
+    res.status(500).json({ success: false, message: 'Failed to update booking details', error: error.message });
+  }
+};
+
 module.exports = {
   createOfflineBooking,
   getAvailableVehicles,
@@ -1481,5 +1560,6 @@ module.exports = {
   getLastMeterReading,
   softDeleteBooking,
   getDeletedBookings,
-  restoreDeletedBooking
+  restoreDeletedBooking,
+  updateBookingDetails
 };

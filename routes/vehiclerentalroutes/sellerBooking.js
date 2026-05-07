@@ -12,7 +12,8 @@ const {
   replaceVehicleOnBooking,
   softDeleteBooking,
   getDeletedBookings,
-  restoreDeletedBooking
+  restoreDeletedBooking,
+  updateBookingDetails
 } = require('../../controllers/vehiclerentalcontrollers/sellerBookingController');
 
 // Middleware to check if user is seller
@@ -35,6 +36,10 @@ router.post('/create-offline', checkSellerRole, createOfflineBooking);
 // Get seller's bookings with filters (alternative endpoint for compatibility)
 // GET /api/seller/bookings?zoneId=&status=&startDate=&endDate=&source=&page=&limit=
 router.get('/', checkSellerRole, getSellerBookings);
+
+// Update booking details (customer info, times, km, deposit, payment)
+// PUT /api/seller/bookings/:bookingId
+router.put('/:bookingId', checkSellerRole, updateBookingDetails);
 
 // Update cash payment for a booking
 // PUT /api/seller/bookings/:bookingId/cash-payment

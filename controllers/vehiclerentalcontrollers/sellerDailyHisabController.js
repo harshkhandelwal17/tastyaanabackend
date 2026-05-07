@@ -288,6 +288,7 @@ const getDailyHisab = async (req, res) => {
           startDateTime: booking.startDateTime,
           endDateTime: booking.endDateTime,
           planType: booking.rateType,
+          includesFuel: booking.includesFuel ?? false,
           durationHours: booking.billing?.duration || null,
           kmLimit: booking.billing?.kmLimit || null,
           totalKm,
