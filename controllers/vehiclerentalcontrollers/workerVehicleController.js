@@ -1544,9 +1544,6 @@ const createWorkerOfflineBooking = async (req, res) => {
       advancePayment,
       workerNotes,
       notes,
-      startMeterReading,
-      fuelLevel,
-      vehicleCondition,
       rateType,
       totalAmount: frontendTotalAmount,
       depositAmount,
@@ -1555,7 +1552,13 @@ const createWorkerOfflineBooking = async (req, res) => {
       depositOnlineAmount,
       cashAmount,
       onlineAmount,
+      handoverDetails,
     } = req.body;
+
+    // startMeterReading/fuelLevel/vehicleCondition may come top-level OR nested inside handoverDetails
+    const startMeterReading = req.body.startMeterReading ?? handoverDetails?.startMeterReading;
+    const fuelLevel = req.body.fuelLevel ?? handoverDetails?.fuelLevel;
+    const vehicleCondition = req.body.vehicleCondition ?? handoverDetails?.vehicleCondition;
 
     // Support both pickupDate/returnDate and startDateTime/endDateTime
     const resolvedPickup = pickupDate || startDateTime;

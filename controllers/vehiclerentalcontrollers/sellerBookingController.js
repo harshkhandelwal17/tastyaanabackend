@@ -444,7 +444,8 @@ const createOfflineBooking = async (req, res) => {
     });
 
     // Update vehicle's meterReading from the meter reading at handover
-    const startMeterReading = accessoriesChecklist.startMeterReading || 0;
+    // startMeterReading may come in handoverDetails or accessoriesChecklist
+    const startMeterReading = req.body.handoverDetails?.startMeterReading || accessoriesChecklist.startMeterReading || 0;
     if (startMeterReading > 0) {
       vehicle.meterReading = startMeterReading;
       await vehicle.save();
