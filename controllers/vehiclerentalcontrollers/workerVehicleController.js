@@ -1029,7 +1029,7 @@ exports.getWorkerVehicles = async (req, res) => {
 const getWorkerBookings = async (req, res) => {
   try {
     const workerId = req.user._id;
-    const { status, dateRange, sortBy, search, zoneId } = req.query;
+    const { status, dateRange, sortBy, sortOrder, search, zoneId, page, limit } = req.query;
 
     console.log(`🔍 Worker ${workerId} requesting bookings`);
 
@@ -1077,13 +1077,12 @@ const getWorkerBookings = async (req, res) => {
       vehicleId: { $in: zoneVehicleIds },
     };
 
-    if (status && status !== "all") {
-      // Map frontend status to backend status if necessary
-      let statusToFilter = status;
-      if (status === 'in-progress' || status === 'active') {
-        statusToFilter = 'ongoing';
-      }
-      query.bookingStatus = statusToFilter;
+    if (status && status !== "all" && status !== "") {
+      const statusList = status.split(",").map((s) => s.trim()).map((s) => {
+        if (s === "in-progress" || s === "active") return "ongoing";
+        return s;
+      });
+      query.bookingStatus = statusList.length === 1 ? statusList[0] : { $in: statusList };
     }
 
     if (dateRange && dateRange !== "all") {
@@ -1106,18 +1105,44 @@ const getWorkerBookings = async (req, res) => {
     }
 
     if (search) {
-      query.$or = [
+      // Also search by vehicle name/number within zone vehicles
+      const matchingVehicles = await Vehicle.find({
+        _id: { $in: zoneVehicleIds },
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { companyName: { $regex: search, $options: "i" } },
+          { vehicleNo: { $regex: search, $options: "i" } },
+        ],
+      }).select("_id");
+      const matchingVehicleIds = matchingVehicles.map((v) => v._id);
+
+      const orConditions = [
         { bookingId: { $regex: search, $options: "i" } },
         { "customerDetails.name": { $regex: search, $options: "i" } },
         { "customerDetails.phone": { $regex: search, $options: "i" } },
         { "savedBookingDetails.customerName": { $regex: search, $options: "i" } },
         { "savedBookingDetails.customerPhone": { $regex: search, $options: "i" } },
       ];
+      if (matchingVehicleIds.length > 0) {
+        orConditions.push({ vehicleId: { $in: matchingVehicleIds } });
+      }
+      query.$or = orConditions;
     }
 
     // Sort options
+    const sortDir = sortOrder === "asc" ? 1 : -1;
     let sort = {};
     switch (sortBy) {
+      case "startDate":
+        sort = { startDateTime: sortDir };
+        break;
+      case "endDate":
+        sort = { endDateTime: sortDir };
+        break;
+      case "bookingDate":
+        sort = { createdAt: sortDir };
+        break;
+      // legacy values kept for backward compatibility
       case "newest":
         sort = { createdAt: -1 };
         break;
@@ -1137,8 +1162,14 @@ const getWorkerBookings = async (req, res) => {
         sort = { createdAt: -1 };
     }
 
+    const pageNum = Math.max(1, parseInt(page) || 1);
+    const limitNum = Math.min(100, Math.max(1, parseInt(limit) || 20));
+    const skip = (pageNum - 1) * limitNum;
+
     const bookings = await VehicleBooking.find(query)
       .sort(sort)
+      .skip(skip)
+      .limit(limitNum)
       .populate("vehicleId", "companyName name vehicleNo vehicleImages category type")
       .populate("userId", "name email phone");
 
@@ -1552,6 +1583,7 @@ const createWorkerOfflineBooking = async (req, res) => {
       depositOnlineAmount,
       cashAmount,
       onlineAmount,
+      discountAmount,
       handoverDetails,
     } = req.body;
 
@@ -1726,7 +1758,7 @@ const createWorkerOfflineBooking = async (req, res) => {
         cleaningCharges: 0,
         tollCharges: 0,
         lateFees: 0,
-        discount: { amount: 0 }
+        discount: { amount: Number(discountAmount) || 0 }
       },
       depositAmount: deposit,
       paymentMethod: paymentMethod || "cash",
@@ -2999,6 +3031,13 @@ const updateWorkerBookingDetails = async (req, res) => {
     // Notes
     if (updateData.notes !== undefined) booking.notes = updateData.notes;
     if (updateData.specialRequests !== undefined) booking.specialRequests = updateData.specialRequests;
+
+    // Discount
+    if (updateData.discountAmount !== undefined) {
+      booking.billing = booking.billing || {};
+      booking.billing.discount = booking.billing.discount || {};
+      booking.billing.discount.amount = Number(updateData.discountAmount) || 0;
+    }
 
     // Fuel option
     if (updateData.includesFuel !== undefined) booking.includesFuel = updateData.includesFuel === true || updateData.includesFuel === 'true';

@@ -31,7 +31,7 @@ const createOfflineBooking = async (req, res) => {
       zoneId,
       paymentMethod = 'cash',
       depositAmount = 0,
-      _debug
+  discountAmount = 0,
     } = req.body;
 
     console.log('📋 Extracted booking data:', {
@@ -341,7 +341,7 @@ const createOfflineBooking = async (req, res) => {
         lateFees: 0,
         totalBill: finalTotalBill,
         discount: {
-          amount: 0,
+          amount: Number(discountAmount) || 0,
           reason: '',
           appliedBy: null
         }
@@ -1532,6 +1532,13 @@ const updateBookingDetails = async (req, res) => {
 
     // Notes
     if (updateData.notes !== undefined) booking.notes = updateData.notes;
+
+    // Discount
+    if (updateData.discountAmount !== undefined) {
+      booking.billing = booking.billing || {};
+      booking.billing.discount = booking.billing.discount || {};
+      booking.billing.discount.amount = Number(updateData.discountAmount) || 0;
+    }
 
     booking.statusHistory = booking.statusHistory || [];
     booking.statusHistory.push({
