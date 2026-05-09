@@ -886,10 +886,12 @@ const completeWorkerBooking = async (req, res) => {
     // ─────────────────────────────────────────────────────────────────────────
 
     // Update vehicle BEFORE saving the booking.
-    await Vehicle.findByIdAndUpdate(booking.vehicleId._id, {
-      availability: 'available',
-      currentBookingId: null,
-    });
+    const vehicleUpdate = { availability: 'available', currentBookingId: null };
+    if (endMeterReading && parseFloat(endMeterReading) > 0) {
+      vehicleUpdate.meterReading = parseFloat(endMeterReading);
+      console.log(`✅ Updated vehicle ${booking.vehicleId._id} meterReading to ${endMeterReading} km at dropoff`);
+    }
+    await Vehicle.findByIdAndUpdate(booking.vehicleId._id, vehicleUpdate);
 
     // All side-effects done — now persist the booking as completed.
     await booking.save();
