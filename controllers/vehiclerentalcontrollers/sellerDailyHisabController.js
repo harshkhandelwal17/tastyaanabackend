@@ -379,6 +379,14 @@ const getDailyHisab = async (req, res) => {
     // Collection calculation: Only deduct cash refunds and maintenance from cash received
     const collectFromWorker = totalCashIn - totalCashOut;
 
+    const totalOngoingBookings = await VehicleBooking.countDocuments({
+      $or: [
+        { vehicleId: { $in: vehicleIds } },
+        { bookedBy: sellerId }
+      ],
+      bookingStatus: 'ongoing'
+    });
+
     res.status(200).json({
       success: true,
       date,
@@ -392,7 +400,8 @@ const getDailyHisab = async (req, res) => {
         collectFromWorker,
         totalNewBookings,
         totalSubmittedBookings,
-        totalTransactions: vehicleTransactions.length
+        totalTransactions: vehicleTransactions.length,
+        totalOngoingBookings
       },
       transactions: vehicleTransactions
     });

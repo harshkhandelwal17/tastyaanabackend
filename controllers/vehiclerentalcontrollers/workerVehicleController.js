@@ -2598,6 +2598,11 @@ const getWorkerDailyHisab = async (req, res) => {
       return new Date(dateB) - new Date(dateA);
     });
 
+    const totalOngoingBookings = await VehicleBooking.countDocuments({
+      vehicleId: { $in: vehicleIds },
+      bookingStatus: 'ongoing'
+    });
+
     res.status(200).json({
       success: true,
       date,
@@ -2611,7 +2616,8 @@ const getWorkerDailyHisab = async (req, res) => {
         collectFromWorker: totalCashIn - totalCashOut,
         totalNewBookings,
         totalSubmittedBookings,
-        totalTransactions: vehicleTransactions.length
+        totalTransactions: vehicleTransactions.length,
+        totalOngoingBookings
       },
       transactions: vehicleTransactions
     });
