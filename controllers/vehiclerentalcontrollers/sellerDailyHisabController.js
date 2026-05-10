@@ -313,6 +313,8 @@ const getDailyHisab = async (req, res) => {
           dayNet: dayPayments - dayRefunds,
           paymentDetails,
           refundDetail,
+          handlerName: booking.vehicleHandover?.handlerName || '',
+          returnHandlerName: booking.vehicleReturn?.returnHandlerName || '',
         });
       }
     }

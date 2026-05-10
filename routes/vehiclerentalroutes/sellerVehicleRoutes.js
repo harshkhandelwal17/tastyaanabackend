@@ -216,6 +216,10 @@ router.put('/zones/:zoneId', sellerVehicleController.updateZone);
 // Delete specific zone
 router.delete('/zones/:zoneId', sellerVehicleController.deleteZone);
 
+// Zone member management
+router.post('/zones/:zoneId/members', sellerVehicleController.addZoneMember);
+router.delete('/zones/:zoneId/members/:memberName', sellerVehicleController.removeZoneMember);
+
 // ===== WORKER MANAGEMENT =====
 
 // Get all workers for this seller

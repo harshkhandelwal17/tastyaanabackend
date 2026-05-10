@@ -1109,6 +1109,8 @@ const userSchema = new mongoose.Schema({
           saturday:  { open: { type: String, default: '09:00' }, close: { type: String, default: '18:00' }, isOpen: { type: Boolean, default: true } },
           sunday:    { open: { type: String, default: '09:00' }, close: { type: String, default: '18:00' }, isOpen: { type: Boolean, default: false } }
         },
+        // Zone staff/people names for this zone
+        members: [{ type: String }],
         createdAt: { type: Date, default: Date.now }
       }]
     }

@@ -1784,6 +1784,69 @@ const deleteZone = async (req, res) => {
   }
 };
 
+// ===== ZONE MEMBER MANAGEMENT =====
+
+// Add a member name to a zone
+const addZoneMember = async (req, res) => {
+  try {
+    const sellerId = req.user.id;
+    const { zoneId } = req.params;
+    const { memberName } = req.body;
+
+    if (!memberName || !memberName.trim()) {
+      return res.status(400).json({ success: false, message: 'Member name is required' });
+    }
+
+    const seller = await User.findById(sellerId);
+    if (!seller || !seller.sellerProfile?.vehicleRentalService?.serviceZones) {
+      return res.status(404).json({ success: false, message: 'Seller or zones not found' });
+    }
+
+    const zone = seller.sellerProfile.vehicleRentalService.serviceZones.id(zoneId);
+    if (!zone) return res.status(404).json({ success: false, message: 'Zone not found' });
+
+    const name = memberName.trim();
+    if (zone.members.includes(name)) {
+      return res.status(400).json({ success: false, message: 'Member already exists in this zone' });
+    }
+
+    zone.members.push(name);
+    seller.markModified('sellerProfile');
+    await seller.save();
+
+    res.json({ success: true, message: 'Member added', data: zone.members });
+  } catch (error) {
+    console.error('Error adding zone member:', error);
+    res.status(500).json({ success: false, message: 'Failed to add member', error: error.message });
+  }
+};
+
+// Remove a member name from a zone
+const removeZoneMember = async (req, res) => {
+  try {
+    const sellerId = req.user.id;
+    const { zoneId, memberName } = req.params;
+
+    const seller = await User.findById(sellerId);
+    if (!seller || !seller.sellerProfile?.vehicleRentalService?.serviceZones) {
+      return res.status(404).json({ success: false, message: 'Seller or zones not found' });
+    }
+
+    const zone = seller.sellerProfile.vehicleRentalService.serviceZones.id(zoneId);
+    if (!zone) return res.status(404).json({ success: false, message: 'Zone not found' });
+
+    const decodedName = decodeURIComponent(memberName);
+    zone.members = zone.members.filter(m => m !== decodedName);
+    seller.markModified('sellerProfile');
+    await seller.save();
+
+    res.json({ success: true, message: 'Member removed', data: zone.members });
+  } catch (error) {
+    console.error('Error removing zone member:', error);
+    res.status(500).json({ success: false, message: 'Failed to remove member', error: error.message });
+  }
+};
+
 // ===== METER READING MANAGEMENT =====
 
 // Update start meter reading during vehicle handover
@@ -3472,6 +3535,8 @@ module.exports = {
   updateSellerZones,
   updateZone,
   deleteZone,
+  addZoneMember,
+  removeZoneMember,
   updateStartMeterReading,
   updateEndMeterReading,
   getTripMetrics,

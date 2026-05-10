@@ -612,6 +612,7 @@ const completeWorkerBooking = async (req, res) => {
       notes,
       refundMode,
       refund, // { refundCash, refundOnline, refundNotes, totalRefund }
+      returnHandlerName, // Name of person who handled the dropoff (from zone members)
     } = req.body;
 
     // Get worker profile with zone info
@@ -666,6 +667,7 @@ const completeWorkerBooking = async (req, res) => {
     booking.vehicleReturn.submitted = true;
     booking.vehicleReturn.submittedAt = booking.endDateTime;
     booking.vehicleReturn.submittedBy = req.user.id;
+    if (returnHandlerName) booking.vehicleReturn.returnHandlerName = returnHandlerName;
     booking.vehicleReturn.endMeterReading = endMeterReading;
     booking.vehicleReturn.returnFuelLevel = endFuelLevel;
     booking.vehicleReturn.condition = vehicleCondition;
@@ -1587,6 +1589,7 @@ const createWorkerOfflineBooking = async (req, res) => {
       onlineAmount,
       discountAmount,
       handoverDetails,
+      handlerName, // Name of person who handled the booking (from zone members)
     } = req.body;
 
     // startMeterReading/fuelLevel/vehicleCondition may come top-level OR nested inside handoverDetails
@@ -1794,7 +1797,8 @@ const createWorkerOfflineBooking = async (req, res) => {
         vehicleCondition: vehicleCondition || 'good',
         handoverTime: new Date(),
         handoverNotes: notes || workerNotes || '',
-        handoverBy: workerId
+        handoverBy: workerId,
+        handlerName: handlerName || ''
       },
 
       includesFuel: includesFuelCalc,
@@ -2540,6 +2544,8 @@ const getWorkerDailyHisab = async (req, res) => {
           dayRefunds, dayCashOut, dayOnlineOut,
           dayNet: dayPayments - dayRefunds,
           paymentDetails, refundDetail,
+          handlerName: booking.vehicleHandover?.handlerName || '',
+          returnHandlerName: booking.vehicleReturn?.returnHandlerName || '',
         });
       }
     }
@@ -3082,6 +3088,114 @@ const updateWorkerBookingDetails = async (req, res) => {
   }
 };
 
+// Get members of worker's zone (list of names for handler selection)
+const getZoneMembers = async (req, res) => {
+  try {
+    const workerId = req.user.id;
+    const worker = await User.findById(workerId).select('name workerProfile');
+    if (!worker?.workerProfile) {
+      return res.status(403).json({ success: false, message: 'Worker profile not found' });
+    }
+
+    const { sellerId, zoneId, zoneName } = worker.workerProfile;
+
+    // Get seller's zone members
+    const seller = await User.findById(sellerId)
+      .select('sellerProfile.vehicleRentalService.serviceZones');
+
+    if (!seller?.sellerProfile?.vehicleRentalService?.serviceZones) {
+      // No members configured — return just worker's own name
+      return res.json({ success: true, data: { members: [worker.name], workerName: worker.name, zoneId, zoneName, sellerZones: [] } });
+    }
+
+    const zone = seller.sellerProfile.vehicleRentalService.serviceZones.find(
+      z => z.zoneCode === worker.workerProfile.zoneCode || z.zoneId === zoneId
+    );
+
+    const members = zone?.members?.length > 0 ? zone.members : [];
+    // Ensure worker's own name is always in the list as default
+    const allMembers = members.includes(worker.name) ? members : [worker.name, ...members];
+
+    // Include all seller zones for zone-change feature
+    const sellerZones = seller.sellerProfile.vehicleRentalService.serviceZones.map(z => ({
+      _id: z._id,
+      zoneName: z.zoneName,
+      zoneCode: z.zoneCode,
+      address: z.address,
+      isActive: z.isActive,
+    }));
+
+    res.json({
+      success: true,
+      data: { members: allMembers, workerName: worker.name, zoneId, zoneName, sellerZones }
+    });
+  } catch (error) {
+    console.error('Error fetching zone members:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch zone members', error: error.message });
+  }
+};
+
+// Change a vehicle's zone (worker can only change vehicles in their zone, to any of seller's zones)
+const changeVehicleZone = async (req, res) => {
+  try {
+    const workerId = req.user.id;
+    const { vehicleId } = req.params;
+    const { newZoneId, newZoneCode, newZoneName, newZoneAddress } = req.body;
+
+    if (!newZoneCode || !newZoneName) {
+      return res.status(400).json({ success: false, message: 'New zone code and name are required' });
+    }
+
+    const worker = await User.findById(workerId).select('workerProfile');
+    if (!worker?.workerProfile) {
+      return res.status(403).json({ success: false, message: 'Worker profile not found' });
+    }
+
+    const { sellerId, zoneCode: workerZoneCode } = worker.workerProfile;
+
+    // Find the vehicle
+    const vehicle = await Vehicle.findById(vehicleId);
+    if (!vehicle) {
+      return res.status(404).json({ success: false, message: 'Vehicle not found' });
+    }
+
+    // Ensure vehicle belongs to this seller
+    if (vehicle.sellerId.toString() !== sellerId.toString()) {
+      return res.status(403).json({ success: false, message: 'Vehicle does not belong to your seller' });
+    }
+
+    // Ensure vehicle is currently in worker's zone
+    if (vehicle.zoneCode !== workerZoneCode) {
+      return res.status(403).json({ success: false, message: 'You can only change zone for vehicles in your zone' });
+    }
+
+    // Verify the target zone exists in seller's zones
+    const seller = await User.findById(sellerId).select('sellerProfile.vehicleRentalService.serviceZones');
+    const targetZone = seller?.sellerProfile?.vehicleRentalService?.serviceZones?.find(
+      z => z.zoneCode === newZoneCode
+    );
+    if (!targetZone) {
+      return res.status(400).json({ success: false, message: 'Target zone not found in seller zones' });
+    }
+
+    // Update vehicle zone
+    vehicle.zoneCode = newZoneCode;
+    vehicle.zoneCenterName = newZoneName;
+    vehicle.zoneCenterAddress = newZoneAddress || targetZone.address || '';
+    if (newZoneId) vehicle.zoneId = newZoneId;
+    await vehicle.save();
+
+    res.json({
+      success: true,
+      message: `Vehicle moved to zone: ${newZoneName}`,
+      data: { vehicleId: vehicle._id, newZoneCode, newZoneName }
+    });
+  } catch (error) {
+    console.error('Error changing vehicle zone:', error);
+    res.status(500).json({ success: false, message: 'Failed to change vehicle zone', error: error.message });
+  }
+};
+
 module.exports = {
   getWorkerDashboard,
   getWorkerVehicles,
@@ -3103,5 +3217,7 @@ module.exports = {
   getWorkerMonthlyRevenue,
   getVehicleMaintenanceHistory,
   addVehicleMaintenance,
-  deleteVehicleMaintenance
+  deleteVehicleMaintenance,
+  getZoneMembers,
+  changeVehicleZone
 };

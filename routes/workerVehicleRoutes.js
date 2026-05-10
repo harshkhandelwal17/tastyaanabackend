@@ -15,7 +15,9 @@ const {
   getWorkerMonthlyRevenue,
   getVehicleMaintenanceHistory,
   addVehicleMaintenance,
-  deleteVehicleMaintenance
+  deleteVehicleMaintenance,
+  getZoneMembers,
+  changeVehicleZone
 } = require('../controllers/vehiclerentalcontrollers/workerVehicleController');
 const { authenticate, authorize } = require('../middlewares/auth');
 
@@ -34,6 +36,12 @@ router.get('/profile', getWorkerProfile);
 
 // Vehicles (in worker's zone)
 router.get('/vehicles', getWorkerVehicles);
+
+// Zone members (names for handler selection)
+router.get('/zone-members', getZoneMembers);
+
+// Change vehicle zone (only for vehicles in worker's zone)
+router.put('/vehicles/:vehicleId/zone', changeVehicleZone);
 
 // Vehicle Maintenance History
 router.get('/vehicles/:vehicleId/maintenance', getVehicleMaintenanceHistory);

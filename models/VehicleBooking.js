@@ -344,7 +344,8 @@ const vehicleBookingSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       description: 'Staff member who handed over the vehicle'
-    }
+    },
+    handlerName: { type: String, default: '' } // Name of person who handled pickup (from zone members)
   },
 
   vehicleReturn: {
@@ -355,6 +356,7 @@ const vehicleBookingSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
+    returnHandlerName: { type: String, default: '' }, // Name of person who handled dropoff (from zone members)
     endMeterReading: {
       type: Number,
       min: 0,
