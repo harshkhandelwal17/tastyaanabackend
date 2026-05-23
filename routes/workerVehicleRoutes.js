@@ -17,7 +17,8 @@ const {
   addVehicleMaintenance,
   deleteVehicleMaintenance,
   getZoneMembers,
-  changeVehicleZone
+  changeVehicleZone,
+  replaceWorkerVehicleOnBooking
 } = require('../controllers/vehiclerentalcontrollers/workerVehicleController');
 const { authenticate, authorize } = require('../middlewares/auth');
 
@@ -59,6 +60,9 @@ router.put('/bookings/:bookingId/status', updateWorkerBookingStatus);
 
 // Update booking details (customer info, meter, deposit, notes)
 router.put('/bookings/:bookingId', updateWorkerBookingDetails);
+
+// Replace vehicle on booking
+router.put('/bookings/:bookingId/replace-vehicle', replaceWorkerVehicleOnBooking);
 
 // Create / approve extension (worker-initiated, auto-approved)
 router.post('/bookings/:bookingId/create-extension', createWorkerExtension);

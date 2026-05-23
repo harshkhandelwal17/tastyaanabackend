@@ -35,7 +35,7 @@ const createOfflineBooking = async (req, res) => {
     } = req.body;
 
     console.log('📋 Extracted booking data:', {
-      vehicleId, zoneId, sellerId, _debug
+      vehicleId, zoneId, sellerId
     });
 
     // Validate seller has access to this zone
@@ -454,12 +454,9 @@ const createOfflineBooking = async (req, res) => {
 
     await booking.save();
 
-    // Update vehicle availability ONLY if booking is confirmed and paid/partially-paid
-    // This prevents vehicles from being locked for unpaid or pending bookings
-    if (vehicle.availability === 'available' &&
-      booking.bookingStatus === 'confirmed' &&
-      ['paid', 'partially-paid'].includes(booking.paymentStatus)) {
-      // Use updateOne to avoid triggering validation on unchanged fields
+    // Update vehicle availability — offline bookings start as 'ongoing', so reserve the vehicle
+    if (['available', 'reserved'].includes(vehicle.availability) &&
+      ['confirmed', 'ongoing'].includes(booking.bookingStatus)) {
       await Vehicle.updateOne(
         { _id: vehicle._id },
         {
@@ -471,7 +468,7 @@ const createOfflineBooking = async (req, res) => {
       );
       console.log(`🔒 Vehicle ${vehicle._id} marked as reserved for booking ${booking._id}`);
     } else {
-      console.log(`⚠️ Vehicle ${vehicle._id} NOT reserved. Status: ${booking.bookingStatus}, Payment: ${booking.paymentStatus}`);
+      console.log(`⚠️ Vehicle ${vehicle._id} NOT reserved. Availability: ${vehicle.availability}, Status: ${booking.bookingStatus}`);
     }
 
     res.status(201).json({
@@ -1140,6 +1137,86 @@ const replaceVehicleOnBooking = async (req, res) => {
 
     // Update booking with new vehicle
     booking.vehicleId = newVehicleId;
+
+    // ── Update vehicle-associated booking parameters ──────────────────────
+
+    // 1. Update start meter reading to new vehicle's current odometer
+    if (newVehicle.meterReading !== undefined && newVehicle.meterReading !== null) {
+      booking.vehicleHandover = booking.vehicleHandover || {};
+      booking.vehicleHandover.startMeterReading = newVehicle.meterReading;
+      booking.markModified('vehicleHandover');
+    }
+
+    // 2. Recalculate cost using new vehicle's rates for the same duration
+    const currentRateType = booking.rateType;
+    const bookingDurationHours = booking.billing?.duration ||
+      Math.abs(new Date(booking.endDateTime) - new Date(booking.startDateTime)) / 36e5;
+
+    const newCostCalc = newVehicle.calculateRate(bookingDurationHours, currentRateType, booking.includesFuel);
+
+    // Re-derive ratePlanUsed from new vehicle
+    let newRatePlanUsed = {};
+    if (currentRateType === 'hourly12' && newVehicle.rate12hr) {
+      newRatePlanUsed = {
+        baseRate: newVehicle.rate12hr.baseRate,
+        ratePerHour: newVehicle.rate12hr.ratePerHour,
+        kmLimit: newVehicle.rate12hr.kmLimit,
+        extraChargePerKm: newVehicle.rate12hr.extraChargePerKm,
+        extraChargePerHour: newVehicle.rate12hr.extraChargePerHour,
+        gracePeriodMinutes: newVehicle.rate12hr.gracePeriodMinutes,
+        includesFuel: booking.includesFuel
+      };
+    } else if (currentRateType === 'hourly' && newVehicle.rateHourly) {
+      newRatePlanUsed = {
+        ratePerHour: newVehicle.rateHourly.ratePerHour,
+        kmFreePerHour: newVehicle.rateHourly.kmFreePerHour,
+        extraChargePerKm: newVehicle.rateHourly.extraChargePerKm,
+        includesFuel: booking.includesFuel
+      };
+    } else if ((currentRateType === 'daily' || currentRateType === 'hourly24') && newVehicle.rate24hr) {
+      newRatePlanUsed = {
+        baseRate: newVehicle.rate24hr.baseRate,
+        ratePerHour: newVehicle.rate24hr.ratePerHour,
+        kmLimit: newVehicle.rate24hr.kmLimit,
+        extraChargePerKm: newVehicle.rate24hr.extraChargePerKm,
+        extraChargePerHour: newVehicle.rate24hr.extraChargePerHour,
+        gracePeriodMinutes: newVehicle.rate24hr.gracePeriodMinutes,
+        includesFuel: booking.includesFuel
+      };
+    }
+    if (Object.keys(newRatePlanUsed).length > 0) {
+      booking.ratePlanUsed = newRatePlanUsed;
+      booking.markModified('ratePlanUsed');
+    }
+
+    // 3. Update billing amounts, kmLimit, and currentKmLimit from new vehicle's plan
+    const newKmLimit = newCostCalc.rateConfig?.kmLimit || newRatePlanUsed.kmLimit || newRatePlanUsed.kmFreePerHour || 0;
+    const newBaseAmount = newCostCalc.total || newCostCalc.breakdown?.total || 0;
+    const addonsCost = (booking.addons || []).reduce((t, a) => t + (a.count * a.price), 0);
+    const newBaseAmountWithAddons = newBaseAmount + addonsCost;
+    const newTotalBill = newBaseAmountWithAddons
+      - (booking.billing?.discount?.amount || 0)
+      + (booking.billing?.taxes?.gst || 0)
+      + (booking.billing?.taxes?.serviceTax || 0);
+
+    booking.billing = booking.billing || {};
+    if (newBaseAmountWithAddons > 0) booking.billing.baseAmount = newBaseAmountWithAddons;
+    if (newKmLimit)                  booking.billing.kmLimit = newKmLimit;
+    if (newTotalBill > 0)            booking.billing.totalBill = newTotalBill;
+    booking.markModified('billing');
+
+    if (newKmLimit) booking.currentKmLimit = newKmLimit;
+
+    console.log('🔄 Updated vehicle params:', {
+      startMeterReading: booking.vehicleHandover?.startMeterReading,
+      rateType: currentRateType,
+      durationHours: bookingDurationHours,
+      newRatePlanUsed,
+      newKmLimit,
+      newBaseAmount,
+      addonsCost,
+      newTotalBill
+    });
 
     // Add to status history
     booking.statusHistory.push({

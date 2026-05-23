@@ -3196,6 +3196,197 @@ const changeVehicleZone = async (req, res) => {
   }
 };
 
+// ===== Replace Vehicle on Booking (Worker) =====
+const replaceWorkerVehicleOnBooking = async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+    const { newVehicleId, reason } = req.body;
+    const workerId = req.user._id;
+
+    if (!newVehicleId) {
+      return res.status(400).json({ success: false, message: 'New vehicle ID is required' });
+    }
+
+    const booking = await VehicleBooking.findById(bookingId).populate('vehicleId');
+    if (!booking) {
+      return res.status(404).json({ success: false, message: 'Booking not found' });
+    }
+
+    const allowedStatuses = ['confirmed', 'ongoing'];
+    if (!allowedStatuses.includes(booking.bookingStatus)) {
+      return res.status(400).json({
+        success: false,
+        message: `Cannot replace vehicle. Booking status is ${booking.bookingStatus}. Only confirmed or ongoing bookings can have vehicle replaced.`
+      });
+    }
+
+    const originalVehicle = await Vehicle.findById(booking.vehicleId._id);
+    if (!originalVehicle) {
+      return res.status(404).json({ success: false, message: 'Original vehicle not found' });
+    }
+
+    // Workers can only manage vehicles in their assigned zone
+    if (req.user.zoneCode && originalVehicle.zoneCode !== req.user.zoneCode) {
+      return res.status(403).json({ success: false, message: 'This booking is not in your zone' });
+    }
+
+    const newVehicle = await Vehicle.findById(newVehicleId);
+    if (!newVehicle) {
+      return res.status(404).json({ success: false, message: 'Replacement vehicle not found' });
+    }
+
+    // Replacement vehicle must be in the same zone as original
+    if (newVehicle.zoneCode !== originalVehicle.zoneCode) {
+      return res.status(400).json({ success: false, message: 'Replacement vehicle must be in the same zone' });
+    }
+
+    const allowedAvailability = ['available', 'reserved'];
+    if (!allowedAvailability.includes(newVehicle.availability)) {
+      return res.status(400).json({
+        success: false,
+        message: `Replacement vehicle is not available (current status: ${newVehicle.availability})`
+      });
+    }
+
+    // Check for conflicting bookings on the new vehicle
+    const conflictingBooking = await VehicleBooking.findOne({
+      vehicleId: newVehicleId,
+      bookingStatus: { $in: ['confirmed', 'ongoing', 'pending'] },
+      $or: [
+        { startDateTime: { $lte: booking.endDateTime }, endDateTime: { $gte: booking.startDateTime } }
+      ]
+    });
+    if (conflictingBooking) {
+      return res.status(400).json({
+        success: false,
+        message: `Replacement vehicle has conflicting bookings during this time period (${conflictingBooking.bookingId})`
+      });
+    }
+
+    // Store original vehicle info for history
+    const originalVehicleDetails = {
+      vehicleId: originalVehicle._id,
+      brand: originalVehicle.companyName,
+      model: originalVehicle.name,
+      registrationNumber: originalVehicle.vehicleNo,
+      replacedAt: new Date(),
+      replacedBy: workerId,
+      reason: reason || 'Vehicle breakdown/maintenance issue'
+    };
+
+    // Free old vehicle, reserve new vehicle
+    await Vehicle.updateOne({ _id: originalVehicle._id }, { $set: { availability: 'available' } });
+    await Vehicle.updateOne({ _id: newVehicle._id }, { $set: { availability: 'reserved' } });
+
+    // Update booking vehicleId
+    booking.vehicleId = newVehicleId;
+
+    // Update start meter reading to new vehicle's current odometer
+    if (newVehicle.meterReading !== undefined && newVehicle.meterReading !== null) {
+      booking.vehicleHandover = booking.vehicleHandover || {};
+      booking.vehicleHandover.startMeterReading = newVehicle.meterReading;
+      booking.markModified('vehicleHandover');
+    }
+
+    // Recalculate cost using new vehicle's rates for the same duration
+    const currentRateType = booking.rateType;
+    const bookingDurationHours = booking.billing?.duration ||
+      Math.abs(new Date(booking.endDateTime) - new Date(booking.startDateTime)) / 36e5;
+
+    const newCostCalc = newVehicle.calculateRate(bookingDurationHours, currentRateType, booking.includesFuel);
+
+    // Re-derive ratePlanUsed from new vehicle
+    let newRatePlanUsed = {};
+    if (currentRateType === 'hourly12' && newVehicle.rate12hr) {
+      newRatePlanUsed = {
+        baseRate: newVehicle.rate12hr.baseRate,
+        ratePerHour: newVehicle.rate12hr.ratePerHour,
+        kmLimit: newVehicle.rate12hr.kmLimit,
+        extraChargePerKm: newVehicle.rate12hr.extraChargePerKm,
+        extraChargePerHour: newVehicle.rate12hr.extraChargePerHour,
+        gracePeriodMinutes: newVehicle.rate12hr.gracePeriodMinutes,
+        includesFuel: booking.includesFuel
+      };
+    } else if (currentRateType === 'hourly' && newVehicle.rateHourly) {
+      newRatePlanUsed = {
+        ratePerHour: newVehicle.rateHourly.ratePerHour,
+        kmFreePerHour: newVehicle.rateHourly.kmFreePerHour,
+        extraChargePerKm: newVehicle.rateHourly.extraChargePerKm,
+        includesFuel: booking.includesFuel
+      };
+    } else if ((currentRateType === 'daily' || currentRateType === 'hourly24') && newVehicle.rate24hr) {
+      newRatePlanUsed = {
+        baseRate: newVehicle.rate24hr.baseRate,
+        ratePerHour: newVehicle.rate24hr.ratePerHour,
+        kmLimit: newVehicle.rate24hr.kmLimit,
+        extraChargePerKm: newVehicle.rate24hr.extraChargePerKm,
+        extraChargePerHour: newVehicle.rate24hr.extraChargePerHour,
+        gracePeriodMinutes: newVehicle.rate24hr.gracePeriodMinutes,
+        includesFuel: booking.includesFuel
+      };
+    }
+    if (Object.keys(newRatePlanUsed).length > 0) {
+      booking.ratePlanUsed = newRatePlanUsed;
+      booking.markModified('ratePlanUsed');
+    }
+
+    // Update billing amounts, kmLimit, and currentKmLimit from new vehicle's plan
+    const newKmLimit = newCostCalc.rateConfig?.kmLimit || newRatePlanUsed.kmLimit || newRatePlanUsed.kmFreePerHour || 0;
+    const newBaseAmount = newCostCalc.total || newCostCalc.breakdown?.total || 0;
+    const addonsCost = (booking.addons || []).reduce((t, a) => t + (a.count * a.price), 0);
+    const newBaseAmountWithAddons = newBaseAmount + addonsCost;
+    const newTotalBill = newBaseAmountWithAddons
+      - (booking.billing?.discount?.amount || 0)
+      + (booking.billing?.taxes?.gst || 0)
+      + (booking.billing?.taxes?.serviceTax || 0);
+
+    booking.billing = booking.billing || {};
+    if (newBaseAmountWithAddons > 0) booking.billing.baseAmount = newBaseAmountWithAddons;
+    if (newKmLimit)                  booking.billing.kmLimit = newKmLimit;
+    if (newTotalBill > 0)            booking.billing.totalBill = newTotalBill;
+    booking.markModified('billing');
+
+    if (newKmLimit) booking.currentKmLimit = newKmLimit;
+
+    // Status history
+    booking.statusHistory = booking.statusHistory || [];
+    booking.statusHistory.push({
+      status: booking.bookingStatus,
+      updatedBy: workerId,
+      updatedAt: new Date(),
+      notes: `Vehicle replaced by worker: ${originalVehicle.companyName} ${originalVehicle.name} (${originalVehicle.vehicleNo}) → ${newVehicle.companyName} ${newVehicle.name} (${newVehicle.vehicleNo}). Reason: ${reason || 'Vehicle breakdown/maintenance'}`
+    });
+
+    if (!booking.vehicleReplacements) booking.vehicleReplacements = [];
+    booking.vehicleReplacements.push(originalVehicleDetails);
+
+    await booking.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Vehicle replaced successfully',
+      data: {
+        booking,
+        oldVehicle: {
+          id: originalVehicle._id,
+          brand: originalVehicle.companyName,
+          model: originalVehicle.name,
+          registrationNumber: originalVehicle.vehicleNo
+        },
+        newVehicle: {
+          id: newVehicle._id,
+          brand: newVehicle.companyName,
+          model: newVehicle.name,
+          registrationNumber: newVehicle.vehicleNo
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Error replacing vehicle (worker):', error);
+    res.status(500).json({ success: false, message: 'Failed to replace vehicle', error: error.message });
+  }
+};
+
 module.exports = {
   getWorkerDashboard,
   getWorkerVehicles,
@@ -3219,5 +3410,6 @@ module.exports = {
   addVehicleMaintenance,
   deleteVehicleMaintenance,
   getZoneMembers,
-  changeVehicleZone
+  changeVehicleZone,
+  replaceWorkerVehicleOnBooking
 };
