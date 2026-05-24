@@ -1204,6 +1204,9 @@ vehicleBookingSchema.statics.getBookingStats = function (sellerId, startDate, en
 // ===== VIRTUAL PROPERTIES =====
 
 // Calculate correct total bill to prevent double-counting
+// NOTE: For online bookings, depositAmount is included in billing.totalBill (paid via Razorpay).
+// For offline/worker bookings, deposit is tracked separately and NOT in billing.totalBill.
+// The pre-save hook logs discrepancies for offline bookings but does NOT auto-correct.
 vehicleBookingSchema.virtual('correctTotalBill').get(function () {
   const billing = this.billing;
   const rentalCost = (billing.baseAmount || 0) +
@@ -1241,17 +1244,16 @@ vehicleBookingSchema.virtual('rentalSubtotal').get(function () {
 
 // ===== MIDDLEWARE =====
 
-// Pre-save hook to validate and correct total bill calculation
+// Pre-save hook: log billing discrepancies for offline bookings (expected, not a bug).
+// Auto-correction is intentionally DISABLED — stored totalBill is authoritative.
+// Online bookings include deposit in totalBill; offline bookings do not.
 vehicleBookingSchema.pre('save', function (next) {
   const correctTotal = this.correctTotalBill;
 
-  // If total bill is incorrect, log the discrepancy
-  if (Math.abs(this.billing.totalBill - correctTotal) > 1) { // Allow for 1 rupee rounding difference
+  if (Math.abs(this.billing.totalBill - correctTotal) > 1) {
     console.warn(`Booking ${this.bookingId}: Total bill discrepancy detected`);
     console.warn(`Stored: ${this.billing.totalBill}, Calculated: ${correctTotal}`);
-
-    // Auto-correct the total bill
-    this.billing.totalBill = correctTotal;
+    // Do NOT auto-correct — offline bookings intentionally exclude deposit from totalBill
   }
 
   next();

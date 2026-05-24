@@ -1458,9 +1458,11 @@ const processWorkerHandover = async (req, res) => {
             notes: 'Security deposit collected by worker during pickup'
           });
 
-          // Update paidAmount
+          // Update paidAmount (deposit is tracked separately, exclude it)
           booking.paidAmount = (booking.payments || []).reduce((sum, p) => {
-            if (p.status === 'success') return sum + (parseFloat(p.amount) || 0);
+            if (p.status === 'success' && !(p.notes || '').toLowerCase().includes('deposit')) {
+              return sum + (parseFloat(p.amount) || 0);
+            }
             return sum;
           }, 0);
         }
@@ -1888,9 +1890,11 @@ const createWorkerOfflineBooking = async (req, res) => {
       }
     }
 
-    // Update paidAmount to match total successful payments
+    // Update paidAmount to match total successful payments (deposit is tracked separately, exclude it)
     booking.paidAmount = (booking.payments || []).reduce((sum, p) => {
-      if (p.status === 'success') return sum + (parseFloat(p.amount) || 0);
+      if (p.status === 'success' && !(p.notes || '').toLowerCase().includes('deposit')) {
+        return sum + (parseFloat(p.amount) || 0);
+      }
       return sum;
     }, 0);
 
@@ -3034,9 +3038,11 @@ const updateWorkerBookingDetails = async (req, res) => {
           notes: 'Security deposit collected by worker'
         });
         
-        // Update paidAmount
+        // Update paidAmount (deposit is tracked separately, exclude it)
         booking.paidAmount = (booking.payments || []).reduce((sum, p) => {
-          if (p.status === 'success') return sum + (parseFloat(p.amount) || 0);
+          if (p.status === 'success' && !(p.notes || '').toLowerCase().includes('deposit')) {
+            return sum + (parseFloat(p.amount) || 0);
+          }
           return sum;
         }, 0);
       }

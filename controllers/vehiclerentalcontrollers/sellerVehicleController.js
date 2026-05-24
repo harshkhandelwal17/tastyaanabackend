@@ -2671,11 +2671,12 @@ const completeBooking = async (req, res) => {
       }
     }
 
-    // Calculate total paid — only count positive entries; negative entries are refund records
+    // Calculate total paid — only count positive entries; exclude deposit payments (tracked separately)
     const totalPaidFromPayments = booking.payments.reduce(
       (sum, p) => {
         const amt = parseFloat(p.amount) || 0;
-        return sum + (amt > 0 ? amt : 0);
+        const isDeposit = (p.notes || '').toLowerCase().includes('deposit');
+        return sum + (amt > 0 && !isDeposit ? amt : 0);
       },
       0
     );
@@ -2769,8 +2770,11 @@ const completeBooking = async (req, res) => {
         });
       }
 
-      // Recalculate paidAmount from payments (positive only — refund entries don't reduce what was paid)
-      const netPaid = (booking.payments || []).reduce((sum, p) => sum + (parseFloat(p.amount) || 0), 0);
+      // Recalculate paidAmount from payments (positive only, excluding deposit — it is tracked separately)
+      const netPaid = (booking.payments || []).reduce((sum, p) => {
+        const isDeposit = (p.notes || '').toLowerCase().includes('deposit');
+        return sum + (isDeposit ? 0 : (parseFloat(p.amount) || 0));
+      }, 0);
       booking.paidAmount = Math.max(0, Math.round((netPaid + Number.EPSILON) * 100) / 100);
 
       // Update paymentStatus after refund
