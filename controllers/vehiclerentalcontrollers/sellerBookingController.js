@@ -1634,6 +1634,136 @@ const updateBookingDetails = async (req, res) => {
   }
 };
 
+// ===== Collect Additional Payment During Booking =====
+const collectPaymentOnBooking = async (req, res) => {
+  try {
+    const sellerId = req.user._id;
+    const { bookingId } = req.params;
+    const { amount, paymentType, cashAmount, onlineAmount, notes } = req.body;
+
+    const isMixed = paymentType === 'Mixed';
+    const validPaymentTypes = ['Cash', 'UPI', 'Card', 'Mixed'];
+    const normalizedType = paymentType || 'Cash';
+    if (!validPaymentTypes.includes(normalizedType)) {
+      return res.status(400).json({ success: false, message: 'paymentType must be Cash, UPI, Card, or Mixed' });
+    }
+
+    let collectAmount;
+    if (isMixed) {
+      const cash = Number(cashAmount) || 0;
+      const online = Number(onlineAmount) || 0;
+      if (cash <= 0 && online <= 0) {
+        return res.status(400).json({ success: false, message: 'At least one of cashAmount or onlineAmount must be greater than 0' });
+      }
+      collectAmount = cash + online;
+    } else {
+      if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
+        return res.status(400).json({ success: false, message: 'Valid amount is required' });
+      }
+      collectAmount = Number(amount);
+    }
+
+    let booking;
+    if (mongoose.Types.ObjectId.isValid(bookingId)) {
+      booking = await VehicleBooking.findById(bookingId);
+    }
+    if (!booking) {
+      booking = await VehicleBooking.findOne({ bookingId });
+    }
+    if (!booking) {
+      return res.status(404).json({ success: false, message: 'Booking not found' });
+    }
+
+    booking.cashFlowDetails = booking.cashFlowDetails || {};
+    booking.cashFlowDetails.cashPaymentDetails = booking.cashFlowDetails.cashPaymentDetails || {};
+    const receivedAt = new Date();
+
+    if (isMixed) {
+      const cash = Number(cashAmount) || 0;
+      const online = Number(onlineAmount) || 0;
+      if (cash > 0) {
+        booking.payments.push({
+          amount: cash,
+          paymentType: 'Cash',
+          paymentMethod: 'Cash',
+          status: 'success',
+          receivedBy: sellerId,
+          receivedAt,
+          notes: notes ? `${notes} (cash portion)` : 'Cash portion of mixed payment collected by seller'
+        });
+        booking.cashFlowDetails.cashPaymentDetails.totalCashReceived =
+          (booking.cashFlowDetails.cashPaymentDetails.totalCashReceived || 0) + cash;
+        booking.cashFlowDetails.cashPaymentDetails.cashReceivedAt = receivedAt;
+      }
+      if (online > 0) {
+        booking.payments.push({
+          amount: online,
+          paymentType: 'UPI',
+          paymentMethod: 'Manual',
+          status: 'success',
+          receivedBy: sellerId,
+          receivedAt,
+          notes: notes ? `${notes} (online portion)` : 'Online portion of mixed payment collected by seller'
+        });
+        booking.cashFlowDetails.cashPaymentDetails.onlinePaymentAmount =
+          (booking.cashFlowDetails.cashPaymentDetails.onlinePaymentAmount || 0) + online;
+      }
+    } else {
+      booking.payments.push({
+        amount: collectAmount,
+        paymentType: normalizedType,
+        paymentMethod: normalizedType === 'Cash' ? 'Cash' : 'Manual',
+        status: 'success',
+        receivedBy: sellerId,
+        receivedAt,
+        notes: notes || 'Additional payment collected by seller'
+      });
+      if (normalizedType === 'Cash') {
+        booking.cashFlowDetails.cashPaymentDetails.totalCashReceived =
+          (booking.cashFlowDetails.cashPaymentDetails.totalCashReceived || 0) + collectAmount;
+        booking.cashFlowDetails.cashPaymentDetails.cashReceivedAt = receivedAt;
+      } else {
+        booking.cashFlowDetails.cashPaymentDetails.onlinePaymentAmount =
+          (booking.cashFlowDetails.cashPaymentDetails.onlinePaymentAmount || 0) + collectAmount;
+      }
+    }
+
+    // Update paidAmount
+    booking.paidAmount = (booking.paidAmount || 0) + collectAmount;
+
+    // Update paymentStatus
+    const totalBill = booking.billing?.finalAmount || booking.billing?.totalBill || 0;
+    if (booking.paidAmount >= totalBill && totalBill > 0) {
+      booking.paymentStatus = 'paid';
+      booking.cashFlowDetails.cashPaymentDetails.pendingCashAmount = 0;
+    } else if (booking.paidAmount > 0) {
+      booking.paymentStatus = 'partially-paid';
+      if (totalBill > 0) {
+        booking.cashFlowDetails.cashPaymentDetails.pendingCashAmount = Math.max(0, totalBill - booking.paidAmount);
+      }
+    }
+
+    booking.statusHistory = booking.statusHistory || [];
+    booking.statusHistory.push({
+      status: booking.bookingStatus,
+      updatedBy: sellerId,
+      updatedAt: new Date(),
+      notes: `Payment of ₹${collectAmount} (${isMixed ? `Mixed: ₹${cashAmount || 0} cash + ₹${onlineAmount || 0} online` : normalizedType}) collected by seller`
+    });
+
+    await booking.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Payment of ₹${collectAmount} collected successfully`,
+      data: { paidAmount: booking.paidAmount, paymentStatus: booking.paymentStatus, bookingStatus: booking.bookingStatus }
+    });
+  } catch (error) {
+    console.error('Error collecting payment:', error);
+    res.status(500).json({ success: false, message: 'Failed to collect payment', error: error.message });
+  }
+};
+
 module.exports = {
   createOfflineBooking,
   getAvailableVehicles,
@@ -1642,6 +1772,7 @@ module.exports = {
   getCashFlowSummary,
   markCashHandover,
   replaceVehicleOnBooking,
+  collectPaymentOnBooking,
   getLastMeterReading,
   softDeleteBooking,
   getDeletedBookings,

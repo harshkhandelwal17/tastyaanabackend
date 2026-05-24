@@ -10,6 +10,7 @@ const {
   getCashFlowSummary,
   markCashHandover,
   replaceVehicleOnBooking,
+  collectPaymentOnBooking,
   softDeleteBooking,
   getDeletedBookings,
   restoreDeletedBooking,
@@ -48,6 +49,10 @@ router.put('/:bookingId/cash-payment', checkSellerRole, updateCashPayment);
 // Replace vehicle on existing booking
 // PUT /api/seller/bookings/:bookingId/replace-vehicle
 router.put('/:bookingId/replace-vehicle', checkSellerRole, replaceVehicleOnBooking);
+
+// Collect additional payment during booking
+// POST /api/seller/bookings/:bookingId/collect-payment
+router.post('/:bookingId/collect-payment', checkSellerRole, collectPaymentOnBooking);
 
 // ===== Soft Delete Management Routes =====
 
