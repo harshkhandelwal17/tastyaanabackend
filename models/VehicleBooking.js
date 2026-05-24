@@ -1248,12 +1248,19 @@ vehicleBookingSchema.virtual('rentalSubtotal').get(function () {
 // Auto-correction is intentionally DISABLED — stored totalBill is authoritative.
 // Online bookings include deposit in totalBill; offline bookings do not.
 vehicleBookingSchema.pre('save', function (next) {
-  const correctTotal = this.correctTotalBill;
+  let correctTotal = this.correctTotalBill;
 
-  if (Math.abs(this.billing.totalBill - correctTotal) > 1) {
+  // For offline bookings the deposit is NOT included in billing.totalBill —
+  // subtract it from the expected total so we don't generate false-positive warnings.
+  const depositInBill = this.depositStatus === 'collected-online';
+  if (!depositInBill && (this.depositAmount || 0) > 0) {
+    correctTotal -= (this.depositAmount || 0);
+  }
+
+  if (Math.abs((this.billing.totalBill || 0) - correctTotal) > 1) {
     console.warn(`Booking ${this.bookingId}: Total bill discrepancy detected`);
     console.warn(`Stored: ${this.billing.totalBill}, Calculated: ${correctTotal}`);
-    // Do NOT auto-correct — offline bookings intentionally exclude deposit from totalBill
+    // Do NOT auto-correct — stored totalBill is authoritative
   }
 
   next();
